@@ -1,0 +1,63 @@
+# Default configuration for the data pipeline (Phase 1).
+# Copy this file (e.g. configs/dev.yaml) to experiment without editing the default.
+
+seed: 42
+
+data:
+  # Path to the IBM AML CSV downloaded from Kaggle (HI-Small_Trans.csv).
+  raw_csv: data/raw/HI-Small_Trans.csv
+  # Optional: use only the first N rows while developing (null = use everything).
+  nrows: null
+  processed_dir: data/processed
+  partitions_dir: data/partitions
+
+split:
+  # Chronological split. Fractions are of the time-sorted transactions.
+  train_frac: 0.6
+  val_frac: 0.2      # test = the remainder
+
+features:
+  # Window for the "burstiness" features (number of txns in the last N hours).
+  burst_window_hours: 24
+  # Amount (in USD) at or above which a payment is considered "round" if divisible by 100.
+  round_amount_min: 100
+
+partition:
+  num_clients: 5
+  # "group": assign every From-Bank ID to one of num_clients institutions (uses all data).
+  # "top":   keep only the num_clients largest banks (drops the rest).
+  mode: group
+
+profiles:
+  enabled: true
+  # How strongly synthetic customer attributes depend on laundering labels.
+  # 0.0 = pure noise (use for the ablation), keep small (<= 0.2) for the main runs.
+  label_signal: 0.1
+
+# Which engineered features and which synthetic profile columns each client bank holds.
+# This is what makes the schemas heterogeneous. Names must match the feature pool
+# (see src/aml_fl/features.py: TXN_FEATURES) and the profile columns (src/aml_fl/profiles.py).
+schemas:
+  client_0:
+    features: [log_amount, payment_format, payment_currency, cross_currency, cross_bank,
+               is_round, hour, dayofweek, src_txn_count, src_amount_mean, src_amount_std,
+               src_fan_out, src_num_currencies, src_secs_since_prev]
+    profile:  [account_age_days, customer_type, kyc_risk_level]
+  client_1:
+    features: [log_amount, payment_format, cross_bank, is_round, src_txn_count,
+               src_fan_out, dst_fan_in, dst_received_volume, dst_burst]
+    profile:  [occupation_category, declared_annual_income, branch_region]
+  client_2:
+    features: [log_amount, payment_format, payment_currency, receiving_currency, cross_currency,
+               cross_bank, is_round, hour, dayofweek, src_txn_count, src_amount_mean,
+               src_amount_std, src_fan_out, src_num_currencies, src_secs_since_prev,
+               src_burst, dst_fan_in, dst_received_volume, dst_burst]
+    profile:  [account_type, num_linked_accounts, onboarding_channel]
+  client_3:
+    features: [log_amount, payment_format, is_round, hour, src_txn_count, src_amount_mean,
+               src_secs_since_prev, src_burst, dst_fan_in, dst_burst]
+    profile:  [account_age_days, declared_annual_income, onboarding_channel]
+  client_4:
+    features: [log_amount, payment_format, payment_currency, cross_currency, cross_bank,
+               src_fan_out, src_num_currencies, dst_fan_in, dst_received_volume]
+    profile:  [customer_type, kyc_risk_level, num_linked_accounts]

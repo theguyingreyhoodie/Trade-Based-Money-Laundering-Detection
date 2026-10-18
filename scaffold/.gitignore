@@ -1,0 +1,45 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+env/
+.pytest_cache/
+.ipynb_checkpoints/
+.mypy_cache/
+.ruff_cache/
+
+# --- Data (download from Kaggle, never commit) ---
+data/raw/*
+data/processed/*
+data/partitions/*
+!data/**/.gitkeep
+
+# --- Models / experiment outputs ---
+*.pt
+*.pth
+*.ckpt
+mlruns/
+wandb/
+
+# --- Blockchain (Hardhat) ---
+node_modules/
+**/hardhat/artifacts/
+**/hardhat/cache/
+**/hardhat/typechain-types/
+coverage/
+
+# --- Secrets ---
+.env
+.env.*
+*.key
+
+# --- OS / editors ---
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

@@ -1,0 +1,23 @@
+# Core data + ML
+numpy>=1.26
+pandas>=2.1
+pyarrow>=15.0
+scikit-learn>=1.4
+xgboost>=2.0
+pyyaml>=6.0
+
+# Deep learning + federated learning
+torch>=2.2          # CPU build is enough: pip install torch --index-url https://download.pytorch.org/whl/cpu
+flwr[simulation]>=1.20
+
+# Explainability + dashboard (Phase 5)
+shap>=0.45
+streamlit>=1.35
+matplotlib>=3.8
+
+# Blockchain client (Phase 4) — the Hardhat side lives in src/aml_fl/chain/ (Node.js)
+web3>=6.15
+
+# Dev
+pytest>=8.0
+jupyter>=1.0
