@@ -27,7 +27,7 @@ The full plan is in [`docs/AML_FL_Implementation_Plan.pdf`](docs/AML_FL_Implemen
 
 ```bash
 git clone https://github.com/theguyingreyhoodie/Trade-Based-Money-Laundering-Detection.git
-cd Trade-Based-Money-Laundering-Detection
+cd Trade-Based-Money-Laundering-Detection/scaffold
 python -m venv .venv
 source .venv/bin/activate          # Windows: .venv\Scripts\activate
 pip install torch --index-url https://download.pytorch.org/whl/cpu
