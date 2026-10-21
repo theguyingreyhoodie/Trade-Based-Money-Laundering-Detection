@@ -1,4 +1,4 @@
-# Federated learning (Phase 3) — owner: Aniket
+# Federated learning (Phase 3)
 
 Planned files:
 

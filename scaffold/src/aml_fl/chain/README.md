@@ -1,4 +1,4 @@
-# Blockchain audit layer (Phase 4) — owner: Laiba
+# Blockchain audit layer (Phase 4)
 
 Planned layout:
 

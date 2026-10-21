@@ -1,4 +1,4 @@
-# Dashboard (Phase 5) — owner: Laiba
+# Dashboard (Phase 5)
 
 `app.py` will be a Streamlit app with three pages:
 
