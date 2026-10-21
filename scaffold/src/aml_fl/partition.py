@@ -1,7 +1,8 @@
 """Split the transactions into client banks and give each one its own schema.
 
 A transaction belongs to the client that holds its *sending* bank (From Bank). Each
-client then keeps only the feature + profile columns listed for it in the config.
+client keeps the core transaction features (shared by all clients) plus the history
+features and profile columns listed for it in the config.
 """
 from __future__ import annotations
 
@@ -38,7 +39,10 @@ def assign_banks(df: pd.DataFrame, num_clients: int, mode: str = "group") -> dic
     return mapping
 
 
-def validate_schemas(schemas: dict, num_clients: int) -> None:
+def validate_schemas(schemas: dict, num_clients: int, core_features: list[str] = ()) -> None:
+    bad_core = set(core_features) - set(TXN_FEATURES)
+    if bad_core:
+        raise ValueError(f"core_features: unknown features {sorted(bad_core)}")
     for i in range(num_clients):
         name = f"client_{i}"
         if name not in schemas:
@@ -50,15 +54,17 @@ def validate_schemas(schemas: dict, num_clients: int) -> None:
 
 
 def partition(df: pd.DataFrame, num_clients: int, mode: str, schemas: dict,
-              use_profiles: bool = True) -> tuple[dict[str, pd.DataFrame], dict[int, int]]:
-    """Return {client_name: frame with ID columns + that client's own columns}, bank map."""
-    validate_schemas(schemas, num_clients)
+              use_profiles: bool = True,
+              core_features: list[str] = ()) -> tuple[dict[str, pd.DataFrame], dict[int, int]]:
+    """Return {client_name: frame with ID columns + core + that client's own columns}, bank map."""
+    validate_schemas(schemas, num_clients, core_features)
     bank_map = assign_banks(df, num_clients, mode)
     client_of = df["src_bank"].map(bank_map)
     clients: dict[str, pd.DataFrame] = {}
     for i in range(num_clients):
         name = f"client_{i}"
-        cols = list(schemas[name].get("features", []))
+        own = schemas[name].get("features", [])
+        cols = list(core_features) + [c for c in own if c not in core_features]
         if use_profiles:
             cols += list(schemas[name].get("profile", []))
         part = df.loc[client_of == i, ID_COLUMNS + cols].reset_index(drop=True)

@@ -88,13 +88,15 @@ def main() -> None:
     log.info("Saved %s", path)
 
     pcfg = cfg["partition"]
-    clients, bank_map = partition.partition(df, pcfg["num_clients"], pcfg["mode"], cfg["schemas"], use_profiles)
+    core = cfg.get("core_features", [])
+    clients, bank_map = partition.partition(df, pcfg["num_clients"], pcfg["mode"], cfg["schemas"],
+                                            use_profiles, core)
     out_part = ROOT / cfg["data"]["partitions_dir"]
     client_stats = {}
     for name, cdf in clients.items():
         cols = [c for c in cdf.columns if c not in partition.ID_COLUMNS]
         save_table(cdf, out_part / name / "transactions")
-        save_json({"client": name, "columns": cols}, out_part / name / "schema.json")
+        save_json({"client": name, "columns": cols, "core_columns": list(core)}, out_part / name / "schema.json")
         client_stats[name] = {
             "rows": int(len(cdf)),
             "laundering": int(cdf["label"].sum()),

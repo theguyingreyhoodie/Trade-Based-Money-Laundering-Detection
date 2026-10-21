@@ -95,9 +95,10 @@ Outputs:
    (account age, KYC risk, occupation, income and so on). Only **training-period** labels
    influence them, through `label_signal` (default 0.1). Run with `--label-signal 0` or
    `--no-profiles` for the ablation.
-5. **Partition** (`src/aml_fl/partition.py`). Assigns banks to 5 clients by *From Bank*. Each
-   client keeps only the columns listed for it under `schemas` in the config, so the
-   schemas differ.
+5. **Partition** (`src/aml_fl/partition.py`). Assigns banks to 5 clients by *From Bank*. Every
+   client gets the 9 `core_features` (transaction fields every bank sees), plus the history
+   features and profile columns listed for it under `schemas` in the config, so the schemas
+   differ.
 6. **Preprocess** (`src/aml_fl/preprocess.py`). Each client fits one-hot encoding and scaling on
    its **own** training data only.
 7. **Pattern tags** (`src/aml_fl/patterns.py`). Reads `*_Patterns.txt` and tags each laundering
