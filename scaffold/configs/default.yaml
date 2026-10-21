@@ -43,30 +43,30 @@ profiles:
   # 0.0 = pure noise (use for the ablation), keep small (<= 0.2) for the main runs.
   label_signal: 0.1
 
-# Which engineered features and which synthetic profile columns each client bank holds.
-# This is what makes the schemas heterogeneous. Names must match the feature pool
-# (see src/aml_fl/features.py: TXN_FEATURES) and the profile columns (src/aml_fl/profiles.py).
+# Transaction fields every bank sees for its own payments, so every client gets them.
+# Naive FedAvg (the FL baseline) uses only these. Names must match TXN_FEATURES.
+core_features: [log_amount, payment_format, payment_currency, receiving_currency, cross_currency,
+                cross_bank, is_round, hour, dayofweek]
+
+# What each bank computes and stores on top of the core: account-history features and
+# synthetic profile columns. This is what makes the schemas heterogeneous. Names must match
+# the feature pool (src/aml_fl/features.py: TXN_FEATURES) and the profile columns
+# (src/aml_fl/profiles.py).
 schemas:
   client_0:
-    features: [log_amount, payment_format, payment_currency, cross_currency, cross_bank,
-               is_round, hour, dayofweek, src_txn_count, src_amount_mean, src_amount_std,
-               src_fan_out, src_num_currencies, src_secs_since_prev]
+    features: [src_txn_count, src_amount_mean, src_amount_std, src_fan_out, src_num_currencies,
+               src_secs_since_prev]
     profile:  [account_age_days, customer_type, kyc_risk_level]
   client_1:
-    features: [log_amount, payment_format, cross_bank, is_round, src_txn_count,
-               src_fan_out, dst_fan_in, dst_received_volume, dst_burst]
+    features: [src_txn_count, src_fan_out, dst_fan_in, dst_received_volume, dst_burst]
     profile:  [occupation_category, declared_annual_income, branch_region]
   client_2:
-    features: [log_amount, payment_format, payment_currency, receiving_currency, cross_currency,
-               cross_bank, is_round, hour, dayofweek, src_txn_count, src_amount_mean,
-               src_amount_std, src_fan_out, src_num_currencies, src_secs_since_prev,
-               src_burst, dst_fan_in, dst_received_volume, dst_burst]
+    features: [src_txn_count, src_amount_mean, src_amount_std, src_fan_out, src_num_currencies,
+               src_secs_since_prev, src_burst, dst_fan_in, dst_received_volume, dst_burst]
     profile:  [account_type, num_linked_accounts, onboarding_channel]
   client_3:
-    features: [log_amount, payment_format, is_round, hour, src_txn_count, src_amount_mean,
-               src_secs_since_prev, src_burst, dst_fan_in, dst_burst]
+    features: [src_txn_count, src_amount_mean, src_secs_since_prev, src_burst, dst_fan_in, dst_burst]
     profile:  [account_age_days, declared_annual_income, onboarding_channel]
   client_4:
-    features: [log_amount, payment_format, payment_currency, cross_currency, cross_bank,
-               src_fan_out, src_num_currencies, dst_fan_in, dst_received_volume]
+    features: [src_fan_out, src_num_currencies, dst_fan_in, dst_received_volume]
     profile:  [customer_type, kyc_risk_level, num_linked_accounts]

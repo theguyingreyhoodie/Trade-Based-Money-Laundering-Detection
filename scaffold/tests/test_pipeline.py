@@ -77,10 +77,15 @@ def test_partition_gives_different_schemas(cleaned):
     f = features.build_features(df)
     f["split"] = split.time_split(f)
     f = profiles.attach_profiles(f, f["split"], 0.1, seed=0)
-    clients, bank_map = partition.partition(f, 5, "group", cfg["schemas"])
+    core = cfg["core_features"]
+    clients, bank_map = partition.partition(f, 5, "group", cfg["schemas"], core_features=core)
     assert sum(len(c) for c in clients.values()) == len(f)          # nothing lost
     schemas = [tuple(c.columns) for c in clients.values()]
     assert len(set(schemas)) == 5                                      # all different
+    assert all(set(core) <= set(s) for s in schemas)                   # core shared by all
+    assert all(len(s) == len(set(s)) for s in schemas)                 # no duplicate columns
+    with pytest.raises(ValueError):
+        partition.partition(f, 5, "group", cfg["schemas"], core_features=["not_a_feature"])
     ids = [set(c["txn_id"]) for c in clients.values()]
     assert all(ids[i].isdisjoint(ids[j]) for i in range(5) for j in range(i + 1, 5))
 
