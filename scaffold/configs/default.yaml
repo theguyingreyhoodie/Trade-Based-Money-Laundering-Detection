@@ -6,6 +6,9 @@ seed: 42
 data:
   # Path to the IBM AML CSV downloaded from Kaggle (HI-Small_Trans.csv).
   raw_csv: data/raw/HI-Small_Trans.csv
+  # Laundering attempts file, used ONLY to report recall per pattern (fan-in, cycle, ...).
+  # null = look for *_Patterns.txt next to raw_csv; skipped if it does not exist.
+  patterns_txt: null
   # Optional: use only the first N rows while developing (null = use everything).
   nrows: null
   processed_dir: data/processed
