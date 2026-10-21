@@ -31,6 +31,12 @@ partition:
   # "top":   keep only the num_clients largest banks (drops the rest).
   mode: group
 
+mlp:
+  # PyTorch BankModel training (baselines now; reuse the same values for FL local training).
+  epochs: 10
+  lr: 0.001
+  batch_size: 512
+
 profiles:
   enabled: true
   # How strongly synthetic customer attributes depend on laundering labels.
