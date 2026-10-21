@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import numpy as np
+import pandas as pd
 from sklearn.metrics import (average_precision_score, f1_score, precision_recall_curve,
                              precision_score, recall_score, roc_auc_score)
 
@@ -29,3 +30,17 @@ def evaluate(y_true: np.ndarray, scores: np.ndarray, threshold: float = 0.5) -> 
         "positives": int(y_true.sum()),
         "n": int(len(y_true)),
     }
+
+
+def recall_by_pattern(patterns: np.ndarray, scores: np.ndarray, threshold: float) -> pd.DataFrame:
+    """Recall per laundering pattern (see patterns.py). Non-laundering rows are ignored.
+
+    Columns: pattern, positives, detected, recall. Rows sorted by number of positives.
+    """
+    patterns = np.asarray(patterns)
+    mask = patterns != "none"
+    df = pd.DataFrame({"pattern": patterns[mask], "detected": np.asarray(scores)[mask] >= threshold})
+    out = df.groupby("pattern")["detected"].agg(positives="size", detected="sum").reset_index()
+    out["detected"] = out["detected"].astype(int)
+    out["recall"] = out["detected"] / out["positives"]
+    return out.sort_values("positives", ascending=False, ignore_index=True)

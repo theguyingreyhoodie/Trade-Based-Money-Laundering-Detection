@@ -13,10 +13,11 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(ROOT / "scripts"))
 
-from aml_fl import data, features, partition, profiles, split  # noqa: E402
+from aml_fl import data, features, partition, patterns, profiles, split  # noqa: E402
+from aml_fl.metrics import recall_by_pattern  # noqa: E402
 from aml_fl.preprocess import TabularPreprocessor, undersample  # noqa: E402
 from aml_fl.utils import load_config  # noqa: E402
-from make_toy_data import make_toy, write_ibm_csv  # noqa: E402
+from make_toy_data import make_toy, make_toy_with_patterns, write_ibm_csv, write_patterns_txt  # noqa: E402
 
 
 @pytest.fixture(scope="module")
@@ -96,6 +97,33 @@ def test_preprocessor_and_undersample(cleaned):
     y = sub["label"].to_numpy()
     Xs, ys = undersample(X, y, neg_per_pos=5)
     assert ys.sum() == y.sum() and len(ys) <= y.sum() * 6
+
+
+def test_patterns_parse_and_tag(tmp_path):
+    raw, attempts = make_toy_with_patterns(rows=5000, seed=1)
+    write_ibm_csv(raw, tmp_path / "toy_Trans.csv")
+    write_patterns_txt(raw, attempts, tmp_path / "toy_Patterns.txt")
+    assert patterns.default_path(tmp_path / "toy_Trans.csv") == tmp_path / "toy_Patterns.txt"
+
+    parsed = patterns.parse_patterns(tmp_path / "toy_Patterns.txt")
+    assert parsed["attempt_id"].nunique() == len(attempts)
+    assert set(parsed["pattern"]) == {"fan_in", "fan_out", "cycle", "scatter_gather"}
+
+    df, _ = data.clean(data.load_raw(tmp_path / "toy_Trans.csv"))
+    tags = patterns.tag_transactions(df, parsed)
+    # Every laundering row was injected by a listed attempt, so none is "unlisted".
+    assert (tags[df["label"] == 1] != patterns.UNLISTED).all()
+    assert (tags[df["label"] == 0] == patterns.NONE).all()
+    assert tags.value_counts().drop(patterns.NONE).to_dict() == parsed["pattern"].value_counts().to_dict()
+
+
+def test_recall_by_pattern():
+    pats = np.array(["none", "fan_in", "fan_in", "cycle", "cycle", "cycle"])
+    scores = np.array([0.9, 0.8, 0.1, 0.7, 0.2, 0.1])
+    out = recall_by_pattern(pats, scores, threshold=0.5).set_index("pattern")
+    assert out.loc["fan_in", "recall"] == 0.5
+    assert out.loc["cycle", "positives"] == 3 and out.loc["cycle", "detected"] == 1
+    assert "none" not in out.index
 
 
 def test_model_shared_weights_roundtrip():
