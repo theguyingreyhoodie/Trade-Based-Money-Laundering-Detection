@@ -9,6 +9,9 @@ so it keeps a private encoder, and only a shared head is averaged across banks. 
 **blockchain** audit layer (Hardhat + Solidity) records hashes of model updates and alerts, so
 any later change to them can be detected.
 
+**Scope.** The project detects money laundering through bank transfers between accounts.
+Trade-based money laundering (invoices, goods, pricing) is future scope.
+
 Data: [IBM Transactions for Anti Money Laundering (HI-Small)](https://www.kaggle.com/datasets/ealtman2019/ibm-transactions-for-anti-money-laundering-aml),
 plus synthetic bank-specific customer profiles.
 
