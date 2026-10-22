@@ -87,24 +87,28 @@ class ClientData:
     y: dict[str, np.ndarray]
     txn_ids: dict[str, np.ndarray]
     feature_names: list[str]
-    preprocessor: TabularPreprocessor
+    preprocessors: list[TabularPreprocessor]
+    core_dim: int = 0   # hybrid layout: the first core_dim columns are the shared core features
 
     @property
     def input_dim(self) -> int:
         return len(self.feature_names)
 
 
-def load_client(client_dir: str | Path, core_only: bool = False,
+def load_client(client_dir: str | Path, columns: str = "all",
                 fixed_categories: dict[str, list[str]] | None = None) -> ClientData:
     """Load data/partitions/<client>/ and return train/val/test arrays.
 
-    core_only: keep only the core columns every client has (schema.json: core_columns).
+    columns: "all" = the bank's whole schema, "core" = only the core columns every client has
+             (schema.json: core_columns), "own" = only the bank's own columns (all minus core).
     fixed_categories: shared category lists, so one-hot columns line up across clients.
     """
     client_dir = Path(client_dir)
     df = load_table(client_dir / "transactions")
     meta = load_json(client_dir / "schema.json")
-    cols = meta["core_columns"] if core_only else meta["columns"]
+    core = meta["core_columns"]
+    cols = {"all": meta["columns"], "core": core,
+            "own": [c for c in meta["columns"] if c not in core]}[columns]
     df = df[ID_COLUMNS + cols]
     train = df[df["split"] == "train"]
     pre = TabularPreprocessor.for_frame(df, fixed_categories).fit(train)
@@ -114,7 +118,19 @@ def load_client(client_dir: str | Path, core_only: bool = False,
         X[s] = pre.transform(part)
         y[s] = part["label"].to_numpy(dtype=np.float32)
         ids[s] = part["txn_id"].to_numpy()
-    return ClientData(client_dir.name, X, y, ids, pre.feature_names, pre)
+    return ClientData(client_dir.name, X, y, ids, pre.feature_names, [pre])
+
+
+def load_client_hybrid(client_dir: str | Path, shared_vocab: dict[str, list[str]]) -> ClientData:
+    """Columns laid out as [core | own]: the core part uses the shared category lists, so it is
+    identical at every bank; the own part is the bank's private layout. core_dim marks the cut."""
+    core = load_client(client_dir, "core", shared_vocab)
+    own = load_client(client_dir, "own")
+    if not all(np.array_equal(core.txn_ids[s], own.txn_ids[s]) for s in core.txn_ids):
+        raise ValueError(f"Row order differs between core and own columns in {client_dir}")
+    X = {s: np.hstack([core.X[s], own.X[s]]) for s in core.X}
+    return ClientData(core.name, X, core.y, core.txn_ids, core.feature_names + own.feature_names,
+                      core.preprocessors + own.preprocessors, core_dim=core.input_dim)
 
 
 def undersample(X: np.ndarray, y: np.ndarray, neg_per_pos: int = 20,

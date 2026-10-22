@@ -5,7 +5,8 @@
         -> SharedHead (identical shape at every bank)     -> laundering logit
                      ^ only these parameters are exchanged with the FL server and FedAvg'd
 
-Used by the Flower client (src/aml_fl/fl/) via get_shared_weights / set_shared_weights.
+HybridModel (below) additionally shares an encoder for the core features every bank has.
+Used by the Flower client (src/aml_fl/fl/).
 """
 from __future__ import annotations
 
@@ -56,6 +57,27 @@ class BankModel(nn.Module):
             raise ValueError(f"Expected {len(keys)} arrays for the shared head, got {len(weights)}")
         state = {k: torch.as_tensor(w) for k, w in zip(keys, weights)}
         self.head.load_state_dict(state, strict=True)
+
+
+class HybridModel(nn.Module):
+    """Shared core encoder + private encoder + shared head.
+
+        [core features | own features]
+           core  -> core_encoder    (SHARED: same layout at every bank, FedAvg'd) -> 16-dim
+           own   -> private_encoder (PRIVATE, never leaves the bank)               -> 16-dim
+        concat -> SharedHead (SHARED, FedAvg'd) -> laundering logit
+    """
+
+    def __init__(self, core_dim: int, own_dim: int, latent: int = LATENT_DIM):
+        super().__init__()
+        self.core_dim = core_dim
+        self.core_encoder = Encoder(core_dim, latent=latent // 2)
+        self.private_encoder = Encoder(own_dim, latent=latent - latent // 2)
+        self.head = SharedHead(latent=latent)
+
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        z = torch.cat([self.core_encoder(x[:, :self.core_dim]), self.private_encoder(x[:, self.core_dim:])], dim=1)
+        return self.head(z)
 
 
 def pos_weight(y: np.ndarray) -> torch.Tensor:
