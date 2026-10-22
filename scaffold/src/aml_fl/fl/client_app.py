@@ -11,6 +11,13 @@ mode "encoder_head" (our method): the bank uses its full own schema and its own 
 lists. Only the SharedHead is exchanged and averaged. The encoder stays at the bank: it is
 kept in the node's `context.state` between rounds and is never put in a reply message.
 
+mode "hybrid": the bank's columns are laid out as [core | own]. A core encoder (on the core
+columns, with the shared category lists) and the head are exchanged and averaged; the private
+encoder on the bank's own columns stays in `context.state`.
+
+In every mode the rule is the same: a parameter whose name starts with PRIVATE_PREFIX[mode]
+stays at the bank, everything else is sent to the server (see shared_state).
+
 After the last round each bank writes its own test scores to <out_dir>/scores/. That file
 is for the experimenter to compute results; it is not sent to the server.
 """
@@ -28,14 +35,35 @@ from flwr.clientapp import ClientApp
 from ..features import SHARED_VOCAB
 from ..metrics import best_f1_threshold
 from ..metrics import evaluate as eval_metrics
-from ..models import BankModel, pos_weight, predict_proba, train_epochs
-from ..preprocess import ClientData, load_client, undersample
+from ..models import BankModel, HybridModel, pos_weight, predict_proba, train_epochs
+from ..preprocess import ClientData, load_client, load_client_hybrid, undersample
 
 log = logging.getLogger(__name__)
 
-MODES = ("naive", "encoder_head")
+MODES = ("naive", "encoder_head", "hybrid")
+# Parameters whose names start with this prefix never leave the bank (None: everything is shared).
+PRIVATE_PREFIX = {"naive": None, "encoder_head": "encoder.", "hybrid": "private_encoder."}
 ENCODER_KEY = "encoder"        # context.state: this bank's private encoder weights
 PROGRESS_KEY = "progress"      # context.state: {"encoder_rounds": n}
+
+
+def new_model(mode: str, d: ClientData) -> torch.nn.Module:
+    if mode == "hybrid":
+        return HybridModel(d.core_dim, d.input_dim - d.core_dim)
+    return BankModel(input_dim=d.input_dim)
+
+
+def is_private(mode: str, key: str) -> bool:
+    return PRIVATE_PREFIX[mode] is not None and key.startswith(PRIVATE_PREFIX[mode])
+
+
+def shared_state(model: torch.nn.Module, mode: str) -> dict[str, torch.Tensor]:
+    """The parameters this mode sends to the server."""
+    return {k: v for k, v in model.state_dict().items() if not is_private(mode, k)}
+
+
+def private_state(model: torch.nn.Module, mode: str) -> dict[str, torch.Tensor]:
+    return {k: v for k, v in model.state_dict().items() if is_private(mode, k)}
 
 
 def make_client_app(partitions_dir: str | Path, out_dir: str | Path, mode: str = "naive",
@@ -53,23 +81,29 @@ def make_client_app(partitions_dir: str | Path, out_dir: str | Path, mode: str =
         pid = int(context.node_config["partition-id"])
         if pid not in cache:
             cache.clear()
-            cache[pid] = load_client(Path(partitions_dir) / f"client_{pid}", core_only=naive,
-                                     fixed_categories=SHARED_VOCAB if naive else None)
+            path = Path(partitions_dir) / f"client_{pid}"
+            if mode == "hybrid":
+                cache[pid] = load_client_hybrid(path, SHARED_VOCAB)
+            elif naive:
+                cache[pid] = load_client(path, "core", SHARED_VOCAB)
+            else:
+                cache[pid] = load_client(path)
         return pid, cache[pid]
 
-    def build_model(msg: Message, context: Context, pid: int, d: ClientData) -> BankModel:
-        """Global weights from the server, plus (encoder_head) this bank's own encoder."""
+    def build_model(msg: Message, context: Context, pid: int, d: ClientData) -> torch.nn.Module:
+        """Global weights from the server, plus this bank's own private encoder (if any)."""
         torch.set_num_threads(1)  # simulated banks run in parallel processes
         rnd = int(msg.content["config"]["server-round"])
         torch.manual_seed(seed + 1000 * pid + rnd)  # reproducible init and shuffling per bank/round
-        model = BankModel(input_dim=d.input_dim)
+        model = new_model(mode, d)
         received = msg.content["arrays"].to_torch_state_dict()
-        if naive:
-            model.load_state_dict(received)
-        else:
-            model.head.load_state_dict(received)
-            if ENCODER_KEY in context.state:  # first round: freshly initialised encoder
-                model.encoder.load_state_dict(context.state[ENCODER_KEY].to_torch_state_dict())
+        if set(received) != set(shared_state(model, mode)):
+            raise ValueError(f"Server sent {sorted(received)}, expected the {mode} shared parameters")
+        state = model.state_dict()
+        state.update(received)
+        if ENCODER_KEY in context.state:  # first round: freshly initialised encoder
+            state.update(context.state[ENCODER_KEY].to_torch_state_dict())
+        model.load_state_dict(state)
         return model
 
     def encoder_rounds(context: Context) -> int:
@@ -84,11 +118,9 @@ def make_client_app(partitions_dir: str | Path, out_dir: str | Path, mode: str =
         loss = train_epochs(model, X, y, epochs=local_epochs, lr=lr, batch_size=batch_size,
                             weight=pos_weight(y))
         metrics = {"train_loss": float(loss), "num-examples": len(d.y["train"])}
-        if naive:
-            shared = ArrayRecord(model.state_dict())
-        else:
-            shared = ArrayRecord(model.head.state_dict())          # the ONLY thing that leaves the bank
-            context.state[ENCODER_KEY] = ArrayRecord(model.encoder.state_dict())
+        shared = ArrayRecord(shared_state(model, mode))            # the ONLY thing that leaves the bank
+        if not naive:
+            context.state[ENCODER_KEY] = ArrayRecord(private_state(model, mode))
             context.state[PROGRESS_KEY] = ConfigRecord({"encoder_rounds": encoder_rounds(context) + 1})
             metrics["encoder_rounds"] = encoder_rounds(context)   # should equal the round number
         return Message(content=RecordDict({"arrays": shared, "metrics": MetricRecord(metrics)}),
