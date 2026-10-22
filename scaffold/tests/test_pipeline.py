@@ -201,7 +201,7 @@ def test_fl_core_input_dim_matches_client(tmp_path):
     core = cfg["core_features"]
     save_table(f[partition.ID_COLUMNS + core], tmp_path / "client_0" / "transactions")
     save_json({"columns": core, "core_columns": core}, tmp_path / "client_0" / "schema.json")
-    c = load_client(tmp_path / "client_0", core_only=True, fixed_categories=features.SHARED_VOCAB)
+    c = load_client(tmp_path / "client_0", "core", features.SHARED_VOCAB)
     assert c.input_dim == core_input_dim(core)
 
 
@@ -259,12 +259,46 @@ def test_fl_encoder_head_only_shares_the_head(toy_partitions, tmp_path):
 
     app = make_client_app(toy_partitions, tmp_path, mode="encoder_head")
     ctx = Context(run_id=1, node_id=7, node_config={"partition-id": 1}, state=RecordDict(), run_config={})
-    head_keys = set(SharedHead().state_dict())
+    head = {f"head.{k}": v for k, v in SharedHead().state_dict().items()}
+    head_keys = set(head)
     for rnd in (1, 2):
-        reply = app(_train_message(ArrayRecord(SharedHead().state_dict()), rnd), ctx)
+        reply = app(_train_message(ArrayRecord(head), rnd), ctx)
         assert set(reply.content["arrays"].keys()) == head_keys        # nothing but the head leaves
         assert reply.content["metrics"]["encoder_rounds"] == rnd        # encoder kept between rounds
         assert ENCODER_KEY in ctx.state                                  # ... at the bank only
+
+
+def test_fl_hybrid_shares_core_encoder_and_head(toy_partitions, tmp_path):
+    pytest.importorskip("flwr")
+    from flwr.app import ArrayRecord, Context, RecordDict
+
+    from aml_fl.fl.client_app import ENCODER_KEY, make_client_app, shared_state
+    from aml_fl.models import HybridModel
+    from run_fl import core_input_dim
+
+    cfg = load_config(ROOT / "configs" / "default.yaml")
+    initial = shared_state(HybridModel(core_input_dim(cfg["core_features"]), 1), "hybrid")
+    assert initial and all(k.startswith(("core_encoder.", "head.")) for k in initial)
+    app = make_client_app(toy_partitions, tmp_path, mode="hybrid")
+    for pid in (0, 3):  # banks with different own schemas accept the same global weights
+        ctx = Context(run_id=1, node_id=7, node_config={"partition-id": pid}, state=RecordDict(), run_config={})
+        for rnd in (1, 2):
+            reply = app(_train_message(ArrayRecord(initial), rnd), ctx)
+            assert set(reply.content["arrays"].keys()) == set(initial)   # private encoder stays home
+            assert reply.content["metrics"]["encoder_rounds"] == rnd
+        assert all(k.startswith("private_encoder.") for k in ctx.state[ENCODER_KEY].keys())
+
+
+def test_hybrid_loader_puts_shared_core_first(toy_partitions):
+    from aml_fl.preprocess import load_client_hybrid
+    from run_fl import core_input_dim
+
+    cfg = load_config(ROOT / "configs" / "default.yaml")
+    a = load_client_hybrid(toy_partitions / "client_0", features.SHARED_VOCAB)
+    b = load_client_hybrid(toy_partitions / "client_2", features.SHARED_VOCAB)
+    assert a.core_dim == b.core_dim == core_input_dim(cfg["core_features"])
+    assert a.feature_names[:a.core_dim] == b.feature_names[:b.core_dim]
+    assert a.feature_names[a.core_dim:] != b.feature_names[b.core_dim:]   # own layouts differ
 
 
 def test_fl_naive_shares_the_whole_model(toy_partitions, tmp_path):
