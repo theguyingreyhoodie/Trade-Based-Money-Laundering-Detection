@@ -31,7 +31,7 @@ from sklearn.linear_model import LogisticRegression
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from aml_fl.metrics import best_f1_threshold, evaluate, recall_by_pattern  # noqa: E402
+from aml_fl.metrics import best_f1_threshold, evaluate, pooled_evaluate, recall_by_pattern  # noqa: E402
 from aml_fl.preprocess import TabularPreprocessor, load_client, undersample  # noqa: E402
 from aml_fl.utils import load_config, load_table, set_seed, setup_logging  # noqa: E402
 
@@ -143,6 +143,7 @@ def main() -> None:
         log.info("centralized %-8s %s", name, res)
 
     # 2. Local-only
+    local_scores: dict[str, list[pd.DataFrame]] = {name: [] for name in candidates}
     for cdir in sorted((ROOT / cfg["data"]["partitions_dir"]).glob("client_*")):
         c = load_client(cdir)
         for name, make in candidates.items():
@@ -150,7 +151,22 @@ def main() -> None:
             rows.append({"setup": "local", "client": c.name, "model": name, **res})
             by_pattern += pattern_rows(pattern_of, c.txn_ids["test"], scores, thr,
                                        setup="local", client=c.name, model=name)
+            if scores is not None:
+                local_scores[name].append(pd.DataFrame({"txn_id": c.txn_ids["test"], "label": c.y["test"],
+                                                        "score": scores, "threshold": thr}))
             log.info("local %s %-8s %s", c.name, name, res)
+
+    # Pooled local-only: every bank's test set together, each flagged by its own bank's model and
+    # threshold. Comparable with the "pooled" row of the FL results.
+    for name, parts in local_scores.items():
+        if not parts:
+            continue
+        s = pd.concat(parts, ignore_index=True)
+        res = pooled_evaluate(s["label"].to_numpy(), s["score"].to_numpy(), s["threshold"].to_numpy())
+        rows.append({"setup": "local", "client": "pooled", "model": name, **res})
+        by_pattern += pattern_rows(pattern_of, s["txn_id"].to_numpy(), (s["score"] - s["threshold"]).to_numpy(),
+                                   0.0, setup="local", client="pooled", model=name)
+        log.info("local pooled %-8s %s", name, res)
 
     out = ROOT / "experiments" / "results" / "baselines.csv"
     out.parent.mkdir(parents=True, exist_ok=True)
