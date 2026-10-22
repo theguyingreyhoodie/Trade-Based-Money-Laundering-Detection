@@ -20,19 +20,26 @@ class TabularPreprocessor:
     categorical: list[str]
     numeric: list[str]
     max_categories: int = 30
+    # Category lists agreed in advance (e.g. features.SHARED_VOCAB). Columns listed here get
+    # the same one-hot layout at every bank instead of one learned from the bank's own data.
+    fixed_categories: dict[str, list[str]] = field(default_factory=dict)
     categories_: dict[str, list[str]] = field(default_factory=dict)
     mean_: pd.Series | None = None
     std_: pd.Series | None = None
 
     @classmethod
-    def for_frame(cls, df: pd.DataFrame) -> "TabularPreprocessor":
+    def for_frame(cls, df: pd.DataFrame,
+                  fixed_categories: dict[str, list[str]] | None = None) -> "TabularPreprocessor":
         cols = [c for c in df.columns if c not in ID_COLUMNS]
         cat = [c for c in cols if not pd.api.types.is_numeric_dtype(df[c])]
         num = [c for c in cols if c not in cat]
-        return cls(categorical=cat, numeric=num)
+        return cls(categorical=cat, numeric=num, fixed_categories=dict(fixed_categories or {}))
 
     def fit(self, df: pd.DataFrame) -> "TabularPreprocessor":
         for c in self.categorical:
+            if c in self.fixed_categories:
+                self.categories_[c] = list(self.fixed_categories[c])
+                continue
             top = df[c].astype(str).value_counts().index[: self.max_categories]
             self.categories_[c] = sorted(top)
         x = df[self.numeric].astype(np.float64)
@@ -73,14 +80,20 @@ class ClientData:
         return len(self.feature_names)
 
 
-def load_client(client_dir: str | Path) -> ClientData:
-    """Load data/partitions/<client>/ and return train/val/test arrays."""
+def load_client(client_dir: str | Path, core_only: bool = False,
+                fixed_categories: dict[str, list[str]] | None = None) -> ClientData:
+    """Load data/partitions/<client>/ and return train/val/test arrays.
+
+    core_only: keep only the core columns every client has (schema.json: core_columns).
+    fixed_categories: shared category lists, so one-hot columns line up across clients.
+    """
     client_dir = Path(client_dir)
     df = load_table(client_dir / "transactions")
     meta = load_json(client_dir / "schema.json")
-    df = df[ID_COLUMNS + meta["columns"]]
+    cols = meta["core_columns"] if core_only else meta["columns"]
+    df = df[ID_COLUMNS + cols]
     train = df[df["split"] == "train"]
-    pre = TabularPreprocessor.for_frame(df).fit(train)
+    pre = TabularPreprocessor.for_frame(df, fixed_categories).fit(train)
     X, y, ids = {}, {}, {}
     for s in ("train", "val", "test"):
         part = df[df["split"] == s]

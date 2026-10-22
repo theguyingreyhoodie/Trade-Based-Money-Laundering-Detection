@@ -31,6 +31,17 @@ NUMERIC = [
 ]
 TXN_FEATURES = CATEGORICAL + NUMERIC
 
+# Public category lists (payment formats and currencies of the payment network), agreed by
+# all banks in advance so that one-hot columns line up when a whole model is averaged.
+# Values follow the IBM AML data; anything else is encoded as "<other>". Check them against
+# "payment_formats" / "currencies" in data/processed/summary.json for the real data.
+PAYMENT_FORMATS = ["ACH", "Bitcoin", "Cash", "Cheque", "Credit Card", "Reinvestment", "Wire"]
+CURRENCIES = ["Australian Dollar", "Bitcoin", "Brazil Real", "Canadian Dollar", "Euro",
+              "Mexican Peso", "Ruble", "Rupee", "Saudi Riyal", "Shekel", "Swiss Franc",
+              "UK Pound", "US Dollar", "Yen", "Yuan"]
+SHARED_VOCAB = {"payment_format": PAYMENT_FORMATS, "payment_currency": CURRENCIES,
+                "receiving_currency": CURRENCIES}
+
 # Value used for "no previous transaction" in time-gap features (30 days, in seconds).
 NO_PREV_SECS = 30 * 24 * 3600.0
 
