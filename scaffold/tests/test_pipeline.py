@@ -131,6 +131,17 @@ def test_patterns_parse_and_tag(tmp_path):
     assert tags.value_counts().drop(patterns.NONE).to_dict() == parsed["pattern"].value_counts().to_dict()
 
 
+def test_pooled_evaluate_uses_each_banks_threshold():
+    from aml_fl.metrics import pooled_evaluate
+
+    y = np.array([1, 0, 1, 0])
+    scores = np.array([0.3, 0.2, 0.9, 0.8])
+    thresholds = np.array([0.25, 0.25, 0.85, 0.85])      # bank A: rows 0-1, bank B: rows 2-3
+    out = pooled_evaluate(y, scores, thresholds)
+    assert out["recall"] == 1.0 and out["fpr"] == 0.0   # 0.3>=0.25 and 0.9>=0.85 flagged; 0.2, 0.8 not
+    assert np.isnan(out["threshold"])
+
+
 def test_recall_by_pattern():
     pats = np.array(["none", "fan_in", "fan_in", "cycle", "cycle", "cycle"])
     scores = np.array([0.9, 0.8, 0.1, 0.7, 0.2, 0.1])

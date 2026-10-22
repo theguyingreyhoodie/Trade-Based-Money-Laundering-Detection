@@ -45,11 +45,14 @@ def make_client_app(partitions_dir: str | Path, out_dir: str | Path, mode: str =
         raise ValueError(f"Unknown FL mode {mode!r}; expected one of {MODES}")
     naive = mode == "naive"
     app = ClientApp()
-    cache: dict[int, ClientData] = {}  # per worker process: load each bank's data once
+    # Per worker process, keep only the most recent bank's data: Ray does not pin a bank to a
+    # worker, so caching every bank a worker has served would hold all partitions many times.
+    cache: dict[int, ClientData] = {}
 
     def bank(context: Context) -> tuple[int, ClientData]:
         pid = int(context.node_config["partition-id"])
         if pid not in cache:
+            cache.clear()
             cache[pid] = load_client(Path(partitions_dir) / f"client_{pid}", core_only=naive,
                                      fixed_categories=SHARED_VOCAB if naive else None)
         return pid, cache[pid]

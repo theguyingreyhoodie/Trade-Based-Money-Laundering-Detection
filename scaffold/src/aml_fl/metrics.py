@@ -32,6 +32,19 @@ def evaluate(y_true: np.ndarray, scores: np.ndarray, threshold: float = 0.5) -> 
     }
 
 
+def pooled_evaluate(y_true: np.ndarray, scores: np.ndarray, thresholds: np.ndarray) -> dict[str, float]:
+    """Metrics over several banks' test sets together, each row flagged by its OWN bank's threshold.
+
+    Threshold metrics (precision, recall, f1, fpr) use `score >= threshold` per row. PR-AUC and
+    ROC-AUC rank the raw scores of all banks together.
+    """
+    scores, thresholds = np.asarray(scores, dtype=float), np.asarray(thresholds, dtype=float)
+    out = evaluate(y_true, scores - thresholds, 0.0)
+    raw = evaluate(y_true, scores)
+    out.update(pr_auc=raw["pr_auc"], roc_auc=raw["roc_auc"], threshold=float("nan"))
+    return out
+
+
 def recall_by_pattern(patterns: np.ndarray, scores: np.ndarray, threshold: float) -> pd.DataFrame:
     """Recall per laundering pattern (see patterns.py). Non-laundering rows are ignored.
 

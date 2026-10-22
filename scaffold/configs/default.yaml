@@ -47,7 +47,7 @@ fl:
   # Federated learning (scripts/run_fl.py). mode: naive = whole model on core_features;
   # encoder_head = private encoder per bank on its full schema, only the head is averaged.
   mode: naive
-  num_rounds: 30
+  num_rounds: 100   # val PR-AUC (encoder_head, HI-Small) flattens after ~70 rounds
   local_epochs: 1
 
 profiles:

@@ -19,6 +19,7 @@ from __future__ import annotations
 
 import argparse
 import logging
+import os
 import shutil
 import sys
 from pathlib import Path
@@ -30,7 +31,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
 from aml_fl.features import CATEGORICAL, SHARED_VOCAB  # noqa: E402
-from aml_fl.metrics import evaluate, recall_by_pattern  # noqa: E402
+from aml_fl.metrics import evaluate, pooled_evaluate, recall_by_pattern  # noqa: E402
 from aml_fl.models import BankModel, SharedHead  # noqa: E402
 from aml_fl.utils import load_config, load_table, set_seed, setup_logging  # noqa: E402
 
@@ -48,11 +49,7 @@ def summarize(scores: pd.DataFrame, pattern_of: pd.Series | None, setup: str) ->
     for client, s in scores.groupby("client", sort=True):
         rows.append({"setup": setup, "client": client, "model": "mlp",
                      **evaluate(s["label"].to_numpy(), s["score"].to_numpy(), float(s["threshold"].iloc[0]))})
-    # Pooled: shift each score by its client's threshold, so ">= 0" means "flagged by that bank".
-    y = scores["label"].to_numpy()
-    pooled = evaluate(y, (scores["score"] - scores["threshold"]).to_numpy(), 0.0)
-    raw = evaluate(y, scores["score"].to_numpy())
-    pooled.update(pr_auc=raw["pr_auc"], roc_auc=raw["roc_auc"], threshold=float("nan"))
+    pooled = pooled_evaluate(scores["label"].to_numpy(), scores["score"].to_numpy(), scores["threshold"].to_numpy())
     rows.append({"setup": setup, "client": "pooled", "model": "mlp", **pooled})
     if pattern_of is not None:
         pats = pattern_of.reindex(scores["txn_id"]).fillna("none").to_numpy()
@@ -104,8 +101,10 @@ def main() -> None:
                                  local_epochs=fl.get("local_epochs", 1), seed=cfg["seed"])
     server_app = make_server_app(initial, n_clients, rounds, out_dir)
     log.info("FL mode=%s, %d clients, %d rounds", mode, n_clients, rounds)
+    # Ray starts (CPUs / num_cpus) workers; size it so there is about one worker per bank.
+    cpus_per_client = max(1, (os.cpu_count() or 1) // n_clients)
     run_simulation(server_app=server_app, client_app=client_app, num_supernodes=n_clients,
-                   backend_config={"client_resources": {"num_cpus": 1, "num_gpus": 0.0}})
+                   backend_config={"client_resources": {"num_cpus": cpus_per_client, "num_gpus": 0.0}})
 
     score_files = sorted((out_dir / "scores").glob("client_*.parquet"))
     if len(score_files) != n_clients:
