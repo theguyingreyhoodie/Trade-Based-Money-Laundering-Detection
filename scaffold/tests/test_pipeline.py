@@ -36,6 +36,15 @@ def test_load_and_clean(cleaned):
     assert abs(rates["Rupee"] - 74.0) < 1.0  # recovered from the data itself
 
 
+def test_trim_drops_rows_at_or_after_end_time(cleaned):
+    df, _ = cleaned
+    end = "2022-09-05 00:00"
+    t = data.trim(df, end)
+    assert (t["timestamp"] < pd.Timestamp(end)).all()
+    assert len(t) == int((df["timestamp"] < pd.Timestamp(end)).sum())
+    assert data.trim(df, None) is df
+
+
 def test_features_use_past_only(cleaned):
     df, _ = cleaned
     f = features.build_features(df)

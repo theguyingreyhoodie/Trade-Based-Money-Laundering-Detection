@@ -100,7 +100,7 @@ def tag_transactions(df: pd.DataFrame, patterns: pd.DataFrame) -> pd.Series:
     matched = int((~pd.isna(tagged)).sum())
     if matched < len(keys):
         log.warning("%d of %d pattern transactions were not found in the transaction table "
-                    "(expected only when using --nrows)", len(keys) - matched, len(keys))
+                    "(expected with --nrows or data.end_time)", len(keys) - matched, len(keys))
     if (~pd.isna(tagged) & ~label).any():
         log.warning("%d pattern transactions are labelled non-laundering", int((~pd.isna(tagged) & ~label).sum()))
     return pd.Series(out, index=df.index, name="pattern")

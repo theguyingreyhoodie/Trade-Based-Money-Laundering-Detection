@@ -9,6 +9,9 @@ data:
   # Laundering attempts file, used ONLY to report recall per pattern (fan-in, cycle, ...).
   # null = look for *_Patterns.txt next to raw_csv; skipped if it does not exist.
   patterns_txt: null
+  # Drop transactions at or after this time (null = keep all). HI-Small's normal activity ends
+  # on 2022-09-10; Sept 11-18 hold ~1,100 transactions, ~59% laundering, all in the test split.
+  end_time: "2022-09-11 00:00"
   # Optional: use only the first N rows while developing (null = use everything).
   nrows: null
   processed_dir: data/processed

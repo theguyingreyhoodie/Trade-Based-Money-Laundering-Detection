@@ -94,6 +94,21 @@ def clean(df: pd.DataFrame) -> tuple[pd.DataFrame, dict[str, float]]:
     return df, rates
 
 
+def trim(df: pd.DataFrame, end_time: str | None) -> pd.DataFrame:
+    """Keep transactions strictly before `end_time` (None = keep everything).
+
+    HI-Small's normal activity stops on 2022-09-10. The last days (Sept 11-18) hold ~1,100
+    transactions of which ~59% are laundering (unfinished attempts), all of which would land
+    in the test split and inflate test scores. The default config cuts them off.
+    """
+    if end_time is None:
+        return df
+    keep = df["timestamp"] < pd.Timestamp(end_time)
+    log.info("Trimmed %d transactions (%d laundering) at or after %s",
+             int((~keep).sum()), int(df.loc[~keep, "label"].sum()), end_time)
+    return df[keep].reset_index(drop=True)
+
+
 def summarize(df: pd.DataFrame) -> dict:
     """Quick statistics worth checking (and quoting in the report)."""
     return {
