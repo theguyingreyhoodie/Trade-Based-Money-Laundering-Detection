@@ -172,6 +172,70 @@ def test_audit_hash_is_deterministic_and_sensitive():
     assert len(h1) == 64
 
 
+@pytest.fixture(scope="module")
+def toy_partitions(tmp_path_factory, cleaned):
+    """Client folders as prepare_data.py writes them, from the toy data."""
+    from aml_fl.utils import save_json, save_table
+
+    df, _ = cleaned
+    cfg = load_config(ROOT / "configs" / "default.yaml")
+    f = features.build_features(df)
+    f["split"] = split.time_split(f)
+    f = profiles.attach_profiles(f, f["split"], 0.1, seed=0)
+    core = cfg["core_features"]
+    clients, _ = partition.partition(f, 5, "group", cfg["schemas"], core_features=core)
+    out = tmp_path_factory.mktemp("partitions")
+    for name, cdf in clients.items():
+        save_table(cdf, out / name / "transactions")
+        save_json({"client": name, "columns": [c for c in cdf.columns if c not in partition.ID_COLUMNS],
+                   "core_columns": core}, out / name / "schema.json")
+    return out
+
+
+def _train_message(arrays, rnd: int):
+    import time
+
+    from flwr.app import ConfigRecord, Message, Metadata, RecordDict
+
+    md = Metadata(run_id=1, message_id=f"m{rnd}", src_node_id=0, dst_node_id=7, reply_to_message_id="",
+                  group_id="", created_at=time.time(), ttl=3600, message_type="train")
+    return Message(content=RecordDict({"arrays": arrays, "config": ConfigRecord({"server-round": rnd})}),
+                   metadata=md)
+
+
+def test_fl_encoder_head_only_shares_the_head(toy_partitions, tmp_path):
+    pytest.importorskip("flwr")
+    from flwr.app import ArrayRecord, Context, RecordDict
+
+    from aml_fl.fl.client_app import ENCODER_KEY, make_client_app
+    from aml_fl.models import SharedHead
+
+    app = make_client_app(toy_partitions, tmp_path, mode="encoder_head")
+    ctx = Context(run_id=1, node_id=7, node_config={"partition-id": 1}, state=RecordDict(), run_config={})
+    head_keys = set(SharedHead().state_dict())
+    for rnd in (1, 2):
+        reply = app(_train_message(ArrayRecord(SharedHead().state_dict()), rnd), ctx)
+        assert set(reply.content["arrays"].keys()) == head_keys        # nothing but the head leaves
+        assert reply.content["metrics"]["encoder_rounds"] == rnd        # encoder kept between rounds
+        assert ENCODER_KEY in ctx.state                                  # ... at the bank only
+
+
+def test_fl_naive_shares_the_whole_model(toy_partitions, tmp_path):
+    pytest.importorskip("flwr")
+    from flwr.app import ArrayRecord, Context, RecordDict
+
+    from aml_fl.fl.client_app import make_client_app
+    from aml_fl.models import BankModel
+    from run_fl import core_input_dim
+
+    cfg = load_config(ROOT / "configs" / "default.yaml")
+    initial = BankModel(input_dim=core_input_dim(cfg["core_features"])).state_dict()
+    app = make_client_app(toy_partitions, tmp_path, mode="naive")
+    ctx = Context(run_id=1, node_id=7, node_config={"partition-id": 0}, state=RecordDict(), run_config={})
+    reply = app(_train_message(ArrayRecord(initial), 1), ctx)
+    assert set(reply.content["arrays"].keys()) == set(initial)
+
+
 def test_model_shared_weights_roundtrip():
     torch = pytest.importorskip("torch")
     from aml_fl.models import BankModel

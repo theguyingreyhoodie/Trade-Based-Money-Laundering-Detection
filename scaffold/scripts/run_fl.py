@@ -1,6 +1,8 @@
 """Phase 3: federated learning simulation with Flower (one simulated node per client bank).
 
-    naive : every bank uses only the core features, the whole BankModel is FedAvg'd
+    naive        : every bank uses only the core features, the whole BankModel is FedAvg'd
+    encoder_head : every bank uses its full own schema with a private encoder; only the
+                   SharedHead is FedAvg'd (our method)
 
 Needs the partitions from prepare_data.py. Results use the same columns as baselines.csv:
 
@@ -29,7 +31,7 @@ sys.path.insert(0, str(ROOT / "src"))
 
 from aml_fl.features import CATEGORICAL, SHARED_VOCAB  # noqa: E402
 from aml_fl.metrics import evaluate, recall_by_pattern  # noqa: E402
-from aml_fl.models import BankModel  # noqa: E402
+from aml_fl.models import BankModel, SharedHead  # noqa: E402
 from aml_fl.utils import load_config, load_table, set_seed, setup_logging  # noqa: E402
 
 log = logging.getLogger("run_fl")
@@ -92,7 +94,11 @@ def main() -> None:
     out_dir = ROOT / "experiments" / "results" / f"fl_{mode}"
     shutil.rmtree(out_dir, ignore_errors=True)
 
-    initial = ArrayRecord(BankModel(input_dim=core_input_dim(cfg["core_features"])).state_dict())
+    # naive: the server holds the whole model. encoder_head: the server only ever holds the head.
+    if mode == "naive":
+        initial = ArrayRecord(BankModel(input_dim=core_input_dim(cfg["core_features"])).state_dict())
+    else:
+        initial = ArrayRecord(SharedHead().state_dict())
     client_app = make_client_app(part_dir, out_dir, mode=mode, lr=mlp.get("lr", 1e-3),
                                  batch_size=mlp.get("batch_size", 512),
                                  local_epochs=fl.get("local_epochs", 1), seed=cfg["seed"])
