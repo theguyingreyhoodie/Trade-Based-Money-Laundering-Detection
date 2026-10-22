@@ -36,6 +36,7 @@ def main() -> None:
     ap.add_argument("--raw", default=None, help="override data.raw_csv")
     ap.add_argument("--patterns", default=None,
                     help="override data.patterns_txt (default: *_Patterns.txt next to the raw CSV)")
+    ap.add_argument("--no-trim", action="store_true", help="ignore data.end_time (keep every day)")
     ap.add_argument("--label-signal", type=float, default=None, help="override profiles.label_signal")
     ap.add_argument("--no-profiles", action="store_true", help="skip synthetic profiles (ablation)")
     args = ap.parse_args()
@@ -53,7 +54,10 @@ def main() -> None:
 
     log.info("Loading %s (nrows=%s)", raw_csv, nrows)
     df, rates = data.clean(data.load_raw(raw_csv, nrows=nrows))
+    end_time = None if args.no_trim else cfg["data"].get("end_time")
+    df = data.trim(df, end_time)
     summary = data.summarize(df)
+    summary["end_time"] = end_time
     log.info("Rows=%d, laundering=%d (%.4f%%), banks=%d", summary["rows"], summary["laundering_rows"],
              100 * summary["laundering_rate"], summary["num_src_banks"])
 
