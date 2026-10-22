@@ -23,7 +23,7 @@ The whole team works on every phase together.
 | 0 | Setup & learning | in progress |
 | 1 | Data pipeline: features, time split, profiles, bank partitions | **first version done** |
 | 2 | Baselines (centralized / local-only) + recall per pattern | LR, XGBoost, MLP done (toy data) |
-| 3 | Federated learning (Flower) | naive FedAvg done (toy data); ours + zero-filled next — see `src/aml_fl/fl/README.md` |
+| 3 | Federated learning (Flower) | naive FedAvg + encoder/shared head done (toy data); zero-filled next — see `src/aml_fl/fl/README.md` |
 | 4 | Blockchain audit layer | todo — see `src/aml_fl/chain/README.md` |
 | 5 | SHAP + Streamlit dashboard | todo |
 | 6 | Evaluation & report | todo |
@@ -79,6 +79,7 @@ python scripts/run_baselines.py
 # Federated learning simulation (one simulated node per client bank):
 python scripts/run_fl.py               # mode and rounds from the fl: section of the config
 python scripts/run_fl.py --rounds 3    # quick check
+python scripts/run_fl.py --mode encoder_head   # our method: private encoders, shared head
 ```
 
 Outputs:

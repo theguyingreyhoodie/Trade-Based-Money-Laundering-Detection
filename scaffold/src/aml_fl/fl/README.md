@@ -5,8 +5,13 @@ Each client loads its own partition with
 `aml_fl.preprocess.load_client("data/partitions/client_i")`. `schema.json` lists the client's
 columns and the `core_columns` that every client has.
 
-Run with `python scripts/run_fl.py` (see the main README). **Status:** naive FedAvg is
-implemented (`mode: naive`); the encoder + shared head and zero-filled FedAvg come next.
+Run with `python scripts/run_fl.py` (see the main README). **Status:** naive FedAvg
+(`--mode naive`) and the encoder + shared head (`--mode encoder_head`) are implemented;
+zero-filled FedAvg comes next.
+
+In `encoder_head` mode a bank's encoder is stored in its own `context.state` between rounds and
+is never put in a reply. Each bank reports `encoder_rounds`, which must equal the round
+number in `history.csv`; a lower value means the encoder was lost between rounds.
 
 Whenever the whole model is averaged, every bank must produce the same input layout. The
 category columns therefore use the public lists in `features.SHARED_VOCAB` (payment formats
