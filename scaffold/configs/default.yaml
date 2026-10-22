@@ -35,8 +35,11 @@ partition:
   mode: group
 
 mlp:
-  # PyTorch BankModel training (baselines now; reuse the same values for FL local training).
-  epochs: 10
+  # PyTorch BankModel training. Baselines train up to max_epochs and keep the epoch with the
+  # best validation PR-AUC (stop after `patience` epochs without improvement). FL reuses lr and
+  # batch_size; its epochs are fl.local_epochs per round.
+  max_epochs: 60
+  patience: 8
   lr: 0.001
   batch_size: 512
 

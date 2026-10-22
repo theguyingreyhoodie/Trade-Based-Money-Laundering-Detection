@@ -39,23 +39,28 @@ log = logging.getLogger("baselines")
 
 
 class TorchMLP:
-    """sklearn-style wrapper around models.BankModel (fit / predict_proba)."""
+    """sklearn-style wrapper around models.BankModel (fit / predict_proba).
 
-    def __init__(self, epochs: int = 10, lr: float = 1e-3, batch_size: int = 512):
-        self.epochs, self.lr, self.batch_size = epochs, lr, batch_size
+    Trains with early stopping on the validation split (see models.train_early_stopping).
+    """
 
-    def fit(self, X: np.ndarray, y: np.ndarray) -> "TorchMLP":
+    def __init__(self, max_epochs: int = 60, patience: int = 8, lr: float = 1e-3, batch_size: int = 512):
+        self.max_epochs, self.patience, self.lr, self.batch_size = max_epochs, patience, lr, batch_size
+
+    def fit(self, X: np.ndarray, y: np.ndarray, X_val: np.ndarray, y_val: np.ndarray) -> "TorchMLP":
         import torch
 
-        from aml_fl.models import BankModel, pos_weight, train_epochs
+        from aml_fl.models import BankModel, pos_weight, train_early_stopping
 
         # xgboost and torch each bring their own OpenMP runtime; once xgboost has run, torch's
         # multi-threaded ops deadlock on macOS. One thread avoids OpenMP and is plenty for this MLP.
         torch.set_num_threads(1)
         y = y.astype(np.float32)
         self.model = BankModel(input_dim=X.shape[1])
-        train_epochs(self.model, X.astype(np.float32), y, epochs=self.epochs, lr=self.lr,
-                     batch_size=self.batch_size, weight=pos_weight(y))
+        self.best_val_pr_auc_, self.best_epoch_ = train_early_stopping(
+            self.model, X.astype(np.float32), y, X_val.astype(np.float32), y_val.astype(np.float32),
+            max_epochs=self.max_epochs, patience=self.patience, lr=self.lr, batch_size=self.batch_size,
+            weight=pos_weight(y))
         return self
 
     def predict_proba(self, X: np.ndarray) -> np.ndarray:
@@ -91,7 +96,11 @@ def fit_eval(make, X, y, seed) -> tuple[dict, np.ndarray | None, float]:
     if ytr.sum() == 0:
         return {"note": "no positives in train"}, None, 0.5
     set_seed(seed)
-    clf = make().fit(Xtr, ytr)
+    clf = make()
+    if isinstance(clf, TorchMLP):
+        clf.fit(Xtr, ytr, X["val"], y["val"])
+    else:
+        clf.fit(Xtr, ytr)
     thr = best_f1_threshold(y["val"], clf.predict_proba(X["val"])[:, 1]) if y["val"].sum() else 0.5
     scores = clf.predict_proba(X["test"])[:, 1]
     return evaluate(y["test"], scores, thr), scores, thr
