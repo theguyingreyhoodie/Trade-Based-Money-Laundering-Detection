@@ -23,7 +23,7 @@ The whole team works on every phase together.
 | 0 | Setup & learning | in progress |
 | 1 | Data pipeline: features, time split, profiles, bank partitions | **first version done** |
 | 2 | Baselines (centralized / local-only) + recall per pattern | LR, XGBoost, MLP done (toy data) |
-| 3 | Federated learning (Flower) | todo — see `src/aml_fl/fl/README.md` |
+| 3 | Federated learning (Flower) | naive FedAvg done (toy data); ours + zero-filled next — see `src/aml_fl/fl/README.md` |
 | 4 | Blockchain audit layer | todo — see `src/aml_fl/chain/README.md` |
 | 5 | SHAP + Streamlit dashboard | todo |
 | 6 | Evaluation & report | todo |
@@ -40,6 +40,11 @@ pip install torch --index-url https://download.pytorch.org/whl/cpu
 pip install -r requirements.txt
 pytest -q                          # should pass without the real dataset
 ```
+
+If the path to your clone contains **spaces**, create the venv somewhere else, e.g.
+`python3.12 -m venv ~/.venvs/aml-fl`. Flower's simulation runs on Ray, and Ray cannot start
+its workers from a Python path with spaces (it hangs, then fails with "worker startup
+repeatedly failed"). `scripts/run_fl.py` stops early with a message if this is the case.
 
 ## Get the data
 
@@ -70,6 +75,10 @@ python scripts/prepare_data.py --config configs/default.yaml --nrows 500000
 
 # Baselines (Logistic Regression, XGBoost and the PyTorch MLP; centralized and local-only):
 python scripts/run_baselines.py
+
+# Federated learning simulation (one simulated node per client bank):
+python scripts/run_fl.py               # mode and rounds from the fl: section of the config
+python scripts/run_fl.py --rounds 3    # quick check
 ```
 
 Outputs:
@@ -79,6 +88,8 @@ Outputs:
 - `data/partitions/client_i/` contains each bank's own transactions and its own columns (`schema.json`).
 - `data/processed/patterns.parquet` maps `txn_id` to its laundering pattern (only if the Patterns file exists).
 - `experiments/results/baselines.csv` holds the baseline results.
+- `experiments/results/fl_<mode>.csv` holds the FL test results (per client and pooled), with
+  per-round metrics in `fl_<mode>/history.csv` and the model hashes in `fl_<mode>/audit.json`.
 - `experiments/results/baselines_by_pattern.csv` holds recall per laundering pattern for each baseline.
 
 ## How the data pipeline works

@@ -37,6 +37,12 @@ mlp:
   lr: 0.001
   batch_size: 512
 
+fl:
+  # Federated learning (scripts/run_fl.py). mode: naive = whole model on core_features.
+  mode: naive
+  num_rounds: 30
+  local_epochs: 1
+
 profiles:
   enabled: true
   # How strongly synthetic customer attributes depend on laundering labels.

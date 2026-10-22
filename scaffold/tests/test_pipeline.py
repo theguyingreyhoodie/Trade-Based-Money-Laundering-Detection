@@ -131,6 +131,47 @@ def test_recall_by_pattern():
     assert "none" not in out.index
 
 
+def test_shared_vocab_aligns_one_hot_layout():
+    a = pd.DataFrame({"payment_format": ["Wire", "Cash"], "log_amount": [1.0, 2.0]})
+    b = pd.DataFrame({"payment_format": ["ACH", "Bitcoin"], "log_amount": [3.0, 4.0]})
+    vocab = {"payment_format": features.PAYMENT_FORMATS}
+    pa = TabularPreprocessor.for_frame(a, vocab).fit(a)
+    pb = TabularPreprocessor.for_frame(b, vocab).fit(b)
+    assert pa.feature_names == pb.feature_names           # same columns, same order
+    assert pa.transform(a).shape[1] == len(features.PAYMENT_FORMATS) + 2   # + <other> + log_amount
+
+
+def test_fl_core_input_dim_matches_client(tmp_path):
+    from aml_fl.preprocess import load_client
+    from aml_fl.utils import save_json, save_table
+    from run_fl import core_input_dim
+
+    cfg = load_config(ROOT / "configs" / "default.yaml")
+    write_ibm_csv(make_toy(rows=3000, seed=2), tmp_path / "toy.csv")
+    df, _ = data.clean(data.load_raw(tmp_path / "toy.csv"))
+    f = features.build_features(df)
+    f["split"] = split.time_split(f)
+    core = cfg["core_features"]
+    save_table(f[partition.ID_COLUMNS + core], tmp_path / "client_0" / "transactions")
+    save_json({"columns": core, "core_columns": core}, tmp_path / "client_0" / "schema.json")
+    c = load_client(tmp_path / "client_0", core_only=True, fixed_categories=features.SHARED_VOCAB)
+    assert c.input_dim == core_input_dim(core)
+
+
+def test_audit_hash_is_deterministic_and_sensitive():
+    pytest.importorskip("flwr")
+    from flwr.app import ArrayRecord
+
+    from aml_fl.fl.strategy import hash_parameters
+
+    w = [np.arange(6, dtype=np.float32).reshape(2, 3), np.zeros(3, dtype=np.float32)]
+    h1 = hash_parameters(ArrayRecord(numpy_ndarrays=w))
+    assert h1 == hash_parameters(ArrayRecord(numpy_ndarrays=[x.copy() for x in w]))
+    w[1][0] = 1e-6
+    assert h1 != hash_parameters(ArrayRecord(numpy_ndarrays=w))
+    assert len(h1) == 64
+
+
 def test_model_shared_weights_roundtrip():
     torch = pytest.importorskip("torch")
     from aml_fl.models import BankModel
