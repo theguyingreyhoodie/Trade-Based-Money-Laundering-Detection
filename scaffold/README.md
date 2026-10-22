@@ -79,7 +79,8 @@ python scripts/run_baselines.py
 # Federated learning simulation (one simulated node per client bank):
 python scripts/run_fl.py               # mode and rounds from the fl: section of the config
 python scripts/run_fl.py --rounds 3    # quick check
-python scripts/run_fl.py --mode encoder_head   # our method: private encoders, shared head
+python scripts/run_fl.py --mode encoder_head   # private encoders, shared head
+python scripts/run_fl.py --mode hybrid         # shared core encoder + private encoder + shared head
 ```
 
 Outputs:
