@@ -88,6 +88,37 @@ def train_epochs(model: nn.Module, X: np.ndarray, y: np.ndarray, epochs: int = 1
     return last
 
 
+def train_early_stopping(model: nn.Module, X: np.ndarray, y: np.ndarray, X_val: np.ndarray,
+                         y_val: np.ndarray, max_epochs: int = 60, patience: int = 8, lr: float = 1e-3,
+                         batch_size: int = 512, weight: torch.Tensor | None = None) -> tuple[float, int]:
+    """Train up to max_epochs, keep the weights with the best validation PR-AUC.
+
+    Stops after `patience` epochs without improvement. Returns (best val PR-AUC, best epoch).
+    """
+    from sklearn.metrics import average_precision_score
+
+    model.train()
+    ds = torch.utils.data.TensorDataset(torch.from_numpy(X), torch.from_numpy(y))
+    dl = torch.utils.data.DataLoader(ds, batch_size=batch_size, shuffle=True)
+    loss_fn = nn.BCEWithLogitsLoss(pos_weight=weight)
+    opt = torch.optim.Adam(model.parameters(), lr=lr)
+    best_ap, best_epoch, best_state = -1.0, 0, None
+    for epoch in range(1, max_epochs + 1):
+        model.train()
+        for xb, yb in dl:
+            opt.zero_grad()
+            loss_fn(model(xb), yb).backward()
+            opt.step()
+        ap = average_precision_score(y_val, predict_proba(model, X_val)) if y_val.sum() else 0.0
+        if ap > best_ap:
+            best_ap, best_epoch = ap, epoch
+            best_state = {k: v.detach().clone() for k, v in model.state_dict().items()}
+        elif epoch - best_epoch >= patience:
+            break
+    model.load_state_dict(best_state)
+    return float(best_ap), best_epoch
+
+
 @torch.no_grad()
 def predict_proba(model: nn.Module, X: np.ndarray, batch_size: int = 4096, device: str = "cpu") -> np.ndarray:
     model.to(device).eval()

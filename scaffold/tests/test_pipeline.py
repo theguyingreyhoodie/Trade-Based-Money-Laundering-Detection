@@ -140,6 +140,33 @@ def test_recall_by_pattern():
     assert "none" not in out.index
 
 
+def test_long_tailed_columns_are_logged_before_scaling():
+    df = pd.DataFrame({"src_txn_count": [0, 1, 10, 100_000], "hour": [0, 1, 10, 23]})
+    pre = TabularPreprocessor.for_frame(df).fit(df)
+    X = pre.transform(df)
+    logged = np.log1p(df["src_txn_count"])
+    expected = (logged - logged.mean()) / logged.std()
+    np.testing.assert_allclose(X[:, pre.numeric.index("src_txn_count")], expected, rtol=1e-5)
+    hour = (df["hour"] - df["hour"].mean()) / df["hour"].std()          # not in LOG1P_COLUMNS
+    np.testing.assert_allclose(X[:, pre.numeric.index("hour")], hour, rtol=1e-5)
+
+
+def test_early_stopping_keeps_best_epoch():
+    torch = pytest.importorskip("torch")
+    from aml_fl.models import BankModel, predict_proba, train_early_stopping
+    from sklearn.metrics import average_precision_score
+
+    rng = np.random.default_rng(0)
+    X = rng.normal(size=(2000, 5)).astype(np.float32)
+    y = (X[:, 0] + 0.3 * rng.normal(size=2000) > 1.5).astype(np.float32)
+    torch.manual_seed(0)
+    model = BankModel(input_dim=5)
+    best, epoch = train_early_stopping(model, X[:1500], y[:1500], X[1500:], y[1500:], max_epochs=30,
+                                       patience=10, lr=1e-2, batch_size=128)
+    assert 1 <= epoch <= 30 and best > 0.8
+    assert abs(average_precision_score(y[1500:], predict_proba(model, X[1500:])) - best) < 1e-6  # best weights kept
+
+
 def test_shared_vocab_aligns_one_hot_layout():
     a = pd.DataFrame({"payment_format": ["Wire", "Cash"], "log_amount": [1.0, 2.0]})
     b = pd.DataFrame({"payment_format": ["ACH", "Bitcoin"], "log_amount": [3.0, 4.0]})
