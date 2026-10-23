@@ -33,6 +33,15 @@ partition:
   # "group": assign every From-Bank ID to one of num_clients institutions (uses all data).
   # "top":   keep only the num_clients largest banks (drops the rest).
   mode: group
+  # Display names for the dashboard only (client_i keeps its ID everywhere else). The names are
+  # illustrative: every figure shown under them comes from the synthetic IBM AML data, and the
+  # dashboard says so on every screen.
+  bank_names:
+    client_0: Axis
+    client_1: HDFC
+    client_2: SBI
+    client_3: ICICI
+    client_4: Kotak
 
 mlp:
   # PyTorch BankModel training. Baselines train up to max_epochs and keep the epoch with the

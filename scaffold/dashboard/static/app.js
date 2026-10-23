@@ -21,7 +21,9 @@ const fmt = {
   short: (h, n = 10) => (h ? h.slice(0, n) + '…' : DASH),
 };
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-const bank = (c) => 'Bank ' + String(c).replace('client_', '');
+// Display names from the config (partition.bank_names); illustrative only, the data is synthetic.
+let BANK_NAMES = {};
+const bank = (c) => BANK_NAMES[c] || 'Bank ' + String(c).replace('client_', '');
 const h = (html) => { const t = document.createElement('template'); t.innerHTML = html.trim(); return t.content; };
 
 async function api(path) {
@@ -539,10 +541,12 @@ async function route() {
 async function loadScope() {
   try {
     const r = await api('/api/runs');
-    document.getElementById('scope').textContent = `5 banks · alerts from ${r.default}`;
+    BANK_NAMES = r.bank_names || {};
+    document.getElementById('scope').textContent = Object.keys(BANK_NAMES).length
+      ? `Bank names are illustrative; all data is synthetic (IBM AML) · alerts from ${r.default}`
+      : `5 banks · alerts from ${r.default}`;
   } catch {}
 }
 
 window.addEventListener('hashchange', route);
-loadScope();
-route();
+loadScope().then(route);

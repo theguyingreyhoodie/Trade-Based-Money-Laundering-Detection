@@ -135,7 +135,7 @@ def create_app(run: str = "fl_hybrid_s42", rpc: str | None = None, results: Path
                         "alerts": (path.parent / "alerts.json").exists()})
         order = {f"fl_{m}": i for i, m in enumerate(MODES)}
         out.sort(key=lambda r: (order.get(r["run"].rsplit("_s", 1)[0], 99), r["run"]))
-        return {"default": run, "runs": out}
+        return {"default": run, "runs": out, "bank_names": cfg["partition"].get("bank_names", {})}
 
     @app.get("/api/chain/status")
     def chain_status() -> dict:
