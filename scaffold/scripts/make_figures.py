@@ -204,11 +204,14 @@ def fig_ablation(res: Path, res0: Path) -> None:
     y = np.arange(len(rows))[::-1]
     for yi, (lab, r1, r0) in zip(y, rows):
         ax.plot([r0["pr_auc_mean"], r1["pr_auc_mean"]], [yi, yi], color=GREY, linewidth=1.6, zorder=1)
-        ax.errorbar(r1["pr_auc_mean"], yi, xerr=r1["pr_auc_std"], fmt="o", ms=6, color=BLUE, mec=INK, mew=0.5,
-                    ecolor=BLUE, elinewidth=0.9, capsize=2, zorder=3, label="Profiles with label signal 0.1 (main runs)" if yi == y[0] else None)
+        ax.errorbar(r1["pr_auc_mean"], yi, xerr=r1["pr_auc_std"], fmt="o", ms=6, color=GREY_DARK, mec=INK, mew=0.5,
+                    ecolor=GREY_DARK, elinewidth=0.9, capsize=2, zorder=3, label="Profiles with label signal 0.1 (main runs)" if yi == y[0] else None)
         ax.errorbar(r0["pr_auc_mean"], yi, xerr=r0["pr_auc_std"], fmt="s", ms=5.5, mfc="white", mec=INK, mew=1,
                     ecolor=INK, elinewidth=0.9, capsize=2, zorder=2, label="Profiles pure noise (signal 0)" if yi == y[0] else None)
     ax.set_yticks(y, [lab for lab, _, _ in rows])
+    for tick in ax.get_yticklabels():
+        if "ours" in tick.get_text():
+            tick.set_fontweight("bold")
     ax.tick_params(axis="y", length=0)
     ax.spines["left"].set_visible(False)
     ax.set_xlim(0, None)
