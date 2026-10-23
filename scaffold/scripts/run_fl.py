@@ -40,7 +40,7 @@ from aml_fl.metrics import evaluate, pooled_evaluate, recall_by_pattern  # noqa:
 from aml_fl.models import BankModel, HybridModel  # noqa: E402
 from aml_fl.preprocess import zero_filled_layout  # noqa: E402
 from aml_fl.profiles import PROFILE_COLUMNS  # noqa: E402
-from aml_fl.utils import load_config, load_json, load_table, set_seed, setup_logging  # noqa: E402
+from aml_fl.utils import load_config, load_json, load_table, results_dir, set_seed, setup_logging  # noqa: E402
 
 log = logging.getLogger("run_fl")
 
@@ -106,7 +106,8 @@ def main() -> None:
     n_clients = len(list(part_dir.glob("client_*")))
     if n_clients == 0:
         sys.exit(f"No partitions in {part_dir}. Run scripts/prepare_data.py first.")
-    out_dir = ROOT / "experiments" / "results" / name
+    res = results_dir(cfg, ROOT)
+    out_dir = res / name
     shutil.rmtree(out_dir, ignore_errors=True)
 
     # The server only ever holds the shared parameters (naive / zero_filled: the whole model;
@@ -142,7 +143,6 @@ def main() -> None:
     for r in rows + by_pattern:
         r["seed"] = seed
 
-    res = ROOT / "experiments" / "results"
     pd.DataFrame(rows).to_csv(res / f"{name}.csv", index=False)
     if by_pattern:
         pd.DataFrame(by_pattern).to_csv(res / f"{name}_by_pattern.csv", index=False)
