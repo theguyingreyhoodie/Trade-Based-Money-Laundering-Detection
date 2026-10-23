@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AML Consortium · Alerts</title>
+  <link rel="icon" href="/static/mark.svg" type="image/svg+xml">
+  <link rel="preload" href="/static/fonts/geist-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/static/vendor/app.css">
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <div class="app">
+    <nav class="rail" id="rail" aria-label="Main">
+      <a class="brand" href="#/alerts" aria-label="AML Consortium">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#mark"/></svg>
+      </a>
+      <a class="rail-item" href="#/alerts" data-view="alerts" aria-label="Alerts" title="Alerts">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 13h4l2 3h4l2-3h4M4 13l2.5-7h11L20 13v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1z"/></svg>
+        <span>Alerts</span>
+      </a>
+      <a class="rail-item" href="#/models" data-view="models" aria-label="Models" title="Models">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20V10M12 20V4M19 20v-7"/></svg>
+        <span>Models</span>
+      </a>
+      <a class="rail-item" href="#/training" data-view="training" aria-label="Training" title="Training">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 18l5-6 4 3 7-9M4 21h16"/></svg>
+        <span>Training</span>
+      </a>
+      <a class="rail-item" href="#/audit" data-view="audit" aria-label="Audit" title="Audit">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 7H7a4 4 0 0 0 0 8h2M15 7h2a4 4 0 0 1 0 8h-2M8 11h8"/></svg>
+        <span>Audit</span>
+      </a>
+    </nav>
+
+    <main class="canvas" id="canvas">
+      <header class="scope">
+        <span class="product">AML Consortium</span>
+        <span class="scope-meta" id="scope">5 banks · federated</span>
+      </header>
+      <div id="view" aria-live="polite"></div>
+    </main>
+  </div>
+
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <!-- the mark: five banks as five blocks chained into one line, the ledger they share -->
+    <symbol id="mark" viewBox="0 0 24 24">
+      <rect x="2" y="8.5" width="3" height="7" rx="0.75"/><rect x="6.25" y="8.5" width="3" height="7" rx="0.75"/><rect x="10.5" y="8.5" width="3" height="7" rx="0.75"/><rect x="14.75" y="8.5" width="3" height="7" rx="0.75"/><rect x="19" y="8.5" width="3" height="7" rx="0.75"/>
+      <rect x="5" y="11.4" width="1.25" height="1.2"/><rect x="9.25" y="11.4" width="1.25" height="1.2"/><rect x="13.5" y="11.4" width="1.25" height="1.2"/><rect x="17.75" y="11.4" width="1.25" height="1.2"/>
+    </symbol>
+  </svg>
+
+  <script src="/static/vendor/charts.js"></script>
+  <script src="/static/app.js" type="module"></script>
+</body>
+</html>
