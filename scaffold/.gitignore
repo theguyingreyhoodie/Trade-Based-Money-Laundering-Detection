@@ -31,6 +31,7 @@ node_modules/
 **/hardhat/artifacts/
 **/hardhat/cache/
 **/hardhat/typechain-types/
+**/hardhat/deployments/
 coverage/
 
 # --- Secrets ---
