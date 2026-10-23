@@ -17,6 +17,11 @@ python dashboard/app.py                                 # http://127.0.0.1:8000
 
 Without a chain node every view still works and the ledger checks say they are offline.
 
+Bank names (Axis, HDFC, SBI, ICICI, Kotak) are display labels set in `configs/default.yaml`
+(`partition.bank_names`); everywhere else the banks are `client_0..client_4`. They are
+illustrative only: every figure shown under them comes from the synthetic IBM AML data, and the
+header of every screen says so. Remove the setting to go back to "Bank 0..4".
+
 Design: the "achromatic ledger" app style from the design-taste-frontend skill. The chrome has no
 colour; the one hue (#1d5fbf) marks the main data (the explanation bars, the hybrid model); red is
 kept for what is wrong. `static/vendor/app.css` and `static/vendor/charts.js` come from that skill.
