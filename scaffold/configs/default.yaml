@@ -45,6 +45,7 @@ mlp:
 
 fl:
   # Federated learning (scripts/run_fl.py). mode: naive = whole model on core_features;
+  # zero_filled = whole model on the union of all banks' columns (0 + missing flag where absent);
   # encoder_head = private encoder per bank on its full schema, only the head is averaged;
   # hybrid = shared core-feature encoder + private encoder for own columns + shared head.
   mode: naive
