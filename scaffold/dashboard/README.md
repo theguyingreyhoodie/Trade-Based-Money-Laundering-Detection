@@ -19,7 +19,7 @@ Without a chain node every view still works and the ledger checks say they are o
 
 Bank names are display labels set in `configs/default.yaml` (`partition.bank_names`); everywhere
 else the banks are `client_0..client_4`. They are fictional (Iris National, Acacia, Magnolia,
-Marigold, Orchid) so that no figure, all of which come from the synthetic IBM AML data, can be read
+Roystonea, Orchid) so that no figure, all of which come from the synthetic IBM AML data, can be read
 as a claim about a real bank. Keep any replacement fictional. Remove the setting to go back to
 "Bank 0..4".
 
