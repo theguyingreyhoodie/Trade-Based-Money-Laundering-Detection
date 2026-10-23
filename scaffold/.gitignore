@@ -17,6 +17,8 @@ env/
 data/raw/*
 data/processed/*
 data/partitions/*
+data/processed_*/
+data/partitions_*/
 !data/**/.gitkeep
 
 # --- Models / experiment outputs ---
