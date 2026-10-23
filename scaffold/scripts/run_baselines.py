@@ -123,7 +123,7 @@ def main() -> None:
     setup_logging()
     cfg = load_config(ROOT / args.config)
     seed = cfg["seed"] if args.seed is None else args.seed
-    name = "baselines" if args.seed is None else f"baselines_s{seed}"
+    out_name = "baselines" if args.seed is None else f"baselines_s{seed}"
     set_seed(seed)
     rows, by_pattern = [], []
     candidates = models(seed, cfg.get("mlp"))
@@ -175,13 +175,13 @@ def main() -> None:
 
     for r in rows + by_pattern:
         r["seed"] = seed
-    out = ROOT / "experiments" / "results" / f"{name}.csv"
+    out = ROOT / "experiments" / "results" / f"{out_name}.csv"
     out.parent.mkdir(parents=True, exist_ok=True)
     pd.DataFrame(rows).to_csv(out, index=False)
     log.info("Saved %s", out)
     if by_pattern:
-        pd.DataFrame(by_pattern).to_csv(out.with_name(f"{name}_by_pattern.csv"), index=False)
-        log.info("Saved %s", out.with_name(f"{name}_by_pattern.csv"))
+        pd.DataFrame(by_pattern).to_csv(out.with_name(f"{out_name}_by_pattern.csv"), index=False)
+        log.info("Saved %s", out.with_name(f"{out_name}_by_pattern.csv"))
 
 
 if __name__ == "__main__":
