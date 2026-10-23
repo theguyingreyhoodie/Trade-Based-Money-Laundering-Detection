@@ -158,8 +158,8 @@
 .rank-row .v small { color: var(--muted); }
 
 /* ---------- audit: the ledger strip, one cell per round and bank ---------- */
-.ledger { display: grid; grid-template-columns: 88px minmax(0, 1fr); gap: 6px 12px; align-items: center; }
-.ledger .who { color: var(--muted); font-size: var(--fs-small); }
+.ledger { display: grid; grid-template-columns: 160px minmax(0, 1fr); gap: 6px 12px; align-items: center; }
+.ledger .who { color: var(--muted); font-size: var(--fs-small); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .ledger .cells { display: grid; grid-template-columns: repeat(var(--n, 100), minmax(0, 1fr)); gap: 2px; }
 .ledger .cells i { height: 18px; border-radius: 1px; background: var(--text); }
 .ledger .cells i.missing { background: transparent; outline: 1px solid var(--control); outline-offset: -1px; }

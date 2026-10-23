@@ -21,7 +21,7 @@ const fmt = {
   short: (h, n = 10) => (h ? h.slice(0, n) + '…' : DASH),
 };
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-// Display names from the config (partition.bank_names); illustrative only, the data is synthetic.
+// Fictional display names from the config (partition.bank_names).
 let BANK_NAMES = {};
 const bank = (c) => BANK_NAMES[c] || 'Bank ' + String(c).replace('client_', '');
 const h = (html) => { const t = document.createElement('template'); t.innerHTML = html.trim(); return t.content; };
@@ -471,7 +471,7 @@ async function renderAudit() {
     </div>
     <div class="grid top">
       <section class="panel" style="grid-column: 1 / -1" id="ledger-panel">
-        <header><h2>Ledger, one cell per round</h2><div class="legend"><span><i></i>matches</span><span><i class="missing"></i>not recorded</span><span><i class="bad"></i>does not match</span></div></header>
+        <header><h2>Ledger: global model and each bank\u2019s update, per round</h2><div class="legend"><span><i></i>matches</span><span><i class="missing"></i>not recorded</span><span><i class="bad"></i>does not match</span></div></header>
         <div id="ledger"></div>
       </section>
       <section class="panel" style="grid-column: span 7">
@@ -515,7 +515,7 @@ async function drawLedger(online) {
   const global = v.rounds.map((r) => cell(!r.recorded ? 'missing' : r.match ? '' : 'bad', `Round ${r.round}: global model ${r.recorded ? (r.match ? 'matches' : 'does not match') : 'not recorded'}`));
   const rows = [`<span class="who">Global model</span><div class="cells" style="--n:${n}">${global.join('')}</div>`];
   for (const b of banks) {
-    rows.push(`<span class="who">${bank(b)} update</span><div class="cells" style="--n:${n}">${v.rounds.map((r) => (b in r.updates
+    rows.push(`<span class="who" title="${esc(bank(b))}\u2019s update">${bank(b)}</span><div class="cells" style="--n:${n}">${v.rounds.map((r) => (b in r.updates
       ? cell(r.updates[b] ? '' : 'bad', `Round ${r.round}: ${bank(b)}'s update ${r.updates[b] ? 'matches' : 'does not match or is not recorded'}`)
       : cell('none', `Round ${r.round}: no update hash in this run`))).join('')}</div>`);
   }
@@ -542,9 +542,7 @@ async function loadScope() {
   try {
     const r = await api('/api/runs');
     BANK_NAMES = r.bank_names || {};
-    document.getElementById('scope').textContent = Object.keys(BANK_NAMES).length
-      ? `Bank names are illustrative; all data is synthetic (IBM AML) · alerts from ${r.default}`
-      : `5 banks · alerts from ${r.default}`;
+    document.getElementById('scope').textContent = `${Object.keys(BANK_NAMES).length || 5} banks · alerts from ${r.default}`;
   } catch {}
 }
 
