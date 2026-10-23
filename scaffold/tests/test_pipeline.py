@@ -396,3 +396,36 @@ def test_model_shared_weights_roundtrip():
     z = torch.randn(4, 32)
     assert torch.allclose(a.head(z), b.head(z))
     assert a(torch.randn(3, 14)).shape == (3,)
+
+
+def test_shap_contributions_add_up_to_the_logit():
+    torch = pytest.importorskip("torch")
+    pytest.importorskip("shap")
+    from aml_fl.explain import shap_values
+    from aml_fl.models import HybridModel
+
+    torch.manual_seed(0)
+    model = HybridModel(core_dim=4, own_dim=3)
+    rng = np.random.default_rng(0)
+    bg, X = rng.normal(size=(64, 7)).astype(np.float32), rng.normal(size=(10, 7)).astype(np.float32)
+    contrib, base = shap_values(model, bg, X, batch_size=4)   # several batches
+    with torch.no_grad():
+        logit = model(torch.from_numpy(X)).numpy()
+    assert contrib.shape == (10, 7)
+    assert np.allclose(base + contrib.sum(1), logit, atol=1e-4)
+
+
+def test_one_hot_contributions_grouped_per_column_and_alert_hash():
+    from aml_fl.explain import alert_hash, group_by_column, top_features
+
+    names = ["log_amount", "payment_format=ACH", "payment_format=Wire", "kyc_risk_level=<missing>"]
+    cols, g = group_by_column(np.array([[0.5, -0.2, 0.9, 0.1]]), names)
+    assert cols == ["log_amount", "payment_format", "kyc_risk_level"]
+    assert np.allclose(g, [[0.5, 0.7, 0.1]])
+    top = top_features(cols, g[0], {"payment_format": "Wire", "log_amount": 3.0}, k=2)
+    assert [t["feature"] for t in top] == ["payment_format", "log_amount"] and top[0]["value"] == "Wire"
+
+    alert = {"txn_id": 7, "bank": "client_1", "score": 0.91, "top_features": top, "model_version": "ab" * 32}
+    h = alert_hash(alert)
+    assert h == alert_hash(dict(alert, amount_usd=10.0))   # display fields are not part of the hash
+    assert h != alert_hash(dict(alert, score=0.92))         # changing the alert changes the hash
