@@ -429,3 +429,15 @@ def test_one_hot_contributions_grouped_per_column_and_alert_hash():
     h = alert_hash(alert)
     assert h == alert_hash(dict(alert, amount_usd=10.0))   # display fields are not part of the hash
     assert h != alert_hash(dict(alert, score=0.92))         # changing the alert changes the hash
+
+
+def test_config_extends_overrides_only_what_it_lists(tmp_path):
+    from aml_fl.utils import results_dir
+
+    (tmp_path / "base.yaml").write_text("seed: 1\ndata: {processed_dir: a, partitions_dir: b}\nfl: {rounds: 5}\n")
+    (tmp_path / "exp.yaml").write_text("extends: base.yaml\ndata: {partitions_dir: c, results_dir: out/x}\n")
+    cfg = load_config(tmp_path / "exp.yaml")
+    assert cfg == {"seed": 1, "data": {"processed_dir": "a", "partitions_dir": "c", "results_dir": "out/x"},
+                   "fl": {"rounds": 5}}
+    assert results_dir(cfg, tmp_path) == tmp_path / "out" / "x"
+    assert results_dir(load_config(tmp_path / "base.yaml"), tmp_path) == tmp_path / "experiments" / "results"

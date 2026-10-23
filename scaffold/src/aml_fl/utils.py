@@ -19,9 +19,26 @@ def setup_logging(level: int = logging.INFO) -> None:
                         datefmt="%H:%M:%S")
 
 
+def _merge(base: dict, over: dict) -> dict:
+    out = dict(base)
+    for k, v in over.items():
+        out[k] = _merge(out[k], v) if isinstance(v, dict) and isinstance(out.get(k), dict) else v
+    return out
+
+
 def load_config(path: str | Path) -> dict[str, Any]:
+    """Read a YAML config. `extends: other.yaml` (relative to this file) loads that one first and
+    overrides it key by key, so an experiment config only lists what it changes."""
+    path = Path(path)
     with open(path, "r", encoding="utf-8") as f:
-        return yaml.safe_load(f)
+        cfg = yaml.safe_load(f) or {}
+    parent = cfg.pop("extends", None)
+    return _merge(load_config(path.parent / parent), cfg) if parent else cfg
+
+
+def results_dir(cfg: dict, root: str | Path) -> Path:
+    """Where scripts write results: data.results_dir (default experiments/results), under root."""
+    return Path(root) / cfg["data"].get("results_dir", "experiments/results")
 
 
 def set_seed(seed: int) -> None:
