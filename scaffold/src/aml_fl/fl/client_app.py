@@ -22,8 +22,9 @@ columns) and lay out their data in it; columns a bank lacks are 0 with a 0/1 "<m
 In every mode the rule is the same: a parameter whose name starts with PRIVATE_PREFIX[mode]
 stays at the bank, everything else is sent to the server (see shared_state).
 
-After the last round each bank writes its own test scores to <out_dir>/scores/. That file
-is for the experimenter to compute results; it is not sent to the server.
+After the last round each bank writes its own test scores to <out_dir>/scores/ and its final
+model to <out_dir>/models/ (for explanations and alerts, see scripts/build_alerts.py). Both stay
+with the experimenter; nothing of it is sent to the server.
 """
 from __future__ import annotations
 
@@ -42,6 +43,7 @@ from ..metrics import best_f1_threshold
 from ..metrics import evaluate as eval_metrics
 from ..models import BankModel, HybridModel, pos_weight, predict_proba, train_epochs
 from ..preprocess import ClientData, load_client, load_client_hybrid, load_client_zero_filled, undersample
+from ..utils import save_json
 from .strategy import AUDIT_KEY, hash_parameters
 
 log = logging.getLogger(__name__)
@@ -63,6 +65,17 @@ def new_model(mode: str, d: ClientData) -> torch.nn.Module:
 
 def is_private(mode: str, key: str) -> bool:
     return PRIVATE_PREFIX[mode] is not None and key.startswith(PRIVATE_PREFIX[mode])
+
+
+def load_bank_data(mode: str, path: str | Path, global_columns: list[str] | None = None) -> ClientData:
+    """A bank's arrays in the layout the given mode trains on."""
+    if mode == "hybrid":
+        return load_client_hybrid(path, SHARED_VOCAB)
+    if mode == "naive":
+        return load_client(path, "core", SHARED_VOCAB)
+    if mode == "zero_filled":
+        return load_client_zero_filled(path, global_columns, ALL_VOCAB)
+    return load_client(path)
 
 
 def shared_state(model: torch.nn.Module, mode: str) -> dict[str, torch.Tensor]:
@@ -93,15 +106,7 @@ def make_client_app(partitions_dir: str | Path, out_dir: str | Path, mode: str =
         pid = int(context.node_config["partition-id"])
         if pid not in cache:
             cache.clear()
-            path = Path(partitions_dir) / f"client_{pid}"
-            if mode == "hybrid":
-                cache[pid] = load_client_hybrid(path, SHARED_VOCAB)
-            elif mode == "naive":
-                cache[pid] = load_client(path, "core", SHARED_VOCAB)
-            elif mode == "zero_filled":
-                cache[pid] = load_client_zero_filled(path, global_columns, ALL_VOCAB)
-            else:
-                cache[pid] = load_client(path)
+            cache[pid] = load_bank_data(mode, Path(partitions_dir) / f"client_{pid}", global_columns)
         return pid, cache[pid]
 
     def build_model(msg: Message, context: Context, pid: int, d: ClientData) -> torch.nn.Module:
@@ -163,6 +168,12 @@ def make_client_app(partitions_dir: str | Path, out_dir: str | Path, mode: str =
             pd.DataFrame({"txn_id": d.txn_ids["test"], "label": d.y["test"].astype(int),
                           "score": predict_proba(model, d.X["test"]), "threshold": thr}
                          ).to_parquet(out / f"client_{pid}.parquet", index=False)
+            models = Path(out_dir) / "models"
+            models.mkdir(parents=True, exist_ok=True)
+            torch.save(model.state_dict(), models / f"client_{pid}.pt")
+            save_json({"mode": mode, "input_dim": d.input_dim, "core_dim": d.core_dim, "threshold": thr,
+                       "feature_names": d.feature_names, "global_columns": global_columns},
+                      models / f"client_{pid}.json")
         return Message(content=RecordDict({"metrics": metrics}), reply_to=msg)
 
     return app
