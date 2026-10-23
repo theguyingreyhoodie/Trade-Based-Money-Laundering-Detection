@@ -81,6 +81,11 @@ python scripts/run_fl.py               # mode and rounds from the fl: section of
 python scripts/run_fl.py --rounds 3    # quick check
 python scripts/run_fl.py --mode encoder_head   # private encoders, shared head
 python scripts/run_fl.py --mode hybrid         # shared core encoder + private encoder + shared head
+
+# Repeat over seeds, then report mean ± std (each --seed run writes *_s<seed> files):
+python scripts/run_baselines.py --seed 43
+python scripts/run_fl.py --mode hybrid --seed 43
+python scripts/summarize_seeds.py
 ```
 
 Outputs:
@@ -93,6 +98,8 @@ Outputs:
 - `experiments/results/fl_<mode>.csv` holds the FL test results (per client and pooled), with
   per-round metrics in `fl_<mode>/history.csv` and the model hashes in `fl_<mode>/audit.json`.
 - `experiments/results/baselines_by_pattern.csv` holds recall per laundering pattern for each baseline.
+- `experiments/results/seeds_summary.csv` and `seeds_per_client.csv` hold mean ± std over the
+  `--seed` runs (from `summarize_seeds.py`).
 
 ## How the data pipeline works
 
@@ -126,7 +133,7 @@ configs/         experiment configs (default.yaml)
 data/            raw/, processed/, partitions/  (git-ignored)
 docs/            project plan
 notebooks/       exploration notebooks
-scripts/         prepare_data.py, run_baselines.py, make_toy_data.py
+scripts/         prepare_data.py, run_baselines.py, run_fl.py, summarize_seeds.py, make_toy_data.py
 src/aml_fl/      library code
   data.py features.py split.py profiles.py partition.py preprocess.py patterns.py
   models.py      Encoder + SharedHead + BankModel (PyTorch)
