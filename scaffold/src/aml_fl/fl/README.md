@@ -45,7 +45,7 @@ Pooled test PR-AUC, mean ± std over 3 seeds (`scripts/summarize_seeds.py`):
 | Centralized XGBoost (upper bound) | 0.340 ± 0.007 | |
 | Centralized MLP (upper bound) | 0.241 ± 0.008 | |
 | Local-only XGBoost | 0.159 ± 0.006 | |
-| **FL hybrid** | **0.140 ± 0.026** | 0.119 / 0.133 / 0.169 |
+| **FL hybrid** | **0.139 ± 0.027** | 0.116 / 0.133 / 0.169 |
 | FL zero_filled | 0.119 ± 0.005 | 0.124 / 0.113 / 0.120 |
 | Local-only MLP (lower bound) | 0.105 ± 0.006 | |
 | FL encoder_head | 0.105 ± 0.004 | 0.109 / 0.102 / 0.103 |
@@ -54,7 +54,7 @@ Pooled test PR-AUC, mean ± std over 3 seeds (`scripts/summarize_seeds.py`):
 - Hybrid versus zero-filled FedAvg (the key comparison): hybrid has the higher mean test
   PR-AUC, the higher validation PR-AUC on every seed (0.19-0.21 vs 0.15-0.18) and the higher
   mean test PR-AUC at 4 of 5 banks, but zero-filled wins seed 42 on test. With 3 seeds the
-  test gap (+0.021) is not statistically significant. Hybrid matches or beats zero-filled
+  test gap (+0.020) is not statistically significant. Hybrid matches or beats zero-filled
   while keeping each bank's column list private.
 - Hybrid beats encoder_head on every seed, and beats the local-only MLP for all 5 banks
   (mean per-bank test PR-AUC). Its spread over seeds is the largest.
@@ -63,6 +63,9 @@ Pooled test PR-AUC, mean ± std over 3 seeds (`scripts/summarize_seeds.py`):
 - Naive FedAvg flags 3-4x more legitimate transactions (FPR 0.0047 vs 0.0013), so its
   per-pattern recall is not comparable with the other setups.
 - Hybrid is still below local-only XGBoost and well below centralized training.
+- Runs are not bit-for-bit reproducible: the order in which the 5 banks' replies arrive changes
+  the floating-point sums. Rerunning hybrid seed 42 (to save its models for the dashboard) gave
+  0.116 instead of 0.119.
 
 ## Training
 

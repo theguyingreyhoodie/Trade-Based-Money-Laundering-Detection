@@ -12,7 +12,8 @@ flwr[simulation]>=1.20
 
 # Explainability + dashboard (Phase 5)
 shap>=0.45
-streamlit>=1.35
+fastapi>=0.110
+uvicorn>=0.29
 matplotlib>=3.8
 
 # Blockchain client (Phase 4) — the Hardhat side lives in src/aml_fl/chain/ (Node.js)
@@ -20,4 +21,5 @@ web3>=6.15
 
 # Dev
 pytest>=8.0
+httpx>=0.27          # FastAPI TestClient
 jupyter>=1.0

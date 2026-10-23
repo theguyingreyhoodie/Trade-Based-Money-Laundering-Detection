@@ -25,7 +25,7 @@ The whole team works on every phase together.
 | 2 | Baselines (centralized / local-only) + recall per pattern | LR, XGBoost, MLP done (HI-Small, 3 seeds) |
 | 3 | Federated learning (Flower) | naive, zero-filled, encoder_head, hybrid done (HI-Small, 3 seeds) — see `src/aml_fl/fl/README.md` |
 | 4 | Blockchain audit layer | contract + client done; global model and per-bank update hashes on-chain — see `src/aml_fl/chain/README.md` |
-| 5 | SHAP + Streamlit dashboard | todo |
+| 5 | SHAP explanations + web dashboard | alerts explained with SHAP, hashed on-chain; FastAPI + static web app — see `dashboard/` |
 | 6 | Evaluation & report | todo |
 
 ## Setup
@@ -98,6 +98,11 @@ python scripts/summarize_seeds.py
 cd src/aml_fl/chain/hardhat && npx hardhat node
 # ... then write a run's model hashes on-chain and check them (--verify-only: just check):
 python scripts/audit_to_chain.py fl_hybrid_s42
+
+# Alerts with SHAP explanations (needs a run made after models were saved), hashes logged on-chain:
+python scripts/build_alerts.py fl_hybrid_s42 --chain
+# Dashboard at http://127.0.0.1:8000 (works without the chain; ledger checks then show as offline):
+python dashboard/app.py
 ```
 
 Outputs:
@@ -152,7 +157,7 @@ src/aml_fl/      library code
   metrics.py     PR-AUC, F1, recall, FPR, threshold tuning, recall per pattern
   fl/            Flower client/server (Phase 3)
   chain/         Solidity contract + web3 client (Phase 4)
-dashboard/       Streamlit app (Phase 5)
+dashboard/       FastAPI app + static front end (Phase 5)
 experiments/     results CSVs
 tests/           pytest suite
 report/          report drafts
