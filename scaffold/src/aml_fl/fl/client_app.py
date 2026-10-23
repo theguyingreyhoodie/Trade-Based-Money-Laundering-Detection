@@ -15,6 +15,10 @@ mode "hybrid": the bank's columns are laid out as [core | own]. A core encoder (
 columns, with the shared category lists) and the head are exchanged and averaged; the private
 encoder on the bank's own columns stays in `context.state`.
 
+mode "zero_filled" (baseline): all banks agree on one global column list (the union of their
+columns) and lay out their data in it; columns a bank lacks are 0 with a 0/1 "<missing>" flag
+(preprocess.load_client_zero_filled). The WHOLE BankModel is exchanged and averaged.
+
 In every mode the rule is the same: a parameter whose name starts with PRIVATE_PREFIX[mode]
 stays at the bank, everything else is sent to the server (see shared_state).
 
@@ -33,16 +37,19 @@ from flwr.app import ArrayRecord, ConfigRecord, Context, Message, MetricRecord, 
 from flwr.clientapp import ClientApp
 
 from ..features import SHARED_VOCAB
+from ..profiles import PROFILE_VOCAB
 from ..metrics import best_f1_threshold
 from ..metrics import evaluate as eval_metrics
 from ..models import BankModel, HybridModel, pos_weight, predict_proba, train_epochs
-from ..preprocess import ClientData, load_client, load_client_hybrid, undersample
+from ..preprocess import ClientData, load_client, load_client_hybrid, load_client_zero_filled, undersample
 
 log = logging.getLogger(__name__)
 
-MODES = ("naive", "encoder_head", "hybrid")
+MODES = ("naive", "zero_filled", "encoder_head", "hybrid")
 # Parameters whose names start with this prefix never leave the bank (None: everything is shared).
-PRIVATE_PREFIX = {"naive": None, "encoder_head": "encoder.", "hybrid": "private_encoder."}
+PRIVATE_PREFIX = {"naive": None, "zero_filled": None, "encoder_head": "encoder.", "hybrid": "private_encoder."}
+# Category lists for every categorical column, for the zero-filled layout.
+ALL_VOCAB = {**SHARED_VOCAB, **PROFILE_VOCAB}
 ENCODER_KEY = "encoder"        # context.state: this bank's private encoder weights
 PROGRESS_KEY = "progress"      # context.state: {"encoder_rounds": n}
 
@@ -68,10 +75,14 @@ def private_state(model: torch.nn.Module, mode: str) -> dict[str, torch.Tensor]:
 
 def make_client_app(partitions_dir: str | Path, out_dir: str | Path, mode: str = "naive",
                     lr: float = 1e-3, batch_size: int = 512, local_epochs: int = 1,
-                    neg_per_pos: int = 20, seed: int = 42) -> ClientApp:
+                    neg_per_pos: int = 20, seed: int = 42,
+                    global_columns: list[str] | None = None) -> ClientApp:
+    """global_columns: the agreed column list (zero_filled mode only)."""
     if mode not in MODES:
         raise ValueError(f"Unknown FL mode {mode!r}; expected one of {MODES}")
-    naive = mode == "naive"
+    if mode == "zero_filled" and not global_columns:
+        raise ValueError("zero_filled mode needs global_columns")
+    has_private = PRIVATE_PREFIX[mode] is not None
     app = ClientApp()
     # Per worker process, keep only the most recent bank's data: Ray does not pin a bank to a
     # worker, so caching every bank a worker has served would hold all partitions many times.
@@ -84,8 +95,10 @@ def make_client_app(partitions_dir: str | Path, out_dir: str | Path, mode: str =
             path = Path(partitions_dir) / f"client_{pid}"
             if mode == "hybrid":
                 cache[pid] = load_client_hybrid(path, SHARED_VOCAB)
-            elif naive:
+            elif mode == "naive":
                 cache[pid] = load_client(path, "core", SHARED_VOCAB)
+            elif mode == "zero_filled":
+                cache[pid] = load_client_zero_filled(path, global_columns, ALL_VOCAB)
             else:
                 cache[pid] = load_client(path)
         return pid, cache[pid]
@@ -119,7 +132,7 @@ def make_client_app(partitions_dir: str | Path, out_dir: str | Path, mode: str =
                             weight=pos_weight(y))
         metrics = {"train_loss": float(loss), "num-examples": len(d.y["train"])}
         shared = ArrayRecord(shared_state(model, mode))            # the ONLY thing that leaves the bank
-        if not naive:
+        if has_private:
             context.state[ENCODER_KEY] = ArrayRecord(private_state(model, mode))
             context.state[PROGRESS_KEY] = ConfigRecord({"encoder_rounds": encoder_rounds(context) + 1})
             metrics["encoder_rounds"] = encoder_rounds(context)   # should equal the round number

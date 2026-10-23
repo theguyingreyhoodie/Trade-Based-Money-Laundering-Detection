@@ -301,6 +301,46 @@ def test_hybrid_loader_puts_shared_core_first(toy_partitions):
     assert a.feature_names[a.core_dim:] != b.feature_names[b.core_dim:]   # own layouts differ
 
 
+def test_zero_filled_layout_is_shared_and_flags_missing(toy_partitions):
+    from aml_fl.fl.client_app import ALL_VOCAB
+    from aml_fl.preprocess import load_client_zero_filled
+    from aml_fl.utils import load_json
+    from run_fl import agreed_columns
+
+    columns = agreed_columns(toy_partitions)
+    a = load_client_zero_filled(toy_partitions / "client_0", columns, ALL_VOCAB)
+    b = load_client_zero_filled(toy_partitions / "client_2", columns, ALL_VOCAB)
+    assert a.feature_names == b.feature_names                       # one layout for every bank
+    own = load_json(toy_partitions / "client_0" / "schema.json")["columns"]
+    for c in columns:
+        flag = a.X["train"][:, a.feature_names.index(f"{c}=<missing>")] if f"{c}=<missing>" in a.feature_names else None
+        cols = [i for i, n in enumerate(a.feature_names) if n == c or n.startswith(f"{c}=") and not n.endswith("<missing>")]
+        if c in own:
+            assert flag is None or (flag == 0).all()
+        else:                                                       # lacked: zeros + flag
+            assert (flag == 1).all() and (a.X["train"][:, cols] == 0).all()
+
+
+def test_fl_zero_filled_shares_the_whole_model(toy_partitions, tmp_path):
+    pytest.importorskip("flwr")
+    from flwr.app import ArrayRecord, Context, RecordDict
+
+    from aml_fl.fl.client_app import ALL_VOCAB, make_client_app
+    from aml_fl.models import BankModel
+    from aml_fl.preprocess import zero_filled_layout
+    from run_fl import agreed_columns
+
+    cfg = load_config(ROOT / "configs" / "default.yaml")
+    columns = agreed_columns(toy_partitions)
+    initial = BankModel(input_dim=len(zero_filled_layout(columns, ALL_VOCAB, cfg["core_features"]))).state_dict()
+    app = make_client_app(toy_partitions, tmp_path, mode="zero_filled", global_columns=columns)
+    for pid in (1, 4):
+        ctx = Context(run_id=1, node_id=7, node_config={"partition-id": pid}, state=RecordDict(), run_config={})
+        reply = app(_train_message(ArrayRecord(initial), 1), ctx)
+        assert set(reply.content["arrays"].keys()) == set(initial)
+        assert len(ctx.state) == 0                                  # nothing kept private
+
+
 def test_fl_naive_shares_the_whole_model(toy_partitions, tmp_path):
     pytest.importorskip("flwr")
     from flwr.app import ArrayRecord, Context, RecordDict

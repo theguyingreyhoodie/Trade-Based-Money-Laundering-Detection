@@ -1,6 +1,8 @@
 """Phase 3: federated learning simulation with Flower (one simulated node per client bank).
 
     naive        : every bank uses only the core features, the whole BankModel is FedAvg'd
+    zero_filled  : every bank uses the union of all banks' columns (missing ones are 0 plus a
+                   "missing" flag), the whole BankModel is FedAvg'd
     encoder_head : every bank uses its full own schema with a private encoder; only the
                    SharedHead is FedAvg'd
     hybrid       : a core encoder (core features) and the head are FedAvg'd; a private
@@ -33,10 +35,12 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from aml_fl.features import CATEGORICAL, SHARED_VOCAB  # noqa: E402
+from aml_fl.features import CATEGORICAL, SHARED_VOCAB, TXN_FEATURES  # noqa: E402
 from aml_fl.metrics import evaluate, pooled_evaluate, recall_by_pattern  # noqa: E402
 from aml_fl.models import BankModel, HybridModel  # noqa: E402
-from aml_fl.utils import load_config, load_table, set_seed, setup_logging  # noqa: E402
+from aml_fl.preprocess import zero_filled_layout  # noqa: E402
+from aml_fl.profiles import PROFILE_COLUMNS  # noqa: E402
+from aml_fl.utils import load_config, load_json, load_table, set_seed, setup_logging  # noqa: E402
 
 log = logging.getLogger("run_fl")
 
@@ -44,6 +48,13 @@ log = logging.getLogger("run_fl")
 def core_input_dim(core: list[str]) -> int:
     """Width of the core feature vector: one per numeric column, one-hot (+ <other>) per categorical."""
     return sum(len(SHARED_VOCAB[c]) + 1 if c in CATEGORICAL else 1 for c in core)
+
+
+def agreed_columns(part_dir: Path) -> list[str]:
+    """Union of every bank's columns in a fixed order: the list zero-filled FedAvg needs all banks
+    to agree on (which reveals what each bank stores)."""
+    union = set().union(*(load_json(d / "schema.json")["columns"] for d in part_dir.glob("client_*")))
+    return [c for c in TXN_FEATURES + list(PROFILE_COLUMNS) if c in union]
 
 
 def summarize(scores: pd.DataFrame, pattern_of: pd.Series | None, setup: str) -> tuple[list[dict], list[dict]]:
@@ -88,7 +99,7 @@ def main() -> None:
     from flwr.app import ArrayRecord
     from flwr.simulation import run_simulation
 
-    from aml_fl.fl.client_app import make_client_app, shared_state
+    from aml_fl.fl.client_app import ALL_VOCAB, make_client_app, shared_state
     from aml_fl.fl.server_app import make_server_app
 
     part_dir = ROOT / cfg["data"]["partitions_dir"]
@@ -98,14 +109,20 @@ def main() -> None:
     out_dir = ROOT / "experiments" / "results" / name
     shutil.rmtree(out_dir, ignore_errors=True)
 
-    # The server only ever holds the shared parameters (naive: the whole model; encoder_head:
-    # the head; hybrid: core encoder + head). Private encoder sizes do not matter here.
+    # The server only ever holds the shared parameters (naive / zero_filled: the whole model;
+    # encoder_head: the head; hybrid: core encoder + head). Private encoder sizes do not matter.
     core_dim = core_input_dim(cfg["core_features"])
-    template = HybridModel(core_dim, 1) if mode == "hybrid" else BankModel(input_dim=core_dim)
+    columns = agreed_columns(part_dir) if mode == "zero_filled" else None
+    if mode == "hybrid":
+        template = HybridModel(core_dim, 1)
+    elif mode == "zero_filled":
+        template = BankModel(input_dim=len(zero_filled_layout(columns, ALL_VOCAB, cfg["core_features"])))
+    else:
+        template = BankModel(input_dim=core_dim)
     initial = ArrayRecord(shared_state(template, mode))
     client_app = make_client_app(part_dir, out_dir, mode=mode, lr=mlp.get("lr", 1e-3),
                                  batch_size=mlp.get("batch_size", 512),
-                                 local_epochs=fl.get("local_epochs", 1), seed=seed)
+                                 local_epochs=fl.get("local_epochs", 1), seed=seed, global_columns=columns)
     server_app = make_server_app(initial, n_clients, rounds, out_dir)
     log.info("FL mode=%s, %d clients, %d rounds, seed %d", mode, n_clients, rounds, seed)
     # Ray starts (CPUs / num_cpus) workers; size it so there is about one worker per bank.
