@@ -70,6 +70,7 @@ def bank_alerts(run_dir: Path, part_dir: Path, client: str, model_version: str, 
             "score": round(float(scores[i]), 6),
             "threshold": round(float(meta["threshold"]), 6),
             "base_value": round(base, 6),
+            "logit": round(float(base + contrib[k].sum()), 6),   # exact: SHAP contributions add up to the logit
             "top_features": top_features(columns, grouped[k], values, top),
             "model_version": model_version,
             "label": int(txn["label"]),
