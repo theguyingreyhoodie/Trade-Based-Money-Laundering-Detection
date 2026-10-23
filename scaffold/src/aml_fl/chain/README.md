@@ -27,11 +27,14 @@ chain (`npx hardhat node`, chain id 31337).
 
 ## Workflow
 
-1. `scripts/run_fl.py` trains and writes `experiments/results/<run>/audit.json` (one global
-   model hash per round, from `strategy.AuditedFedAvg`).
+1. `scripts/run_fl.py` trains and writes `experiments/results/<run>/audit.json`: per round, the
+   global model hash and each bank's update hash (`strategy.AuditedFedAvg`). Each bank declares
+   the hash of the update it sends; the server re-hashes what it received and stops the run if
+   they differ.
 2. `scripts/audit_to_chain.py <run>` deploys the contract on first use (address kept in
-   `hardhat/deployments/localhost.json`, not committed), registers accounts 1..5 as the banks,
-   records every round hash and checks the file against the chain.
+   `hardhat/deployments/localhost.json`, not committed), registers accounts 1..5 as the banks
+   `client_0..client_4`, records every global model hash (as operator) and every update hash
+   (from that bank's own account), and checks the file against the chain.
 3. Later, `scripts/audit_to_chain.py <run> --verify-only` shows whether `audit.json` was changed
    since it was recorded: it lists the rounds that no longer match and exits with code 1.
 
@@ -40,9 +43,9 @@ depend on a running chain. The chain still makes the record tamper-evident from 
 
 ## Status
 
-- Done: contract, Solidity tests, Python client, recording and verifying round hashes
-  (`tests/test_chain.py` runs the client against a throwaway Hardhat node).
-- Next: per-bank update hashes (each bank hashes its own reply in the FL client).
+- Done: contract, Solidity tests, Python client, recording and verifying global model and
+  per-bank update hashes (`tests/test_chain.py` runs the client against a throwaway Hardhat
+  node). Runs made before the update hashes were added only have global model hashes.
 - Phase 5: alert hashes from the dashboard (`AuditChain.log_alert`).
 
 Hardhat node accounts are public test keys. Never reuse them, or this setup, on a real network.

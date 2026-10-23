@@ -71,8 +71,9 @@ Pooled test PR-AUC, mean ± std over 3 seeds (`scripts/summarize_seeds.py`):
 - Local training: each round, undersample the bank's training data again
   (`seed + round`), then `fl.local_epochs` epochs with `pos_weight` in the loss. `lr` and
   `batch_size` come from the `mlp:` section so the results are comparable with the baselines.
-- `AuditedFedAvg` stores the SHA-256 of every aggregated model in `audit.json`, for the
-  blockchain audit log (Phase 4).
+- `AuditedFedAvg` stores the SHA-256 of every aggregated model and of every bank's update in
+  `audit.json`, for the blockchain audit log (Phase 4). Each bank declares its update's hash in
+  its reply; the server refuses the round if the update it received hashes differently.
 
 ## Evaluation
 
