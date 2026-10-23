@@ -142,6 +142,11 @@ class AuditChain:
                 bad.append(e["round"])
         return bad
 
+    def event_counts(self) -> dict[str, int]:
+        """How many global model hashes, update hashes and alert hashes the contract holds."""
+        events = {"global_models": "GlobalModelRecorded", "updates": "UpdateRecorded", "alerts": "AlertLogged"}
+        return {k: len(getattr(self.contract.events, e)().get_logs(from_block=0)) for k, e in events.items()}
+
     def alert_bank(self, digest: str) -> str | None:
         bank = self.contract.functions.alertBank(to_bytes32(digest)).call()
         return None if int(bank, 16) == 0 else bank
