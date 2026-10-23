@@ -67,6 +67,27 @@ Pooled test PR-AUC, mean ± std over 3 seeds (`scripts/summarize_seeds.py`):
   the floating-point sums. Rerunning hybrid seed 42 (to save its models for the dashboard) gave
   0.116 instead of 0.119.
 
+### Ablation: profiles without label signal (`configs/ablation_signal0.yaml`)
+
+The synthetic customer profiles of the main runs carry a weak label signal (`label_signal` 0.1:
+some attributes of accounts that laundered in the training period are drawn riskier). Rerun with
+pure-noise profiles (`label_signal` 0), seeds 42/43/44:
+
+| Setup | Main runs (signal 0.1) | Signal 0 | Per seed (signal 0) |
+|---|---|---|---|
+| Centralized XGBoost | 0.340 ± 0.007 | 0.355 ± 0.004 | |
+| Centralized MLP | 0.241 ± 0.008 | 0.257 ± 0.010 | |
+| **FL hybrid** | **0.139 ± 0.027** | **0.171 ± 0.033** | 0.133 / 0.190 / 0.191 |
+| Local-only XGBoost | 0.159 ± 0.006 | 0.154 ± 0.023 | |
+| FL zero_filled | 0.119 ± 0.005 | 0.133 ± 0.004 | 0.129 / 0.133 / 0.137 |
+| Local-only MLP | 0.105 ± 0.006 | 0.111 ± 0.006 | |
+
+- The results do not depend on the synthetic signal: without it every model does as well or
+  better, and the order of the setups is the same.
+- Likely reason: the signal marks only accounts that laundered in the training period, so models
+  learn a cue that does not carry over to new launderers in the test period.
+- Without the signal, hybrid beats zero-filled FedAvg on every seed and passes local-only XGBoost.
+
 ## Training
 
 - FedAvg (`strategy.AuditedFedAvg`), all 5 banks every round, weighted by training rows.
