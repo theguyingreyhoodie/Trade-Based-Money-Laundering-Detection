@@ -31,6 +31,28 @@ The key comparison is ours versus zero-filled FedAvg. If zero-filled scores high
 gap as the accuracy cost of keeping the schema private. Every setup should land between the
 local-only and centralized MLP results in `experiments/results/baselines.csv`.
 
+## Results (HI-Small, 100 rounds, seeds 42/43/44)
+
+Pooled test PR-AUC, mean ± std over 3 seeds (`scripts/summarize_seeds.py`):
+
+| Setup | Pooled test PR-AUC | Per seed |
+|---|---|---|
+| Centralized XGBoost (upper bound) | 0.340 ± 0.007 | |
+| Centralized MLP (upper bound) | 0.241 ± 0.008 | |
+| Local-only XGBoost | 0.159 ± 0.006 | |
+| **FL hybrid** | **0.140 ± 0.026** | 0.119 / 0.133 / 0.169 |
+| Local-only MLP (lower bound) | 0.105 ± 0.006 | |
+| FL encoder_head | 0.105 ± 0.004 | 0.109 / 0.102 / 0.103 |
+| FL naive | 0.053 ± 0.006 | 0.048 / 0.052 / 0.059 |
+
+- Hybrid beats encoder_head on every seed, and beats the local-only MLP for all 5 banks
+  (mean per-bank test PR-AUC). Its spread over seeds is the largest.
+- Sharing only the head (`encoder_head`) gives no gain over training alone; sharing the
+  core encoder is what helps.
+- Naive FedAvg flags 3-4x more legitimate transactions (FPR 0.0047 vs 0.0013), so its
+  per-pattern recall is not comparable with the other setups.
+- Hybrid is still below local-only XGBoost and well below centralized training.
+
 ## Training
 
 - FedAvg (`strategy.AuditedFedAvg`), all 5 banks every round, weighted by training rows.
