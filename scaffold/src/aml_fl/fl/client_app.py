@@ -42,6 +42,7 @@ from ..metrics import best_f1_threshold
 from ..metrics import evaluate as eval_metrics
 from ..models import BankModel, HybridModel, pos_weight, predict_proba, train_epochs
 from ..preprocess import ClientData, load_client, load_client_hybrid, load_client_zero_filled, undersample
+from .strategy import AUDIT_KEY, hash_parameters
 
 log = logging.getLogger(__name__)
 
@@ -136,7 +137,9 @@ def make_client_app(partitions_dir: str | Path, out_dir: str | Path, mode: str =
             context.state[ENCODER_KEY] = ArrayRecord(private_state(model, mode))
             context.state[PROGRESS_KEY] = ConfigRecord({"encoder_rounds": encoder_rounds(context) + 1})
             metrics["encoder_rounds"] = encoder_rounds(context)   # should equal the round number
-        return Message(content=RecordDict({"arrays": shared, "metrics": MetricRecord(metrics)}),
+        # The bank declares the hash of what it sends; the server checks it and logs it for the audit.
+        audit = ConfigRecord({"bank": d.name, "update-hash": hash_parameters(shared)})
+        return Message(content=RecordDict({"arrays": shared, "metrics": MetricRecord(metrics), AUDIT_KEY: audit}),
                        reply_to=msg)
 
     @app.evaluate()
