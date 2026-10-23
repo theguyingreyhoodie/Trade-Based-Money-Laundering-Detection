@@ -85,17 +85,27 @@ class AuditChain:
         self._send(self.contract.functions.recordGlobalModel(run_key(run_id), rnd, to_bytes32(digest)),
                    self.operator)
 
-    def record_run(self, run_id: str, audit_log: list[dict]) -> int:
-        """Record every {"round", "hash"} of an audit.json that is not on-chain yet. Returns how
-        many were written. Raises if a round is already recorded with a different hash."""
+    def record_run(self, run_id: str, audit_log: list[dict], banks: dict[str, str] | None = None) -> int:
+        """Record every hash of an audit.json that is not on-chain yet: the global model of each
+        round (as operator) and, if `banks` maps bank names to addresses, each bank's update (sent
+        from that bank's address). Returns how many hashes were written. Raises if one is already
+        recorded with a different value."""
         written = 0
         for entry in audit_log:
-            onchain = self.global_model_hash(run_id, entry["round"])
+            rnd = entry["round"]
+            onchain = self.global_model_hash(run_id, rnd)
             if onchain is None:
-                self.record_global_model(run_id, entry["round"], entry["hash"])
+                self.record_global_model(run_id, rnd, entry["hash"])
                 written += 1
             elif onchain != entry["hash"]:
-                raise ValueError(f"{run_id} round {entry['round']} is already recorded with a different hash")
+                raise ValueError(f"{run_id} round {rnd} is already recorded with a different hash")
+            for bank, digest in entry.get("updates", {}).items() if banks else ():
+                onchain = self.update_hash(run_id, rnd, banks[bank])
+                if onchain is None:
+                    self.record_update(run_id, rnd, digest, banks[bank])
+                    written += 1
+                elif onchain != digest:
+                    raise ValueError(f"{run_id} round {rnd}: {bank}'s update is already recorded with a different hash")
         return written
 
     def record_update(self, run_id: str, rnd: int, digest: str, bank: str) -> None:
@@ -115,9 +125,22 @@ class AuditChain:
     def verify_global_model(self, run_id: str, rnd: int, digest: str) -> bool:
         return self.contract.functions.verifyGlobalModel(run_key(run_id), rnd, to_bytes32(digest)).call()
 
-    def verify_run(self, run_id: str, audit_log: list[dict]) -> list[int]:
-        """Rounds whose hash in audit_log does not match the chain (empty list: all match)."""
-        return [e["round"] for e in audit_log if not self.verify_global_model(run_id, e["round"], e["hash"])]
+    def update_hash(self, run_id: str, rnd: int, bank: str) -> str | None:
+        raw = self.contract.functions.updateHash(run_key(run_id), rnd, bank).call()
+        return None if raw == bytes(32) else raw.hex()
+
+    def verify_run(self, run_id: str, audit_log: list[dict], banks: dict[str, str] | None = None) -> list[int]:
+        """Rounds of audit_log that do not match the chain: the global model hash, or (if `banks`
+        is given) any bank's update hash. Empty list: everything matches."""
+        bad = []
+        for e in audit_log:
+            ok = self.verify_global_model(run_id, e["round"], e["hash"])
+            if banks:
+                ok = ok and all(self.update_hash(run_id, e["round"], banks[b]) == h
+                                for b, h in e.get("updates", {}).items())
+            if not ok:
+                bad.append(e["round"])
+        return bad
 
     def alert_bank(self, digest: str) -> str | None:
         bank = self.contract.functions.alertBank(to_bytes32(digest)).call()

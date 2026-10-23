@@ -74,6 +74,22 @@ def test_record_run_then_verify_detects_tampering(chain):
         chain.record_run("fl_hybrid_s42", tampered)                   # no overwriting
 
 
+def test_bank_update_hashes_recorded_from_each_bank(chain):
+    accounts = chain.w3.eth.accounts
+    banks = {"client_0": accounts[1], "client_1": accounts[2]}
+    for addr in banks.values():
+        chain.register_bank(addr)
+    h = [e["hash"] for e in _audit(6)]
+    audit = [{"round": 1, "hash": h[0], "updates": {"client_0": h[1], "client_1": h[2]}},
+             {"round": 2, "hash": h[3], "updates": {"client_0": h[4], "client_1": h[5]}}]
+    assert chain.record_run("run", audit, banks) == 6
+    assert chain.update_hash("run", 2, accounts[2]) == h[5]           # stored under that bank
+    assert chain.verify_run("run", audit, banks) == []
+    tampered = [dict(e, updates=dict(e["updates"])) for e in audit]
+    tampered[1]["updates"]["client_0"] = h[0]
+    assert chain.verify_run("run", tampered, banks) == [2]
+
+
 def test_model_hash_from_fl_roundtrips(chain):
     pytest.importorskip("flwr")
     import numpy as np

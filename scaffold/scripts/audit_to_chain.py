@@ -12,7 +12,8 @@ Then, in another terminal:
 
 The contract is deployed on first use and its address kept in
 src/aml_fl/chain/hardhat/deployments/localhost.json; it is redeployed if the node was
-restarted. Account 0 is the operator (FL server), accounts 1..n are registered as the banks.
+restarted. Account 0 is the operator (FL server), accounts 1..n are registered as the banks
+client_0..client_{n-1}; each bank's update hashes are sent from its own account.
 """
 from __future__ import annotations
 
@@ -32,6 +33,11 @@ log = logging.getLogger("audit_to_chain")
 DEPLOYMENT = HARDHAT_DIR / "deployments" / "localhost.json"
 
 
+def bank_accounts(chain: AuditChain, num_banks: int) -> dict[str, str]:
+    """client_i -> the node account that plays that bank (accounts 1..n)."""
+    return {f"client_{i}": a for i, a in enumerate(chain.w3.eth.accounts[1:1 + num_banks])}
+
+
 def get_chain(rpc_url: str, num_banks: int, deployment: Path = DEPLOYMENT) -> AuditChain:
     """The deployed contract for this node (deployed and banks registered if needed)."""
     w3 = connect(rpc_url)
@@ -44,7 +50,7 @@ def get_chain(rpc_url: str, num_banks: int, deployment: Path = DEPLOYMENT) -> Au
         deployment.write_text(json.dumps({"rpc": rpc_url, "chain_id": w3.eth.chain_id,
                                           "address": chain.address}, indent=2))
         log.info("Deployed FLAudit at %s (operator %s)", chain.address, chain.operator)
-    for bank in w3.eth.accounts[1:1 + num_banks]:
+    for bank in bank_accounts(chain, num_banks).values():
         chain.register_bank(bank)
     return chain
 
@@ -60,6 +66,7 @@ def main() -> None:
     cfg = load_config(ROOT / args.config)
 
     chain = get_chain(args.rpc, cfg["partition"]["num_clients"])
+    banks = bank_accounts(chain, cfg["partition"]["num_clients"])
     failed = False
     for run in args.runs:
         path = ROOT / "experiments" / "results" / run / "audit.json"
@@ -67,9 +74,11 @@ def main() -> None:
             sys.exit(f"{path} not found. Run scripts/run_fl.py first.")
         audit = json.loads(path.read_text())
         if not args.verify_only:
-            written = chain.record_run(run, audit)
-            log.info("%s: recorded %d new rounds (%d already on-chain)", run, written, len(audit) - written)
-        bad = chain.verify_run(run, audit)
+            written = chain.record_run(run, audit, banks)
+            log.info("%s: recorded %d new hashes", run, written)
+        if not any("updates" in e for e in audit):
+            log.warning("%s: audit.json has no per-bank update hashes (run made before they were added)", run)
+        bad = chain.verify_run(run, audit, banks)
         if bad:
             failed = True
             log.error("%s: %d of %d rounds do NOT match the chain: %s", run, len(bad), len(audit), bad[:10])
