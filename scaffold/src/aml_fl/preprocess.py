@@ -133,6 +133,37 @@ def load_client_hybrid(client_dir: str | Path, shared_vocab: dict[str, list[str]
                       core.preprocessors + own.preprocessors, core_dim=core.input_dim)
 
 
+def zero_filled_layout(columns: list[str], vocab: dict[str, list[str]], core: list[str]) -> list[str]:
+    """Feature names of the layout every bank agrees on for zero-filled FedAvg: each column of
+    the agreed list (one-hot over its vocab if categorical), then a 0/1 "<missing>" flag per
+    non-core column."""
+    names = []
+    for c in columns:
+        names += [f"{c}={v}" for v in vocab[c]] + [f"{c}=<other>"] if c in vocab else [c]
+    return names + [f"{c}=<missing>" for c in columns if c not in core]
+
+
+def load_client_zero_filled(client_dir: str | Path, columns: list[str],
+                            vocab: dict[str, list[str]]) -> ClientData:
+    """The bank's own columns placed in the agreed layout (zero_filled_layout). Columns the bank
+    does not have stay 0 and get <missing> = 1. Scaling is still fitted on the bank's own data."""
+    own = load_client(client_dir, "all", vocab)
+    meta = load_json(Path(client_dir) / "schema.json")
+    unknown = set(meta["columns"]) - set(columns)
+    if unknown:
+        raise ValueError(f"{client_dir} has columns outside the agreed list: {sorted(unknown)}")
+    names = zero_filled_layout(columns, vocab, meta["core_columns"])
+    idx = {n: i for i, n in enumerate(names)}
+    pos = [idx[n] for n in own.feature_names]
+    missing = [idx[f"{c}=<missing>"] for c in columns if c not in meta["columns"]]
+    X = {}
+    for s, x in own.X.items():
+        X[s] = np.zeros((len(x), len(names)), dtype=np.float32)
+        X[s][:, pos] = x
+        X[s][:, missing] = 1.0
+    return ClientData(own.name, X, own.y, own.txn_ids, names, own.preprocessors)
+
+
 def undersample(X: np.ndarray, y: np.ndarray, neg_per_pos: int = 20,
                 seed: int = 0) -> tuple[np.ndarray, np.ndarray]:
     """Keep all positives and at most `neg_per_pos` negatives per positive (training only!)."""

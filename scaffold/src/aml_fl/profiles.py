@@ -38,6 +38,9 @@ _OCCUPATIONS = ["salaried", "self_employed", "student", "retired", "trader", "un
 _REGIONS = ["north", "south", "east", "west", "central"]
 _ACCOUNT_TYPES = ["savings", "current", "nri", "salary"]
 _CHANNELS = ["branch", "online", "agent"]
+# Every value a categorical profile column can take (used when banks agree on one layout).
+PROFILE_VOCAB = {"customer_type": _CUSTOMER_TYPES, "kyc_risk_level": _KYC, "occupation_category": _OCCUPATIONS,
+                 "branch_region": _REGIONS, "account_type": _ACCOUNT_TYPES, "onboarding_channel": _CHANNELS}
 
 
 def generate_profiles(accounts: pd.Series, risky: pd.Series, label_signal: float,
