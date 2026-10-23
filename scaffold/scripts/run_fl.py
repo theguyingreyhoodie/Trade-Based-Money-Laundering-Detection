@@ -16,6 +16,7 @@ Needs the partitions from prepare_data.py. Results use the same columns as basel
 Usage:
     python scripts/run_fl.py --config configs/default.yaml
     python scripts/run_fl.py --rounds 3          # quick check
+    python scripts/run_fl.py --seed 1            # writes fl_<mode>_s1.csv, fl_<mode>_s1/ instead
 """
 from __future__ import annotations
 
@@ -65,13 +66,17 @@ def main() -> None:
     ap.add_argument("--config", default="configs/default.yaml")
     ap.add_argument("--mode", default=None, help="override fl.mode")
     ap.add_argument("--rounds", type=int, default=None, help="override fl.num_rounds")
+    ap.add_argument("--seed", type=int, default=None,
+                    help="override seed; outputs get a _s<seed> suffix so repeated runs do not overwrite")
     args = ap.parse_args()
     setup_logging()
     cfg = load_config(ROOT / args.config)
     fl, mlp = cfg["fl"], cfg.get("mlp", {})
     mode = args.mode or fl["mode"]
     rounds = args.rounds or fl["num_rounds"]
-    set_seed(cfg["seed"])
+    seed = cfg["seed"] if args.seed is None else args.seed
+    name = f"fl_{mode}" if args.seed is None else f"fl_{mode}_s{seed}"
+    set_seed(seed)
     if " " in sys.executable:
         # Ray (Flower's simulation backend) cannot start workers from such a path; it hangs
         # for minutes and then fails with "worker startup repeatedly failed".
@@ -90,7 +95,7 @@ def main() -> None:
     n_clients = len(list(part_dir.glob("client_*")))
     if n_clients == 0:
         sys.exit(f"No partitions in {part_dir}. Run scripts/prepare_data.py first.")
-    out_dir = ROOT / "experiments" / "results" / f"fl_{mode}"
+    out_dir = ROOT / "experiments" / "results" / name
     shutil.rmtree(out_dir, ignore_errors=True)
 
     # The server only ever holds the shared parameters (naive: the whole model; encoder_head:
@@ -100,9 +105,9 @@ def main() -> None:
     initial = ArrayRecord(shared_state(template, mode))
     client_app = make_client_app(part_dir, out_dir, mode=mode, lr=mlp.get("lr", 1e-3),
                                  batch_size=mlp.get("batch_size", 512),
-                                 local_epochs=fl.get("local_epochs", 1), seed=cfg["seed"])
+                                 local_epochs=fl.get("local_epochs", 1), seed=seed)
     server_app = make_server_app(initial, n_clients, rounds, out_dir)
-    log.info("FL mode=%s, %d clients, %d rounds", mode, n_clients, rounds)
+    log.info("FL mode=%s, %d clients, %d rounds, seed %d", mode, n_clients, rounds, seed)
     # Ray starts (CPUs / num_cpus) workers; size it so there is about one worker per bank.
     cpus_per_client = max(1, (os.cpu_count() or 1) // n_clients)
     run_simulation(server_app=server_app, client_app=client_app, num_supernodes=n_clients,
@@ -117,15 +122,17 @@ def main() -> None:
     except FileNotFoundError:
         pattern_of = None
     rows, by_pattern = summarize(scores, pattern_of, f"fl_{mode}")
+    for r in rows + by_pattern:
+        r["seed"] = seed
 
     res = ROOT / "experiments" / "results"
-    pd.DataFrame(rows).to_csv(res / f"fl_{mode}.csv", index=False)
+    pd.DataFrame(rows).to_csv(res / f"{name}.csv", index=False)
     if by_pattern:
-        pd.DataFrame(by_pattern).to_csv(res / f"fl_{mode}_by_pattern.csv", index=False)
+        pd.DataFrame(by_pattern).to_csv(res / f"{name}_by_pattern.csv", index=False)
     pooled = rows[-1]
     log.info("pooled test: pr_auc=%.3f f1=%.3f recall=%.3f fpr=%.4f", pooled["pr_auc"], pooled["f1"],
              pooled["recall"], pooled["fpr"])
-    log.info("Saved %s", res / f"fl_{mode}.csv")
+    log.info("Saved %s", res / f"{name}.csv")
 
 
 if __name__ == "__main__":

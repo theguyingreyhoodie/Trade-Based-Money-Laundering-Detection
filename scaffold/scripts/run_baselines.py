@@ -12,6 +12,7 @@ Results go to experiments/results/baselines.csv. If data/processed/patterns.parq
 
 Usage:
     python scripts/run_baselines.py --config configs/default.yaml
+    python scripts/run_baselines.py --seed 1     # writes baselines_s1.csv instead
 """
 from __future__ import annotations
 
@@ -116,12 +117,16 @@ def pattern_rows(pattern_of: pd.Series | None, txn_ids, scores, thr, **info) -> 
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--config", default="configs/default.yaml")
+    ap.add_argument("--seed", type=int, default=None,
+                    help="override seed; outputs get a _s<seed> suffix so repeated runs do not overwrite")
     args = ap.parse_args()
     setup_logging()
     cfg = load_config(ROOT / args.config)
-    set_seed(cfg["seed"])
+    seed = cfg["seed"] if args.seed is None else args.seed
+    name = "baselines" if args.seed is None else f"baselines_s{seed}"
+    set_seed(seed)
     rows, by_pattern = [], []
-    candidates = models(cfg["seed"], cfg.get("mlp"))
+    candidates = models(seed, cfg.get("mlp"))
 
     proc = ROOT / cfg["data"]["processed_dir"]
     try:
@@ -137,7 +142,7 @@ def main() -> None:
     y = {s: df.loc[df["split"] == s, "label"].to_numpy() for s in ("train", "val", "test")}
     test_ids = df.loc[df["split"] == "test", "txn_id"].to_numpy()
     for name, make in candidates.items():
-        res, scores, thr = fit_eval(make, X, y, cfg["seed"])
+        res, scores, thr = fit_eval(make, X, y, seed)
         rows.append({"setup": "centralized", "client": "all", "model": name, **res})
         by_pattern += pattern_rows(pattern_of, test_ids, scores, thr, setup="centralized", client="all", model=name)
         log.info("centralized %-8s %s", name, res)
@@ -147,7 +152,7 @@ def main() -> None:
     for cdir in sorted((ROOT / cfg["data"]["partitions_dir"]).glob("client_*")):
         c = load_client(cdir)
         for name, make in candidates.items():
-            res, scores, thr = fit_eval(make, c.X, c.y, cfg["seed"])
+            res, scores, thr = fit_eval(make, c.X, c.y, seed)
             rows.append({"setup": "local", "client": c.name, "model": name, **res})
             by_pattern += pattern_rows(pattern_of, c.txn_ids["test"], scores, thr,
                                        setup="local", client=c.name, model=name)
@@ -168,13 +173,15 @@ def main() -> None:
                                    0.0, setup="local", client="pooled", model=name)
         log.info("local pooled %-8s %s", name, res)
 
-    out = ROOT / "experiments" / "results" / "baselines.csv"
+    for r in rows + by_pattern:
+        r["seed"] = seed
+    out = ROOT / "experiments" / "results" / f"{name}.csv"
     out.parent.mkdir(parents=True, exist_ok=True)
     pd.DataFrame(rows).to_csv(out, index=False)
     log.info("Saved %s", out)
     if by_pattern:
-        pd.DataFrame(by_pattern).to_csv(out.with_name("baselines_by_pattern.csv"), index=False)
-        log.info("Saved %s", out.with_name("baselines_by_pattern.csv"))
+        pd.DataFrame(by_pattern).to_csv(out.with_name(f"{name}_by_pattern.csv"), index=False)
+        log.info("Saved %s", out.with_name(f"{name}_by_pattern.csv"))
 
 
 if __name__ == "__main__":
