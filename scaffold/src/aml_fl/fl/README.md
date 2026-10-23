@@ -11,7 +11,7 @@ Run with `python scripts/run_fl.py --mode <mode>` (see the main README).
 | Mode | Shared (FedAvg'd) | Private (stays at the bank) | Features each bank uses |
 |---|---|---|---|
 | `naive` (baseline) | whole `BankModel` | nothing | the 9 `core_columns` only |
-| zero-filled (baseline, todo) | whole `BankModel` | nothing | the union of all clients' columns; missing ones are 0 plus a 0/1 "missing" flag |
+| `zero_filled` (baseline) | whole `BankModel` | nothing | the agreed union of all banks' columns; missing ones are 0 plus a 0/1 "missing" flag |
 | `encoder_head` | `SharedHead` | `Encoder` | the bank's full own schema |
 | `hybrid` | core encoder + `SharedHead` | encoder of the bank's own columns | `[core | own]` |
 
@@ -27,6 +27,11 @@ One rule decides what is sent in every mode: a parameter whose name starts with
 rounds. Each bank reports `encoder_rounds`, which must equal the round number in
 `history.csv`; a lower value means the private encoder was lost between rounds.
 
+`zero_filled` (`preprocess.load_client_zero_filled`) needs every bank to agree on one column
+list (`run_fl.agreed_columns`: the union of the banks' schemas) and on the category lists of
+every categorical column (`client_app.ALL_VOCAB`). Agreeing on that list reveals which columns
+each bank stores; the hybrid mode avoids this.
+
 The key comparison is ours versus zero-filled FedAvg. If zero-filled scores higher, report the
 gap as the accuracy cost of keeping the schema private. Every setup should land between the
 local-only and centralized MLP results in `experiments/results/baselines.csv`.
@@ -41,10 +46,16 @@ Pooled test PR-AUC, mean ± std over 3 seeds (`scripts/summarize_seeds.py`):
 | Centralized MLP (upper bound) | 0.241 ± 0.008 | |
 | Local-only XGBoost | 0.159 ± 0.006 | |
 | **FL hybrid** | **0.140 ± 0.026** | 0.119 / 0.133 / 0.169 |
+| FL zero_filled | 0.119 ± 0.005 | 0.124 / 0.113 / 0.120 |
 | Local-only MLP (lower bound) | 0.105 ± 0.006 | |
 | FL encoder_head | 0.105 ± 0.004 | 0.109 / 0.102 / 0.103 |
 | FL naive | 0.053 ± 0.006 | 0.048 / 0.052 / 0.059 |
 
+- Hybrid versus zero-filled FedAvg (the key comparison): hybrid has the higher mean test
+  PR-AUC, the higher validation PR-AUC on every seed (0.19-0.21 vs 0.15-0.18) and the higher
+  mean test PR-AUC at 4 of 5 banks, but zero-filled wins seed 42 on test. With 3 seeds the
+  test gap (+0.021) is not statistically significant. Hybrid matches or beats zero-filled
+  while keeping each bank's column list private.
 - Hybrid beats encoder_head on every seed, and beats the local-only MLP for all 5 banks
   (mean per-bank test PR-AUC). Its spread over seeds is the largest.
 - Sharing only the head (`encoder_head`) gives no gain over training alone; sharing the
