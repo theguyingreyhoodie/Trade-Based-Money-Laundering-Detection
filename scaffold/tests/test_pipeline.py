@@ -341,6 +341,36 @@ def test_fl_zero_filled_shares_the_whole_model(toy_partitions, tmp_path):
         assert len(ctx.state) == 0                                  # nothing kept private
 
 
+def test_fl_server_logs_and_checks_bank_update_hashes(toy_partitions, tmp_path):
+    pytest.importorskip("flwr")
+    from flwr.app import ArrayRecord, Context, RecordDict
+
+    from aml_fl.fl.client_app import make_client_app
+    from aml_fl.fl.strategy import AUDIT_KEY, AuditedFedAvg, hash_parameters
+    from aml_fl.models import BankModel
+    from run_fl import core_input_dim
+
+    cfg = load_config(ROOT / "configs" / "default.yaml")
+    initial = ArrayRecord(BankModel(input_dim=core_input_dim(cfg["core_features"])).state_dict())
+    app = make_client_app(toy_partitions, tmp_path, mode="naive")
+    replies = []
+    for pid in (0, 1):
+        ctx = Context(run_id=1, node_id=7, node_config={"partition-id": pid}, state=RecordDict(), run_config={})
+        replies.append(app(_train_message(initial, 1), ctx))
+    for r in replies:   # each bank declares the hash of exactly what it sends
+        assert r.content[AUDIT_KEY]["update-hash"] == hash_parameters(r.content["arrays"])
+
+    strategy = AuditedFedAvg()
+    strategy.aggregate_train(1, replies)
+    entry = strategy.audit_log[0]
+    assert set(entry["updates"]) == {"client_0", "client_1"}
+    assert entry["updates"]["client_1"] == replies[1].content[AUDIT_KEY]["update-hash"]
+
+    replies[1].content["arrays"] = replies[0].content["arrays"]   # update altered in transit
+    with pytest.raises(ValueError, match="client_1"):
+        AuditedFedAvg().aggregate_train(1, replies)
+
+
 def test_fl_naive_shares_the_whole_model(toy_partitions, tmp_path):
     pytest.importorskip("flwr")
     from flwr.app import ArrayRecord, Context, RecordDict
