@@ -22,9 +22,9 @@ The whole team works on every phase together.
 |---|---|---|
 | 0 | Setup & learning | in progress |
 | 1 | Data pipeline: features, time split, profiles, bank partitions | **first version done** |
-| 2 | Baselines (centralized / local-only) + recall per pattern | LR, XGBoost, MLP done (toy data) |
-| 3 | Federated learning (Flower) | naive FedAvg + encoder/shared head done (toy data); zero-filled next — see `src/aml_fl/fl/README.md` |
-| 4 | Blockchain audit layer | todo — see `src/aml_fl/chain/README.md` |
+| 2 | Baselines (centralized / local-only) + recall per pattern | LR, XGBoost, MLP done (HI-Small, 3 seeds) |
+| 3 | Federated learning (Flower) | naive, zero-filled, encoder_head, hybrid done (HI-Small, 3 seeds) — see `src/aml_fl/fl/README.md` |
+| 4 | Blockchain audit layer | contract + client done, round hashes on-chain; per-bank update hashes next — see `src/aml_fl/chain/README.md` |
 | 5 | SHAP + Streamlit dashboard | todo |
 | 6 | Evaluation & report | todo |
 
@@ -39,6 +39,12 @@ brew install libomp                # macOS only: XGBoost needs it
 pip install torch --index-url https://download.pytorch.org/whl/cpu
 pip install -r requirements.txt
 pytest -q                          # should pass without the real dataset
+```
+
+For the blockchain layer (Phase 4) you also need Node.js 22 or 24 (`brew install node@24`):
+
+```bash
+cd src/aml_fl/chain/hardhat && npm install && npx hardhat build && npx hardhat test
 ```
 
 If the path to your clone contains **spaces**, create the venv somewhere else, e.g.
@@ -87,6 +93,11 @@ python scripts/run_fl.py --mode hybrid         # shared core encoder + private e
 python scripts/run_baselines.py --seed 43
 python scripts/run_fl.py --mode hybrid --seed 43
 python scripts/summarize_seeds.py
+
+# Blockchain audit: start a local chain in one terminal ...
+cd src/aml_fl/chain/hardhat && npx hardhat node
+# ... then write a run's model hashes on-chain and check them (--verify-only: just check):
+python scripts/audit_to_chain.py fl_hybrid_s42
 ```
 
 Outputs:
