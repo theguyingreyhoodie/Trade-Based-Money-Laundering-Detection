@@ -1,0 +1,15 @@
+{
+  "name": "aml-fl-audit",
+  "version": "0.1.0",
+  "private": true,
+  "description": "FLAudit contract: on-chain hashes of federated model rounds and alerts",
+  "type": "module",
+  "scripts": {
+    "build": "hardhat build",
+    "test": "hardhat test",
+    "node": "hardhat node"
+  },
+  "devDependencies": {
+    "hardhat": "3.21.0"
+  }
+}
