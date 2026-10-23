@@ -24,7 +24,7 @@ The whole team works on every phase together.
 | 1 | Data pipeline: features, time split, profiles, bank partitions | **first version done** |
 | 2 | Baselines (centralized / local-only) + recall per pattern | LR, XGBoost, MLP done (HI-Small, 3 seeds) |
 | 3 | Federated learning (Flower) | naive, zero-filled, encoder_head, hybrid done (HI-Small, 3 seeds) — see `src/aml_fl/fl/README.md` |
-| 4 | Blockchain audit layer | contract + client done, round hashes on-chain; per-bank update hashes next — see `src/aml_fl/chain/README.md` |
+| 4 | Blockchain audit layer | contract + client done; global model and per-bank update hashes on-chain — see `src/aml_fl/chain/README.md` |
 | 5 | SHAP + Streamlit dashboard | todo |
 | 6 | Evaluation & report | todo |
 
