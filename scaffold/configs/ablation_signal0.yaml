@@ -1,0 +1,18 @@
+# Ablation: the synthetic customer profiles carry no label signal at all (pure noise).
+# In the main runs (default.yaml, label_signal 0.1) a few profile attributes of accounts that
+# laundered in the TRAINING period are drawn from a riskier distribution. If the results hold here,
+# they do not depend on that synthetic signal.
+#
+#   python scripts/prepare_data.py --config configs/ablation_signal0.yaml
+#   python scripts/run_baselines.py --config configs/ablation_signal0.yaml --seed 42
+#   python scripts/run_fl.py --config configs/ablation_signal0.yaml --mode hybrid --seed 42
+#   python scripts/summarize_seeds.py --config configs/ablation_signal0.yaml
+extends: default.yaml
+
+profiles:
+  label_signal: 0.0
+
+data:
+  processed_dir: data/processed_signal0
+  partitions_dir: data/partitions_signal0
+  results_dir: experiments/results/signal0
