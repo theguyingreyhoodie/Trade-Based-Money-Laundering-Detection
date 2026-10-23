@@ -8,9 +8,11 @@ Reads experiments/results/baselines_s<seed>.csv and fl_<mode>_s<seed>.csv and wr
 
 Usage:
     python scripts/summarize_seeds.py
+    python scripts/summarize_seeds.py --config configs/ablation_signal0.yaml   # that config's results_dir
 """
 from __future__ import annotations
 
+import argparse
 import sys
 from pathlib import Path
 
@@ -43,16 +45,23 @@ def summarize(runs: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
 
 
 def main() -> None:
-    agg, pc = summarize(load_runs())
-    agg.to_csv(RESULTS / "seeds_summary.csv", index=False)
-    pc.to_csv(RESULTS / "seeds_per_client.csv", index=False)
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--config", default="configs/default.yaml")
+    args = ap.parse_args()
+    sys.path.insert(0, str(ROOT / "src"))
+    from aml_fl.utils import load_config, results_dir
+
+    out = results_dir(load_config(ROOT / args.config), ROOT)
+    agg, pc = summarize(load_runs(out))
+    agg.to_csv(out / "seeds_summary.csv", index=False)
+    pc.to_csv(out / "seeds_per_client.csv", index=False)
     print("| Setup | Model | Seeds | Test PR-AUC (mean ± std) | F1 | Recall | FPR |")
     print("|---|---|---|---|---|---|---|")
     for r in agg.itertuples():
         setup = r.setup if r.client == "all" else f"{r.setup} (pooled)"
         print(f"| {setup} | {r.model} | {r.seeds} | {r.pr_auc_mean:.3f} ± {r.pr_auc_std:.3f} | "
               f"{r.f1_mean:.3f} | {r.recall_mean:.3f} | {r.fpr_mean:.4f} |")
-    print(f"\nSaved {RESULTS / 'seeds_summary.csv'} and {RESULTS / 'seeds_per_client.csv'}")
+    print(f"\nSaved {out / 'seeds_summary.csv'} and {out / 'seeds_per_client.csv'}")
 
 
 if __name__ == "__main__":

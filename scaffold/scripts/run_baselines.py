@@ -34,7 +34,7 @@ sys.path.insert(0, str(ROOT / "src"))
 
 from aml_fl.metrics import best_f1_threshold, evaluate, pooled_evaluate, recall_by_pattern  # noqa: E402
 from aml_fl.preprocess import TabularPreprocessor, load_client, undersample  # noqa: E402
-from aml_fl.utils import load_config, load_table, set_seed, setup_logging  # noqa: E402
+from aml_fl.utils import load_config, load_table, results_dir, set_seed, setup_logging  # noqa: E402
 
 log = logging.getLogger("baselines")
 
@@ -175,7 +175,7 @@ def main() -> None:
 
     for r in rows + by_pattern:
         r["seed"] = seed
-    out = ROOT / "experiments" / "results" / f"{out_name}.csv"
+    out = results_dir(cfg, ROOT) / f"{out_name}.csv"
     out.parent.mkdir(parents=True, exist_ok=True)
     pd.DataFrame(rows).to_csv(out, index=False)
     log.info("Saved %s", out)
