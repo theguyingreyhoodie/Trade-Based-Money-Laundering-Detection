@@ -4,8 +4,9 @@ B.E. Computer Engineering project, MES Wadia College of Engineering, Pune (2026�
 **Team:** Anuj Nanhe, Aniket Shelke, Laiba Shaikh. **Guide:** Dr. S. R. Khonde.
 
 Several banks train a money-laundering detection model together using **Federated Learning**,
-without sharing raw data. Each bank has a **different data schema**, so it keeps a private
-encoder, and only a shared head is aggregated with **FedAvg** (orchestrated by Flower).
+without sharing raw data. Each bank has a **different data schema**: an encoder for the columns
+every bank has and the prediction head are aggregated with **FedAvg** (orchestrated by Flower),
+while each bank keeps a private encoder for its own columns ("hybrid").
 A **blockchain** audit layer records hashes of model updates and alerts, which makes the
 process tamper-evident.
 
@@ -26,7 +27,7 @@ The whole team works on every phase together.
 | 3 | Federated learning (Flower) | naive, zero-filled, encoder_head, hybrid done (HI-Small, 3 seeds) — see `src/aml_fl/fl/README.md` |
 | 4 | Blockchain audit layer | contract + client done; global model and per-bank update hashes on-chain — see `src/aml_fl/chain/README.md` |
 | 5 | SHAP explanations + web dashboard | alerts explained with SHAP, hashed on-chain; FastAPI + static web app — see `dashboard/` |
-| 6 | Evaluation & report | todo |
+| 6 | Evaluation & report | profile-signal ablation and report figures done (`docs/figures/`); report in progress |
 
 ## Setup
 
@@ -117,6 +118,12 @@ Outputs:
 - `experiments/results/baselines_by_pattern.csv` holds recall per laundering pattern for each baseline.
 - `experiments/results/seeds_summary.csv` and `seeds_per_client.csv` hold mean ± std over the
   `--seed` runs (from `summarize_seeds.py`).
+
+The small per-seed results (`*_s42`, `*_s43`, `*_s44`, also under `experiments/results/signal0/`)
+and `data/processed/summary.json` are committed, so a fresh clone can open the dashboard and
+redraw the figures without the dataset. Per-transaction scores (`scores/`) stay local.
+
+![The dashboard's model comparison](docs/images/dashboard-models.png)
 
 ## How the data pipeline works
 
