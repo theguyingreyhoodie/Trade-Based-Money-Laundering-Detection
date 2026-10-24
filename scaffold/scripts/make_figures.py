@@ -69,8 +69,8 @@ def style() -> None:
 
 def save(fig, name: str) -> None:
     OUT.mkdir(parents=True, exist_ok=True)
-    for ext in ("png", "pdf"):
-        fig.savefig(OUT / f"{name}.{ext}")
+    fig.savefig(OUT / f"{name}.png", metadata={"Software": None})
+    fig.savefig(OUT / f"{name}.pdf", metadata={"CreationDate": None, "Producer": None})  # same bytes on every run
     plt.close(fig)
     print(f"wrote docs/figures/{name}.png / .pdf")
 
