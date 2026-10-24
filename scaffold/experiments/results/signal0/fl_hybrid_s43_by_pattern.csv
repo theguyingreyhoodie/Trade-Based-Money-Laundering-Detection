@@ -1,0 +1,10 @@
+setup,client,model,pattern,positives,detected,recall,seed
+fl_hybrid,pooled,mlp,unlisted,459,29,0.06318082788671024,43
+fl_hybrid,pooled,mlp,gather_scatter,147,75,0.5102040816326531,43
+fl_hybrid,pooled,mlp,scatter_gather,123,51,0.4146341463414634,43
+fl_hybrid,pooled,mlp,stack,107,36,0.3364485981308411,43
+fl_hybrid,pooled,mlp,fan_out,74,51,0.6891891891891891,43
+fl_hybrid,pooled,mlp,fan_in,71,22,0.30985915492957744,43
+fl_hybrid,pooled,mlp,cycle,65,21,0.3230769230769231,43
+fl_hybrid,pooled,mlp,bipartite,52,14,0.2692307692307692,43
+fl_hybrid,pooled,mlp,random,45,15,0.3333333333333333,43

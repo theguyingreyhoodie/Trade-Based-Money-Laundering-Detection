@@ -16,12 +16,17 @@ env/
 # --- Data (download from Kaggle, never commit) ---
 data/raw/*
 data/processed/*
+!data/processed/summary.json
 data/partitions/*
 data/processed_*/
 data/partitions_*/
 !data/**/.gitkeep
 
 # --- Models / experiment outputs ---
+# Only the small per-seed results are committed (summaries, histories, audit hashes, alerts, the
+# tiny saved models); per-transaction scores and old local runs stay on each machine.
+experiments/results/**/scores/
+experiments/results/archive/
 *.pt
 *.pth
 *.ckpt
