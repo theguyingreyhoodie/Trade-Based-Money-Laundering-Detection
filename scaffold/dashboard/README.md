@@ -8,6 +8,8 @@ python scripts/build_alerts.py fl_hybrid_s42 --chain   # alerts + SHAP, hashes o
 python dashboard/app.py                                 # http://127.0.0.1:8000
 ```
 
+![Alerts](../docs/images/dashboard-alerts.png)
+
 | View | Question it answers |
 |---|---|
 | Alerts | Which flagged transactions need review first, and why was each one flagged? Score against the bank's own threshold, the top SHAP features in plain words, the transaction, a live check that the alert is unchanged and was logged on-chain by its bank, and the dataset label (evaluation only). Escalate / Dismiss are kept in the browser only. |
@@ -16,6 +18,10 @@ python dashboard/app.py                                 # http://127.0.0.1:8000
 | Audit | Is the model history intact? One cell per round and bank, each a live comparison of `audit.json` with the FLAudit contract. |
 
 Without a chain node every view still works and the ledger checks say they are offline.
+
+| Models | Training | Audit |
+|---|---|---|
+| ![Models](../docs/images/dashboard-models.png) | ![Training](../docs/images/dashboard-training.png) | ![Audit](../docs/images/dashboard-audit.png) |
 
 Bank names are display labels set in `configs/default.yaml` (`partition.bank_names`); everywhere
 else the banks are `client_0..client_4`. They are fictional (Iris National, Acacia, Magnolia,
