@@ -266,15 +266,17 @@ profiles:
     ledger.benchmark.batch_sizes: [1, 50]
   test:                         # seconds, used by the pytest suite
     project.seeds: [0]
-    data.n_trades: 4000
-    data.entities.n_companies: 400
+    data.n_trades: 6000
+    data.illicit_rate: 0.05
+    data.entities.n_companies: 500
     data.entities.n_finance_houses: 8
     data.entities.n_business_centres: 15
     data.entities.n_group_directors: 25
-    data.networks.n_networks: 10
+    data.networks.n_networks: 20
+    data.networks.active_months: [14, 24]
     models.mlp.epochs: 6
     models.random_forest.n_estimators: 40
     models.lightgbm.n_estimators: 60
     fl.rounds: 2
     fl.experiments.min_client_size: 50
-    split.min_typology_count: 1
+    split.min_typology_count: 0

@@ -1,0 +1,1832 @@
+{
+  "n_features": 81,
+  "n_trades": 60453,
+  "split": {
+    "train": {
+      "n": 35687,
+      "n_illicit": 1578,
+      "illicit_rate": 0.044217782385742706,
+      "typology_counts": {
+        "over_invoicing": 202,
+        "under_invoicing": 196,
+        "multiple_invoicing": 155,
+        "phantom_shipment": 154,
+        "over_under_shipment": 174,
+        "misdescription": 132,
+        "third_party_payment": 197,
+        "circular_trading": 113,
+        "shell_company": 157,
+        "high_risk_routing": 98
+      }
+    },
+    "val": {
+      "n": 12291,
+      "n_illicit": 454,
+      "illicit_rate": 0.03693759661540965,
+      "typology_counts": {
+        "over_invoicing": 43,
+        "under_invoicing": 69,
+        "multiple_invoicing": 39,
+        "phantom_shipment": 45,
+        "over_under_shipment": 39,
+        "misdescription": 45,
+        "third_party_payment": 34,
+        "circular_trading": 62,
+        "shell_company": 35,
+        "high_risk_routing": 43
+      }
+    },
+    "test": {
+      "n": 12475,
+      "n_illicit": 371,
+      "illicit_rate": 0.029739478957915833,
+      "typology_counts": {
+        "over_invoicing": 91,
+        "under_invoicing": 23,
+        "multiple_invoicing": 22,
+        "phantom_shipment": 41,
+        "over_under_shipment": 27,
+        "misdescription": 63,
+        "third_party_payment": 9,
+        "circular_trading": 44,
+        "shell_company": 24,
+        "high_risk_routing": 27
+      }
+    }
+  },
+  "features": {
+    "price_log_ratio": {
+      "group": "invoice",
+      "mean_legit": 0.0038188809994608164,
+      "mean_illicit": 0.04757428541779518,
+      "auc_any_illicit": 0.5331315994262695,
+      "best_typology": "over_invoicing",
+      "best_typology_separation": 0.9042602181434631
+    },
+    "price_z": {
+      "group": "invoice",
+      "mean_legit": 0.029492424800992012,
+      "mean_illicit": 0.07338802516460419,
+      "auc_any_illicit": 0.5253046751022339,
+      "best_typology": "over_invoicing",
+      "best_typology_separation": 0.9082357883453369
+    },
+    "price_abs_z": {
+      "group": "invoice",
+      "mean_legit": 0.739996075630188,
+      "mean_illicit": 1.3189277648925781,
+      "auc_any_illicit": 0.5743539929389954,
+      "best_typology": "under_invoicing",
+      "best_typology_separation": 0.8599449992179871
+    },
+    "price_abs_z_declared_hs": {
+      "group": "invoice",
+      "mean_legit": 0.7439581155776978,
+      "mean_illicit": 1.6760767698287964,
+      "auc_any_illicit": 0.6021249890327454,
+      "best_typology": "misdescription",
+      "best_typology_separation": 0.8733155727386475
+    },
+    "price_dev_exporter_hs": {
+      "group": "invoice",
+      "mean_legit": -0.004194825422018766,
+      "mean_illicit": 0.02007230371236801,
+      "auc_any_illicit": 0.5145941376686096,
+      "best_typology": "under_invoicing",
+      "best_typology_separation": 0.7940135300159454
+    },
+    "invoice_value_log": {
+      "group": "invoice",
+      "mean_legit": 5.788121223449707,
+      "mean_illicit": 5.854826927185059,
+      "auc_any_illicit": 0.533898115158081,
+      "best_typology": "shell_company",
+      "best_typology_separation": 0.7002348303794861
+    },
+    "round_amount_level": {
+      "group": "invoice",
+      "mean_legit": 0.1571139544248581,
+      "mean_illicit": 0.2959442436695099,
+      "auc_any_illicit": 0.5198692083358765,
+      "best_typology": "shell_company",
+      "best_typology_separation": 0.689015805721283
+    },
+    "round_amount_flag": {
+      "group": "invoice",
+      "mean_legit": 0.0500454418361187,
+      "mean_illicit": 0.08871989697217941,
+      "auc_any_illicit": 0.5193372368812561,
+      "best_typology": "shell_company",
+      "best_typology_separation": 0.6851683855056763
+    },
+    "inv_pay_gap": {
+      "group": "invoice",
+      "mean_legit": -0.00136744964402169,
+      "mean_illicit": -0.001324065262451768,
+      "auc_any_illicit": 0.5010399222373962,
+      "best_typology": "circular_trading",
+      "best_typology_separation": 0.5477190911769867
+    },
+    "inv_pay_abs_gap": {
+      "group": "invoice",
+      "mean_legit": 0.0013674503425136209,
+      "mean_illicit": 0.0013240653788670897,
+      "auc_any_illicit": 0.5077433586120605,
+      "best_typology": "third_party_payment",
+      "best_typology_separation": 0.5997166633605957
+    },
+    "customs_value_log_ratio": {
+      "group": "invoice",
+      "mean_legit": 0.02920965850353241,
+      "mean_illicit": 0.003238130360841751,
+      "auc_any_illicit": 0.43924909830093384,
+      "best_typology": "phantom_shipment",
+      "best_typology_separation": 0.9021976143121719
+    },
+    "customs_value_abs_dev": {
+      "group": "invoice",
+      "mean_legit": 0.029905056580901146,
+      "mean_illicit": 0.0771297737956047,
+      "auc_any_illicit": 0.49232760071754456,
+      "best_typology": "phantom_shipment",
+      "best_typology_separation": 0.9057751446962357
+    },
+    "missing_shipment": {
+      "group": "shipment",
+      "mean_legit": 0.011228707619011402,
+      "mean_illicit": 0.0652724951505661,
+      "auc_any_illicit": 0.5270219445228577,
+      "best_typology": "phantom_shipment",
+      "best_typology_separation": 0.7800999283790588
+    },
+    "missing_customs": {
+      "group": "shipment",
+      "mean_legit": 0.009029874578118324,
+      "mean_illicit": 0.08301647752523422,
+      "auc_any_illicit": 0.5369933247566223,
+      "best_typology": "phantom_shipment",
+      "best_typology_separation": 0.9013292193412781
+    },
+    "missing_both": {
+      "group": "shipment",
+      "mean_legit": 0.001084757735952735,
+      "mean_illicit": 0.05513307824730873,
+      "auc_any_illicit": 0.5270241498947144,
+      "best_typology": "phantom_shipment",
+      "best_typology_separation": 0.7819251418113708
+    },
+    "ship_qty_log_ratio": {
+      "group": "shipment",
+      "mean_legit": -0.005893136840313673,
+      "mean_illicit": -0.11780214309692383,
+      "auc_any_illicit": 0.4392382502555847,
+      "best_typology": "multiple_invoicing",
+      "best_typology_separation": 0.9911986142396927
+    },
+    "ship_qty_abs_dev": {
+      "group": "shipment",
+      "mean_legit": 0.008051007054746151,
+      "mean_illicit": 0.16395303606987,
+      "auc_any_illicit": 0.5972086191177368,
+      "best_typology": "multiple_invoicing",
+      "best_typology_separation": 0.9905490875244141
+    },
+    "customs_qty_log_ratio": {
+      "group": "shipment",
+      "mean_legit": -0.005508548580110073,
+      "mean_illicit": -0.026978636160492897,
+      "auc_any_illicit": 0.4885066747665405,
+      "best_typology": "over_under_shipment",
+      "best_typology_separation": 0.629794180393219
+    },
+    "customs_qty_abs_dev": {
+      "group": "shipment",
+      "mean_legit": 0.008479977026581764,
+      "mean_illicit": 0.07979602366685867,
+      "auc_any_illicit": 0.5543927550315857,
+      "best_typology": "over_under_shipment",
+      "best_typology_separation": 0.9954127669334412
+    },
+    "weight_per_unit_log_ratio": {
+      "group": "shipment",
+      "mean_legit": 0.04302064701914787,
+      "mean_illicit": -0.02332591637969017,
+      "auc_any_illicit": 0.4815005958080292,
+      "best_typology": "phantom_shipment",
+      "best_typology_separation": 0.7588108479976654
+    },
+    "weight_per_unit_abs_dev": {
+      "group": "shipment",
+      "mean_legit": 0.0848173126578331,
+      "mean_illicit": 0.3871873915195465,
+      "auc_any_illicit": 0.5371150374412537,
+      "best_typology": "misdescription",
+      "best_typology_separation": 0.9372512698173523
+    },
+    "customs_weight_per_unit_log_ratio": {
+      "group": "shipment",
+      "mean_legit": 0.042524393647909164,
+      "mean_illicit": 0.030547568574547768,
+      "auc_any_illicit": 0.4885501563549042,
+      "best_typology": "phantom_shipment",
+      "best_typology_separation": 0.6945691406726837
+    },
+    "hs_mismatch": {
+      "group": "shipment",
+      "mean_legit": 0.019115189090371132,
+      "mean_illicit": 0.10202788561582565,
+      "auc_any_illicit": 0.541456401348114,
+      "best_typology": "misdescription",
+      "best_typology_separation": 0.9904423952102661
+    },
+    "hs_heading_mismatch": {
+      "group": "shipment",
+      "mean_legit": 0.004954704083502293,
+      "mean_illicit": 0.0722433477640152,
+      "auc_any_illicit": 0.5336443185806274,
+      "best_typology": "misdescription",
+      "best_typology_separation": 0.899037778377533
+    },
+    "hs_chapter_mismatch": {
+      "group": "shipment",
+      "mean_legit": 0.0008795332396402955,
+      "mean_illicit": 0.061470214277505875,
+      "auc_any_illicit": 0.5302953124046326,
+      "best_typology": "misdescription",
+      "best_typology_separation": 0.863196611404419
+    },
+    "n_transshipments": {
+      "group": "shipment",
+      "mean_legit": 0.2950834035873413,
+      "mean_illicit": 0.4169835150241852,
+      "auc_any_illicit": 0.5356557965278625,
+      "best_typology": "high_risk_routing",
+      "best_typology_separation": 0.9419817924499512
+    },
+    "route_detour_ratio": {
+      "group": "shipment",
+      "mean_legit": 1.223291277885437,
+      "mean_illicit": 1.3493437767028809,
+      "auc_any_illicit": 0.5362569093704224,
+      "best_typology": "high_risk_routing",
+      "best_typology_separation": 0.9553945064544678
+    },
+    "route_via_high_risk": {
+      "group": "shipment",
+      "mean_legit": 0.0033129085786640644,
+      "mean_illicit": 0.039923954755067825,
+      "auc_any_illicit": 0.5142000317573547,
+      "best_typology": "high_risk_routing",
+      "best_typology_separation": 0.7332571744918823
+    },
+    "route_via_ftz": {
+      "group": "shipment",
+      "mean_legit": 0.13028819859027863,
+      "mean_illicit": 0.22179974615573883,
+      "auc_any_illicit": 0.5336433053016663,
+      "best_typology": "high_risk_routing",
+      "best_typology_separation": 0.8938138484954834
+    },
+    "route_max_stop_risk": {
+      "group": "shipment",
+      "mean_legit": 0.10623881965875626,
+      "mean_illicit": 0.16371990740299225,
+      "auc_any_illicit": 0.537966787815094,
+      "best_typology": "high_risk_routing",
+      "best_typology_separation": 0.9646795392036438
+    },
+    "route_rarity": {
+      "group": "shipment",
+      "mean_legit": 0.7906430959701538,
+      "mean_illicit": 0.8959093689918518,
+      "auc_any_illicit": 0.5324087142944336,
+      "best_typology": "high_risk_routing",
+      "best_typology_separation": 0.9139173030853271
+    },
+    "days_invoice_to_ship": {
+      "group": "shipment",
+      "mean_legit": 7.901697635650635,
+      "mean_illicit": 6.439797401428223,
+      "auc_any_illicit": 0.42132869362831116,
+      "best_typology": "circular_trading",
+      "best_typology_separation": 0.8630557656288147
+    },
+    "invoices_per_bl": {
+      "group": "shipment",
+      "mean_legit": 1.027500033378601,
+      "mean_illicit": 1.1406843662261963,
+      "auc_any_illicit": 0.5353303551673889,
+      "best_typology": "multiple_invoicing",
+      "best_typology_separation": 0.9859193563461304
+    },
+    "bl_payer_banks": {
+      "group": "shipment",
+      "mean_legit": 1.0,
+      "mean_illicit": 1.0836502313613892,
+      "auc_any_illicit": 0.5370722413063049,
+      "best_typology": "multiple_invoicing",
+      "best_typology_separation": 0.8774193525314331
+    },
+    "third_party_payer": {
+      "group": "payment",
+      "mean_legit": 0.03210296481847763,
+      "mean_illicit": 0.14892268180847168,
+      "auc_any_illicit": 0.5584098696708679,
+      "best_typology": "third_party_payment",
+      "best_typology_separation": 0.9839485287666321
+    },
+    "n_distinct_payers": {
+      "group": "payment",
+      "mean_legit": 1.0,
+      "mean_illicit": 1.0278834104537964,
+      "auc_any_illicit": 0.513941764831543,
+      "best_typology": "third_party_payment",
+      "best_typology_separation": 0.6116751432418823
+    },
+    "payer_country_differs": {
+      "group": "payment",
+      "mean_legit": 0.023219678550958633,
+      "mean_illicit": 0.14131812751293182,
+      "auc_any_illicit": 0.5590492486953735,
+      "best_typology": "third_party_payment",
+      "best_typology_separation": 0.985852062702179
+    },
+    "payer_risk": {
+      "group": "payment",
+      "mean_legit": 0.006982028018683195,
+      "mean_illicit": 0.08507604897022247,
+      "auc_any_illicit": 0.5599299669265747,
+      "best_typology": "third_party_payment",
+      "best_typology_separation": 0.9960652589797974
+    },
+    "payer_related": {
+      "group": "payment",
+      "mean_legit": 0.012166876345872879,
+      "mean_illicit": 0.016476552933454514,
+      "auc_any_illicit": 0.5021548867225647,
+      "best_typology": "third_party_payment",
+      "best_typology_separation": 0.5243734121322632
+    },
+    "payer_is_finance_house": {
+      "group": "payment",
+      "mean_legit": 0.009176463820040226,
+      "mean_illicit": 0.0076045626774430275,
+      "auc_any_illicit": 0.4992140233516693,
+      "best_typology": "shell_company",
+      "best_typology_separation": 0.5081506371498108
+    },
+    "payer_age_log": {
+      "group": "payment",
+      "mean_legit": 7.908641338348389,
+      "mean_illicit": 7.5991339683532715,
+      "auc_any_illicit": 0.42059260606765747,
+      "best_typology": "third_party_payment",
+      "best_typology_separation": 0.903629943728447
+    },
+    "days_invoice_to_payment": {
+      "group": "payment",
+      "mean_legit": 48.531063079833984,
+      "mean_illicit": 40.64195251464844,
+      "auc_any_illicit": 0.42912545800209045,
+      "best_typology": "circular_trading",
+      "best_typology_separation": 0.8757824003696442
+    },
+    "days_payment_minus_ship": {
+      "group": "payment",
+      "mean_legit": 40.084346771240234,
+      "mean_illicit": 32.69771957397461,
+      "auc_any_illicit": 0.42964187264442444,
+      "best_typology": "phantom_shipment",
+      "best_typology_separation": 0.826484739780426
+    },
+    "paid_before_shipment": {
+      "group": "payment",
+      "mean_legit": 0.11038142442703247,
+      "mean_illicit": 0.19328263401985168,
+      "auc_any_illicit": 0.5414506793022156,
+      "best_typology": "phantom_shipment",
+      "best_typology_separation": 0.7857183814048767
+    },
+    "n_payments": {
+      "group": "payment",
+      "mean_legit": 1.2175965309143066,
+      "mean_illicit": 1.2281368970870972,
+      "auc_any_illicit": 0.5086781978607178,
+      "best_typology": "third_party_payment",
+      "best_typology_separation": 0.6495648622512817
+    },
+    "payment_span_days": {
+      "group": "payment",
+      "mean_legit": 6.52053689956665,
+      "mean_illicit": 6.647021770477295,
+      "auc_any_illicit": 0.5081406235694885,
+      "best_typology": "third_party_payment",
+      "best_typology_separation": 0.648597002029419
+    },
+    "currency_mismatch": {
+      "group": "payment",
+      "mean_legit": 0.014336392283439636,
+      "mean_illicit": 0.04245880991220474,
+      "auc_any_illicit": 0.5140612125396729,
+      "best_typology": "third_party_payment",
+      "best_typology_separation": 0.6121211647987366
+    },
+    "currency_unusual": {
+      "group": "payment",
+      "mean_legit": 0.0,
+      "mean_illicit": 0.0,
+      "auc_any_illicit": 0.5,
+      "best_typology": "over_invoicing",
+      "best_typology_separation": 0.5
+    },
+    "payee_bank_offshore": {
+      "group": "payment",
+      "mean_legit": 0.018323609605431557,
+      "mean_illicit": 0.08871989697217941,
+      "auc_any_illicit": 0.5351981520652771,
+      "best_typology": "high_risk_routing",
+      "best_typology_separation": 0.8275728821754456
+    },
+    "payee_bank_risk": {
+      "group": "payment",
+      "mean_legit": 0.00740860216319561,
+      "mean_illicit": 0.05792141705751419,
+      "auc_any_illicit": 0.5355348587036133,
+      "best_typology": "high_risk_routing",
+      "best_typology_separation": 0.8305200934410095
+    },
+    "payer_bank_offshore": {
+      "group": "payment",
+      "mean_legit": 0.0,
+      "mean_illicit": 0.025348542258143425,
+      "auc_any_illicit": 0.5126742720603943,
+      "best_typology": "multiple_invoicing",
+      "best_typology_separation": 0.6290322542190552
+    },
+    "exporter_age_log": {
+      "group": "counterparty",
+      "mean_legit": 7.873625755310059,
+      "mean_illicit": 7.701170444488525,
+      "auc_any_illicit": 0.4623255133628845,
+      "best_typology": "shell_company",
+      "best_typology_separation": 0.7349693775177002
+    },
+    "importer_age_log": {
+      "group": "counterparty",
+      "mean_legit": 7.874367713928223,
+      "mean_illicit": 7.763218879699707,
+      "auc_any_illicit": 0.4761907756328583,
+      "best_typology": "shell_company",
+      "best_typology_separation": 0.6966975331306458
+    },
+    "min_party_age_log": {
+      "group": "counterparty",
+      "mean_legit": 7.39494514465332,
+      "mean_illicit": 7.162415504455566,
+      "auc_any_illicit": 0.4328983426094055,
+      "best_typology": "shell_company",
+      "best_typology_separation": 0.866167813539505
+    },
+    "exporter_country_risk": {
+      "group": "counterparty",
+      "mean_legit": 0.2652408480644226,
+      "mean_illicit": 0.3207857608795166,
+      "auc_any_illicit": 0.5448404550552368,
+      "best_typology": "phantom_shipment",
+      "best_typology_separation": 0.6179346442222595
+    },
+    "importer_country_risk": {
+      "group": "counterparty",
+      "mean_legit": 0.2621067464351654,
+      "mean_illicit": 0.32588717341423035,
+      "auc_any_illicit": 0.5601720213890076,
+      "best_typology": "misdescription",
+      "best_typology_separation": 0.6523988842964172
+    },
+    "max_party_risk": {
+      "group": "counterparty",
+      "mean_legit": 0.36608076095581055,
+      "mean_illicit": 0.46089982986450195,
+      "auc_any_illicit": 0.5885193943977356,
+      "best_typology": "circular_trading",
+      "best_typology_separation": 0.7256311774253845
+    },
+    "parties_related": {
+      "group": "counterparty",
+      "mean_legit": 5.863554906682111e-05,
+      "mean_illicit": 0.014575411565601826,
+      "auc_any_illicit": 0.507258415222168,
+      "best_typology": "circular_trading",
+      "best_typology_separation": 0.6017405986785889
+    },
+    "max_addr_shared_log": {
+      "group": "counterparty",
+      "mean_legit": 0.6196355223655701,
+      "mean_illicit": 0.9111598134040833,
+      "auc_any_illicit": 0.5748918652534485,
+      "best_typology": "shell_company",
+      "best_typology_separation": 0.7503113150596619
+    },
+    "max_dir_shared_log": {
+      "group": "counterparty",
+      "mean_legit": 0.2961105406284332,
+      "mean_illicit": 0.5208927989006042,
+      "auc_any_illicit": 0.6028969883918762,
+      "best_typology": "shell_company",
+      "best_typology_separation": 0.77278071641922
+    },
+    "exporter_n_trades_log": {
+      "group": "counterparty",
+      "mean_legit": 4.368860721588135,
+      "mean_illicit": 3.5708093643188477,
+      "auc_any_illicit": 0.3144530951976776,
+      "best_typology": "shell_company",
+      "best_typology_separation": 0.7964556515216827
+    },
+    "importer_n_trades_log": {
+      "group": "counterparty",
+      "mean_legit": 3.5684285163879395,
+      "mean_illicit": 3.3636815547943115,
+      "auc_any_illicit": 0.44820207357406616,
+      "best_typology": "shell_company",
+      "best_typology_separation": 0.7200221419334412
+    },
+    "max_volume_per_age": {
+      "group": "counterparty",
+      "mean_legit": 7.210256099700928,
+      "mean_illicit": 7.083930015563965,
+      "auc_any_illicit": 0.4349417984485626,
+      "best_typology": "high_risk_routing",
+      "best_typology_separation": 0.710318386554718
+    },
+    "pair_n_trades_log": {
+      "group": "counterparty",
+      "mean_legit": 2.3801231384277344,
+      "mean_illicit": 1.726296067237854,
+      "auc_any_illicit": 0.3078579902648926,
+      "best_typology": "shell_company",
+      "best_typology_separation": 0.8871260955929756
+    },
+    "pair_share_exporter": {
+      "group": "counterparty",
+      "mean_legit": 0.26122167706489563,
+      "mean_illicit": 0.2809883654117584,
+      "auc_any_illicit": 0.527020275592804,
+      "best_typology": "misdescription",
+      "best_typology_separation": 0.557299792766571
+    },
+    "exporter_hhi": {
+      "group": "counterparty",
+      "mean_legit": 0.3232436180114746,
+      "mean_illicit": 0.38322457671165466,
+      "auc_any_illicit": 0.6002042293548584,
+      "best_typology": "under_invoicing",
+      "best_typology_separation": 0.6551265120506287
+    },
+    "importer_hhi": {
+      "group": "counterparty",
+      "mean_legit": 0.5112550258636475,
+      "mean_illicit": 0.443010151386261,
+      "auc_any_illicit": 0.39765241742134094,
+      "best_typology": "phantom_shipment",
+      "best_typology_separation": 0.6569873690605164
+    },
+    "max_hs_diversity": {
+      "group": "counterparty",
+      "mean_legit": 4.882142543792725,
+      "mean_illicit": 6.940431118011475,
+      "auc_any_illicit": 0.7581253051757812,
+      "best_typology": "over_invoicing",
+      "best_typology_separation": 0.8418092727661133
+    },
+    "exporter_import_share": {
+      "group": "counterparty",
+      "mean_legit": 0.16190117597579956,
+      "mean_illicit": 0.22236420214176178,
+      "auc_any_illicit": 0.5398669242858887,
+      "best_typology": "circular_trading",
+      "best_typology_separation": 0.8421563506126404
+    },
+    "importer_export_share": {
+      "group": "counterparty",
+      "mean_legit": 0.16296535730361938,
+      "mean_illicit": 0.19936124980449677,
+      "auc_any_illicit": 0.5235918760299683,
+      "best_typology": "circular_trading",
+      "best_typology_separation": 0.8616645932197571
+    },
+    "exporter_out_degree_log": {
+      "group": "network",
+      "mean_legit": 2.5025994777679443,
+      "mean_illicit": 2.123991012573242,
+      "auc_any_illicit": 0.3591037392616272,
+      "best_typology": "circular_trading",
+      "best_typology_separation": 0.7269635498523712
+    },
+    "exporter_in_degree_log": {
+      "group": "network",
+      "mean_legit": 1.1928648948669434,
+      "mean_illicit": 1.0751851797103882,
+      "auc_any_illicit": 0.4652520716190338,
+      "best_typology": "circular_trading",
+      "best_typology_separation": 0.6775709986686707
+    },
+    "importer_in_degree_log": {
+      "group": "network",
+      "mean_legit": 1.7895785570144653,
+      "mean_illicit": 1.8775063753128052,
+      "auc_any_illicit": 0.5668614506721497,
+      "best_typology": "phantom_shipment",
+      "best_typology_separation": 0.6761642098426819
+    },
+    "importer_out_degree_log": {
+      "group": "network",
+      "mean_legit": 0.8849709630012512,
+      "mean_illicit": 0.928417444229126,
+      "auc_any_illicit": 0.5109689831733704,
+      "best_typology": "circular_trading",
+      "best_typology_separation": 0.803533673286438
+    },
+    "exporter_pagerank_log": {
+      "group": "network",
+      "mean_legit": 0.18395675718784332,
+      "mean_illicit": -0.050267044454813004,
+      "auc_any_illicit": 0.4164000451564789,
+      "best_typology": "high_risk_routing",
+      "best_typology_separation": 0.6923516690731049
+    },
+    "importer_pagerank_log": {
+      "group": "network",
+      "mean_legit": 0.23737412691116333,
+      "mean_illicit": 0.35282984375953674,
+      "auc_any_illicit": 0.5819098353385925,
+      "best_typology": "phantom_shipment",
+      "best_typology_separation": 0.6719606518745422
+    },
+    "edge_reciprocal": {
+      "group": "network",
+      "mean_legit": 0.1292327493429184,
+      "mean_illicit": 0.16286438703536987,
+      "auc_any_illicit": 0.5168158411979675,
+      "best_typology": "circular_trading",
+      "best_typology_separation": 0.7672420144081116
+    },
+    "edge_in_cycle": {
+      "group": "network",
+      "mean_legit": 0.37339118123054504,
+      "mean_illicit": 0.31875792145729065,
+      "auc_any_illicit": 0.4726833403110504,
+      "best_typology": "circular_trading",
+      "best_typology_separation": 0.8133044242858887
+    },
+    "edge_in_cycle_same_hs": {
+      "group": "network",
+      "mean_legit": 0.11595179885625839,
+      "mean_illicit": 0.12547528743743896,
+      "auc_any_illicit": 0.5047617554664612,
+      "best_typology": "circular_trading",
+      "best_typology_separation": 0.9420241117477417
+    },
+    "cycle_len_same_hs": {
+      "group": "network",
+      "mean_legit": 0.2406402975320816,
+      "mean_illicit": 0.3136882185935974,
+      "auc_any_illicit": 0.5072649121284485,
+      "best_typology": "circular_trading",
+      "best_typology_separation": 0.975552499294281
+    },
+    "exporter_resale_days_log": {
+      "group": "network",
+      "mean_legit": 5.196562767028809,
+      "mean_illicit": 5.181817054748535,
+      "auc_any_illicit": 0.5179378986358643,
+      "best_typology": "circular_trading",
+      "best_typology_separation": 0.8811056539416313
+    }
+  },
+  "typologies": {
+    "over_invoicing": {
+      "top_features": [
+        {
+          "feature": "price_z",
+          "separation": 0.9082357883453369
+        },
+        {
+          "feature": "price_log_ratio",
+          "separation": 0.9042602181434631
+        },
+        {
+          "feature": "price_abs_z",
+          "separation": 0.8436301350593567
+        },
+        {
+          "feature": "price_abs_z_declared_hs",
+          "separation": 0.8431644439697266
+        },
+        {
+          "feature": "max_hs_diversity",
+          "separation": 0.8418092727661133
+        },
+        {
+          "feature": "price_dev_exporter_hs",
+          "separation": 0.7932192087173462
+        }
+      ],
+      "best_targeted_separation": 0.9082357883453369
+    },
+    "under_invoicing": {
+      "top_features": [
+        {
+          "feature": "price_z",
+          "separation": 0.8916396349668503
+        },
+        {
+          "feature": "price_log_ratio",
+          "separation": 0.8763078600168228
+        },
+        {
+          "feature": "price_abs_z",
+          "separation": 0.8599449992179871
+        },
+        {
+          "feature": "price_abs_z_declared_hs",
+          "separation": 0.8595400452613831
+        },
+        {
+          "feature": "max_hs_diversity",
+          "separation": 0.8085259795188904
+        },
+        {
+          "feature": "price_dev_exporter_hs",
+          "separation": 0.7940135300159454
+        }
+      ],
+      "best_targeted_separation": 0.8916396349668503
+    },
+    "multiple_invoicing": {
+      "top_features": [
+        {
+          "feature": "ship_qty_log_ratio",
+          "separation": 0.9911986142396927
+        },
+        {
+          "feature": "ship_qty_abs_dev",
+          "separation": 0.9905490875244141
+        },
+        {
+          "feature": "invoices_per_bl",
+          "separation": 0.9859193563461304
+        },
+        {
+          "feature": "bl_payer_banks",
+          "separation": 0.8774193525314331
+        },
+        {
+          "feature": "days_invoice_to_ship",
+          "separation": 0.6953420639038086
+        },
+        {
+          "feature": "max_hs_diversity",
+          "separation": 0.6572437286376953
+        }
+      ],
+      "best_targeted_separation": 0.9911986142396927
+    },
+    "phantom_shipment": {
+      "top_features": [
+        {
+          "feature": "customs_value_abs_dev",
+          "separation": 0.9057751446962357
+        },
+        {
+          "feature": "customs_value_log_ratio",
+          "separation": 0.9021976143121719
+        },
+        {
+          "feature": "missing_customs",
+          "separation": 0.9013292193412781
+        },
+        {
+          "feature": "days_payment_minus_ship",
+          "separation": 0.826484739780426
+        },
+        {
+          "feature": "max_hs_diversity",
+          "separation": 0.7860931158065796
+        },
+        {
+          "feature": "route_rarity",
+          "separation": 0.7858454585075378
+        }
+      ],
+      "best_targeted_separation": 0.9013292193412781
+    },
+    "over_under_shipment": {
+      "top_features": [
+        {
+          "feature": "customs_qty_abs_dev",
+          "separation": 0.9954127669334412
+        },
+        {
+          "feature": "ship_qty_abs_dev",
+          "separation": 0.9863710999488831
+        },
+        {
+          "feature": "max_hs_diversity",
+          "separation": 0.7692535519599915
+        },
+        {
+          "feature": "exporter_n_trades_log",
+          "separation": 0.674583226442337
+        },
+        {
+          "feature": "pair_n_trades_log",
+          "separation": 0.6687275171279907
+        },
+        {
+          "feature": "exporter_out_degree_log",
+          "separation": 0.6362488865852356
+        }
+      ],
+      "best_targeted_separation": 0.9954127669334412
+    },
+    "misdescription": {
+      "top_features": [
+        {
+          "feature": "hs_mismatch",
+          "separation": 0.9904423952102661
+        },
+        {
+          "feature": "weight_per_unit_abs_dev",
+          "separation": 0.9372512698173523
+        },
+        {
+          "feature": "hs_heading_mismatch",
+          "separation": 0.899037778377533
+        },
+        {
+          "feature": "price_abs_z_declared_hs",
+          "separation": 0.8733155727386475
+        },
+        {
+          "feature": "hs_chapter_mismatch",
+          "separation": 0.863196611404419
+        },
+        {
+          "feature": "max_hs_diversity",
+          "separation": 0.8043941259384155
+        }
+      ],
+      "best_targeted_separation": 0.9904423952102661
+    },
+    "third_party_payment": {
+      "top_features": [
+        {
+          "feature": "payer_risk",
+          "separation": 0.9960652589797974
+        },
+        {
+          "feature": "payer_country_differs",
+          "separation": 0.985852062702179
+        },
+        {
+          "feature": "third_party_payer",
+          "separation": 0.9839485287666321
+        },
+        {
+          "feature": "payer_age_log",
+          "separation": 0.903629943728447
+        },
+        {
+          "feature": "max_hs_diversity",
+          "separation": 0.7928858995437622
+        },
+        {
+          "feature": "exporter_n_trades_log",
+          "separation": 0.6880477070808411
+        }
+      ],
+      "best_targeted_separation": 0.9960652589797974
+    },
+    "circular_trading": {
+      "top_features": [
+        {
+          "feature": "cycle_len_same_hs",
+          "separation": 0.975552499294281
+        },
+        {
+          "feature": "edge_in_cycle_same_hs",
+          "separation": 0.9420241117477417
+        },
+        {
+          "feature": "exporter_resale_days_log",
+          "separation": 0.8811056539416313
+        },
+        {
+          "feature": "days_invoice_to_payment",
+          "separation": 0.8757824003696442
+        },
+        {
+          "feature": "pair_n_trades_log",
+          "separation": 0.8746461421251297
+        },
+        {
+          "feature": "days_invoice_to_ship",
+          "separation": 0.8630557656288147
+        }
+      ],
+      "best_targeted_separation": 0.975552499294281
+    },
+    "shell_company": {
+      "top_features": [
+        {
+          "feature": "pair_n_trades_log",
+          "separation": 0.8871260955929756
+        },
+        {
+          "feature": "min_party_age_log",
+          "separation": 0.866167813539505
+        },
+        {
+          "feature": "exporter_n_trades_log",
+          "separation": 0.7964556515216827
+        },
+        {
+          "feature": "max_dir_shared_log",
+          "separation": 0.77278071641922
+        },
+        {
+          "feature": "max_addr_shared_log",
+          "separation": 0.7503113150596619
+        },
+        {
+          "feature": "days_invoice_to_payment",
+          "separation": 0.7471539676189423
+        }
+      ],
+      "best_targeted_separation": 0.866167813539505
+    },
+    "high_risk_routing": {
+      "top_features": [
+        {
+          "feature": "route_max_stop_risk",
+          "separation": 0.9646795392036438
+        },
+        {
+          "feature": "route_detour_ratio",
+          "separation": 0.9553945064544678
+        },
+        {
+          "feature": "n_transshipments",
+          "separation": 0.9419817924499512
+        },
+        {
+          "feature": "route_rarity",
+          "separation": 0.9139173030853271
+        },
+        {
+          "feature": "route_via_ftz",
+          "separation": 0.8938138484954834
+        },
+        {
+          "feature": "payee_bank_risk",
+          "separation": 0.8305200934410095
+        }
+      ],
+      "best_targeted_separation": 0.9646795392036438
+    }
+  },
+  "separation_matrix": {
+    "over_invoicing": [
+      0.9043,
+      0.9082,
+      0.8436,
+      0.8432,
+      0.7932,
+      0.6052,
+      0.5108,
+      0.5102,
+      0.506,
+      0.5191,
+      0.669,
+      0.6556,
+      0.5068,
+      0.5004,
+      0.5005,
+      0.5035,
+      0.5001,
+      0.5014,
+      0.5002,
+      0.5069,
+      0.5185,
+      0.5026,
+      0.5003,
+      0.5,
+      0.5004,
+      0.5074,
+      0.5005,
+      0.5017,
+      0.503,
+      0.506,
+      0.528,
+      0.5076,
+      0.5138,
+      0.5,
+      0.5013,
+      0.5,
+      0.5032,
+      0.5013,
+      0.5038,
+      0.5004,
+      0.5427,
+      0.5053,
+      0.5182,
+      0.5092,
+      0.5229,
+      0.525,
+      0.5022,
+      0.5,
+      0.5057,
+      0.5057,
+      0.5,
+      0.5499,
+      0.5506,
+      0.51,
+      0.585,
+      0.5365,
+      0.5765,
+      0.5,
+      0.5275,
+      0.5059,
+      0.6181,
+      0.5476,
+      0.5514,
+      0.6692,
+      0.5342,
+      0.6041,
+      0.6227,
+      0.8418,
+      0.6044,
+      0.5088,
+      0.5949,
+      0.5431,
+      0.6265,
+      0.5046,
+      0.5395,
+      0.6233,
+      0.5052,
+      0.5184,
+      0.5184,
+      0.5183,
+      0.5476
+    ],
+    "under_invoicing": [
+      0.8763,
+      0.8916,
+      0.8599,
+      0.8595,
+      0.794,
+      0.5956,
+      0.5053,
+      0.5056,
+      0.5005,
+      0.5107,
+      0.5469,
+      0.5442,
+      0.5005,
+      0.502,
+      0.5005,
+      0.501,
+      0.5036,
+      0.5011,
+      0.5038,
+      0.5097,
+      0.5286,
+      0.5073,
+      0.5045,
+      0.5001,
+      0.5021,
+      0.5359,
+      0.5339,
+      0.5034,
+      0.5068,
+      0.5348,
+      0.559,
+      0.5148,
+      0.5138,
+      0.5,
+      0.5069,
+      0.5,
+      0.5037,
+      0.5067,
+      0.501,
+      0.5005,
+      0.5433,
+      0.507,
+      0.5031,
+      0.5009,
+      0.5057,
+      0.5064,
+      0.5005,
+      0.5,
+      0.501,
+      0.501,
+      0.5,
+      0.504,
+      0.5486,
+      0.5217,
+      0.5268,
+      0.571,
+      0.5628,
+      0.5,
+      0.5731,
+      0.5864,
+      0.6467,
+      0.5032,
+      0.5546,
+      0.6115,
+      0.5115,
+      0.6551,
+      0.5508,
+      0.8085,
+      0.5209,
+      0.5248,
+      0.6255,
+      0.5538,
+      0.5796,
+      0.5384,
+      0.5998,
+      0.5793,
+      0.5008,
+      0.5515,
+      0.5172,
+      0.5171,
+      0.5369
+    ],
+    "multiple_invoicing": [
+      0.5085,
+      0.5009,
+      0.5039,
+      0.5043,
+      0.5036,
+      0.5804,
+      0.5099,
+      0.5105,
+      0.5252,
+      0.53,
+      0.5244,
+      0.5203,
+      0.5056,
+      0.5045,
+      0.5005,
+      0.9912,
+      0.9905,
+      0.5083,
+      0.5517,
+      0.5234,
+      0.5676,
+      0.5164,
+      0.5098,
+      0.504,
+      0.5004,
+      0.5237,
+      0.527,
+      0.5017,
+      0.5478,
+      0.5277,
+      0.5145,
+      0.6953,
+      0.9859,
+      0.8774,
+      0.5161,
+      0.5,
+      0.5116,
+      0.5161,
+      0.5061,
+      0.5046,
+      0.595,
+      0.506,
+      0.5677,
+      0.5229,
+      0.507,
+      0.5063,
+      0.5072,
+      0.5,
+      0.5037,
+      0.5037,
+      0.629,
+      0.5996,
+      0.5926,
+      0.6048,
+      0.505,
+      0.5373,
+      0.5771,
+      0.5,
+      0.5974,
+      0.5692,
+      0.6562,
+      0.5707,
+      0.5174,
+      0.6217,
+      0.5389,
+      0.6156,
+      0.6112,
+      0.6572,
+      0.5216,
+      0.5007,
+      0.6272,
+      0.5849,
+      0.537,
+      0.5071,
+      0.6333,
+      0.5328,
+      0.5128,
+      0.5641,
+      0.5354,
+      0.5355,
+      0.5603
+    ],
+    "phantom_shipment": [
+      0.5125,
+      0.5005,
+      0.57,
+      0.5704,
+      0.5391,
+      0.5746,
+      0.5005,
+      0.501,
+      0.5032,
+      0.5066,
+      0.9022,
+      0.9058,
+      0.7801,
+      0.9013,
+      0.7819,
+      0.5044,
+      0.5252,
+      0.5082,
+      0.5319,
+      0.7588,
+      0.6606,
+      0.6946,
+      0.5063,
+      0.5008,
+      0.5004,
+      0.5847,
+      0.5866,
+      0.5017,
+      0.5297,
+      0.5816,
+      0.7858,
+      0.7614,
+      0.5138,
+      0.5,
+      0.5031,
+      0.5,
+      0.5084,
+      0.5029,
+      0.5061,
+      0.5013,
+      0.619,
+      0.7351,
+      0.8265,
+      0.7857,
+      0.5177,
+      0.5204,
+      0.5007,
+      0.5,
+      0.5071,
+      0.5072,
+      0.5,
+      0.5134,
+      0.6363,
+      0.5469,
+      0.6179,
+      0.6189,
+      0.6355,
+      0.5,
+      0.5361,
+      0.6065,
+      0.6612,
+      0.5238,
+      0.5686,
+      0.6632,
+      0.5453,
+      0.5674,
+      0.657,
+      0.7861,
+      0.5481,
+      0.533,
+      0.6235,
+      0.5131,
+      0.6762,
+      0.5531,
+      0.5671,
+      0.672,
+      0.5127,
+      0.5828,
+      0.532,
+      0.5314,
+      0.5068
+    ],
+    "over_under_shipment": [
+      0.5466,
+      0.5329,
+      0.5281,
+      0.5284,
+      0.5311,
+      0.5013,
+      0.5059,
+      0.5066,
+      0.5089,
+      0.5096,
+      0.5135,
+      0.5136,
+      0.503,
+      0.5045,
+      0.5005,
+      0.6267,
+      0.9864,
+      0.6298,
+      0.9954,
+      0.5192,
+      0.527,
+      0.5237,
+      0.5038,
+      0.5025,
+      0.5004,
+      0.5297,
+      0.5319,
+      0.5012,
+      0.5072,
+      0.5277,
+      0.5591,
+      0.5177,
+      0.5138,
+      0.5,
+      0.5017,
+      0.5,
+      0.503,
+      0.5016,
+      0.5003,
+      0.5017,
+      0.5198,
+      0.5134,
+      0.5134,
+      0.5035,
+      0.527,
+      0.5252,
+      0.5014,
+      0.5,
+      0.5063,
+      0.5063,
+      0.5,
+      0.5116,
+      0.5304,
+      0.5174,
+      0.5792,
+      0.5246,
+      0.553,
+      0.5,
+      0.5075,
+      0.6021,
+      0.6746,
+      0.5551,
+      0.5936,
+      0.6687,
+      0.5103,
+      0.5926,
+      0.6111,
+      0.7693,
+      0.511,
+      0.5097,
+      0.6362,
+      0.5423,
+      0.5613,
+      0.5127,
+      0.5785,
+      0.5715,
+      0.5158,
+      0.5516,
+      0.5292,
+      0.5294,
+      0.5406
+    ],
+    "misdescription": [
+      0.5341,
+      0.5267,
+      0.5372,
+      0.8733,
+      0.5596,
+      0.5261,
+      0.5084,
+      0.5053,
+      0.5025,
+      0.5107,
+      0.5274,
+      0.6692,
+      0.5056,
+      0.5045,
+      0.5005,
+      0.5147,
+      0.5071,
+      0.5146,
+      0.507,
+      0.5616,
+      0.9373,
+      0.5615,
+      0.9904,
+      0.899,
+      0.8632,
+      0.5007,
+      0.5029,
+      0.5017,
+      0.502,
+      0.5008,
+      0.5422,
+      0.5373,
+      0.5138,
+      0.5,
+      0.5085,
+      0.5,
+      0.504,
+      0.5084,
+      0.5023,
+      0.5008,
+      0.569,
+      0.506,
+      0.5149,
+      0.5054,
+      0.5154,
+      0.5147,
+      0.5042,
+      0.5,
+      0.5092,
+      0.5092,
+      0.5,
+      0.5166,
+      0.5662,
+      0.5308,
+      0.538,
+      0.6524,
+      0.6151,
+      0.5,
+      0.6045,
+      0.5633,
+      0.6528,
+      0.5151,
+      0.5336,
+      0.6061,
+      0.5573,
+      0.6052,
+      0.571,
+      0.8044,
+      0.5311,
+      0.6015,
+      0.636,
+      0.6001,
+      0.5485,
+      0.5918,
+      0.6422,
+      0.5427,
+      0.5187,
+      0.5314,
+      0.5428,
+      0.5429,
+      0.5627
+    ],
+    "third_party_payment": [
+      0.5227,
+      0.5258,
+      0.5051,
+      0.5054,
+      0.5066,
+      0.5491,
+      0.5029,
+      0.5047,
+      0.5018,
+      0.5997,
+      0.5196,
+      0.5167,
+      0.5005,
+      0.5045,
+      0.5005,
+      0.5038,
+      0.5121,
+      0.5062,
+      0.5148,
+      0.5053,
+      0.5075,
+      0.51,
+      0.5057,
+      0.5001,
+      0.5004,
+      0.5221,
+      0.5199,
+      0.5009,
+      0.5162,
+      0.5241,
+      0.529,
+      0.5145,
+      0.5138,
+      0.5,
+      0.9839,
+      0.6117,
+      0.9859,
+      0.9961,
+      0.5244,
+      0.5046,
+      0.9036,
+      0.5036,
+      0.5034,
+      0.5171,
+      0.6496,
+      0.6486,
+      0.6121,
+      0.5,
+      0.5092,
+      0.5092,
+      0.5,
+      0.5103,
+      0.5163,
+      0.5055,
+      0.6017,
+      0.5487,
+      0.6075,
+      0.5,
+      0.5422,
+      0.5548,
+      0.688,
+      0.5236,
+      0.6023,
+      0.684,
+      0.5171,
+      0.5584,
+      0.6162,
+      0.7929,
+      0.501,
+      0.5017,
+      0.6239,
+      0.5558,
+      0.6228,
+      0.5094,
+      0.5767,
+      0.6477,
+      0.542,
+      0.5369,
+      0.5072,
+      0.5066,
+      0.5533
+    ],
+    "circular_trading": [
+      0.6737,
+      0.6265,
+      0.6741,
+      0.6744,
+      0.5162,
+      0.5921,
+      0.5029,
+      0.5029,
+      0.5477,
+      0.5281,
+      0.5391,
+      0.5333,
+      0.5032,
+      0.5001,
+      0.5005,
+      0.503,
+      0.5161,
+      0.5013,
+      0.5206,
+      0.5022,
+      0.5041,
+      0.5033,
+      0.5081,
+      0.5019,
+      0.5004,
+      0.5482,
+      0.5384,
+      0.5017,
+      0.5171,
+      0.546,
+      0.6031,
+      0.8631,
+      0.5138,
+      0.5,
+      0.5161,
+      0.5,
+      0.5116,
+      0.5161,
+      0.5061,
+      0.5046,
+      0.6568,
+      0.8758,
+      0.8245,
+      0.5463,
+      0.5088,
+      0.5088,
+      0.5017,
+      0.5,
+      0.5003,
+      0.5002,
+      0.5,
+      0.6548,
+      0.6498,
+      0.7667,
+      0.6171,
+      0.6323,
+      0.7256,
+      0.6017,
+      0.6826,
+      0.732,
+      0.7789,
+      0.6236,
+      0.6276,
+      0.8746,
+      0.5356,
+      0.5918,
+      0.6481,
+      0.5818,
+      0.8422,
+      0.8617,
+      0.727,
+      0.6776,
+      0.531,
+      0.8035,
+      0.6515,
+      0.6674,
+      0.7672,
+      0.8133,
+      0.942,
+      0.9756,
+      0.8811
+    ],
+    "shell_company": [
+      0.5033,
+      0.5046,
+      0.5391,
+      0.5387,
+      0.5154,
+      0.7002,
+      0.689,
+      0.6852,
+      0.5041,
+      0.5083,
+      0.5183,
+      0.5175,
+      0.5024,
+      0.5013,
+      0.5005,
+      0.5009,
+      0.5291,
+      0.501,
+      0.5292,
+      0.5456,
+      0.5382,
+      0.5421,
+      0.5,
+      0.5007,
+      0.5004,
+      0.5108,
+      0.5062,
+      0.5017,
+      0.5274,
+      0.5151,
+      0.5831,
+      0.5192,
+      0.5138,
+      0.5,
+      0.5062,
+      0.5,
+      0.5043,
+      0.5062,
+      0.5003,
+      0.5082,
+      0.6849,
+      0.7472,
+      0.7364,
+      0.6932,
+      0.5019,
+      0.5037,
+      0.5056,
+      0.5,
+      0.6564,
+      0.6579,
+      0.5,
+      0.735,
+      0.6967,
+      0.8662,
+      0.5779,
+      0.5981,
+      0.6887,
+      0.5,
+      0.7503,
+      0.7728,
+      0.7965,
+      0.72,
+      0.5141,
+      0.8871,
+      0.5397,
+      0.6206,
+      0.5561,
+      0.6773,
+      0.5295,
+      0.5111,
+      0.7115,
+      0.5785,
+      0.5025,
+      0.5438,
+      0.6535,
+      0.5038,
+      0.5519,
+      0.5816,
+      0.5548,
+      0.5548,
+      0.5674
+    ],
+    "high_risk_routing": [
+      0.5504,
+      0.5505,
+      0.5335,
+      0.5331,
+      0.52,
+      0.5704,
+      0.5002,
+      0.5005,
+      0.5058,
+      0.5124,
+      0.5307,
+      0.5337,
+      0.5056,
+      0.5006,
+      0.5005,
+      0.5042,
+      0.5041,
+      0.5043,
+      0.5039,
+      0.5681,
+      0.5442,
+      0.5648,
+      0.5045,
+      0.5025,
+      0.5004,
+      0.942,
+      0.9554,
+      0.7333,
+      0.8938,
+      0.9647,
+      0.9139,
+      0.5271,
+      0.5138,
+      0.5,
+      0.5044,
+      0.5,
+      0.5088,
+      0.5043,
+      0.5092,
+      0.5005,
+      0.5323,
+      0.5534,
+      0.5542,
+      0.5111,
+      0.5182,
+      0.5192,
+      0.503,
+      0.5,
+      0.8276,
+      0.8305,
+      0.5,
+      0.5071,
+      0.5464,
+      0.5119,
+      0.6124,
+      0.5,
+      0.5948,
+      0.5,
+      0.5583,
+      0.6137,
+      0.7603,
+      0.5354,
+      0.7103,
+      0.7088,
+      0.5567,
+      0.5772,
+      0.5842,
+      0.7812,
+      0.5391,
+      0.5147,
+      0.6521,
+      0.6426,
+      0.5572,
+      0.5045,
+      0.6924,
+      0.5195,
+      0.5238,
+      0.5898,
+      0.5427,
+      0.5428,
+      0.6001
+    ]
+  },
+  "seconds": 1.9034877500962466
+}

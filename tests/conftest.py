@@ -32,3 +32,20 @@ def cfg(tmp_path_factory: pytest.TempPathFactory) -> Config:
 def dataset(cfg: Config) -> TradeDataset:
     """One small generated dataset (seed 0) shared by the whole suite."""
     return generate_dataset(cfg, 0)
+
+
+@pytest.fixture(scope="session")
+def linked(dataset: TradeDataset):
+    """Linked trades (one row per invoice) of the shared dataset."""
+    from tbml.features.link import link_dataset
+
+    return link_dataset(dataset)
+
+
+@pytest.fixture(scope="session")
+def features(cfg: Config, dataset: TradeDataset, linked):
+    """Centralised feature set of the shared dataset."""
+    from tbml.features.build import Reference, build_features
+
+    ref = Reference.from_tables(dataset.tables)
+    return build_features(linked, dataset.tables["kyc_entities"], dataset.tables["banks"], ref, cfg, dataset.tables["labels"])

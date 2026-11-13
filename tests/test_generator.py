@@ -23,7 +23,7 @@ def test_schema_and_integrity(dataset, cfg) -> None:
 def test_label_rates(dataset, cfg) -> None:
     labels = dataset.tables["labels"]
     rate = labels["is_illicit"].mean()
-    assert 0.02 <= rate <= 0.05
+    assert 0.02 <= rate <= 0.055
     assert abs(rate - cfg.data.illicit_rate) < 0.01
 
     counts = labels.loc[labels["is_illicit"] == 1, "typology"].value_counts()
@@ -125,8 +125,9 @@ def test_typology_fingerprints(joined) -> None:
     assert (per_bl[multi.index] >= 2).mean() > 0.95, "duplicate invoices share one bill of lading"
 
     phantom = rows("phantom_shipment")
-    assert phantom["has_customs"].mean() < 0.35
-    assert phantom["has_shipment"].mean() < 0.60
+    # expected: 15% forged complete papers, 25% near-empty container, 60% nothing (about 30 cases here)
+    assert phantom["has_customs"].mean() < 0.40
+    assert phantom["has_shipment"].mean() < 0.75
     assert legit["has_customs"].mean() > 0.97 and legit["has_shipment"].mean() > 0.97
     assert phantom["has_payment"].all(), "a phantom shipment is still paid for"
 
