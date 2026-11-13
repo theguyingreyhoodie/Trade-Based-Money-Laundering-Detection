@@ -1,0 +1,266 @@
+{
+  "generator_version": "1.0",
+  "seed": 1,
+  "n_trades": 60453,
+  "n_illicit": 2403,
+  "illicit_rate": 0.03974988834301027,
+  "typology_counts": {
+    "over_invoicing": 336,
+    "under_invoicing": 288,
+    "multiple_invoicing": 216,
+    "phantom_shipment": 240,
+    "over_under_shipment": 240,
+    "misdescription": 240,
+    "third_party_payment": 240,
+    "circular_trading": 219,
+    "shell_company": 216,
+    "high_risk_routing": 168
+  },
+  "n_entities": 3239,
+  "n_networks": 45,
+  "n_relationships": 6324,
+  "period": [
+    "2023-01-01",
+    "2024-12-31"
+  ],
+  "rows": {
+    "invoices": 60589,
+    "shipments": 59202,
+    "declarations": 59755,
+    "payments": 73746,
+    "kyc_entities": 3239,
+    "banks": 45,
+    "shipping_lines": 10,
+    "hs_reference": 49,
+    "countries": 35,
+    "ports": 35,
+    "fx_rates": 6,
+    "labels": 60453,
+    "entity_truth": 3239
+  },
+  "validation": {
+    "checks": [
+      {
+        "name": "columns:invoices",
+        "ok": true,
+        "detail": ""
+      },
+      {
+        "name": "columns:shipments",
+        "ok": true,
+        "detail": ""
+      },
+      {
+        "name": "columns:payments",
+        "ok": true,
+        "detail": ""
+      },
+      {
+        "name": "columns:declarations",
+        "ok": true,
+        "detail": ""
+      },
+      {
+        "name": "columns:kyc_entities",
+        "ok": true,
+        "detail": ""
+      },
+      {
+        "name": "columns:banks",
+        "ok": true,
+        "detail": ""
+      },
+      {
+        "name": "columns:shipping_lines",
+        "ok": true,
+        "detail": ""
+      },
+      {
+        "name": "columns:hs_reference",
+        "ok": true,
+        "detail": ""
+      },
+      {
+        "name": "columns:countries",
+        "ok": true,
+        "detail": ""
+      },
+      {
+        "name": "columns:ports",
+        "ok": true,
+        "detail": ""
+      },
+      {
+        "name": "columns:fx_rates",
+        "ok": true,
+        "detail": ""
+      },
+      {
+        "name": "columns:labels",
+        "ok": true,
+        "detail": ""
+      },
+      {
+        "name": "columns:entity_truth",
+        "ok": true,
+        "detail": ""
+      },
+      {
+        "name": "unique:invoices.invoice_id",
+        "ok": true,
+        "detail": "after removing exact duplicate rows"
+      },
+      {
+        "name": "unique:shipments.bl_id",
+        "ok": true,
+        "detail": "after removing exact duplicate rows"
+      },
+      {
+        "name": "unique:payments.payment_id",
+        "ok": true,
+        "detail": "after removing exact duplicate rows"
+      },
+      {
+        "name": "unique:declarations.declaration_id",
+        "ok": true,
+        "detail": "after removing exact duplicate rows"
+      },
+      {
+        "name": "unique:kyc_entities.entity_id",
+        "ok": true,
+        "detail": "after removing exact duplicate rows"
+      },
+      {
+        "name": "unique:labels.trade_id",
+        "ok": true,
+        "detail": "after removing exact duplicate rows"
+      },
+      {
+        "name": "no_truth_columns:bank",
+        "ok": true,
+        "detail": ""
+      },
+      {
+        "name": "no_truth_columns:trade",
+        "ok": true,
+        "detail": ""
+      },
+      {
+        "name": "no_truth_columns:customs",
+        "ok": true,
+        "detail": ""
+      },
+      {
+        "name": "fk:payments.invoice_id",
+        "ok": true,
+        "detail": ""
+      },
+      {
+        "name": "fk:declarations.invoice_id",
+        "ok": true,
+        "detail": ""
+      },
+      {
+        "name": "fk:invoice parties",
+        "ok": true,
+        "detail": ""
+      },
+      {
+        "name": "fk:payment parties",
+        "ok": true,
+        "detail": ""
+      },
+      {
+        "name": "fk:invoices.hs_code",
+        "ok": true,
+        "detail": ""
+      },
+      {
+        "name": "fk:shipment ports",
+        "ok": true,
+        "detail": ""
+      },
+      {
+        "name": "fk:banks",
+        "ok": true,
+        "detail": ""
+      },
+      {
+        "name": "every invoice is paid",
+        "ok": true,
+        "detail": ""
+      },
+      {
+        "name": "exporter != importer",
+        "ok": true,
+        "detail": ""
+      },
+      {
+        "name": "positive:quantity",
+        "ok": true,
+        "detail": ""
+      },
+      {
+        "name": "positive:unit_price",
+        "ok": true,
+        "detail": ""
+      },
+      {
+        "name": "positive:invoice_value",
+        "ok": true,
+        "detail": ""
+      },
+      {
+        "name": "positive:payment amount",
+        "ok": true,
+        "detail": ""
+      },
+      {
+        "name": "dates:invoice within period",
+        "ok": true,
+        "detail": ""
+      },
+      {
+        "name": "dates:arrival after departure",
+        "ok": true,
+        "detail": ""
+      },
+      {
+        "name": "labels cover every invoice",
+        "ok": true,
+        "detail": ""
+      },
+      {
+        "name": "illicit rate in 2-5%",
+        "ok": true,
+        "detail": "rate=0.0397"
+      },
+      {
+        "name": "every typology present",
+        "ok": true,
+        "detail": ""
+      },
+      {
+        "name": "legit rows labelled none",
+        "ok": true,
+        "detail": ""
+      }
+    ],
+    "n_failed": 0,
+    "illicit_rate": 0.03974988834301027,
+    "typology_rates": {
+      "over_invoicing": 0.005558036821993946,
+      "under_invoicing": 0.004764031561709096,
+      "multiple_invoicing": 0.003573023671281822,
+      "phantom_shipment": 0.003970026301424247,
+      "over_under_shipment": 0.003970026301424247,
+      "misdescription": 0.003970026301424247,
+      "third_party_payment": 0.003970026301424247,
+      "circular_trading": 0.003622649000049625,
+      "shell_company": 0.003573023671281822,
+      "high_risk_routing": 0.002779018410996973
+    }
+  },
+  "seconds": 1.5506470000836998,
+  "joined_rows": 60453
+}

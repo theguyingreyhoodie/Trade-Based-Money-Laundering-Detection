@@ -11,6 +11,7 @@ from pathlib import Path
 import pytest
 
 from tbml.config import Config, load_config
+from tbml.data.generator import TradeDataset, generate_dataset
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 
@@ -25,3 +26,9 @@ def cfg(tmp_path_factory: pytest.TempPathFactory) -> Config:
     config.set_path("paths.results_dir", str(base / "results"))
     config.set_path("ledger.backend", "python")
     return config
+
+
+@pytest.fixture(scope="session")
+def dataset(cfg: Config) -> TradeDataset:
+    """One small generated dataset (seed 0) shared by the whole suite."""
+    return generate_dataset(cfg, 0)

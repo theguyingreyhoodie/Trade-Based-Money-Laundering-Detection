@@ -41,15 +41,16 @@ data:
 
   entities:
     n_companies: 3000
-    n_banks: 30
+    n_banks: 45                 # at least one per jurisdiction; extra banks follow trade weight
     n_shipping_lines: 10
     n_finance_houses: 25        # benign third-party payers (factoring / trade finance)
-    role_shares: {exporter: 0.40, importer: 0.40, trader: 0.20}
+    role_shares: {exporter: 0.33, importer: 0.37, trader: 0.30}
     shared_address_share: 0.15  # benign firms in business centres / registered-agent addresses
     n_business_centres: 60
     group_director_share: 0.12  # benign firms belonging to a business group (shared director)
     n_group_directors: 120
     new_entrant_share: 0.06     # benign firms registered during the data period
+    startup_business_centre_p: 0.40   # young benign firms often sit in shared offices
 
   networks:                     # laundering networks (ground truth only)
     n_networks: 45
@@ -59,15 +60,30 @@ data:
     typologies_per_network: [2, 3]
     active_months: [6, 24]
     shell_age_months_at_start: [1, 14]
+    shell_roles: {trader: 0.50, exporter: 0.25, importer: 0.25}
+    hidden_shell_p: 0.35        # shell with its own address and director (no registry footprint)
+    shelf_company_p: 0.20       # aged company bought off the shelf (3-8 years old)
+    # who the two parties of an illicit trade are:
+    #   partner  = recruited firm trading with one of its existing, ordinary trading partners
+    #   internal = two recruited firms of the same network
+    #   shell    = a shell on one side
+    pair_modes: {partner: 0.45, internal: 0.35, shell: 0.20}
 
   legit:                        # behaviour of ordinary trade
     suppliers_per_importer_mean: 2.5
+    spot_rate: 0.12             # one-off deals between firms with no standing relationship
+    return_rate: 0.008          # returned goods: the buyer ships part of an order back
+    n_trading_rings: 12         # benign commodity trading rings (legitimate same-goods cycles)
+    ring_trade_rate: 0.006
+    feeder_stop_rate: 0.03      # extra regional stop at a non-hub port
+    unrelated_payer_rate: 0.012 # paid by an unrelated but legitimate third party
     same_region_preference: 3.0
     pair_price_effect: 0.5      # persistent pair-level price level, in units of the HS sigma
     trade_price_noise: 0.75     # trade-level noise, in units of the HS sigma (Student-t, df=5)
     monthly_price_drift: 0.02   # per-HS random walk (legitimate price volatility)
     extreme_deal_rate: 0.004    # legitimate clearance / premium deals
     lump_sum_rate: 0.05         # negotiated round invoice totals
+    consolidated_rate: 0.015    # legitimate split invoicing: two invoices share one shipment
     transshipment_p1: {same_region: 0.08, cross_region: 0.28}
     transshipment_p2: 0.03
     payment_terms: {advance: 0.12, sight: 0.38, open_account: 0.50}
@@ -79,13 +95,16 @@ data:
 
   noise:                        # benign data-quality problems that look suspicious
     bl_typo_rate: 0.006         # B/L number mistyped on the invoice -> shipment cannot be linked
-    missing_shipment_rate: 0.005
-    missing_customs_rate: 0.010
-    missing_both_rate: 0.003
+    missing_shipment_rate: 0.004
+    missing_customs_rate: 0.008
+    missing_both_rate: 0.001
     qty_typo_rate: 0.0015       # x10 / /10 keying errors in shipment or customs quantity
     qty_tolerance_rate: 0.06    # small genuine quantity differences
     short_shipment_rate: 0.02
-    hs_reclass_rate: 0.02       # customs classifies under a sibling HS-6 code
+    hs_reclass_rate: 0.02       # customs classifies the goods under a different HS-6 code
+    hs_reclass_heading_p: 0.20  # ... of which: different 4-digit heading
+    hs_reclass_chapter_p: 0.05  # ... of which: different chapter (keying error)
+    split_consignment_rate: 0.006   # goods sent in two consignments, only the first B/L on the invoice
     customs_value_adjust_rate: 0.01
     duplicate_row_rate: 0.002   # exact duplicate rows in the raw tables
     messy_code_rate: 0.01       # stray whitespace / lower-case codes
@@ -93,16 +112,16 @@ data:
 
   typologies:                   # manipulation strength; "subtle_share" cases sit near benign behaviour
     subtle_share: 0.25
-    over_invoicing: {factor_median: 2.0, factor_sigma: 0.40, subtle_range: [1.20, 1.50], customs_true_value_p: 0.4}
-    under_invoicing: {factor_median: 0.50, factor_sigma: 0.35, subtle_range: [0.65, 0.85]}
+    over_invoicing: {factor_median: 2.4, factor_sigma: 0.40, subtle_range: [1.20, 1.50], customs_true_value_p: 0.4}
+    under_invoicing: {factor_median: 0.42, factor_sigma: 0.35, subtle_range: [0.65, 0.85]}
     multiple_invoicing: {extra_invoices_p2: 0.3, other_bank_p: 0.6, max_delay_days: 20}
-    phantom_shipment: {empty_container_p: 0.25}
+    phantom_shipment: {empty_container_p: 0.25, fabricated_docs_p: 0.15}
     over_under_shipment: {under_range: [0.20, 0.70], over_range: [1.40, 3.00], subtle_under: [0.75, 0.90], subtle_over: [1.10, 1.30], under_p: 0.6}
     misdescription: {cross_chapter_p: 0.7}
     third_party_payment: {currency_switch_p: 0.3, split_p: 0.4}
     circular_trading: {loop_len: [3, 5], markup: [0.02, 0.08], hop_days: [2, 10], related_p: 0.6}
     shell_company: {round_amount_p: 0.4, price_dev: 0.30}
-    high_risk_routing: {n_hops: [2, 3], offshore_bank_p: 0.6, misprice_p: 0.5, price_dev: 0.25}
+    high_risk_routing: {n_hops: [1, 3], listed_stop_p: 0.35, offshore_bank_p: 0.6, misprice_p: 0.5, price_dev: 0.25}
 
 # -----------------------------------------------------------------------------
 # Phase 2: features
