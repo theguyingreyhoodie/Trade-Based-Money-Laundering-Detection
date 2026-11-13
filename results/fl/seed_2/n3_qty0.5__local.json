@@ -1,0 +1,102 @@
+{
+  "seed": 2,
+  "scenario": {
+    "name": "n3_qty0.5",
+    "n_clients": 3,
+    "partition": "quantity",
+    "alpha": 0.5,
+    "label": "quantity skew \u03b1=0.5, 3 clients"
+  },
+  "strategy": "local",
+  "n_clients": 3,
+  "final": {
+    "precision": 0.7186046511627907,
+    "recall": 0.6130952380952381,
+    "f1": 0.6616702355460385,
+    "fpr": 0.009860647054029826,
+    "alert_rate": 0.03365949119373777,
+    "confusion": {
+      "tp": 309,
+      "fp": 121,
+      "fn": 195,
+      "tn": 12150
+    },
+    "recall_by_typology": {
+      "over_invoicing": 0.49074074074074076,
+      "under_invoicing": 0.47692307692307695,
+      "multiple_invoicing": 0.5111111111111111,
+      "phantom_shipment": 0.868421052631579,
+      "over_under_shipment": 0.7567567567567568,
+      "misdescription": 0.8245614035087719,
+      "third_party_payment": 0.8461538461538461,
+      "circular_trading": 0.68,
+      "shell_company": 0.4318181818181818,
+      "high_risk_routing": 0.5588235294117647
+    },
+    "support_by_typology": {
+      "over_invoicing": 108,
+      "under_invoicing": 65,
+      "multiple_invoicing": 45,
+      "phantom_shipment": 38,
+      "over_under_shipment": 37,
+      "misdescription": 57,
+      "third_party_payment": 26,
+      "circular_trading": 50,
+      "shell_company": 44,
+      "high_risk_routing": 34
+    },
+    "pr_auc": 0.7091174446070196,
+    "roc_auc": 0.9508468960887265,
+    "n": 12775,
+    "n_illicit": 504,
+    "prevalence": 0.03945205479452055
+  },
+  "per_client": [
+    {
+      "client": 0,
+      "n_train": 5916,
+      "n_illicit_train": 224,
+      "n_test": 2214,
+      "n_illicit_test": 111,
+      "f1": 0.6122448979591837,
+      "precision": 0.7058823529411765,
+      "recall": 0.5405405405405406,
+      "fpr": 0.011887779362815026,
+      "pr_auc": 0.6564252353114606,
+      "threshold": 0.704745697998091,
+      "best_epoch": 9
+    },
+    {
+      "client": 1,
+      "n_train": 10194,
+      "n_illicit_train": 398,
+      "n_test": 3733,
+      "n_illicit_test": 138,
+      "f1": 0.6621621621621622,
+      "precision": 0.620253164556962,
+      "recall": 0.7101449275362319,
+      "fpr": 0.016689847009735744,
+      "pr_auc": 0.744846960464077,
+      "threshold": 0.5224848247918,
+      "best_epoch": 15
+    },
+    {
+      "client": 2,
+      "n_train": 18833,
+      "n_illicit_train": 683,
+      "n_test": 6828,
+      "n_illicit_test": 255,
+      "f1": 0.6832579185520362,
+      "precision": 0.8074866310160428,
+      "recall": 0.592156862745098,
+      "fpr": 0.005476951163852123,
+      "pr_auc": 0.7226482209795626,
+      "threshold": 0.9255320548339719,
+      "best_epoch": 12
+    }
+  ],
+  "client_f1_range": [
+    0.6122448979591837,
+    0.6832579185520362
+  ]
+}

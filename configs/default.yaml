@@ -190,10 +190,11 @@ fl:
   local_epochs: 1
   fraction_train: 1.0
   fraction_evaluate: 1.0
-  lr: 0.05
+  lr: 0.05                      # client learning rate in round 1
+  lr_decay: 0.95                # multiplied in every round; chosen on validation (see docs/fl_design.md)
   proximal_mu: 0.01             # FedProx
   hist_bins: 800                # score-histogram resolution used for federated evaluation
-  target_f1_frac: 0.95          # communication-to-target: this fraction of the centralised MLP F1
+  target_f1_frac: 0.90          # communication-to-target: this fraction of the centralised MLP F1
   backend:
     client_cpus: 1
     init_cpus: 6
@@ -206,7 +207,7 @@ fl:
     n_clients: [3, 5, 10]
     alphas: [0.1, 0.5, 1.0]
     quantity_skew_alpha: 0.5    # Dirichlet over client sizes for the quantity-skew scenario
-    min_client_size: 200
+    min_client_share: 0.25      # reject splits where a client gets under 25% of an equal share (see fl/partition.py)
   secure_aggregation: false     # stretch: pairwise additive masking
   norm_clip: 0.0                # stretch: clip client update norm (0 = off)
   dp:                           # stretch: DP-SGD with Opacus
@@ -224,6 +225,7 @@ ledger:
   auto_start_node: true         # start `npx hardhat node` if nothing answers on rpc_url
   chain_dir: chain
   doc_batch_size: 500           # trade documents per Merkle batch at ingestion
+  max_batch_items: 100          # hashes per batch transaction (per-transaction gas cap is about 16.7M)
   organisations:                # index 0 is the registry admin on the EVM backend
     - regulator
     - bank_consortium
@@ -232,7 +234,7 @@ ledger:
     - fl_aggregator
   benchmark:
     n_single: 300
-    batch_sizes: [1, 10, 50, 200]
+    batch_sizes: [1, 10, 50, 100]
     n_batched_items: 2000
     block_interval_s: 1.0       # second benchmark run with interval mining (emulates block time)
 
@@ -281,5 +283,4 @@ profiles:
     models.random_forest.n_estimators: 40
     models.lightgbm.n_estimators: 60
     fl.rounds: 2
-    fl.experiments.min_client_size: 50
     split.min_typology_count: 0

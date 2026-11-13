@@ -29,6 +29,8 @@ def get_logger(name: str, level: str | None = None) -> logging.Logger:
             format=_LOG_FORMAT,
             datefmt="%H:%M:%S",
         )
+        for noisy in ("alembic", "flwr", "ray", "urllib3", "web3", "matplotlib", "PIL", "shap", "numba", "filelock"):
+            logging.getLogger(noisy).setLevel(logging.WARNING)
         _configured = True
     logger = logging.getLogger(name)
     if level:

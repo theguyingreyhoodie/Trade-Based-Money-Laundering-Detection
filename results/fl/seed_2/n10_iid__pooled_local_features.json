@@ -1,0 +1,67 @@
+{
+  "seed": 2,
+  "scenario": {
+    "name": "n10_iid",
+    "n_clients": 10,
+    "partition": "iid",
+    "alpha": null,
+    "label": "IID, 10 clients"
+  },
+  "strategy": "pooled_local_features",
+  "n_clients": 10,
+  "final": {
+    "threshold": 0.8037659436342208,
+    "threshold_bin": 447,
+    "precision": 0.773936170212766,
+    "recall": 0.5773809523809523,
+    "f1": 0.6613636363636364,
+    "fpr": 0.006926900823078804,
+    "alert_rate": 0.02943248532289628,
+    "confusion": {
+      "tp": 291,
+      "fp": 85,
+      "fn": 213,
+      "tn": 12186
+    },
+    "recall_by_typology": {
+      "over_invoicing": 0.4351851851851852,
+      "under_invoicing": 0.2923076923076923,
+      "multiple_invoicing": 0.4,
+      "phantom_shipment": 0.8947368421052632,
+      "over_under_shipment": 0.8108108108108109,
+      "misdescription": 0.8421052631578947,
+      "third_party_payment": 0.9230769230769231,
+      "circular_trading": 0.46,
+      "shell_company": 0.4772727272727273,
+      "high_risk_routing": 0.7941176470588235
+    },
+    "support_by_typology": {
+      "over_invoicing": 108,
+      "under_invoicing": 65,
+      "multiple_invoicing": 45,
+      "phantom_shipment": 38,
+      "over_under_shipment": 37,
+      "misdescription": 57,
+      "third_party_payment": 26,
+      "circular_trading": 50,
+      "shell_company": 44,
+      "high_risk_routing": 34
+    },
+    "pr_auc": 0.7110133306137216,
+    "roc_auc": 0.9409459876363552,
+    "n": 12775,
+    "n_illicit": 504,
+    "prevalence": 0.03945205479452055,
+    "val": {
+      "precision": 0.7898230088495575,
+      "recall": 0.6040609137055838,
+      "f1": 0.6845637583892616,
+      "pr_auc": 0.7293524366902908,
+      "roc_auc": 0.9375076569169175,
+      "n": 12676,
+      "n_illicit": 591
+    },
+    "oracle_f1": 0.6761177753544166
+  },
+  "best_epoch": 12
+}

@@ -153,7 +153,8 @@ def train_epochs(
     xb = torch.as_tensor(np.asarray(X, dtype=np.float32))
     yb = torch.as_tensor(np.asarray(y, dtype=np.float32))
     batch = int(cfg.models.mlp.batch_size)
-    gen = torch.Generator().manual_seed(int(seed))
+    torch.manual_seed(int(seed) % (2**31))  # dropout masks come from the global generator
+    gen = torch.Generator().manual_seed(int(seed) % (2**31))
     anchor = [p.detach().clone() for p in model.parameters()] if proximal_mu > 0 else None
     model.train()
     total, steps = 0.0, 0

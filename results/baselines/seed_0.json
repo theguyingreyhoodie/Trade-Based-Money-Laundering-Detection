@@ -276,7 +276,7 @@
         "n_illicit": 530
       },
       "oracle_f1": 0.6939759036144578,
-      "fit_seconds": 0.7436272078193724
+      "fit_seconds": 0.778348249848932
     },
     "random_forest": {
       "threshold": 0.3475105378072553,
@@ -331,7 +331,7 @@
         "n_illicit": 530
       },
       "oracle_f1": 0.7289293849658315,
-      "fit_seconds": 1.8157959999516606
+      "fit_seconds": 2.0806098331231624
     },
     "lightgbm": {
       "threshold": 0.2535060166623378,
@@ -468,33 +468,33 @@
           "share": 0.0178609477477585
         }
       ],
-      "fit_seconds": 1.4643727918155491
+      "fit_seconds": 1.40644675004296
     },
     "mlp": {
-      "threshold": 0.6524894621927446,
-      "threshold_bin": 421,
-      "precision": 0.7609649122807017,
-      "recall": 0.7694013303769401,
-      "f1": 0.7651598676957001,
-      "fpr": 0.009062941714475763,
-      "alert_rate": 0.036544317999679436,
+      "threshold": 0.8084546514385325,
+      "threshold_bin": 448,
+      "precision": 0.7627494456762749,
+      "recall": 0.7627494456762749,
+      "f1": 0.7627494456762749,
+      "fpr": 0.008896649205953271,
+      "alert_rate": 0.03614361275845488,
       "confusion": {
-        "tp": 347,
-        "fp": 109,
-        "fn": 104,
-        "tn": 11918
+        "tp": 344,
+        "fp": 107,
+        "fn": 107,
+        "tn": 11920
       },
       "recall_by_typology": {
         "over_invoicing": 0.5223880597014925,
-        "under_invoicing": 0.4,
+        "under_invoicing": 0.44,
         "multiple_invoicing": 1.0,
-        "phantom_shipment": 0.8695652173913043,
-        "over_under_shipment": 0.6140350877192983,
-        "misdescription": 0.8723404255319149,
-        "third_party_payment": 0.9137931034482759,
+        "phantom_shipment": 0.8260869565217391,
+        "over_under_shipment": 0.7017543859649122,
+        "misdescription": 0.851063829787234,
+        "third_party_payment": 0.8275862068965517,
         "circular_trading": 0.8108108108108109,
         "shell_company": 0.8378378378378378,
-        "high_risk_routing": 0.8275862068965517
+        "high_risk_routing": 0.7931034482758621
       },
       "support_by_typology": {
         "over_invoicing": 67,
@@ -508,24 +508,24 @@
         "shell_company": 37,
         "high_risk_routing": 29
       },
-      "pr_auc": 0.8410257895227334,
-      "roc_auc": 0.9694350866500117,
+      "pr_auc": 0.8387615119345324,
+      "roc_auc": 0.9725811860490541,
       "n": 12478,
       "n_illicit": 451,
       "prevalence": 0.03614361275845488,
       "val": {
-        "precision": 0.7857142857142857,
-        "recall": 0.7471698113207547,
-        "f1": 0.7659574468085106,
-        "pr_auc": 0.8234983791240753,
-        "roc_auc": 0.9740143287575307,
+        "precision": 0.7855711422845691,
+        "recall": 0.7396226415094339,
+        "f1": 0.7619047619047619,
+        "pr_auc": 0.8180218979387022,
+        "roc_auc": 0.9762242483525697,
         "n": 12547,
         "n_illicit": 530
       },
-      "oracle_f1": 0.7922705314009661,
-      "best_epoch": 16,
-      "epochs_run": 24,
-      "fit_seconds": 0.7904079998843372
+      "oracle_f1": 0.7785547785547785,
+      "best_epoch": 7,
+      "epochs_run": 15,
+      "fit_seconds": 0.5390142498072237
     }
   }
 }
