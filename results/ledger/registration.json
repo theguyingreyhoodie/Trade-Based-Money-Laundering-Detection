@@ -1,0 +1,73 @@
+{
+  "tables": {
+    "invoices": {
+      "doc_type": "invoice",
+      "org": "trade_registry",
+      "documents": 60408,
+      "batches": 121,
+      "cost": 12509880
+    },
+    "shipments": {
+      "doc_type": "shipment",
+      "org": "trade_registry",
+      "documents": 59068,
+      "batches": 119,
+      "cost": 12289164
+    },
+    "payments": {
+      "doc_type": "payment",
+      "org": "bank_consortium",
+      "documents": 73506,
+      "batches": 148,
+      "cost": 15280404
+    },
+    "declarations": {
+      "doc_type": "customs_declaration",
+      "org": "customs_authority",
+      "documents": 59564,
+      "batches": 120,
+      "cost": 12424068
+    }
+  },
+  "batch_size": 500,
+  "backend": "evm",
+  "documents": 252546,
+  "batches": 508,
+  "hash_seconds": 4.493005539989099,
+  "ledger_seconds": 7.037726499373093,
+  "documents_per_second": 21901.991923660145,
+  "cost": 52503516,
+  "cost_unit": "gas",
+  "cost_per_document": 207.89684255541565,
+  "ledger_storage_bytes": 48768,
+  "ledger_bytes_per_document": 0.19310541445914803,
+  "seed": 0,
+  "organisations": {
+    "regulator": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+    "bank_consortium": "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC",
+    "trade_registry": "0x90F79bf6EB2c4f870365E785982E1f101E93b906",
+    "customs_authority": "0x15d34AAf54267DB7D7c367839AAf71A00a2C6A65",
+    "fl_aggregator": "0x9965507D1a55bcC2695C58ba16FB37d819B0A4dc"
+  },
+  "ledger": {
+    "backend": "evm",
+    "contract": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+    "chain_id": 31337,
+    "block_number": 514,
+    "n_records": 508,
+    "n_organisations": 5,
+    "storage_bytes": 48768,
+    "storage_note": "contract storage slots x 32 bytes; state-trie overhead not included",
+    "contract_code_bytes": 4175,
+    "total_cost": 52906920,
+    "cost_unit": "gas"
+  },
+  "index": {
+    "documents": 252546,
+    "batches": 508,
+    "n_customs_declaration": 59564,
+    "n_invoice": 60408,
+    "n_payment": 73506,
+    "n_shipment": 59068
+  }
+}

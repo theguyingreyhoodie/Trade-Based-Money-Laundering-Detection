@@ -1,0 +1,87 @@
+{
+  "backend": "evm",
+  "trade_document": {
+    "document": "INV-0030205",
+    "field_changed": "invoice_value",
+    "original_value": 107043.44,
+    "tampered_value": 117747.78,
+    "original": {
+      "doc_type": "invoice",
+      "ref_id": "INV-0030205",
+      "computed_hash": "a54f1622baad0479e6cc20192cfca913e73953de1f5d6138c67229e7292ba191",
+      "verified": true,
+      "indexed_hash": "a54f1622baad0479e6cc20192cfca913e73953de1f5d6138c67229e7292ba191",
+      "hash_matches_index": true,
+      "batch_id": "invoice-seed0-00060",
+      "proof_length": 9,
+      "computed_root": "c797a61ab82428f90f2537a3cb04872ec2ca99ce448e5c49cefebdfc8a243010",
+      "root_on_ledger": true,
+      "registered_by": "trade_registry",
+      "registered_at": 1794586244,
+      "reason": "document matches the registered evidence"
+    },
+    "tampered": {
+      "doc_type": "invoice",
+      "ref_id": "INV-0030205",
+      "computed_hash": "029805a8487e70e718b08de5a1938042ba6b33aa8420accb67e36f084c42a133",
+      "verified": false,
+      "indexed_hash": "a54f1622baad0479e6cc20192cfca913e73953de1f5d6138c67229e7292ba191",
+      "hash_matches_index": false,
+      "batch_id": "invoice-seed0-00060",
+      "proof_length": 9,
+      "computed_root": "03add9ff52bbfc25791d5146af70a22c5ff6df65baa39eeba4f304021f4d785e",
+      "root_on_ledger": false,
+      "registered_by": "",
+      "registered_at": 0,
+      "reason": "document content differs from what was registered"
+    },
+    "tampered_with_index_rewritten": {
+      "doc_type": "invoice",
+      "ref_id": "INV-0030205",
+      "computed_hash": "029805a8487e70e718b08de5a1938042ba6b33aa8420accb67e36f084c42a133",
+      "verified": false,
+      "indexed_hash": "029805a8487e70e718b08de5a1938042ba6b33aa8420accb67e36f084c42a133",
+      "hash_matches_index": true,
+      "batch_id": "invoice-seed0-00060",
+      "proof_length": 9,
+      "computed_root": "03add9ff52bbfc25791d5146af70a22c5ff6df65baa39eeba4f304021f4d785e",
+      "root_on_ledger": false,
+      "registered_by": "",
+      "registered_at": 0,
+      "reason": "the off-chain index does not match the ledger (index altered, or evidence never anchored)"
+    },
+    "restored": {
+      "doc_type": "invoice",
+      "ref_id": "INV-0030205",
+      "computed_hash": "a54f1622baad0479e6cc20192cfca913e73953de1f5d6138c67229e7292ba191",
+      "verified": true,
+      "indexed_hash": "a54f1622baad0479e6cc20192cfca913e73953de1f5d6138c67229e7292ba191",
+      "hash_matches_index": true,
+      "batch_id": "invoice-seed0-00060",
+      "proof_length": 9,
+      "computed_root": "c797a61ab82428f90f2537a3cb04872ec2ca99ce448e5c49cefebdfc8a243010",
+      "root_on_ledger": true,
+      "registered_by": "trade_registry",
+      "registered_at": 1794586244,
+      "reason": "document matches the registered evidence"
+    },
+    "as_expected": true
+  },
+  "model_update": {
+    "model_file": "artifacts/seed_0/fl/n3_dir0.5/fedavg_primary/global_model.npz",
+    "round": 29,
+    "original": {
+      "sha256": "8ff5dc50017073748489572946bf23df25795da39f8b9074ad6a482166387b7a",
+      "on_ledger": true,
+      "doc_type": "global_model",
+      "ref_id": "seed0-n3_dir0.5-fedavg/round-029",
+      "registered_by": "fl_aggregator"
+    },
+    "one_weight_changed": {
+      "sha256": "bb3f436bf9a50e2393dbe99c7ff6a879d4b4c8f88f8e61123a0c298732765e8e",
+      "on_ledger": false
+    },
+    "as_expected": true
+  },
+  "alert": null
+}

@@ -6,7 +6,7 @@ PROFILE ?=
 ARGS    := $(if $(PROFILE),--profile $(PROFILE),)
 
 .PHONY: help setup chain-install chain-compile chain-up chain-down data features baselines fl \
-        fl-experiments ledger alerts stretch evaluate test all quick dashboard clean
+        fl-experiments ledger ledger-check alerts stretch evaluate test all quick dashboard clean
 
 help:
 	@echo "setup           create .venv, install Python deps and the Hardhat project"
@@ -16,7 +16,8 @@ help:
 	@echo "baselines       Phase 3  rules engine + centralised ML"
 	@echo "fl              Phase 4  primary federated run"
 	@echo "fl-experiments  Phase 4  IID / non-IID / client-count sweep, local-only, FedProx"
-	@echo "ledger          Phase 5  register evidence, tamper demo, benchmark"
+	@echo "ledger          Phase 5  register trade documents on the evidence ledger"
+	@echo "ledger-check    Phase 5  tamper demo and ledger benchmark"
 	@echo "alerts          Phase 6  risk scores and explainable alerts"
 	@echo "stretch         secure aggregation, DP-SGD, vertical-FL demo, poisoning defence"
 	@echo "evaluate        Phase 7  tables, plots, RESULTS.md"
@@ -59,6 +60,8 @@ fl-experiments:
 
 ledger:
 	$(PY) scripts/ledger_register.py $(ARGS)
+
+ledger-check:
 	$(PY) scripts/ledger_tamper_demo.py $(ARGS)
 	$(PY) scripts/ledger_benchmark.py $(ARGS)
 

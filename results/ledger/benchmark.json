@@ -1,0 +1,263 @@
+{
+  "python": {
+    "backend": "python",
+    "cost_unit": "bytes appended",
+    "single": {
+      "records": 300,
+      "latency": {
+        "p50_ms": 2.886853995732963,
+        "p95_ms": 3.1871021492406726,
+        "mean_ms": 2.8713701277350387,
+        "max_ms": 3.3270411659032106,
+        "n": 300
+      },
+      "records_per_second": 342.79592926550794,
+      "cost_per_record": 572.6733333333333,
+      "seconds": 0.875156250083819
+    },
+    "verify": {
+      "p50_ms": 0.0029581133276224136,
+      "p95_ms": 0.003251910675317048,
+      "mean_ms": 0.003108935197815299,
+      "max_ms": 0.020041828975081444,
+      "n": 200
+    },
+    "batched": [
+      {
+        "batch_size": 1,
+        "records": 2000,
+        "ledger_writes": 2000,
+        "records_per_second": 251.38985860265524,
+        "cost_per_record": 569.653,
+        "ms_per_write": 3.97788520809263,
+        "seconds": 7.95577041618526
+      },
+      {
+        "batch_size": 10,
+        "records": 2000,
+        "ledger_writes": 200,
+        "records_per_second": 1784.1656188028844,
+        "cost_per_record": 147.0,
+        "ms_per_write": 5.604860835010186,
+        "seconds": 1.1209721670020372
+      },
+      {
+        "batch_size": 50,
+        "records": 2000,
+        "ledger_writes": 40,
+        "records_per_second": 6965.470855257124,
+        "cost_per_record": 109.0,
+        "ms_per_write": 7.178265624679625,
+        "seconds": 0.287130624987185
+      },
+      {
+        "batch_size": 100,
+        "records": 2000,
+        "ledger_writes": 20,
+        "records_per_second": 9857.418597617801,
+        "cost_per_record": 105.0,
+        "ms_per_write": 10.144643753301352,
+        "seconds": 0.20289287506602705
+      }
+    ],
+    "merkle": {
+      "batch_size": 500,
+      "records": 10000,
+      "ledger_writes": 20,
+      "records_per_second": 92084.59920069187,
+      "cost_per_record": 1.158,
+      "storage_bytes_per_record": 1.158,
+      "seconds": 0.10859579220414162
+    },
+    "storage_growth": [
+      {
+        "records": 8320,
+        "storage_bytes": 2050081
+      },
+      {
+        "records": 8370,
+        "storage_bytes": 2055402
+      },
+      {
+        "records": 8420,
+        "storage_bytes": 2060723
+      },
+      {
+        "records": 8470,
+        "storage_bytes": 2066044
+      },
+      {
+        "records": 8520,
+        "storage_bytes": 2071365
+      },
+      {
+        "records": 8570,
+        "storage_bytes": 2076686
+      },
+      {
+        "records": 8620,
+        "storage_bytes": 2082007
+      },
+      {
+        "records": 8670,
+        "storage_bytes": 2087328
+      },
+      {
+        "records": 8720,
+        "storage_bytes": 2092649
+      }
+    ],
+    "storage_bytes_per_record": 106.42,
+    "final_stats": {
+      "backend": "python",
+      "n_records": 8720,
+      "n_entries": 2594,
+      "n_organisations": 6,
+      "storage_bytes": 2092649,
+      "total_cost": 2092649,
+      "cost_unit": "bytes appended",
+      "sign_ops": 2594
+    }
+  },
+  "evm": {
+    "backend": "evm",
+    "cost_unit": "gas",
+    "single": {
+      "records": 300,
+      "latency": {
+        "p50_ms": 8.905416470952332,
+        "p95_ms": 10.562491265591236,
+        "mean_ms": 9.141693769488484,
+        "max_ms": 25.494666071608663,
+        "n": 300
+      },
+      "records_per_second": 99.88636953260082,
+      "cost_per_record": 103087.64,
+      "seconds": 3.003412791993469
+    },
+    "verify": {
+      "p50_ms": 2.676875563338399,
+      "p95_ms": 3.111218218691647,
+      "mean_ms": 2.6375529123470187,
+      "max_ms": 4.456665832549334,
+      "n": 200
+    },
+    "batched": [
+      {
+        "batch_size": 1,
+        "records": 2000,
+        "ledger_writes": 2000,
+        "records_per_second": 104.85874736999459,
+        "cost_per_record": 104251.542,
+        "ms_per_write": 9.536638812511228,
+        "seconds": 19.073277625022456
+      },
+      {
+        "batch_size": 10,
+        "records": 2000,
+        "ledger_writes": 200,
+        "records_per_second": 579.0811285477914,
+        "cost_per_record": 76920.75,
+        "ms_per_write": 17.26873749983497,
+        "seconds": 3.453747499966994
+      },
+      {
+        "batch_size": 50,
+        "records": 2000,
+        "ledger_writes": 40,
+        "records_per_second": 1706.4509102545856,
+        "cost_per_record": 74492.775,
+        "ms_per_write": 29.300579172559083,
+        "seconds": 1.1720231669023633
+      },
+      {
+        "batch_size": 100,
+        "records": 2000,
+        "ledger_writes": 20,
+        "records_per_second": 1960.366855604467,
+        "cost_per_record": 74208.55,
+        "ms_per_write": 51.01086039794609,
+        "seconds": 1.0202172079589218
+      }
+    ],
+    "merkle": {
+      "batch_size": 500,
+      "records": 10000,
+      "ledger_writes": 20,
+      "records_per_second": 46505.99485029297,
+      "cost_per_record": 206.1828,
+      "storage_bytes_per_record": 0.192,
+      "seconds": 0.21502604195848107
+    },
+    "storage_growth": [
+      {
+        "records": 8320,
+        "storage_bytes": 798720
+      },
+      {
+        "records": 8370,
+        "storage_bytes": 803520
+      },
+      {
+        "records": 8420,
+        "storage_bytes": 808320
+      },
+      {
+        "records": 8470,
+        "storage_bytes": 813120
+      },
+      {
+        "records": 8520,
+        "storage_bytes": 817920
+      },
+      {
+        "records": 8570,
+        "storage_bytes": 822720
+      },
+      {
+        "records": 8620,
+        "storage_bytes": 827520
+      },
+      {
+        "records": 8670,
+        "storage_bytes": 832320
+      },
+      {
+        "records": 8720,
+        "storage_bytes": 837120
+      }
+    ],
+    "storage_bytes_per_record": 96.0,
+    "block_interval": {
+      "block_interval_s": 1.0,
+      "sequential_latency": {
+        "p50_ms": 1001.6090624267235,
+        "p95_ms": 1009.0937147731893,
+        "mean_ms": 1000.6781823758502,
+        "max_ms": 1010.0234169512987,
+        "n": 8
+      },
+      "concurrent": {
+        "records": 100,
+        "submit_seconds": 0.4433623750228435,
+        "seconds_until_all_final": 1.094571250025183,
+        "blocks_used": 1,
+        "records_per_second": 91.35997313806597
+      }
+    },
+    "deploy_gas": 980755,
+    "final_stats": {
+      "backend": "evm",
+      "contract": "0x8A791620dd6260079BF849Dc5567aDC3F2FdC318",
+      "chain_id": 31337,
+      "block_number": 3241,
+      "n_records": 8828,
+      "n_organisations": 6,
+      "storage_bytes": 837888,
+      "storage_note": "contract storage slots x 32 bytes; state-trie overhead not included",
+      "contract_code_bytes": 4175,
+      "total_cost": 723826160,
+      "cost_unit": "gas"
+    }
+  }
+}
