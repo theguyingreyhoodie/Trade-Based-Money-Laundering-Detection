@@ -1,0 +1,261 @@
+# =============================================================================
+# Single source of configuration for the whole pipeline.
+# Every script reads this file; override any value from the CLI with
+#   --set data.n_trades=20000 --set fl.rounds=10
+# or apply a named profile from the bottom of this file with --profile quick.
+# =============================================================================
+
+project:
+  name: tbml-fl-blockchain
+  seed: 0                 # seed of the "primary" run (data, split, partition, model init)
+  seeds: [0, 1, 2]        # seeds for the multi-seed comparison (mean +/- std)
+
+paths:                    # relative to the repository root
+  data_dir: data
+  artifacts_dir: artifacts
+  results_dir: results
+
+logging:
+  level: INFO
+
+# -----------------------------------------------------------------------------
+# Phase 1: synthetic trade data generator (see docs/data_generator.md)
+# -----------------------------------------------------------------------------
+data:
+  n_trades: 60000
+  start_date: "2023-01-01"
+  end_date: "2024-12-31"
+  illicit_rate: 0.04            # target share of illicit trades (2-5% is realistic)
+
+  typology_mix:                 # relative shares of the illicit trades
+    over_invoicing: 0.14
+    under_invoicing: 0.12
+    multiple_invoicing: 0.09
+    phantom_shipment: 0.10
+    over_under_shipment: 0.10
+    misdescription: 0.10
+    third_party_payment: 0.10
+    circular_trading: 0.09
+    shell_company: 0.09
+    high_risk_routing: 0.07
+
+  entities:
+    n_companies: 3000
+    n_banks: 30
+    n_shipping_lines: 10
+    n_finance_houses: 25        # benign third-party payers (factoring / trade finance)
+    role_shares: {exporter: 0.40, importer: 0.40, trader: 0.20}
+    shared_address_share: 0.15  # benign firms in business centres / registered-agent addresses
+    n_business_centres: 60
+    group_director_share: 0.12  # benign firms belonging to a business group (shared director)
+    n_group_directors: 120
+    new_entrant_share: 0.06     # benign firms registered during the data period
+
+  networks:                     # laundering networks (ground truth only)
+    n_networks: 45
+    shells_per_network: [2, 4]
+    complicit_per_network: [2, 4]
+    payers_per_network: [1, 2]
+    typologies_per_network: [2, 3]
+    active_months: [6, 24]
+    shell_age_months_at_start: [1, 14]
+
+  legit:                        # behaviour of ordinary trade
+    suppliers_per_importer_mean: 2.5
+    same_region_preference: 3.0
+    pair_price_effect: 0.5      # persistent pair-level price level, in units of the HS sigma
+    trade_price_noise: 0.75     # trade-level noise, in units of the HS sigma (Student-t, df=5)
+    monthly_price_drift: 0.02   # per-HS random walk (legitimate price volatility)
+    extreme_deal_rate: 0.004    # legitimate clearance / premium deals
+    lump_sum_rate: 0.05         # negotiated round invoice totals
+    transshipment_p1: {same_region: 0.08, cross_region: 0.28}
+    transshipment_p2: 0.03
+    payment_terms: {advance: 0.12, sight: 0.38, open_account: 0.50}
+    split_payment_probs: [0.82, 0.14, 0.04]   # 1, 2 or 3 instalments
+    group_payer_rate: 0.015     # paid by a related group company
+    finance_payer_rate: 0.010   # paid by a trade-finance house
+    offshore_account_rate: 0.02 # exporter collects through a bank abroad
+    currency_convert_rate: 0.015
+
+  noise:                        # benign data-quality problems that look suspicious
+    bl_typo_rate: 0.006         # B/L number mistyped on the invoice -> shipment cannot be linked
+    missing_shipment_rate: 0.005
+    missing_customs_rate: 0.010
+    missing_both_rate: 0.003
+    qty_typo_rate: 0.0015       # x10 / /10 keying errors in shipment or customs quantity
+    qty_tolerance_rate: 0.06    # small genuine quantity differences
+    short_shipment_rate: 0.02
+    hs_reclass_rate: 0.02       # customs classifies under a sibling HS-6 code
+    customs_value_adjust_rate: 0.01
+    duplicate_row_rate: 0.002   # exact duplicate rows in the raw tables
+    messy_code_rate: 0.01       # stray whitespace / lower-case codes
+    reference_price_error: 0.03 # estimation error of the published HS reference prices
+
+  typologies:                   # manipulation strength; "subtle_share" cases sit near benign behaviour
+    subtle_share: 0.25
+    over_invoicing: {factor_median: 2.0, factor_sigma: 0.40, subtle_range: [1.20, 1.50], customs_true_value_p: 0.4}
+    under_invoicing: {factor_median: 0.50, factor_sigma: 0.35, subtle_range: [0.65, 0.85]}
+    multiple_invoicing: {extra_invoices_p2: 0.3, other_bank_p: 0.6, max_delay_days: 20}
+    phantom_shipment: {empty_container_p: 0.25}
+    over_under_shipment: {under_range: [0.20, 0.70], over_range: [1.40, 3.00], subtle_under: [0.75, 0.90], subtle_over: [1.10, 1.30], under_p: 0.6}
+    misdescription: {cross_chapter_p: 0.7}
+    third_party_payment: {currency_switch_p: 0.3, split_p: 0.4}
+    circular_trading: {loop_len: [3, 5], markup: [0.02, 0.08], hop_days: [2, 10], related_p: 0.6}
+    shell_company: {round_amount_p: 0.4, price_dev: 0.30}
+    high_risk_routing: {n_hops: [2, 3], offshore_bank_p: 0.6, misprice_p: 0.5, price_dev: 0.25}
+
+# -----------------------------------------------------------------------------
+# Phase 2: features
+# -----------------------------------------------------------------------------
+features:
+  round_amount_base: 1000       # invoice totals divisible by this count as "round"
+  cycle_max_len: 5              # longest directed cycle searched in the trade graph
+  pagerank_alpha: 0.85
+  clip_log_ratio: 5.0           # clip log-ratios to +/- this value
+
+# -----------------------------------------------------------------------------
+# Phase 3: split, rules, baseline models
+# -----------------------------------------------------------------------------
+split:
+  train_frac: 0.60              # by invoice date: oldest 60% train, next 20% val, newest 20% test
+  val_frac: 0.20
+  min_typology_count: 5         # every split must hold at least this many cases per typology
+
+rules:
+  alert_threshold: 0.5          # default operating point of the rules-only baseline (noisy-OR score)
+  thresholds:
+    price_z_high: 3.0           # |log price ratio| / HS sigma
+    price_ratio_high: 1.8       # unit price / reference
+    price_ratio_low: 0.55
+    qty_mismatch: 0.15          # |log(shipped or declared qty / invoiced qty)|
+    weight_per_unit_dev: 0.6    # |log(weight per unit / HS typical)|
+    inv_pay_mismatch: 0.10
+    value_mismatch_customs: 0.20
+    young_entity_days: 365
+    shared_address_min: 4
+    volume_per_age_high: 15.0   # log(USD volume per year of age)
+    transshipments_high: 2
+    detour_ratio_high: 1.6
+    invoices_per_bl_min: 2
+    bl_cover_ratio_high: 1.5
+    advance_payment_days: -10   # paid this many days before shipment
+    third_party_risk_min: 0.6
+
+models:
+  threshold_metric: f1          # decision threshold maximises this on validation only
+  logreg: {C: 1.0, max_iter: 2000}
+  random_forest: {n_estimators: 300, max_depth: 14, min_samples_leaf: 3}
+  lightgbm: {n_estimators: 400, learning_rate: 0.05, num_leaves: 31, min_child_samples: 20, subsample: 0.8, colsample_bytree: 0.8}
+  mlp:
+    hidden: [64, 32]
+    dropout: 0.10
+    loss: weighted_bce          # weighted_bce | focal
+    pos_weight: 6.0             # same fixed class weight for centralised, local and federated training
+    focal_gamma: 2.0
+    focal_alpha: 0.75
+    optimizer: sgd              # sgd (momentum 0.9) | adam
+    lr: 0.05
+    weight_decay: 1.0e-5
+    batch_size: 256
+    epochs: 40                  # centralised / local-only budget
+    patience: 8                 # early stopping on validation PR-AUC
+
+# -----------------------------------------------------------------------------
+# Phase 4: federated learning
+# -----------------------------------------------------------------------------
+fl:
+  rounds: 30
+  local_epochs: 1
+  fraction_train: 1.0
+  fraction_evaluate: 1.0
+  lr: 0.05
+  proximal_mu: 0.01             # FedProx
+  hist_bins: 800                # score-histogram resolution used for federated evaluation
+  target_f1_frac: 0.95          # communication-to-target: this fraction of the centralised MLP F1
+  backend:
+    client_cpus: 1
+    init_cpus: 6
+  primary:                      # scenario used for the ledger, alerts and dashboard
+    n_clients: 3
+    partition: dirichlet        # iid | dirichlet | quantity
+    alpha: 0.5
+    strategy: fedavg
+  experiments:
+    n_clients: [3, 5, 10]
+    alphas: [0.1, 0.5, 1.0]
+    quantity_skew_alpha: 0.5    # Dirichlet over client sizes for the quantity-skew scenario
+    min_client_size: 200
+  secure_aggregation: false     # stretch: pairwise additive masking
+  norm_clip: 0.0                # stretch: clip client update norm (0 = off)
+  dp:                           # stretch: DP-SGD with Opacus
+    enabled: false
+    epsilons: [1.0, 3.0, 8.0]
+    delta: 1.0e-5
+    max_grad_norm: 1.0
+
+# -----------------------------------------------------------------------------
+# Phase 5: blockchain evidence layer
+# -----------------------------------------------------------------------------
+ledger:
+  backend: auto                 # auto | evm | python   (auto = EVM if a Hardhat node is reachable/startable)
+  rpc_url: "http://127.0.0.1:8545"
+  auto_start_node: true         # start `npx hardhat node` if nothing answers on rpc_url
+  chain_dir: chain
+  doc_batch_size: 500           # trade documents per Merkle batch at ingestion
+  organisations:                # index 0 is the registry admin on the EVM backend
+    - regulator
+    - bank_consortium
+    - trade_registry
+    - customs_authority
+    - fl_aggregator
+  benchmark:
+    n_single: 300
+    batch_sizes: [1, 10, 50, 200]
+    n_batched_items: 2000
+    block_interval_s: 1.0       # second benchmark run with interval mining (emulates block time)
+
+# -----------------------------------------------------------------------------
+# Phase 6: risk scoring and alerts
+# -----------------------------------------------------------------------------
+scoring:
+  calibration: isotonic         # isotonic | platt
+  model_weight: 0.7             # risk = 100 * (w * p_model + (1 - w) * p_rules)
+  bands: {medium: 25, high: 50, critical: 75}
+  alert_min_score: 25           # alerts are raised from "Medium" upwards
+  top_k_features: 5
+  shap_background: 200
+  report_sample: 12
+
+# -----------------------------------------------------------------------------
+# Profiles: dotted-key overrides applied with --profile <name>
+# -----------------------------------------------------------------------------
+profiles:
+  quick:                        # minutes, for smoke runs and CI
+    project.seeds: [0]
+    data.n_trades: 12000
+    data.entities.n_companies: 900
+    data.networks.n_networks: 14
+    models.mlp.epochs: 12
+    models.random_forest.n_estimators: 80
+    models.lightgbm.n_estimators: 120
+    fl.rounds: 6
+    fl.experiments.n_clients: [3]
+    fl.experiments.alphas: [0.5]
+    fl.dp.epsilons: [3.0]
+    ledger.benchmark.n_single: 60
+    ledger.benchmark.n_batched_items: 400
+    ledger.benchmark.batch_sizes: [1, 50]
+  test:                         # seconds, used by the pytest suite
+    project.seeds: [0]
+    data.n_trades: 4000
+    data.entities.n_companies: 400
+    data.entities.n_finance_houses: 8
+    data.entities.n_business_centres: 15
+    data.entities.n_group_directors: 25
+    data.networks.n_networks: 10
+    models.mlp.epochs: 6
+    models.random_forest.n_estimators: 40
+    models.lightgbm.n_estimators: 60
+    fl.rounds: 2
+    fl.experiments.min_client_size: 50
+    split.min_typology_count: 1

@@ -1,0 +1,19 @@
+# Core stack (see pyproject.toml; `pip install -e ".[dev]"` installs the same set)
+numpy>=1.26
+pandas>=2.1
+scikit-learn>=1.4
+lightgbm>=4.0
+torch>=2.2            # CPU build is enough
+flwr[simulation]>=1.22  # Message API (ServerApp/ClientApp) + Ray simulation backend
+shap>=0.45
+networkx>=3.2
+pyyaml>=6.0
+web3>=7.0
+matplotlib>=3.8
+
+# Tests
+pytest>=8.0
+
+# Optional: stretch goals and dashboard
+opacus>=1.5           # DP-SGD (privacy/utility experiment)
+streamlit>=1.36       # investigator dashboard

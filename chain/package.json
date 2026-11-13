@@ -1,0 +1,13 @@
+{
+  "name": "tbml-evidence-chain",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Local permissioned-chain prototype (Hardhat) for the TBML evidence registry",
+  "scripts": {
+    "compile": "hardhat compile",
+    "node": "hardhat node --hostname 127.0.0.1 --port 8545"
+  },
+  "devDependencies": {
+    "hardhat": "2.29.2"
+  }
+}

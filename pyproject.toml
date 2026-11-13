@@ -1,0 +1,43 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tbml"
+version = "0.1.0"
+description = "Privacy-preserving Trade-Based Money Laundering detection with Federated Learning and a blockchain evidence layer (B.E. final-year project prototype)"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "numpy>=1.26",
+    "pandas>=2.1",
+    "scikit-learn>=1.4",
+    "lightgbm>=4.0",
+    "torch>=2.2",
+    "flwr[simulation]>=1.22",
+    "shap>=0.45",
+    "networkx>=3.2",
+    "pyyaml>=6.0",
+    "web3>=7.0",
+    "matplotlib>=3.8",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+privacy = ["opacus>=1.5"]
+dashboard = ["streamlit>=1.36"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+markers = [
+    "slow: longer-running tests (Flower simulation, EVM node)",
+    "evm: needs the local Hardhat node (skipped automatically if Node/Hardhat is unavailable)",
+]
+filterwarnings = [
+    "ignore::DeprecationWarning",
+    "ignore::FutureWarning",
+]

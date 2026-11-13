@@ -1,0 +1,27 @@
+"""Shared pytest fixtures.
+
+The suite runs on the ``test`` profile (a few thousand trades) so that the whole
+pipeline can be exercised in seconds. Expensive objects are session-scoped.
+"""
+
+from __future__ import annotations
+
+from pathlib import Path
+
+import pytest
+
+from tbml.config import Config, load_config
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
+
+
+@pytest.fixture(scope="session")
+def cfg(tmp_path_factory: pytest.TempPathFactory) -> Config:
+    """Config on the ``test`` profile, writing to a temporary directory."""
+    base = tmp_path_factory.mktemp("tbml")
+    config = load_config(REPO_ROOT / "configs" / "default.yaml", profile="test")
+    config.set_path("paths.data_dir", str(base / "data"))
+    config.set_path("paths.artifacts_dir", str(base / "artifacts"))
+    config.set_path("paths.results_dir", str(base / "results"))
+    config.set_path("ledger.backend", "python")
+    return config

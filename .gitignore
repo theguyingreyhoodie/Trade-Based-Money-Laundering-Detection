@@ -1,0 +1,27 @@
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ipynb_checkpoints/
+build/
+dist/
+
+# Generated, reproducible from the seed (see README)
+/data/
+/artifacts/
+/ray_results/
+
+# Hardhat
+chain/node_modules/
+chain/cache/
+chain/artifacts/build-info/
+chain/artifacts/**/*.dbg.json
+.chain.pid
+.chain.log
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/
