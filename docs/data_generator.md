@@ -72,11 +72,14 @@ table: the true median with 3% estimation noise and the dispersion with about 9%
   other firms (business groups, nominee providers). These are the benign look-alikes of shells.
 - Every firm has a home bank in its own jurisdiction.
 
-**Laundering networks** (default 45, ground truth only). A network has:
+**Laundering networks** (default 45, ground truth only; on seed 0: 189 shells, 68 payer vehicles,
+143 complicit firms). A network has:
 
-- 2-4 **shells**: founded 1-14 months before the network becomes active (20% are aged "shelf"
-  companies), usually at a formation-agent address with a nominee director; 35% are *hidden*
-  (own address and director). Shells sit mostly in offshore and medium-risk jurisdictions.
+- 3-6 **shells**. A shell is short-lived: it is registered 1-8 months before its first use, used
+  for 4-12 months and then dropped, so a network works through several of them (median shell age
+  at the time of a trade: about 9 months). 20% are aged "shelf" companies. Most sit at a
+  formation-agent address with a nominee director; 35% are *hidden* (own address and director).
+  Shells sit mostly in offshore and medium-risk jurisdictions.
 - 2-4 **complicit firms** recruited from ordinary, established companies that have real trading
   relationships. Their illicit trades are mixed into a genuine trading history.
 - 1-2 **payer vehicles** in offshore or listed jurisdictions.
@@ -104,8 +107,10 @@ a network or an illicit trade (tested).
 - **Quantity** is lognormal around the HS typical order, scaled by importer size. 5% of invoices
   are negotiated lump sums (round totals).
 - **Route.** Direct in most cases; one transshipment with probability 8% (same region) or 28%
-  (cross-region), two with 3%. Hubs are chosen to minimise the detour. 3% of trades add a feeder
-  stop at an ordinary port, which can be in a listed jurisdiction.
+  (cross-region), two with 3%. A hub is only used when it lies roughly on the way (at most 1.8
+  times the direct distance; smaller detours are preferred), otherwise the trade goes direct. 3%
+  of trades add a feeder call at a nearby ordinary port, which can be in a listed jurisdiction.
+  The 99th percentile of the legitimate detour ratio is about 1.8.
 - **Payment.** Terms: advance 12%, at sight 38%, open account 50% (30/60/90 days). 18% are paid in
   2-3 instalments. 5% carry bank charges, 2% a credit note. Benign third-party payers: a related
   group company (1.5%), a trade-finance house (1.0%), an unrelated legitimate firm (1.2%). 2% of
@@ -116,17 +121,17 @@ a network or an illicit trade (tested).
 
 ### Benign noise that looks suspicious
 
-Measured on seed 0 (58,019 legitimate trades):
+Measured on seed 0 (58,005 legitimate trades):
 
 | Look-alike | Share of legitimate trades | Mimics |
 |---|---|---|
-| shipment record cannot be linked (lost record or mistyped B/L number) | 1.06% | phantom shipment |
+| shipment record cannot be linked (lost record or mistyped B/L number) | 1.08% | phantom shipment |
 | customs declaration missing | 0.88% | phantom shipment |
-| both missing | 0.10% | phantom shipment |
-| third-party payer | 3.58% | third-party payment |
-| customs HS code differs from invoice (75% same heading, 20% other heading, 5% other chapter) | 1.97% | misdescription |
-| transshipped at least once | 26.3% | high-risk routing |
-| two or more invoices on one B/L | 2.76% | multiple invoicing |
+| both missing | 0.11% | phantom shipment |
+| third-party payer | 3.70% | third-party payment |
+| customs HS code differs from invoice (75% same heading, 20% other heading, 5% other chapter) | 1.94% | misdescription |
+| transshipped at least once | 22.6% | high-risk routing |
+| two or more invoices on one B/L | 2.74% | multiple invoicing |
 | round invoice total | 5.0% | shell company |
 | paid before shipment | 9.9% | phantom shipment, shell company |
 | shipped quantity differs from invoiced by more than 8% (tolerances, short shipment, split consignment, keying errors) | 3.8% | over-/under-shipment |
@@ -136,14 +141,16 @@ that the cleaning step has to remove.
 
 ## 4. Injected typologies
 
-About 4% of trades are illicit (2,403 of 60,422 on seed 0). Each illicit trade has one primary
+About 4% of trades are illicit (2,403 of 60,408 on seed 0). Each illicit trade has one primary
 typology as its label sub-type. A quarter of the cases are *subtle*: the manipulation is small
 enough to overlap with benign behaviour.
 
-**Who trades.** The parties of an illicit trade are drawn in one of three ways: a complicit firm
-with one of its existing ordinary partners (45%), two complicit firms of one network (35%), or a
-shell on one side (20%; always for the shell-company typology). On seed 0, 35% of illicit trades
-involve a shell and 34% are between parties that also trade legitimately with each other. This
+**Who trades.** A date inside the network's active window is drawn first; the parties must exist
+on that date, and a shell qualifies only while it is in use. The parties are then drawn in one of
+three ways: a complicit firm with one of its existing ordinary partners (45%), two complicit firms
+of one network (35%), or a shell on one side (20%; always for the shell-company typology). On
+seed 0, 34% of illicit trades involve a shell and 35% are between parties that also trade
+legitimately with each other. This
 matters: if illicit trades only ran between parties that never trade legitimately, a model could
 detect "who" instead of "what", and the task would be trivial.
 
@@ -172,9 +179,10 @@ detect "who" instead of "what", and the task would be trivial.
 - **Seaborne goods trade only.** No services, no air freight, no letters of credit.
 - **Stationary behaviour.** Networks do not adapt to detection. Real launderers do.
 - **Illicit activity is roughly uniform over time.** Networks are placed so that the density of
-  illicit trades is flat except for the last few weeks; the positive rate still varies between the
-  train, validation and test periods (4.2%, 3.8% and 3.4% on seed 0).
+  illicit trades is flat; the positive rate still varies between the train, validation and test
+  periods by chance (4.0%, 4.2% and 3.6% on seed 0).
 - **Difficulty is a modelling choice.** Manipulation strength, the subtle share and the benign
   noise rates determine how separable the classes are. They were set so that a strong centralised
-  model is clearly better than rules and linear models but far from perfect (LightGBM test PR-AUC
-  about 0.83). Other settings would give other absolute numbers.
+  model is clearly better than rules and linear models but far from perfect (centralised LightGBM:
+  test PR-AUC about 0.87, F1 about 0.81; rules engine: F1 about 0.43). Other settings would give
+  other absolute numbers.

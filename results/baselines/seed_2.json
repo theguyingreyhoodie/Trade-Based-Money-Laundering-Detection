@@ -1,0 +1,531 @@
+{
+  "seed": 2,
+  "n_features": 81,
+  "methods": {
+    "rules": {
+      "threshold": 0.5962826992967879,
+      "threshold_bin": 413,
+      "precision": 0.2849025974025974,
+      "recall": 0.6964285714285714,
+      "f1": 0.4043778801843318,
+      "fpr": 0.07179528970744031,
+      "alert_rate": 0.09643835616438357,
+      "confusion": {
+        "tp": 351,
+        "fp": 881,
+        "fn": 153,
+        "tn": 11390
+      },
+      "recall_by_typology": {
+        "over_invoicing": 0.39814814814814814,
+        "under_invoicing": 0.46153846153846156,
+        "multiple_invoicing": 1.0,
+        "phantom_shipment": 0.8947368421052632,
+        "over_under_shipment": 1.0,
+        "misdescription": 0.8245614035087719,
+        "third_party_payment": 0.6923076923076923,
+        "circular_trading": 0.84,
+        "shell_company": 0.6136363636363636,
+        "high_risk_routing": 0.8235294117647058
+      },
+      "support_by_typology": {
+        "over_invoicing": 108,
+        "under_invoicing": 65,
+        "multiple_invoicing": 45,
+        "phantom_shipment": 38,
+        "over_under_shipment": 37,
+        "misdescription": 57,
+        "third_party_payment": 26,
+        "circular_trading": 50,
+        "shell_company": 44,
+        "high_risk_routing": 34
+      },
+      "pr_auc": 0.3719364345175441,
+      "roc_auc": 0.8626153351623974,
+      "n": 12775,
+      "n_illicit": 504,
+      "prevalence": 0.03945205479452055,
+      "val": {
+        "precision": 0.31619339984650807,
+        "recall": 0.6971235194585449,
+        "f1": 0.43505807814149944,
+        "pr_auc": 0.39544924207629,
+        "roc_auc": 0.8561380296223802,
+        "n": 12676,
+        "n_illicit": 591
+      },
+      "oracle_f1": 0.4043778801843318,
+      "per_rule": [
+        {
+          "rule": "R01",
+          "name": "Unit price far above reference",
+          "typology": "over_invoicing",
+          "hits": 61,
+          "precision": 0.45901639344262296,
+          "recall_own_typology": 0.25925925925925924
+        },
+        {
+          "rule": "R02",
+          "name": "Unit price far below reference",
+          "typology": "under_invoicing",
+          "hits": 60,
+          "precision": 0.36666666666666664,
+          "recall_own_typology": 0.3384615384615385
+        },
+        {
+          "rule": "R03",
+          "name": "Customs value differs from invoice value",
+          "typology": "over_invoicing",
+          "hits": 80,
+          "precision": 0.7625,
+          "recall_own_typology": 0.3425925925925926
+        },
+        {
+          "rule": "R04",
+          "name": "Several invoices exceed one shipment",
+          "typology": "multiple_invoicing",
+          "hits": 47,
+          "precision": 0.9574468085106383,
+          "recall_own_typology": 1.0
+        },
+        {
+          "rule": "R05",
+          "name": "Paid, but no shipment and no customs record",
+          "typology": "phantom_shipment",
+          "hits": 30,
+          "precision": 0.7,
+          "recall_own_typology": 0.5526315789473685
+        },
+        {
+          "rule": "R06",
+          "name": "No customs record and paid early or near-empty shipment",
+          "typology": "phantom_shipment",
+          "hits": 22,
+          "precision": 0.6818181818181818,
+          "recall_own_typology": 0.34210526315789475
+        },
+        {
+          "rule": "R07",
+          "name": "Shipped or declared quantity differs from invoice",
+          "typology": "over_under_shipment",
+          "hits": 157,
+          "precision": 0.5477707006369427,
+          "recall_own_typology": 1.0
+        },
+        {
+          "rule": "R08",
+          "name": "Goods declared under a different HS heading",
+          "typology": "misdescription",
+          "hits": 95,
+          "precision": 0.4631578947368421,
+          "recall_own_typology": 0.7543859649122807
+        },
+        {
+          "rule": "R09",
+          "name": "Cargo weight inconsistent with the goods",
+          "typology": "misdescription",
+          "hits": 84,
+          "precision": 0.6071428571428571,
+          "recall_own_typology": 0.6666666666666666
+        },
+        {
+          "rule": "R10",
+          "name": "Unrelated third-party payer in a high-risk jurisdiction",
+          "typology": "third_party_payment",
+          "hits": 31,
+          "precision": 0.4838709677419355,
+          "recall_own_typology": 0.5769230769230769
+        },
+        {
+          "rule": "R11",
+          "name": "Unrelated third-party payer abroad",
+          "typology": "third_party_payment",
+          "hits": 45,
+          "precision": 0.26666666666666666,
+          "recall_own_typology": 0.38461538461538464
+        },
+        {
+          "rule": "R12",
+          "name": "Same goods traded round a loop",
+          "typology": "circular_trading",
+          "hits": 269,
+          "precision": 0.20446096654275092,
+          "recall_own_typology": 0.82
+        },
+        {
+          "rule": "R13",
+          "name": "Goods resold within days inside a loop",
+          "typology": "circular_trading",
+          "hits": 318,
+          "precision": 0.1320754716981132,
+          "recall_own_typology": 0.82
+        },
+        {
+          "rule": "R14",
+          "name": "Young company at a mass-registration address",
+          "typology": "shell_company",
+          "hits": 518,
+          "precision": 0.17374517374517376,
+          "recall_own_typology": 0.5454545454545454
+        },
+        {
+          "rule": "R15",
+          "name": "Young company with very high turnover",
+          "typology": "shell_company",
+          "hits": 818,
+          "precision": 0.06845965770171149,
+          "recall_own_typology": 0.4772727272727273
+        },
+        {
+          "rule": "R16",
+          "name": "Round amount paid in advance to or by a young company",
+          "typology": "shell_company",
+          "hits": 16,
+          "precision": 0.4375,
+          "recall_own_typology": 0.13636363636363635
+        },
+        {
+          "rule": "R17",
+          "name": "Needless transshipment",
+          "typology": "high_risk_routing",
+          "hits": 390,
+          "precision": 0.09743589743589744,
+          "recall_own_typology": 0.8529411764705882
+        },
+        {
+          "rule": "R18",
+          "name": "Stop in a listed high-risk jurisdiction",
+          "typology": "high_risk_routing",
+          "hits": 55,
+          "precision": 0.23636363636363636,
+          "recall_own_typology": 0.35294117647058826
+        },
+        {
+          "rule": "R19",
+          "name": "Proceeds collected in an offshore bank",
+          "typology": "high_risk_routing",
+          "hits": 166,
+          "precision": 0.2289156626506024,
+          "recall_own_typology": 0.5882352941176471
+        },
+        {
+          "rule": "R20",
+          "name": "Party in a listed high-risk jurisdiction",
+          "typology": "high_risk_routing",
+          "hits": 1189,
+          "precision": 0.0672834314550042,
+          "recall_own_typology": 0.38235294117647056
+        }
+      ],
+      "any_rule": {
+        "alert_rate": 0.2561252446183953,
+        "recall": 0.8392857142857143,
+        "precision": 0.12927872860635697
+      }
+    },
+    "logreg": {
+      "threshold": 0.9097018552970803,
+      "threshold_bin": 477,
+      "precision": 0.626953125,
+      "recall": 0.6369047619047619,
+      "f1": 0.6318897637795275,
+      "fpr": 0.01556515361421237,
+      "alert_rate": 0.040078277886497066,
+      "confusion": {
+        "tp": 321,
+        "fp": 191,
+        "fn": 183,
+        "tn": 12080
+      },
+      "recall_by_typology": {
+        "over_invoicing": 0.48148148148148145,
+        "under_invoicing": 0.38461538461538464,
+        "multiple_invoicing": 0.9555555555555556,
+        "phantom_shipment": 0.8421052631578947,
+        "over_under_shipment": 0.8378378378378378,
+        "misdescription": 0.7543859649122807,
+        "third_party_payment": 0.8461538461538461,
+        "circular_trading": 0.76,
+        "shell_company": 0.20454545454545456,
+        "high_risk_routing": 0.7647058823529411
+      },
+      "support_by_typology": {
+        "over_invoicing": 108,
+        "under_invoicing": 65,
+        "multiple_invoicing": 45,
+        "phantom_shipment": 38,
+        "over_under_shipment": 37,
+        "misdescription": 57,
+        "third_party_payment": 26,
+        "circular_trading": 50,
+        "shell_company": 44,
+        "high_risk_routing": 34
+      },
+      "pr_auc": 0.6714398873429835,
+      "roc_auc": 0.9578094500778063,
+      "n": 12775,
+      "n_illicit": 504,
+      "prevalence": 0.03945205479452055,
+      "val": {
+        "precision": 0.7175843694493783,
+        "recall": 0.6835871404399323,
+        "f1": 0.7001733102253033,
+        "pr_auc": 0.7343234296814398,
+        "roc_auc": 0.9634587072534019,
+        "n": 12676,
+        "n_illicit": 591
+      },
+      "oracle_f1": 0.6488294314381271,
+      "fit_seconds": 0.03897608304396272
+    },
+    "random_forest": {
+      "threshold": 0.35434369377420466,
+      "threshold_bin": 380,
+      "precision": 0.8355437665782494,
+      "recall": 0.625,
+      "f1": 0.7150964812712828,
+      "fpr": 0.0050525629533045395,
+      "alert_rate": 0.029510763209393345,
+      "confusion": {
+        "tp": 315,
+        "fp": 62,
+        "fn": 189,
+        "tn": 12209
+      },
+      "recall_by_typology": {
+        "over_invoicing": 0.4444444444444444,
+        "under_invoicing": 0.35384615384615387,
+        "multiple_invoicing": 1.0,
+        "phantom_shipment": 0.868421052631579,
+        "over_under_shipment": 1.0,
+        "misdescription": 0.8596491228070176,
+        "third_party_payment": 0.8846153846153846,
+        "circular_trading": 0.76,
+        "shell_company": 0.18181818181818182,
+        "high_risk_routing": 0.3235294117647059
+      },
+      "support_by_typology": {
+        "over_invoicing": 108,
+        "under_invoicing": 65,
+        "multiple_invoicing": 45,
+        "phantom_shipment": 38,
+        "over_under_shipment": 37,
+        "misdescription": 57,
+        "third_party_payment": 26,
+        "circular_trading": 50,
+        "shell_company": 44,
+        "high_risk_routing": 34
+      },
+      "pr_auc": 0.776413219435224,
+      "roc_auc": 0.9707039309353708,
+      "n": 12775,
+      "n_illicit": 504,
+      "prevalence": 0.03945205479452055,
+      "val": {
+        "precision": 0.8303393213572854,
+        "recall": 0.7038917089678511,
+        "f1": 0.7619047619047619,
+        "pr_auc": 0.8268649103345822,
+        "roc_auc": 0.9792769350210404,
+        "n": 12676,
+        "n_illicit": 591
+      },
+      "oracle_f1": 0.7200000000000001,
+      "fit_seconds": 2.0234324999619275
+    },
+    "lightgbm": {
+      "threshold": 0.30789049569821175,
+      "threshold_bin": 373,
+      "precision": 0.9148936170212766,
+      "recall": 0.6825396825396826,
+      "f1": 0.7818181818181817,
+      "fpr": 0.0026077744275120203,
+      "alert_rate": 0.02943248532289628,
+      "confusion": {
+        "tp": 344,
+        "fp": 32,
+        "fn": 160,
+        "tn": 12239
+      },
+      "recall_by_typology": {
+        "over_invoicing": 0.49074074074074076,
+        "under_invoicing": 0.38461538461538464,
+        "multiple_invoicing": 0.8444444444444444,
+        "phantom_shipment": 0.868421052631579,
+        "over_under_shipment": 0.8918918918918919,
+        "misdescription": 0.9298245614035088,
+        "third_party_payment": 0.9230769230769231,
+        "circular_trading": 0.94,
+        "shell_company": 0.36363636363636365,
+        "high_risk_routing": 0.6470588235294118
+      },
+      "support_by_typology": {
+        "over_invoicing": 108,
+        "under_invoicing": 65,
+        "multiple_invoicing": 45,
+        "phantom_shipment": 38,
+        "over_under_shipment": 37,
+        "misdescription": 57,
+        "third_party_payment": 26,
+        "circular_trading": 50,
+        "shell_company": 44,
+        "high_risk_routing": 34
+      },
+      "pr_auc": 0.8615949073784517,
+      "roc_auc": 0.9820847287384243,
+      "n": 12775,
+      "n_illicit": 504,
+      "prevalence": 0.03945205479452055,
+      "val": {
+        "precision": 0.9266802443991853,
+        "recall": 0.7698815566835872,
+        "f1": 0.8410351201478742,
+        "pr_auc": 0.9047682912556629,
+        "roc_auc": 0.9856528803658798,
+        "n": 12676,
+        "n_illicit": 591
+      },
+      "oracle_f1": 0.8091762252346194,
+      "top_features_by_gain": [
+        {
+          "feature": "max_hs_diversity",
+          "share": 0.0996468284303436
+        },
+        {
+          "feature": "ship_qty_abs_dev",
+          "share": 0.09182842596906099
+        },
+        {
+          "feature": "pair_n_trades_log",
+          "share": 0.08171669335654906
+        },
+        {
+          "feature": "price_abs_z_declared_hs",
+          "share": 0.06861497830624157
+        },
+        {
+          "feature": "customs_value_log_ratio",
+          "share": 0.043627939286419004
+        },
+        {
+          "feature": "importer_pagerank_log",
+          "share": 0.03255786989517195
+        },
+        {
+          "feature": "importer_hhi",
+          "share": 0.031114959702027465
+        },
+        {
+          "feature": "payer_risk",
+          "share": 0.03061616026332489
+        },
+        {
+          "feature": "exporter_n_trades_log",
+          "share": 0.02924408014354475
+        },
+        {
+          "feature": "payer_age_log",
+          "share": 0.025283377977750505
+        },
+        {
+          "feature": "importer_n_trades_log",
+          "share": 0.02448607259598748
+        },
+        {
+          "feature": "min_party_age_log",
+          "share": 0.024044153844004972
+        },
+        {
+          "feature": "cycle_len_same_hs",
+          "share": 0.02282487691869481
+        },
+        {
+          "feature": "weight_per_unit_abs_dev",
+          "share": 0.021471911672575818
+        },
+        {
+          "feature": "max_dir_shared_log",
+          "share": 0.01835366790089277
+        },
+        {
+          "feature": "exporter_age_log",
+          "share": 0.017696861268306587
+        },
+        {
+          "feature": "route_via_high_risk",
+          "share": 0.017612271865882247
+        },
+        {
+          "feature": "exporter_pagerank_log",
+          "share": 0.015941359266605806
+        },
+        {
+          "feature": "price_log_ratio",
+          "share": 0.015179626087873453
+        },
+        {
+          "feature": "customs_value_abs_dev",
+          "share": 0.015051489479010988
+        }
+      ],
+      "fit_seconds": 1.3415102500002831
+    },
+    "mlp": {
+      "threshold": 0.9212896628294649,
+      "threshold_bin": 482,
+      "precision": 0.8461538461538461,
+      "recall": 0.6765873015873016,
+      "f1": 0.7519294377067256,
+      "fpr": 0.0050525629533045395,
+      "alert_rate": 0.031545988258317025,
+      "confusion": {
+        "tp": 341,
+        "fp": 62,
+        "fn": 163,
+        "tn": 12209
+      },
+      "recall_by_typology": {
+        "over_invoicing": 0.5092592592592593,
+        "under_invoicing": 0.36923076923076925,
+        "multiple_invoicing": 1.0,
+        "phantom_shipment": 0.8947368421052632,
+        "over_under_shipment": 0.7567567567567568,
+        "misdescription": 0.8070175438596491,
+        "third_party_payment": 0.8461538461538461,
+        "circular_trading": 0.84,
+        "shell_company": 0.4090909090909091,
+        "high_risk_routing": 0.7941176470588235
+      },
+      "support_by_typology": {
+        "over_invoicing": 108,
+        "under_invoicing": 65,
+        "multiple_invoicing": 45,
+        "phantom_shipment": 38,
+        "over_under_shipment": 37,
+        "misdescription": 57,
+        "third_party_payment": 26,
+        "circular_trading": 50,
+        "shell_company": 44,
+        "high_risk_routing": 34
+      },
+      "pr_auc": 0.8157683138660492,
+      "roc_auc": 0.9740067399844516,
+      "n": 12775,
+      "n_illicit": 504,
+      "prevalence": 0.03945205479452055,
+      "val": {
+        "precision": 0.9073684210526316,
+        "recall": 0.7292724196277496,
+        "f1": 0.8086303939962476,
+        "pr_auc": 0.8681093944107793,
+        "roc_auc": 0.9760841669309397,
+        "n": 12676,
+        "n_illicit": 591
+      },
+      "oracle_f1": 0.7618048268625394,
+      "best_epoch": 21,
+      "epochs_run": 29,
+      "fit_seconds": 0.9972418330144137
+    }
+  }
+}

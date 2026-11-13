@@ -54,12 +54,13 @@ data:
 
   networks:                     # laundering networks (ground truth only)
     n_networks: 45
-    shells_per_network: [2, 4]
+    shells_per_network: [3, 6]  # shells are short-lived and replaced, so a network uses several
     complicit_per_network: [2, 4]
     payers_per_network: [1, 2]
     typologies_per_network: [2, 3]
     active_months: [6, 24]
-    shell_age_months_at_start: [1, 14]
+    shell_age_months_at_start: [1, 8]   # registered this long before first use
+    shell_active_days: [120, 365]       # a shell is used for this long, then dropped
     shell_roles: {trader: 0.50, exporter: 0.25, importer: 0.25}
     hidden_shell_p: 0.35        # shell with its own address and director (no registry footprint)
     shelf_company_p: 0.20       # aged company bought off the shelf (3-8 years old)
@@ -141,29 +142,31 @@ split:
   min_typology_count: 5         # every split must hold at least this many cases per typology
 
 rules:
-  alert_threshold: 0.5          # default operating point of the rules-only baseline (noisy-OR score)
+  # Thresholds of the red-flag rules in src/tbml/rules/engine.py. They are expert settings
+  # informed by the unlabelled distribution of each indicator, not fitted to labels.
   thresholds:
-    price_z_high: 3.0           # |log price ratio| / HS sigma
+    price_z_high: 3.0           # |log price ratio| / HS dispersion
     price_ratio_high: 1.8       # unit price / reference
     price_ratio_low: 0.55
+    value_mismatch_customs: 0.20   # |log(customs value / invoice value)|
     qty_mismatch: 0.15          # |log(shipped or declared qty / invoiced qty)|
-    weight_per_unit_dev: 0.6    # |log(weight per unit / HS typical)|
-    inv_pay_mismatch: 0.10
-    value_mismatch_customs: 0.20
-    young_entity_days: 365
-    shared_address_min: 4
-    volume_per_age_high: 15.0   # log(USD volume per year of age)
-    transshipments_high: 2
-    detour_ratio_high: 1.6
+    weight_per_unit_dev: 0.6    # |log(weight per unit / typical weight of the goods)|
     invoices_per_bl_min: 2
-    bl_cover_ratio_high: 1.5
-    advance_payment_days: -10   # paid this many days before shipment
-    third_party_risk_min: 0.6
+    bl_cover_ratio_high: 1.5    # invoiced quantity / shipped quantity on one B/L
+    advance_payment_days: -5    # first payment this many days before departure
+    third_party_risk_min: 0.6   # jurisdiction risk score counted as high-risk / offshore
+    rapid_resale_days: 14
+    young_entity_days: 365
+    shared_address_min: 4       # other entities at the same address
+    volume_per_age_high: 7.0    # log10 of USD traded per year of age, for the younger party
+    transshipments_high: 2
+    detour_ratio_high: 1.8      # route length / direct distance
+  severity: {}                  # optional per-rule overrides, e.g. {R05: 0.8}
 
 models:
   threshold_metric: f1          # decision threshold maximises this on validation only
   logreg: {C: 1.0, max_iter: 2000}
-  random_forest: {n_estimators: 300, max_depth: 14, min_samples_leaf: 3}
+  random_forest: {n_estimators: 300, max_depth: null, min_samples_leaf: 1, class_weight: balanced}   # chosen on validation
   lightgbm: {n_estimators: 400, learning_rate: 0.05, num_leaves: 31, min_child_samples: 20, subsample: 0.8, colsample_bytree: 0.8}
   mlp:
     hidden: [64, 32]

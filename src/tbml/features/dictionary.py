@@ -105,7 +105,7 @@ FEATURES: list[FeatureSpec] = [
     _F("max_dir_shared_log", "counterparty", "context", "bank", "log1p number of other known entities with a party's director (max of both parties)", (T_SHELL, T_CIRC)),
     _F("exporter_n_trades_log", "counterparty", "context", "trade", "log1p number of trades of the exporter seen so far", (T_SHELL,)),
     _F("importer_n_trades_log", "counterparty", "context", "trade", "log1p number of trades of the importer seen so far", (T_SHELL,)),
-    _F("max_volume_per_age", "counterparty", "context", "cross", "log10 of traded USD volume per year of age (max of both parties)", (T_SHELL,)),
+    _F("younger_party_volume_per_age", "counterparty", "context", "cross", "log10 of USD volume traded per year of age, for the younger of the two parties", (T_SHELL,)),
     _F("pair_n_trades_log", "counterparty", "context", "trade", "log1p number of trades between this exporter and importer", (T_CIRC, T_MULTI)),
     _F("pair_share_exporter", "counterparty", "context", "trade", "share of the exporter's volume that goes to this importer", (T_CIRC, T_SHELL)),
     _F("exporter_hhi", "counterparty", "context", "trade", "concentration (HHI) of the exporter's volume across importers", (T_CIRC, T_SHELL)),

@@ -1,22 +1,22 @@
 {
   "generator_version": "1.0",
   "seed": 1,
-  "n_trades": 60453,
-  "n_illicit": 2403,
-  "illicit_rate": 0.03974988834301027,
+  "n_trades": 60462,
+  "n_illicit": 2402,
+  "illicit_rate": 0.03972743210611624,
   "typology_counts": {
     "over_invoicing": 336,
     "under_invoicing": 288,
-    "multiple_invoicing": 216,
+    "multiple_invoicing": 217,
     "phantom_shipment": 240,
     "over_under_shipment": 240,
     "misdescription": 240,
     "third_party_payment": 240,
-    "circular_trading": 219,
+    "circular_trading": 217,
     "shell_company": 216,
     "high_risk_routing": 168
   },
-  "n_entities": 3239,
+  "n_entities": 3294,
   "n_networks": 45,
   "n_relationships": 6324,
   "period": [
@@ -24,19 +24,19 @@
     "2024-12-31"
   ],
   "rows": {
-    "invoices": 60589,
-    "shipments": 59202,
-    "declarations": 59755,
-    "payments": 73746,
-    "kyc_entities": 3239,
+    "invoices": 60597,
+    "shipments": 59192,
+    "declarations": 59741,
+    "payments": 73857,
+    "kyc_entities": 3294,
     "banks": 45,
     "shipping_lines": 10,
     "hs_reference": 49,
     "countries": 35,
     "ports": 35,
     "fx_rates": 6,
-    "labels": 60453,
-    "entity_truth": 3239
+    "labels": 60462,
+    "entity_truth": 3294
   },
   "validation": {
     "checks": [
@@ -247,20 +247,20 @@
       }
     ],
     "n_failed": 0,
-    "illicit_rate": 0.03974988834301027,
+    "illicit_rate": 0.03972743210611624,
     "typology_rates": {
-      "over_invoicing": 0.005558036821993946,
-      "under_invoicing": 0.004764031561709096,
-      "multiple_invoicing": 0.003573023671281822,
-      "phantom_shipment": 0.003970026301424247,
-      "over_under_shipment": 0.003970026301424247,
-      "misdescription": 0.003970026301424247,
-      "third_party_payment": 0.003970026301424247,
-      "circular_trading": 0.003622649000049625,
-      "shell_company": 0.003573023671281822,
-      "high_risk_routing": 0.002779018410996973
+      "over_invoicing": 0.005557209486950481,
+      "under_invoicing": 0.004763322417386127,
+      "multiple_invoicing": 0.0035890311269888525,
+      "phantom_shipment": 0.003969435347821773,
+      "over_under_shipment": 0.003969435347821773,
+      "misdescription": 0.003969435347821773,
+      "third_party_payment": 0.003969435347821773,
+      "circular_trading": 0.0035890311269888525,
+      "shell_company": 0.003572491813039595,
+      "high_risk_routing": 0.0027786047434752406
     }
   },
-  "seconds": 1.5506470000836998,
-  "joined_rows": 60453
+  "seconds": 1.469640334136784,
+  "joined_rows": 60462
 }

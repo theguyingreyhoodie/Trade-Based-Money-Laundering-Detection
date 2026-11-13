@@ -76,21 +76,31 @@ class _Picker:
     def country(self, eid: str) -> str:
         return str(self.comp.at[eid, "country"])
 
-    def pair(self, net: Network, typology: str) -> tuple[str, str, str, float] | None:
-        """Draw (exporter, importer, HS code, pair price effect); None if impossible."""
-        mode = "shell" if typology == "shell_company" else str(self.rng.choice(self.modes, p=self.mode_p))
+    def exists(self, eid: str, date: pd.Timestamp) -> bool:
+        return self.comp.at[eid, "registration_date"] + pd.Timedelta(days=15) <= date
+
+    def pair(self, net: Network, typology: str, date: pd.Timestamp) -> tuple[str, str, str, float] | None:
+        """Draw (exporter, importer, HS code, pair price effect) for a trade on ``date``.
+
+        Only parties that exist on that date qualify, and a shell only while it
+        is in use. Returns None if no valid pair is found.
+        """
+        shell_only = typology == "shell_company"
+        mode = "shell" if shell_only else str(self.rng.choice(self.modes, p=self.mode_p))
         for _ in range(40):
             if mode == "partner":
                 drawn = self._partner(net)
             elif mode == "internal":
-                drawn = self._internal(net)
+                drawn = self._internal(net, date)
             else:
-                drawn = self._shell(net)
-            if drawn is None:  # fall back towards modes that are always possible
-                mode = "internal" if mode == "partner" else "shell"
+                drawn = self._shell(net, date)
+            if drawn is None:
+                if shell_only or mode == "shell":
+                    return None
+                mode = "internal" if mode == "partner" else "shell"  # fall back
                 continue
             exp_id, imp_id, hs, effect = drawn
-            if exp_id != imp_id and self.country(exp_id) != self.country(imp_id):
+            if exp_id != imp_id and self.country(exp_id) != self.country(imp_id) and self.exists(exp_id, date) and self.exists(imp_id, date):
                 return exp_id, imp_id, hs, effect
         return None
 
@@ -112,19 +122,23 @@ class _Picker:
         other, hs, effect = self.suppliers_of[firm][int(self.rng.integers(len(self.suppliers_of[firm])))]
         return other, firm, hs, effect
 
-    def _internal(self, net: Network) -> tuple[str, str, str, float] | None:
+    def _internal(self, net: Network, date: pd.Timestamp) -> tuple[str, str, str, float] | None:
         """Two recruited firms of the same network (shells only if needed)."""
-        exporters = [m for m in net.complicit if self.can_export(m)] or [m for m in net.shells if self.can_export(m)]
-        importers = [m for m in net.complicit if self.can_import(m)] or [m for m in net.shells if self.can_import(m)]
+        shells = net.active_shells(date)
+        exporters = [m for m in net.complicit if self.can_export(m)] or [m for m in shells if self.can_export(m)]
+        importers = [m for m in net.complicit if self.can_import(m)] or [m for m in shells if self.can_import(m)]
         if not exporters or not importers:
             return None
         exp_id = str(self.rng.choice(exporters))
         imp_id = str(self.rng.choice(importers))
         return exp_id, imp_id, self.hs(net, exp_id), float(self.rng.normal(0.0, 0.6))
 
-    def _shell(self, net: Network) -> tuple[str, str, str, float] | None:
+    def _shell(self, net: Network, date: pd.Timestamp) -> tuple[str, str, str, float] | None:
         """A shell on one side; the other side is a recruited firm or an ordinary company."""
-        shell = str(self.rng.choice(net.shells))
+        shells = net.active_shells(date)
+        if not shells:
+            return None
+        shell = str(self.rng.choice(shells))
         sells = self.can_export(shell) and (not self.can_import(shell) or self.rng.random() < 0.5)
         if sells:
             members = [m for m in net.complicit if self.can_import(m)]
@@ -140,13 +154,12 @@ class _Picker:
             return str(self.rng.choice(products))
         return str(self.rng.choice(net.hs_codes))
 
-    def date(self, net: Network, *entities: str, tail_days: int = 0) -> pd.Timestamp | None:
-        """Uniform date inside the network's active window, after all parties exist."""
-        lo = max([net.start, *[self.comp.at[e, "registration_date"] + pd.Timedelta(days=15) for e in entities]])
+    def date(self, net: Network, tail_days: int = 0) -> pd.Timestamp | None:
+        """Uniform date inside the network's active window (leaving ``tail_days`` at the end)."""
         hi = min(net.end, self.end) - pd.Timedelta(days=tail_days)
-        if lo >= hi:
+        if net.start >= hi:
             return None
-        return (lo + pd.Timedelta(days=int(self.rng.integers(0, (hi - lo).days + 1)))).normalize()
+        return (net.start + pd.Timedelta(days=int(self.rng.integers(0, (hi - net.start).days + 1)))).normalize()
 
 
 def _row(exp_id: str, imp_id: str, hs: str, date: pd.Timestamp, typology: str, net: Network, effect: float, **extra) -> dict:
@@ -194,7 +207,10 @@ def illicit_specs(rng: np.random.Generator, world: World, ents: Entities, relati
 
             if typology == "circular_trading":
                 p = tcfg.circular_trading
-                members = net.members
+                d0 = picker.date(net, tail_days=int(p.hop_days[1]) * int(p.loop_len[1]))
+                if d0 is None:
+                    continue
+                members = [m for m in [*net.active_shells(d0), *net.complicit] if picker.exists(m, d0)]
                 length = int(min(len(members), rng.integers(p.loop_len[0], p.loop_len[1] + 1)))
                 if length < 3:
                     continue
@@ -206,10 +222,6 @@ def illicit_specs(rng: np.random.Generator, world: World, ents: Entities, relati
                         loop = cand
                         break
                 if loop is None:
-                    continue
-                span = int(p.hop_days[1]) * length
-                d0 = picker.date(net, *loop, tail_days=span)
-                if d0 is None:
                     continue
                 hs = str(rng.choice(net.hs_codes))
                 ref = world.hs.loc[hs]
@@ -227,16 +239,17 @@ def illicit_specs(rng: np.random.Generator, world: World, ents: Entities, relati
                 made += length
                 continue
 
-            pair = picker.pair(net, typology)
+            tail = int(tcfg.multiple_invoicing.max_delay_days) if typology == "multiple_invoicing" else 0
+            date = picker.date(net, tail_days=tail)
+            if date is None:
+                continue
+            pair = picker.pair(net, typology, date)
             if pair is None:
                 continue
             exp_id, imp_id, hs, effect = pair
 
             if typology == "multiple_invoicing":
                 p = tcfg.multiple_invoicing
-                date = picker.date(net, exp_id, imp_id, tail_days=int(p.max_delay_days))
-                if date is None:
-                    continue
                 key = f"MULTI-{len(rows):06d}"
                 base_idx = len(rows)
                 rows.append(_row(exp_id, imp_id, hs, date, typology, net, effect, group_key=key))
@@ -247,14 +260,11 @@ def illicit_specs(rng: np.random.Generator, world: World, ents: Entities, relati
                 made += 1 + n_extra
                 continue
 
-            date = picker.date(net, exp_id, imp_id)
-            if date is None:
-                continue
             extra = {}
             if typology == "third_party_payment":
-                vehicles = list(net.payers)
+                vehicles = [x for x in net.payers if picker.exists(x, date)]
                 if rng.random() < 0.25:  # sometimes a shell of the network pays instead of a dedicated vehicle
-                    vehicles = [x for x in net.shells if x not in (exp_id, imp_id)] or vehicles
+                    vehicles = [x for x in net.active_shells(date) if x not in (exp_id, imp_id)] or vehicles
                 if not vehicles:
                     continue
                 extra["payer_override"] = str(rng.choice(vehicles))

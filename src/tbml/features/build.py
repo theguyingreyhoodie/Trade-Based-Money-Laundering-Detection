@@ -356,7 +356,9 @@ def context_features(S: pd.DataFrame, kyc: pd.DataFrame, ref: Reference, cfg: Co
     vol_per_age = pd.Series(np.log10(total_vol.to_numpy() / age_years + 1.0), index=entities)
     F["exporter_n_trades_log"] = np.log1p(total_n.reindex(exp).to_numpy(dtype=float))
     F["importer_n_trades_log"] = np.log1p(total_n.reindex(imp).to_numpy(dtype=float))
-    F["max_volume_per_age"] = np.maximum(vol_per_age.reindex(exp).to_numpy(), vol_per_age.reindex(imp).to_numpy())
+    reg_date = kyc["registration_date"]
+    exporter_is_younger = reg_date.reindex(exp).to_numpy() >= reg_date.reindex(imp).to_numpy()
+    F["younger_party_volume_per_age"] = np.where(exporter_is_younger, vol_per_age.reindex(exp).to_numpy(), vol_per_age.reindex(imp).to_numpy())
     F["exporter_import_share"] = (n_as_imp / total_n).reindex(exp).to_numpy(dtype=float)
     F["importer_export_share"] = (n_as_exp / total_n).reindex(imp).to_numpy(dtype=float)
 

@@ -217,19 +217,25 @@ def ring_specs(rng: np.random.Generator, world: World, ents: Entities, cfg: Conf
     return _spec_frame(rows)
 
 
-def _hub_probabilities(world: World, scale_nm: float = 900.0) -> np.ndarray:
-    """P(hub | origin, destination) for legitimate transshipment: prefer small detours."""
+def _hub_probabilities(world: World, max_ratio: float = 1.8, sharpness: float = 4.0) -> np.ndarray:
+    """P(hub | origin, destination) for legitimate transshipment.
+
+    Carriers route through a hub only when it lies roughly on the way: hubs that
+    would lengthen the voyage by more than ``max_ratio`` are excluded and the
+    rest are weighted by how small the detour is. A corridor with no suitable
+    hub gets all-zero probabilities, i.e. it is always served directly.
+    """
     d = world.distance_nm
     hubs = world.hub_idx
-    n = d.shape[0]
-    detour = d[:, hubs][:, None, :] + d[hubs, :].T[None, :, :] - d[:, :, None]  # [o, d, h]
-    logits = -detour / scale_nm
-    for j, h in enumerate(hubs):  # a hub cannot serve its own country as a stopover
-        logits[h, :, j] = -np.inf
-        logits[:, h, j] = -np.inf
-    logits -= logits.max(axis=2, keepdims=True)
-    p = np.exp(logits)
-    return p / p.sum(axis=2, keepdims=True)
+    via = d[:, hubs][:, None, :] + d[hubs, :].T[None, :, :]  # [origin, destination, hub]
+    ratio = via / np.maximum(d[:, :, None], 1.0)
+    p = np.exp(-sharpness * (ratio - 1.0))
+    p[ratio > max_ratio] = 0.0
+    for j, h in enumerate(hubs):  # a hub cannot be a stopover for its own country
+        p[h, :, j] = 0.0
+        p[:, h, j] = 0.0
+    total = p.sum(axis=2, keepdims=True)
+    return np.divide(p, total, out=np.zeros_like(p), where=total > 0)
 
 
 def build_primitives(
@@ -305,6 +311,8 @@ def build_primitives(
     for i in np.flatnonzero(n_hops > 0):
         p = hub_p[o_idx[i], d_idx[i]]
         k = int(min(n_hops[i], np.count_nonzero(p > 0)))
+        if k == 0:  # no hub lies on the way: direct service
+            continue
         chosen = rng.choice(len(hubs), size=k, replace=False, p=p)
         # order stopovers by distance from the origin so the path is sensible
         chosen = sorted(chosen, key=lambda j: world.distance_nm[o_idx[i], hubs[j]])
@@ -318,7 +326,10 @@ def build_primitives(
         pool = np.flatnonzero((regions == region) & non_hub & (np.arange(len(codes)) != o_idx[i]) & (np.arange(len(codes)) != d_idx[i]))
         if not len(pool):
             continue
-        stop = f"{codes[int(rng.choice(pool))]}01"
+        # a feeder call is a nearby port: take one of the three smallest detours
+        added = world.distance_nm[o_idx[i], pool] + world.distance_nm[pool, d_idx[i]] - world.distance_nm[o_idx[i], d_idx[i]]
+        near = pool[np.argsort(added)[:3]]
+        stop = f"{codes[int(rng.choice(near))]}01"
         stops = [x for x in via[i].split("|") if x]
         via[i] = "|".join([stop, *stops] if near_origin else [*stops, stop])
     P["via_ports"] = via

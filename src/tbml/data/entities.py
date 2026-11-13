@@ -36,6 +36,11 @@ class Network:
     shells: list[str] = field(default_factory=list)
     complicit: list[str] = field(default_factory=list)
     payers: list[str] = field(default_factory=list)
+    #: period during which each shell is in use (shells are short-lived and get replaced)
+    shell_windows: dict[str, tuple[pd.Timestamp, pd.Timestamp]] = field(default_factory=dict)
+
+    def active_shells(self, date: pd.Timestamp) -> list[str]:
+        return [s for s in self.shells if self.shell_windows[s][0] <= date <= self.shell_windows[s][1]]
 
     @property
     def members(self) -> list[str]:
@@ -290,8 +295,13 @@ def build_networks(
         nominee_pool = [f"DIR-N{i + 1:03d}"]
         if group_directors and rng.random() < 0.25:
             nominee_pool.append(str(rng.choice(group_directors)))  # nominee who also serves benign firms
-        for c in shell_countries:
+        for position, c in enumerate(shell_countries):
             shell_seq += 1
+            # each shell is used for a limited time; the first one from the day the network starts
+            latest = max(0, (t1 - t0).days - int(ncfg.shell_active_days[0]))
+            active_from = t0 + pd.Timedelta(days=0 if position == 0 else int(rng.integers(0, latest + 1)))
+            active_to = min(t1, active_from + pd.Timedelta(days=int(rng.integers(ncfg.shell_active_days[0], ncfg.shell_active_days[1] + 1))))
+            first_use = founded if position == 0 else active_from
             age_months = int(rng.integers(ncfg.shell_age_months_at_start[0], ncfg.shell_age_months_at_start[1] + 1))
             if rng.random() < ncfg.shelf_company_p:
                 age_months = int(rng.integers(36, 97))  # aged "shelf" company
@@ -304,7 +314,7 @@ def build_networks(
                     "entity_type": "company",
                     "role": str(rng.choice(role_names, p=role_p / role_p.sum())),
                     "country": c,
-                    "registration_date": (founded - pd.Timedelta(days=int(age_months * 30.4))).normalize(),
+                    "registration_date": (first_use - pd.Timedelta(days=int(age_months * 30.4))).normalize(),
                     "address_id": f"ADR-S{shell_seq:05d}" if hidden else str(rng.choice(addr_pool)),
                     "director_id": f"DIR-S{shell_seq:05d}" if hidden else str(rng.choice(nominee_pool)),
                     "home_bank_id": _bank_for(rng, banks, c),
@@ -318,6 +328,7 @@ def build_networks(
                 }
             )
             net.shells.append(eid)
+            net.shell_windows[eid] = (active_from, active_to)
 
         # --- complicit established firms recruited from the ordinary population
         n_comp = int(rng.integers(ncfg.complicit_per_network[0], ncfg.complicit_per_network[1] + 1))
@@ -406,6 +417,7 @@ def anonymise(rng: np.random.Generator, ents: Entities, relationships: pd.DataFr
         codes = dict(zip(values, [f"{prefix}-{i:06d}" for i in rng.permutation(len(values)) + 1]))
         companies[col] = companies[col].map(codes)
     for net in ents.networks:
+        net.shell_windows = {mapping[e]: window for e, window in net.shell_windows.items()}
         net.shells = [mapping[e] for e in net.shells]
         net.complicit = [mapping[e] for e in net.complicit]
         net.payers = [mapping[e] for e in net.payers]
