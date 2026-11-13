@@ -83,5 +83,16 @@
     },
     "as_expected": true
   },
-  "alert": null
+  "alert": {
+    "alert_id": "ALERT-0047952",
+    "original": {
+      "on_ledger": true,
+      "registered_by": "fl_client_1",
+      "ref_id": "ALERT-0047952"
+    },
+    "score_lowered": {
+      "on_ledger": false
+    },
+    "as_expected": true
+  }
 }

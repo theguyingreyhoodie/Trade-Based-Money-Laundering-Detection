@@ -245,6 +245,7 @@ scoring:
   calibration: isotonic         # isotonic | platt
   model_weight: 0.7             # risk = 100 * (w * p_model + (1 - w) * p_rules)
   bands: {medium: 25, high: 50, critical: 75}
+  rule_floor_probability: 0.6   # rule evidence this strong alone puts a trade in at least the Medium band
   alert_min_score: 25           # alerts are raised from "Medium" upwards
   top_k_features: 5
   shap_background: 200
