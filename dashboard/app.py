@@ -75,6 +75,11 @@ def when(ts: int) -> str:
     return dt.datetime.fromtimestamp(int(ts), dt.timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC") if ts else "-"
 
 
+def times(event_ts: int, block_ts: int) -> str:
+    """Both timestamps a record carries: the submitter's clock and the chain's block time."""
+    return f"event time {when(event_ts)} (submitter's clock), block time {when(block_ts)} (chain clock)"
+
+
 def short(digest: str, n: int = 10) -> str:
     return f"{digest[:n]}…{digest[-6:]}" if digest and len(digest) > n + 8 else digest
 
@@ -183,8 +188,8 @@ def show_alert(alert: dict[str, Any], ledger: Any, ledger_error: str) -> None:
             candidate["risk_score"] = round(max(0.0, candidate["risk_score"] - 30.0), 1)
         result = verify_alert(ledger, candidate)
         if result["on_ledger"] and result["matches_alert_id"]:
-            st.success(f"Verified. The alert's hash is on the ledger, registered by `{result['registered_by']}` at {when(result['registered_at'])}. "
-                       "The alert has not been altered since it was raised.")
+            st.success(f"Verified. The alert's hash is on the ledger, registered by `{result['registered_by']}`; "
+                       f"{times(result['event_time'], result['registered_at'])}. The alert has not been altered since it was raised.")
         else:
             st.error(f"Verification failed. The hash of this alert as presented (`{short(result['sha256'], 16)}`) is not on the ledger: "
                      "its content differs from what was registered.")
@@ -297,7 +302,8 @@ def view_training(cfg: Config, ledger: Any) -> None:
             names = list(z.files)
             digest, record = verify_model(ledger, names, [z[n] for n in names])
         if record.exists:
-            st.success(f"Verified. The model file hashes to `{short(digest, 16)}`, registered as `{record.ref_id}` by `{record.org}` at {when(record.block_ts)}.")
+            st.success(f"Verified. The model file hashes to `{short(digest, 16)}`, registered as `{record.ref_id}` by `{record.org}`; "
+                       f"{times(record.client_ts, record.block_ts)}.")
         else:
             st.error(f"Verification failed. The model file hashes to `{short(digest, 16)}`, which is not on the ledger.")
 
@@ -327,7 +333,8 @@ def view_ledger(cfg: Config, ledger: Any, ledger_error: str) -> None:
             trail = trail.sort_values("block", ascending=False).head(500)
             st.write(f"Audit trail, newest first ({len(trail):,} rows shown)")
             st.dataframe(pd.DataFrame({"Block": trail["block"], "Type": trail["doc_type"], "Reference": trail["ref_id"], "Registered by": trail["org"],
-                                       "Event time": trail["client_ts"].map(when), "SHA-256": trail["digest"], "Transaction": trail["tx_id"]}),
+                                       "Event time (submitter)": trail["client_ts"].map(when), "Block time (chain)": trail["block_ts"].map(when),
+                                       "SHA-256": trail["digest"], "Transaction": trail["tx_id"]}),
                          hide_index=True, use_container_width=True, height=380)
         st.markdown("**Check any hash**")
         digest = st.text_input("SHA-256 (hex)", placeholder="paste a 64-character hash")
@@ -335,7 +342,7 @@ def view_ledger(cfg: Config, ledger: Any, ledger_error: str) -> None:
             try:
                 record = ledger.verify(digest)
                 if record.exists:
-                    st.success(f"On the ledger: `{record.doc_type}` `{record.ref_id}`, registered by `{record.org}` at {when(record.block_ts)}.")
+                    st.success(f"On the ledger: `{record.doc_type}` `{record.ref_id}`, registered by `{record.org}`; {times(record.client_ts, record.block_ts)}.")
                 else:
                     st.error("This hash is not on the ledger.")
             except Exception as exc:

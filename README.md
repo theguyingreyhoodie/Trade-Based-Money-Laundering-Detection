@@ -1,5 +1,13 @@
 # Privacy-Preserving TBML Detection with Federated Learning and Blockchain
 
+![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-3776AB?logo=python&logoColor=white)
+![PyTorch](https://img.shields.io/badge/PyTorch-2.x-EE4C2C?logo=pytorch&logoColor=white)
+![Flower](https://img.shields.io/badge/Flower-1.43-F2B705)
+![Solidity](https://img.shields.io/badge/Solidity-0.8.28-363636?logo=solidity&logoColor=white)
+![Hardhat](https://img.shields.io/badge/Hardhat-2.29-FFF100)
+![Streamlit](https://img.shields.io/badge/Streamlit-dashboard-FF4B4B?logo=streamlit&logoColor=white)
+![Data: synthetic](https://img.shields.io/badge/data-synthetic-6E7781)
+
 B.E. final-year project prototype. Trade-Based Money Laundering (TBML) hides illicit money in trade
 transactions. The evidence is split across organisations: banks hold payments, traders and
 carriers hold invoices and shipment records, customs holds declarations. None of them can pool raw
@@ -45,6 +53,16 @@ Mean of 3 seeds on the test period (full tables and figures: [`results/RESULTS.m
   verification.
 - Alerts: precision 31% / 59% / 96% in the Medium / High / Critical bands; each alert lists its top
   SHAP contributions in plain English, the rules that fired and a suspected typology.
+
+![F1 by method: rules, centralised models, and the methods that keep raw data local](results/plots/method_comparison.png)
+
+### Investigator dashboard
+
+Each alert shows its score, the indicators behind it in plain English, the red-flag rules that
+fired and its evidence record, and can be checked against the chain with one click
+(`make dashboard`).
+
+![An alert in the investigator dashboard, verified on-chain](docs/images/dashboard_alert.png)
 
 ## Quick start
 

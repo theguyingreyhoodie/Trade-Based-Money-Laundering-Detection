@@ -209,6 +209,7 @@ def verify_alert(ledger: EvidenceLedger, alert: dict[str, Any]) -> dict[str, Any
     digest = alert_digest(alert)
     record = ledger.verify(digest)
     return {"sha256": digest, "on_ledger": record.exists, "registered_by": record.org, "ref_id": record.ref_id, "registered_at": record.block_ts,
+            "event_time": record.client_ts,
             "matches_alert_id": record.exists and record.ref_id == alert.get("alert_id"), "doc_type": record.doc_type}
 
 

@@ -155,5 +155,15 @@ to about 16.7 million gas.
   structure of a federated run.
 - **Keys.** Organisation keys are the node's unlocked development accounts (EVM) or derived
   deterministically from a name (Python). Neither is acceptable outside a prototype.
+- **Block time on a development node is not wall-clock time.** Every record carries two
+  timestamps: the event time reported by the submitting organisation and the block time set by
+  the chain. On the Hardhat node used here the two diverged in both directions. When blocks are
+  mined faster than one per second, each block is still stamped one second after the previous
+  one (observed: consecutive blocks 1 s apart while mined about 6 ms apart), so after the
+  benchmarks the block time ran ahead: the alerts' blocks are stamped about 2 h 35 min after
+  their real registration time. Later the node's clock fell behind real time (2 h 40 min behind
+  after about 22 hours on a laptop that slept repeatedly; the cause of this part was not pinned
+  down). The dashboard therefore shows both times, and the event time is the one to read. On a
+  real permissioned network, block time comes from the validators' clocks and blocks are paced.
 - **Gas has no price here.** Gas is reported as a measure of work and state growth; a
   permissioned chain typically sets the gas price to zero.
