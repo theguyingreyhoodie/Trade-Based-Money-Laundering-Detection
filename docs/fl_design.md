@@ -143,17 +143,17 @@ fragmentation** (context indicators computed per client). Pooled-local -> FedAvg
   centralised MLP. When a typology concentrates at one institution, its local graph is intact
   and its own threshold fits its own positive rate. Client thresholds on the global model
   recover part of the gap (0.752).
-- FedProx (mu = 0.01) is not distinguishable from FedAvg in any scenario.
+- FedProx (mu = 0.01) does not improve on FedAvg at any alpha (differences between -0.011 and +0.004 F1).
 
 ## 8. Threat model and limitations
 
 - **Honest-but-curious server, honest clients** is the assumption of the core protocol.
 - **Model poisoning and backdoors are not prevented.** A malicious client can send an arbitrary
   update (boosted, sign-flipped, or trained to ignore one counterparty). FedAvg has no defence:
-  with 3 clients one attacker controls a third of the average. A simple defence, clipping the
-  L2 norm of every client update (`fl.norm_clip`), is implemented and demonstrated in the
-  stretch experiments; it limits boosted updates but not a patient, norm-bounded backdoor.
-  Robust aggregation (median, Krum) needs more clients than a three-party consortium has.
+  with 3 clients one attacker controls a large share of the average. A simple defence, clipping
+  the L2 norm of every client update (`fl.norm_clip`), is implemented and measured in section 10;
+  it limits boosted updates but not a patient, norm-bounded backdoor. Robust aggregation
+  (median, Krum) needs more clients than a three-party consortium has.
 - **Aggregates leak something** (section 3).
 - **No dropout handling.** Every client takes part in every round; a missing client aborts the
   run. Partial participation is supported by Flower (`fl.fraction_train`) but not evaluated.
@@ -188,3 +188,104 @@ What it cannot do: indicators that compare two parties' fields directly (invoice
 customs HS code, amount paid against amount invoiced) can no longer be computed by anyone; the
 top model has to learn them from embeddings. Embeddings and their gradients can leak labels and
 features, so a deployment would add secure computation on the top model.
+
+Measured (3 seeds, `results/stretch/vertical.json`). Columns per party: bank 23, trade 41,
+customs 11.
+
+| Model | F1 | PR-AUC |
+|---|---|---|
+| Customs alone | 0.266 ± 0.031 | 0.212 |
+| Bank alone | 0.346 ± 0.030 | 0.312 |
+| Trade registry alone | 0.429 ± 0.006 | 0.440 |
+| Split neural network, all three parties | 0.568 ± 0.029 | 0.604 |
+| One model on all three parties' columns (bound for the split network) | 0.593 ± 0.014 | 0.642 |
+| Centralised MLP with all 81 indicators, including cross-party ones | 0.753 ± 0.008 | 0.820 |
+
+Working together clearly beats any party alone and comes close to pooling the same columns. The
+remaining gap to the 81-indicator model is the price of not being able to compare two parties'
+fields directly. Traffic: 192 bytes per trade per epoch, 6.8 MB per epoch for 35,383 training
+trades (FedAvg: 0.34 MB per round for the whole federation).
+
+## 10. Extensions (stretch goals)
+
+Code: `fl/extensions.py`, `fl/dp.py`, `fl/local.py`, `fl/vertical.py`. Experiments:
+`scripts/run_stretch.py`, results in `results/stretch/`. All on the primary scenario
+(3 clients, Dirichlet 0.5) unless stated.
+
+### Secure aggregation
+
+Pairwise additive masking after Bonawitz et al. (2017), without dropout recovery. A client
+encodes its weighted update `n_i * w_i` (and `n_i` itself) as fixed-point 64-bit integers and adds,
+for every other participant, a mask derived from a key the two share: the client with the smaller
+id adds it, the other subtracts it. Arithmetic is modulo 2^64, so the masks cancel exactly in the
+sum and each masked update on its own is uniform noise. The server adds the masked arrays,
+decodes the sum and divides by the summed `n_i`.
+
+- After one round the result equals plain FedAvg to within 1.2e-7 per weight (one float32
+  rounding step), with an identical confusion matrix. Over 30 rounds the rounding differences are
+  amplified by training: F1 0.730 against 0.726.
+- The upload doubles (1.95x) because 64-bit integers replace 32-bit floats.
+- The boundary guard switches to "masked" mode: only `uint64` arrays of the model's shapes are
+  accepted, an unmasked update is refused.
+- Not covered: a client that drops out mid-round (its masks no longer cancel; the full protocol
+  recovers them with secret sharing). Pairwise keys are derived from one secret shared by the
+  clients, standing in for a Diffie-Hellman exchange. Server-side norm clipping is impossible by
+  construction. Feature moments and score histograms are still sent in the clear.
+
+### DP-SGD
+
+Clients train with per-example gradient clipping and Gaussian noise (Opacus), which bounds what
+an update reveals about any single training row. Each client computes the noise multiplier that
+spends its budget over all its local steps of the run (Renyi DP accounting, Poisson sampling,
+delta = 1e-5); a small client needs more noise than a large one.
+
+| Budget per client | Mean noise multiplier | F1 | PR-AUC |
+|---|---|---|---|
+| no DP | - | 0.722 ± 0.005 | 0.772 |
+| epsilon = 8 | 0.94 | 0.577 ± 0.008 | 0.605 |
+| epsilon = 3 | 1.68 | 0.548 ± 0.012 | 0.570 |
+| epsilon = 1 | 4.10 | 0.415 ± 0.046 | 0.395 |
+
+Privacy is expensive here: even a loose budget costs about 0.15 F1, because the positive class
+is rare and its gradients are exactly the ones clipping and noise damage most. The clipping norm
+(2.0) was chosen on validation at epsilon = 3 on seed 0 from 12 combinations of clipping norm,
+batch size and learning rate. The first, untuned setting (norm 1.0) reached validation PR-AUC
+0.41 against 0.54, so an untuned DP baseline would have overstated the cost. DP covers training
+only; the evaluation histograms and feature moments are not noised. DP and secure aggregation
+are demonstrated separately, not combined.
+
+### Poisoning and norm clipping
+
+One of three clients (the smallest) sends its update sign-flipped and scaled by 5 in every round.
+
+| Condition | F1, model of the last round | F1, round selected on validation |
+|---|---|---|
+| No attack | 0.720 ± 0.005 | 0.722 ± 0.005 |
+| Attack, no defence | 0.070 ± 0.004 | 0.372 ± 0.120 (round 1) |
+| Attack, median norm clipping | 0.592 ± 0.028 | 0.584 ± 0.038 |
+| No attack, median norm clipping | 0.697 ± 0.014 | 0.700 ± 0.020 |
+
+- Without a defence training diverges. Selecting the round on validation only rolls back to the
+  first round; it repairs nothing.
+- Clipping every update to the round's median norm keeps training alive (0.59) but does not
+  restore the clean result (0.72), and costs 0.02 F1 when nobody attacks.
+- The size of an honest update grows with the number of local steps, so the bound mostly shrinks
+  the *largest honest* client. A small attacker whose boosted update stays under the median is
+  not clipped at all, and a patient attacker within the bound (a backdoor) is not addressed.
+
+### Local fine-tuning of the global model
+
+After federated training each client trains the global model for up to 10 more epochs on its own
+rows (learning rate 0.01), keeps whichever version validates best on its own validation rows
+(possibly the unchanged global model) and picks its own threshold. Nothing is sent.
+
+| Split (3 clients) | Local-only | FedAvg | FedAvg + fine-tuning |
+|---|---|---|---|
+| IID | 0.653 | 0.702 | 0.696 |
+| Dirichlet 1.0 | 0.708 | 0.726 | 0.735 |
+| Dirichlet 0.5 | 0.722 | 0.722 | 0.750 |
+| Dirichlet 0.1 | 0.801 | 0.737 | 0.804 |
+
+Fine-tuning is within 0.01 F1 of the better of the two alternatives in every scenario and
+clearly ahead under moderate skew. It answers the objection that institutions with skewed data
+gain nothing from joining: they keep their local advantage and still get what the others learned.

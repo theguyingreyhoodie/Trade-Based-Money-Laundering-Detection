@@ -1,0 +1,85 @@
+{
+  "seed": 2,
+  "scenario": {
+    "name": "n3_qty0.5",
+    "n_clients": 3,
+    "partition": "quantity",
+    "alpha": 0.5,
+    "label": "quantity skew \u03b1=0.5, 3 clients"
+  },
+  "strategy": "fedavg+finetune",
+  "n_clients": 3,
+  "global_round": 29,
+  "final": {
+    "precision": 0.8,
+    "recall": 0.626984126984127,
+    "f1": 0.7030033370411568,
+    "fpr": 0.0064379431179203,
+    "alert_rate": 0.03091976516634051,
+    "confusion": {
+      "tp": 316,
+      "fp": 79,
+      "fn": 188,
+      "tn": 12192
+    },
+    "recall_by_typology": {
+      "over_invoicing": 0.4537037037037037,
+      "under_invoicing": 0.4461538461538462,
+      "multiple_invoicing": 0.5777777777777777,
+      "phantom_shipment": 0.868421052631579,
+      "over_under_shipment": 0.8378378378378378,
+      "misdescription": 0.8245614035087719,
+      "third_party_payment": 0.9615384615384616,
+      "circular_trading": 0.58,
+      "shell_company": 0.5681818181818182,
+      "high_risk_routing": 0.6470588235294118
+    },
+    "support_by_typology": {
+      "over_invoicing": 108,
+      "under_invoicing": 65,
+      "multiple_invoicing": 45,
+      "phantom_shipment": 38,
+      "over_under_shipment": 37,
+      "misdescription": 57,
+      "third_party_payment": 26,
+      "circular_trading": 50,
+      "shell_company": 44,
+      "high_risk_routing": 34
+    },
+    "pr_auc": 0.7613287508286202,
+    "roc_auc": 0.9581574120425884,
+    "n": 12775,
+    "n_illicit": 504,
+    "prevalence": 0.03945205479452055
+  },
+  "per_client": [
+    {
+      "client": 0,
+      "f1": 0.655367231638418,
+      "precision": 0.8787878787878788,
+      "recall": 0.5225225225225225,
+      "kept_epoch": 0,
+      "n_test": 2214,
+      "n_illicit_test": 111
+    },
+    {
+      "client": 1,
+      "f1": 0.6801619433198381,
+      "precision": 0.7706422018348624,
+      "recall": 0.6086956521739131,
+      "kept_epoch": 2,
+      "n_test": 3733,
+      "n_illicit_test": 138
+    },
+    {
+      "client": 2,
+      "f1": 0.7326315789473684,
+      "precision": 0.7909090909090909,
+      "recall": 0.6823529411764706,
+      "kept_epoch": 0,
+      "n_test": 6828,
+      "n_illicit_test": 255
+    }
+  ],
+  "clients_that_changed_the_model": 1
+}

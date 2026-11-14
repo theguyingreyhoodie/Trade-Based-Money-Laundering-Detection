@@ -91,8 +91,12 @@ def run_federated(
     target_f1: float | None = None,
     tag: str = "",
     save: bool = True,
+    keep_weights: bool = False,
 ) -> dict[str, Any]:
     """Simulate one federation and return (and optionally save) its results.
+
+    ``keep_weights`` adds the selected global model's arrays to the returned
+    dict under ``"weights"`` (they are never written to the result JSON).
 
     ``options`` switches on the extensions: ``{"secagg": {...}}``,
     ``{"dp": {...}}``, ``{"poison": {...}}``, ``{"norm_clip": float}``.
@@ -116,8 +120,9 @@ def run_federated(
         array_dtype_override="uint64" if secagg else None,
         extra_array_names=(N_SLOT,) if secagg else (),
     )
+    clip = options.get("norm_clip", cfg.fl.norm_clip)
     state = RunState(cfg=cfg, spec=spec, names=names, trainable=trainable_mask(template), n_clients=n_clients, audit_sink=audit_sink,
-                     norm_clip=float(options.get("norm_clip", cfg.fl.norm_clip)), secagg=secagg)
+                     norm_clip=clip if clip == "median" else float(clip), secagg=secagg)
     train_config: dict[str, Any] = {"lr": float(cfg.fl.lr), "local-epochs": int(cfg.fl.local_epochs)}
     if secagg:
         train_config["secagg-participants"] = list(range(n_clients))
@@ -135,6 +140,8 @@ def run_federated(
             holder["traceback"] = traceback.format_exc()
 
     client_options = {k: v for k, v in options.items() if k in ("secagg", "dp", "poison")}
+    if client_options.get("dp"):
+        client_options["dp"] = {**client_options["dp"], "rounds": rounds}
     client_app = make_client_app(cfg, root, seed, client_options)
     # Flower logs every round at INFO and a deprecation notice for run_simulation at WARNING
     # (see README, "Known limitations"); our own logger reports the rounds.
@@ -199,7 +206,8 @@ def run_federated(
                      "max_reply_bytes": {kind: max((r["bytes"] for r in spec.received if r["kind"] == kind), default=0) for kind in ("stats", "train", "evaluate")},
                      "array_records_outside_training": sum(r["n_arrays"] for r in spec.received if r["kind"] != "train")},
         "model_hashes": state.audit,
-        "update_norms": {"clipped_updates": state.clipped, "last_round": state.update_norms},
+        "update_norms": {"clipped_updates": state.clipped, "history": state.norm_history},
+        "dp_clients": {str(c): v for c, v in sorted(state.dp_report.items())},
         "seconds": out["seconds"],
     }
     if save:
@@ -210,6 +218,8 @@ def run_federated(
                    "hist_val": best["hist_val"].to_list(), "hist_bins": int(cfg.fl.hist_bins), "scenario": scenario.to_dict(), "strategy": strategy,
                    "seed": seed}, mdir / "model_meta.json")
         save_json(result, result_path(cfg, seed, scenario, strategy, tag))
+    if keep_weights:
+        result["weights"] = {name: w for name, w in zip(names, best["weights"])}
     final = result["final"]
     log.info("seed %d %s %s: best round %d  F1 %.3f  P %.3f  R %.3f  PR-AUC %.3f  (%.0fs, %.1f MB total)", seed, scenario.name, strategy + (f"/{tag}" if tag else ""),
              best["round"], final["f1"], final["precision"], final["recall"], final["pr_auc"], out["seconds"], result["communication"]["total_bytes"] / 1e6)

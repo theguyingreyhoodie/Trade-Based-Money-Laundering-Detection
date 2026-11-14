@@ -121,5 +121,4 @@ def dp_local_update(cfg: Config, fs: Any, global_weights: list[np.ndarray], part
     from tbml.fl.dp import dp_train_round
 
     return dp_train_round(cfg, fs, global_weights, partition_id, server_round, seed, lr=float(config["lr"]),
-                          local_epochs=int(config["local-epochs"]), noise_multiplier=float(options["noise_multiplier"]),
-                          max_grad_norm=float(options["max_grad_norm"]))
+                          local_epochs=int(config["local-epochs"]), options=options)

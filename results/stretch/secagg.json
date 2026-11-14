@@ -1,0 +1,52 @@
+{
+  "seed": 0,
+  "scenario": {
+    "name": "n3_dir0.5",
+    "n_clients": 3,
+    "partition": "dirichlet",
+    "alpha": 0.5,
+    "label": "non-IID Dirichlet \u03b1=0.5, 3 clients"
+  },
+  "one_round": {
+    "max_abs_weight_difference": 1.1920928955078125e-07,
+    "same_confusion_matrix": true,
+    "f1_plain": 0.5054945054945054,
+    "f1_secure": 0.5054945054945054
+  },
+  "plain": {
+    "f1": 0.7255594817432274,
+    "precision": 0.7738693467336684,
+    "recall": 0.6829268292682927,
+    "pr_auc": 0.7817852666428426,
+    "best_round": 29,
+    "total_bytes": 10140482,
+    "train_upload_per_client_round": 31723.0
+  },
+  "secure": {
+    "f1": 0.7296037296037297,
+    "precision": 0.769041769041769,
+    "recall": 0.6940133037694013,
+    "pr_auc": 0.7824896397523384,
+    "best_round": 29,
+    "total_bytes": 12867152,
+    "train_upload_per_client_round": 61986.333333333336
+  },
+  "max_f1_difference_over_rounds": 0.01761541488280849,
+  "upload_overhead_factor": 1.953987117653858,
+  "boundary": {
+    "replies_checked": 183,
+    "violations": 0,
+    "kinds": {
+      "stats": 3,
+      "train": 90,
+      "evaluate": 90
+    },
+    "max_reply_bytes": {
+      "stats": 1401,
+      "train": 61987,
+      "evaluate": 17811
+    },
+    "array_records_outside_training": 0
+  },
+  "note": "updates are fixed-point encoded in 64-bit integers and masked pairwise; the server only ever sees masked arrays and their sum"
+}

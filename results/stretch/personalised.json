@@ -1,0 +1,247 @@
+{
+  "runs": [
+    {
+      "seed": 0,
+      "scenario": "n3_iid",
+      "f1": 0.6983758700696056,
+      "precision": 0.732360097323601,
+      "recall": 0.6674057649667405,
+      "clients_that_changed_the_model": 1,
+      "n_clients": 3
+    },
+    {
+      "seed": 1,
+      "scenario": "n3_iid",
+      "f1": 0.6940298507462687,
+      "precision": 0.7361477572559367,
+      "recall": 0.6564705882352941,
+      "clients_that_changed_the_model": 0,
+      "n_clients": 3
+    },
+    {
+      "seed": 2,
+      "scenario": "n3_iid",
+      "f1": 0.6967471143756557,
+      "precision": 0.7394209354120267,
+      "recall": 0.6587301587301587,
+      "clients_that_changed_the_model": 1,
+      "n_clients": 3
+    },
+    {
+      "seed": 0,
+      "scenario": "n3_dir0.1",
+      "f1": 0.8114558472553699,
+      "precision": 0.8785529715762274,
+      "recall": 0.753880266075388,
+      "clients_that_changed_the_model": 3,
+      "n_clients": 3
+    },
+    {
+      "seed": 1,
+      "scenario": "n3_dir0.1",
+      "f1": 0.8072289156626505,
+      "precision": 0.8271604938271605,
+      "recall": 0.788235294117647,
+      "clients_that_changed_the_model": 3,
+      "n_clients": 3
+    },
+    {
+      "seed": 2,
+      "scenario": "n3_dir0.1",
+      "f1": 0.7938775510204081,
+      "precision": 0.8172268907563025,
+      "recall": 0.7718253968253969,
+      "clients_that_changed_the_model": 3,
+      "n_clients": 3
+    },
+    {
+      "seed": 0,
+      "scenario": "n3_dir0.5",
+      "f1": 0.7397899649941657,
+      "precision": 0.7807881773399015,
+      "recall": 0.7028824833702882,
+      "clients_that_changed_the_model": 3,
+      "n_clients": 3
+    },
+    {
+      "seed": 1,
+      "scenario": "n3_dir0.5",
+      "f1": 0.7790549169859514,
+      "precision": 0.8519553072625698,
+      "recall": 0.7176470588235294,
+      "clients_that_changed_the_model": 2,
+      "n_clients": 3
+    },
+    {
+      "seed": 2,
+      "scenario": "n3_dir0.5",
+      "f1": 0.7310195227765727,
+      "precision": 0.80622009569378,
+      "recall": 0.6686507936507936,
+      "clients_that_changed_the_model": 3,
+      "n_clients": 3
+    },
+    {
+      "seed": 0,
+      "scenario": "n3_dir1",
+      "f1": 0.7213510253317249,
+      "precision": 0.791005291005291,
+      "recall": 0.6629711751662971,
+      "clients_that_changed_the_model": 3,
+      "n_clients": 3
+    },
+    {
+      "seed": 1,
+      "scenario": "n3_dir1",
+      "f1": 0.7566137566137567,
+      "precision": 0.8640483383685801,
+      "recall": 0.6729411764705883,
+      "clients_that_changed_the_model": 2,
+      "n_clients": 3
+    },
+    {
+      "seed": 2,
+      "scenario": "n3_dir1",
+      "f1": 0.7274633123689727,
+      "precision": 0.7711111111111111,
+      "recall": 0.6884920634920635,
+      "clients_that_changed_the_model": 3,
+      "n_clients": 3
+    },
+    {
+      "seed": 0,
+      "scenario": "n3_qty0.5",
+      "f1": 0.7099056603773584,
+      "precision": 0.7581863979848866,
+      "recall": 0.6674057649667405,
+      "clients_that_changed_the_model": 2,
+      "n_clients": 3
+    },
+    {
+      "seed": 1,
+      "scenario": "n3_qty0.5",
+      "f1": 0.7193195625759417,
+      "precision": 0.7437185929648241,
+      "recall": 0.6964705882352941,
+      "clients_that_changed_the_model": 2,
+      "n_clients": 3
+    },
+    {
+      "seed": 2,
+      "scenario": "n3_qty0.5",
+      "f1": 0.7030033370411568,
+      "precision": 0.8,
+      "recall": 0.626984126984127,
+      "clients_that_changed_the_model": 1,
+      "n_clients": 3
+    },
+    {
+      "seed": 0,
+      "scenario": "n5_iid",
+      "f1": 0.6726057906458798,
+      "precision": 0.6756152125279642,
+      "recall": 0.6696230598669624,
+      "clients_that_changed_the_model": 2,
+      "n_clients": 5
+    },
+    {
+      "seed": 1,
+      "scenario": "n5_iid",
+      "f1": 0.6798418972332015,
+      "precision": 0.7724550898203593,
+      "recall": 0.6070588235294118,
+      "clients_that_changed_the_model": 2,
+      "n_clients": 5
+    },
+    {
+      "seed": 2,
+      "scenario": "n5_iid",
+      "f1": 0.6757990867579909,
+      "precision": 0.7956989247311828,
+      "recall": 0.5873015873015873,
+      "clients_that_changed_the_model": 0,
+      "n_clients": 5
+    },
+    {
+      "seed": 0,
+      "scenario": "n5_dir0.5",
+      "f1": 0.7201889020070837,
+      "precision": 0.7702020202020202,
+      "recall": 0.6762749445676275,
+      "clients_that_changed_the_model": 5,
+      "n_clients": 5
+    },
+    {
+      "seed": 1,
+      "scenario": "n5_dir0.5",
+      "f1": 0.7272727272727272,
+      "precision": 0.7298578199052133,
+      "recall": 0.7247058823529412,
+      "clients_that_changed_the_model": 5,
+      "n_clients": 5
+    },
+    {
+      "seed": 2,
+      "scenario": "n5_dir0.5",
+      "f1": 0.7531645569620253,
+      "precision": 0.8040540540540541,
+      "recall": 0.7083333333333334,
+      "clients_that_changed_the_model": 4,
+      "n_clients": 5
+    },
+    {
+      "seed": 0,
+      "scenario": "n10_iid",
+      "f1": 0.613931523022432,
+      "precision": 0.6565656565656566,
+      "recall": 0.5764966740576497,
+      "clients_that_changed_the_model": 3,
+      "n_clients": 10
+    },
+    {
+      "seed": 1,
+      "scenario": "n10_iid",
+      "f1": 0.6240409207161125,
+      "precision": 0.6834733893557423,
+      "recall": 0.5741176470588235,
+      "clients_that_changed_the_model": 5,
+      "n_clients": 10
+    },
+    {
+      "seed": 2,
+      "scenario": "n10_iid",
+      "f1": 0.6268980477223427,
+      "precision": 0.6913875598086124,
+      "recall": 0.5734126984126984,
+      "clients_that_changed_the_model": 4,
+      "n_clients": 10
+    },
+    {
+      "seed": 0,
+      "scenario": "n10_dir0.5",
+      "f1": 0.669833729216152,
+      "precision": 0.7212276214833759,
+      "recall": 0.6252771618625277,
+      "clients_that_changed_the_model": 10,
+      "n_clients": 10
+    },
+    {
+      "seed": 1,
+      "scenario": "n10_dir0.5",
+      "f1": 0.6708229426433915,
+      "precision": 0.713527851458886,
+      "recall": 0.6329411764705882,
+      "clients_that_changed_the_model": 10,
+      "n_clients": 10
+    },
+    {
+      "seed": 2,
+      "scenario": "n10_dir0.5",
+      "f1": 0.7092511013215859,
+      "precision": 0.7970297029702971,
+      "recall": 0.6388888888888888,
+      "clients_that_changed_the_model": 8,
+      "n_clients": 10
+    }
+  ]
+}

@@ -1,0 +1,226 @@
+{
+  "scenario": {
+    "name": "n3_dir0.5",
+    "n_clients": 3,
+    "partition": "dirichlet",
+    "alpha": 0.5,
+    "label": "non-IID Dirichlet \u03b1=0.5, 3 clients"
+  },
+  "seeds": [
+    0,
+    1,
+    2
+  ],
+  "private": [
+    {
+      "epsilon": 1.0,
+      "delta": 1e-05,
+      "max_grad_norm": 2.0,
+      "runs": [
+        {
+          "seed": 0,
+          "f1": 0.38084112149532706,
+          "precision": 0.4024691358024691,
+          "recall": 0.3614190687361419,
+          "pr_auc": 0.36940408470498,
+          "best_round": 22,
+          "last_round_f1": 0.4117647058823529,
+          "total_bytes": 10145010,
+          "train_upload_per_client_round": 31772.666666666668,
+          "epsilon_spent_max": 0.9989621237636231,
+          "noise_multipliers": [
+            5.3125,
+            4.0625,
+            2.5390625
+          ]
+        },
+        {
+          "seed": 1,
+          "f1": 0.47965116279069764,
+          "precision": 0.6273764258555133,
+          "recall": 0.38823529411764707,
+          "pr_auc": 0.4644369368291368,
+          "best_round": 29,
+          "last_round_f1": 0.48640915593705303,
+          "total_bytes": 10146098,
+          "train_upload_per_client_round": 31772.0,
+          "epsilon_spent_max": 0.9989454688993958,
+          "noise_multipliers": [
+            5.78125,
+            5.46875,
+            2.32421875
+          ]
+        },
+        {
+          "seed": 2,
+          "f1": 0.38551099611901685,
+          "precision": 0.5539033457249071,
+          "recall": 0.29563492063492064,
+          "pr_auc": 0.3515537711245551,
+          "best_round": 17,
+          "last_round_f1": 0.40632054176072235,
+          "total_bytes": 10144943,
+          "train_upload_per_client_round": 31772.666666666668,
+          "epsilon_spent_max": 0.995194864119271,
+          "noise_multipliers": [
+            3.4375,
+            5.15625,
+            2.79296875
+          ]
+        }
+      ]
+    },
+    {
+      "epsilon": 3.0,
+      "delta": 1e-05,
+      "max_grad_norm": 2.0,
+      "runs": [
+        {
+          "seed": 0,
+          "f1": 0.5315005727376861,
+          "precision": 0.5497630331753555,
+          "recall": 0.5144124168514412,
+          "pr_auc": 0.5443235470801068,
+          "best_round": 30,
+          "last_round_f1": 0.5315005727376861,
+          "total_bytes": 10145257,
+          "train_upload_per_client_round": 31772.666666666668,
+          "epsilon_spent_max": 2.999895627929209,
+          "noise_multipliers": [
+            2.109375,
+            1.66015625,
+            1.14013671875
+          ]
+        },
+        {
+          "seed": 1,
+          "f1": 0.5548037889039241,
+          "precision": 0.6528662420382165,
+          "recall": 0.4823529411764706,
+          "pr_auc": 0.5893662547629015,
+          "best_round": 27,
+          "last_round_f1": 0.5558739255014327,
+          "total_bytes": 10145844,
+          "train_upload_per_client_round": 31772.0,
+          "epsilon_spent_max": 2.9962219490577624,
+          "noise_multipliers": [
+            2.2607421875,
+            2.1630859375,
+            1.07177734375
+          ]
+        },
+        {
+          "seed": 2,
+          "f1": 0.5585798816568048,
+          "precision": 0.6920821114369502,
+          "recall": 0.46825396825396826,
+          "pr_auc": 0.5765705386622282,
+          "best_round": 30,
+          "last_round_f1": 0.5585798816568048,
+          "total_bytes": 10145025,
+          "train_upload_per_client_round": 31772.666666666668,
+          "epsilon_spent_max": 2.996394738660363,
+          "noise_multipliers": [
+            1.44287109375,
+            2.0458984375,
+            1.2255859375
+          ]
+        }
+      ]
+    },
+    {
+      "epsilon": 8.0,
+      "delta": 1e-05,
+      "max_grad_norm": 2.0,
+      "runs": [
+        {
+          "seed": 0,
+          "f1": 0.5701657458563536,
+          "precision": 0.5682819383259912,
+          "recall": 0.5720620842572062,
+          "pr_auc": 0.5805669629248404,
+          "best_round": 30,
+          "last_round_f1": 0.5701657458563536,
+          "total_bytes": 10145349,
+          "train_upload_per_client_round": 31772.666666666668,
+          "epsilon_spent_max": 7.995979370238809,
+          "noise_multipliers": [
+            1.1004638671875,
+            0.931396484375,
+            0.73455810546875
+          ]
+        },
+        {
+          "seed": 1,
+          "f1": 0.5725699067909454,
+          "precision": 0.6595092024539877,
+          "recall": 0.5058823529411764,
+          "pr_auc": 0.6185642753621359,
+          "best_round": 27,
+          "last_round_f1": 0.5744966442953019,
+          "total_bytes": 10145639,
+          "train_upload_per_client_round": 31772.0,
+          "epsilon_spent_max": 7.996534214002035,
+          "noise_multipliers": [
+            1.1590576171875,
+            1.121826171875,
+            0.70709228515625
+          ]
+        },
+        {
+          "seed": 2,
+          "f1": 0.588495575221239,
+          "precision": 0.665,
+          "recall": 0.5277777777777778,
+          "pr_auc": 0.6162104427996209,
+          "best_round": 30,
+          "last_round_f1": 0.588495575221239,
+          "total_bytes": 10145052,
+          "train_upload_per_client_round": 31772.666666666668,
+          "epsilon_spent_max": 7.9999598300542045,
+          "noise_multipliers": [
+            0.849609375,
+            1.07666015625,
+            0.7672119140625
+          ]
+        }
+      ]
+    }
+  ],
+  "non_private": [
+    {
+      "seed": 0,
+      "f1": 0.7255594817432274,
+      "precision": 0.7738693467336684,
+      "recall": 0.6829268292682927,
+      "pr_auc": 0.7817852666428426,
+      "best_round": 29,
+      "last_round_f1": 0.7185185185185186,
+      "total_bytes": 10140482,
+      "train_upload_per_client_round": 31723.0
+    },
+    {
+      "seed": 1,
+      "f1": 0.7248677248677249,
+      "precision": 0.8277945619335347,
+      "recall": 0.6447058823529411,
+      "pr_auc": 0.7668206976532677,
+      "best_round": 22,
+      "last_round_f1": 0.7275064267352186,
+      "total_bytes": 10140617,
+      "train_upload_per_client_round": 31722.666666666668
+    },
+    {
+      "seed": 2,
+      "f1": 0.7144340602284528,
+      "precision": 0.7494553376906318,
+      "recall": 0.6825396825396826,
+      "pr_auc": 0.7685430266498257,
+      "best_round": 30,
+      "last_round_f1": 0.7144340602284528,
+      "total_bytes": 10140403,
+      "train_upload_per_client_round": 31723.0
+    }
+  ],
+  "note": "example-level (epsilon, delta)-DP for each client's own training rows, accounted with Renyi DP over all local steps of the run"
+}

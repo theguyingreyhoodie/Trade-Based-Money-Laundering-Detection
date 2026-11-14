@@ -208,13 +208,15 @@ fl:
     alphas: [0.1, 0.5, 1.0]
     quantity_skew_alpha: 0.5    # Dirichlet over client sizes for the quantity-skew scenario
     min_client_share: 0.25      # reject splits where a client gets under 25% of an equal share (see fl/partition.py)
-  secure_aggregation: false     # stretch: pairwise additive masking
-  norm_clip: 0.0                # stretch: clip client update norm (0 = off)
+  personalisation: {epochs: 10, lr: 0.01}   # local fine-tuning of the global model after training
+  norm_clip: 0.0                # clip client update norm: 0 = off, a number = fixed bound, "median" = per-round median
+  poison: {clients: [0], mode: signflip, scale: 5.0}   # poisoning demo: which client attacks and how
+  vertical: {embedding: 8, hidden: 16, epochs: 40, lr: 0.05}   # vertical-FL (split NN) demo
   dp:                           # stretch: DP-SGD with Opacus
     enabled: false
     epsilons: [1.0, 3.0, 8.0]
     delta: 1.0e-5
-    max_grad_norm: 1.0
+    max_grad_norm: 2.0          # per-example clipping norm; chosen on validation at epsilon = 3 (see docs/fl_design.md)
 
 # -----------------------------------------------------------------------------
 # Phase 5: blockchain evidence layer
@@ -267,6 +269,7 @@ profiles:
     fl.experiments.n_clients: [3]
     fl.experiments.alphas: [0.5]
     fl.dp.epsilons: [3.0]
+    fl.vertical.epochs: 15
     ledger.benchmark.n_single: 60
     ledger.benchmark.n_batched_items: 400
     ledger.benchmark.batch_sizes: [1, 50]
@@ -284,4 +287,6 @@ profiles:
     models.random_forest.n_estimators: 40
     models.lightgbm.n_estimators: 60
     fl.rounds: 2
+    fl.vertical.epochs: 25
+    fl.personalisation.epochs: 3
     split.min_typology_count: 0

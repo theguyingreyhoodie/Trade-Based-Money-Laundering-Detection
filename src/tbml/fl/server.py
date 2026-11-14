@@ -53,7 +53,7 @@ class RunState:
     trainable: list[bool]
     n_clients: int
     audit_sink: AuditSink | None = None
-    norm_clip: float = 0.0
+    norm_clip: float | str = 0.0  # 0 = off, a number = fixed bound, "median" = median norm of the round
     secagg: dict[str, Any] | None = None
     comm: list[dict[str, Any]] = field(default_factory=list)
     audit: list[dict[str, Any]] = field(default_factory=list)
@@ -62,7 +62,9 @@ class RunState:
     global_weights: list[np.ndarray] | None = None
     client_hists: dict[int, tuple[ScoreHist, ScoreHist]] = field(default_factory=dict)
     update_norms: dict[int, float] = field(default_factory=dict)
+    norm_history: list[dict[str, Any]] = field(default_factory=list)
     clipped: int = 0
+    dp_report: dict[int, dict[str, float]] = field(default_factory=dict)
 
     def record_bytes(self, server_round: int, phase: str, direction: str, n_bytes: int) -> None:
         self.comm.append({"round": server_round, "phase": phase, "direction": direction, "bytes": int(n_bytes)})
@@ -125,6 +127,8 @@ class AuditedAggregation:
                 raise RuntimeError(f"round {server_round}: update of client {client} does not match its reported hash")
             st.record_audit({"round": server_round, "kind": "client_update", "client": client, "sha256": digest,
                              "n_examples": int(metrics["num-examples"]), "bytes": receipt["bytes"]})
+            if "dp-epsilon" in metrics:
+                st.dp_report[client] = {"epsilon": float(metrics["dp-epsilon"]), "noise_multiplier": float(metrics["dp-noise"])}
             contents.append((client, content))
         contents.sort(key=lambda item: item[0])  # fixed order -> reproducible floating-point sums
 
@@ -134,8 +138,7 @@ class AuditedAggregation:
             weights = unmask_sum([c["arrays"] for _, c in contents], st.names, st.secagg)
             aggregated = to_record(st.names, weights)
         else:
-            if st.norm_clip > 0:
-                contents = [(client, self._clip(client, content)) for client, content in contents]
+            contents = self._clip_updates(server_round, contents)
             averaged = aggregate_arrayrecords([c for _, c in contents], self.weighted_by_key)  # type: ignore[attr-defined]
             assert st.global_weights is not None
             # trained arrays come from the weighted average; buffers (the shared scaler) are kept as sent
@@ -149,20 +152,37 @@ class AuditedAggregation:
                          "n_examples": int(total), "bytes": message_bytes(RecordDict({"arrays": aggregated}))})
         return aggregated, MetricRecord({"train-loss": float(loss), "n-clients": len(contents)})
 
-    def _clip(self, client: int, content: RecordDict) -> RecordDict:
-        """Scale a client's update so that its L2 norm is at most ``norm_clip``."""
+    def _clip_updates(self, server_round: int, contents: list[tuple[int, RecordDict]]) -> list[tuple[int, RecordDict]]:
+        """Record every update's L2 norm; if clipping is on, scale down updates above the bound.
+
+        The bound is ``norm_clip`` or, with ``norm_clip == "median"``, the median
+        norm of this round's updates (no tuning, and robust as long as fewer than
+        half of the clients are malicious).
+        """
         st = self.state
         assert st.global_weights is not None
-        local = from_record(content["arrays"], st.names)
-        delta = [l.astype(np.float64) - g.astype(np.float64) for l, g in zip(local, st.global_weights)]
-        norm = float(np.sqrt(sum(float((d**2).sum()) for d, t in zip(delta, st.trainable) if t)))
-        st.update_norms[client] = norm
-        if norm <= st.norm_clip:
-            return content
-        st.clipped += 1
-        scale = st.norm_clip / norm
-        clipped = [(g + d * scale).astype(np.float32) if t else l for l, g, d, t in zip(local, st.global_weights, delta, st.trainable)]
-        return RecordDict({"arrays": to_record(st.names, clipped), "metrics": content["metrics"]})
+        deltas, norms = {}, {}
+        for client, content in contents:
+            local = from_record(content["arrays"], st.names)
+            delta = [l.astype(np.float64) - g.astype(np.float64) for l, g in zip(local, st.global_weights)]
+            deltas[client] = (local, delta)
+            norms[client] = float(np.sqrt(sum(float((d**2).sum()) for d, t in zip(delta, st.trainable) if t)))
+        st.update_norms = norms
+        bound = float(np.median(list(norms.values()))) if st.norm_clip == "median" else float(st.norm_clip)
+        st.norm_history.append({"round": server_round, "norms": {str(c): round(v, 6) for c, v in norms.items()}, "bound": bound if bound > 0 else None})
+        if bound <= 0:
+            return contents
+        out = []
+        for client, content in contents:
+            if norms[client] <= bound:
+                out.append((client, content))
+                continue
+            st.clipped += 1
+            local, delta = deltas[client]
+            scale = bound / norms[client]
+            clipped = [(g + d * scale).astype(np.float32) if t else l for l, g, d, t in zip(local, st.global_weights, delta, st.trainable)]
+            out.append((client, RecordDict({"arrays": to_record(st.names, clipped), "metrics": content["metrics"]})))
+        return out
 
     # ------------------------------------------------------------------ evaluation
     def configure_evaluate(self, server_round: int, arrays: ArrayRecord, config: ConfigRecord, grid: Grid) -> Iterable[Message]:

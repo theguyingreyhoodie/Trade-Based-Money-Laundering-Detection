@@ -124,3 +124,49 @@ def run_pooled_local_features(cfg: Config, seed: int, scenario: Scenario, save: 
     log.info("seed %d %s pooled model on local features: F1 %.3f  P %.3f  R %.3f  PR-AUC %.3f", seed, scenario.name, final["f1"],
              final["precision"], final["recall"], final["pr_auc"])
     return result
+
+
+def run_personalised(cfg: Config, seed: int, scenario: Scenario, strategy: str = "fedavg", tag: str = "", save: bool = True) -> dict[str, Any]:
+    """FedAvg followed by local fine-tuning: each client adapts the global model to its own data.
+
+    Starting from the global model (weights and shared scaler), a client trains
+    a few more epochs on its own rows with a small learning rate, keeps whichever
+    version validates best on its own validation rows (possibly the unchanged
+    global model), and picks its own threshold. Nothing is sent anywhere, so this
+    costs no communication and no privacy beyond the federated run itself.
+    """
+    from tbml.fl.simulation import load_global_model
+    from tbml.models.mlp import get_weights
+
+    model, meta = load_global_model(cfg, seed, scenario, strategy, tag)
+    start = get_weights(model)
+    root = scenario_dir(cfg, seed, scenario)
+    n_bins = int(cfg.fl.hist_bins)
+    metric = str(cfg.models.threshold_metric)
+    p = cfg.fl.personalisation
+    flagged = np.zeros(N_CLASSES, dtype=np.int64)
+    support = np.zeros(N_CLASSES, dtype=np.int64)
+    pooled = ScoreHist.empty(n_bins)
+    clients = []
+    for client in range(scenario.n_clients):
+        fs = load_client(root, client)
+        train, val, test = fs.part("train"), fs.part("val"), fs.part("test")
+        tuned, info = fit_mlp(cfg, train.X, train.y, val.X, val.y, seed=derive_seed(seed, "personalise", scenario.name, client) % (2**31),
+                              epochs=int(p.epochs), init_weights=start, lr=float(p.lr))
+        h_val = ScoreHist.from_scores(predict_proba(tuned, val.X), val.typology, n_bins)
+        h_test = ScoreHist.from_scores(predict_proba(tuned, test.X), test.typology, n_bins)
+        k = h_val.best_threshold(metric)
+        m = h_test.at(k)
+        flagged += h_test.counts[:, k:].sum(axis=1)
+        support += h_test.counts.sum(axis=1)
+        pooled = pooled + h_test
+        clients.append({"client": client, "f1": m["f1"], "precision": m["precision"], "recall": m["recall"], "kept_epoch": info["best_epoch"],
+                        "n_test": h_test.n, "n_illicit_test": h_test.n_pos})
+    result = {"seed": seed, "scenario": scenario.to_dict(), "strategy": f"{strategy}+finetune", "n_clients": scenario.n_clients,
+              "global_round": meta["best_round"], "final": pooled_from_counts(flagged, support, pooled), "per_client": clients,
+              "clients_that_changed_the_model": sum(c["kept_epoch"] > 0 for c in clients)}
+    if save:
+        save_json(result, cfg.path("results_dir", "fl", f"seed_{seed}", f"{scenario.name}__{strategy}_finetuned.json"))
+    log.info("seed %d %s %s + local fine-tuning: pooled F1 %.3f  P %.3f  R %.3f", seed, scenario.name, strategy, result["final"]["f1"],
+             result["final"]["precision"], result["final"]["recall"])
+    return result

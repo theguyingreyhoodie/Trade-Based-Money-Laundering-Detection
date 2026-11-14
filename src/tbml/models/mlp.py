@@ -195,24 +195,36 @@ def fit_mlp(
     seed: int,
     epochs: int | None = None,
     scaler: tuple[np.ndarray, np.ndarray] | None = None,
+    init_weights: Sequence[np.ndarray] | None = None,
+    lr: float | None = None,
 ) -> tuple[TBMLNet, dict[str, Any]]:
     """Train on one data set with early stopping on validation PR-AUC.
 
     Used for the centralised baseline and for local-only client models. The
     scaler is fitted on the training rows only unless one is passed in.
+
+    ``init_weights`` warm-starts from an existing model (for example the global
+    FL model, including its scaler); the starting model then counts as "epoch 0"
+    and is kept if no later epoch validates better.
     """
     from sklearn.metrics import average_precision_score
 
     m = cfg.models.mlp
     epochs = int(m.epochs if epochs is None else epochs)
     model = make_model(cfg, X_train.shape[1], seed)
-    mean, std = scaler if scaler is not None else moments_to_scaler(*feature_moments(X_train))
-    with torch.no_grad():
-        set_scaler(model, mean, std)
-    opt = make_optimizer(cfg, model)
+    if init_weights is not None:
+        set_weights(model, init_weights)
+    else:
+        mean, std = scaler if scaler is not None else moments_to_scaler(*feature_moments(X_train))
+        with torch.no_grad():
+            set_scaler(model, mean, std)
+    opt = make_optimizer(cfg, model, lr)
     can_validate = len(y_val) > 0 and 0 < y_val.sum() < len(y_val)
     best_score, best_state, best_epoch, stale = -1.0, None, 0, 0
     history: list[dict[str, float]] = []
+    if init_weights is not None and can_validate:
+        best_score = float(average_precision_score(y_val, predict_proba(model, X_val)))
+        best_state = {k: v.detach().clone() for k, v in model.state_dict().items()}
     for epoch in range(1, epochs + 1):
         info = train_epochs(model, X_train, y_train, cfg, 1, seed=seed * 1000 + epoch, optimizer=opt)
         score = float(average_precision_score(y_val, predict_proba(model, X_val))) if can_validate else -float(info["loss"])
