@@ -234,6 +234,12 @@ def test_pyledger_persists_and_detects_tampering(tmp_path) -> None:
     reopened = PyLedger(tmp_path / "led")
     assert reopened.verify(digest("p3")).ref_id == "PAY-3" and reopened.stats()["n_records"] == 6
     assert reopened.organisations() == led.organisations()
+    # an organisation registered in an earlier session can keep writing after the ledger is reopened
+    assert reopened.register(digest("later"), "invoice", "INV-10", "bank").status == "registered"
+    assert reopened.register_organisation("bank") == led.organisations()["bank"]
+    assert PyLedger(tmp_path / "led").verify_chain()[0]
+    with pytest.raises(PermissionDenied):
+        PyLedger(tmp_path / "led", key_salt="someone-else").register(digest("forged"), "invoice", "INV-11", "bank")
 
     path = tmp_path / "led" / "chain.jsonl"
     original = path.read_text()

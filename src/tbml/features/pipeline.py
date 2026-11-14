@@ -86,8 +86,10 @@ def feature_report(fs: FeatureSet, cfg: Config) -> dict[str, Any]:
     for k in range(1, len(TYPOLOGY_CLASSES)):
         top = np.argsort(-sep[k])[:6]
         targeted = [j for j, name in enumerate(fs.feature_names) if TYPOLOGY_CLASSES[k] in FEATURE_BY_NAME[name].typologies]
+        best_targeted = sorted(targeted, key=lambda j: -sep[k, j])[:4]
         report["typologies"][TYPOLOGY_CLASSES[k]] = {
             "top_features": [{"feature": fs.feature_names[j], "separation": float(sep[k, j])} for j in top],
+            "top_targeted": [{"feature": fs.feature_names[j], "separation": float(sep[k, j])} for j in best_targeted],
             "best_targeted_separation": float(sep[k, targeted].max()) if targeted else None,
         }
     report["separation_matrix"] = {TYPOLOGY_CLASSES[k]: [round(float(v), 4) for v in sep[k]] for k in range(1, len(TYPOLOGY_CLASSES))}

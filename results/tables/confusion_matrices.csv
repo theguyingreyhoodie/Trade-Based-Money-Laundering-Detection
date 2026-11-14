@@ -1,0 +1,23 @@
+method,data,tp,fp,fn,tn
+Rules engine,pooled,923,2050,457,34326
+Logistic regression,pooled,876,423,504,35953
+Random forest,pooled,906,238,474,36138
+LightGBM,pooled,1030,147,350,36229
+MLP (centralised),pooled,975,234,405,36142
+Local-only,"IID, 3 clients",788,244,592,36132
+Pooled model on local features (diagnostic),"IID, 3 clients",875,250,505,36126
+FedAvg,"IID, 3 clients",929,338,451,36038
+"FedAvg, client thresholds","IID, 3 clients",903,294,477,36082
+FedAvg + local fine-tuning,"IID, 3 clients",912,327,468,36049
+Local-only,"non-IID Dirichlet α=0.5, 3 clients",958,321,422,36055
+Pooled model on local features (diagnostic),"non-IID Dirichlet α=0.5, 3 clients",917,198,463,36178
+FedAvg,"non-IID Dirichlet α=0.5, 3 clients",926,262,454,36114
+"FedAvg, client thresholds","non-IID Dirichlet α=0.5, 3 clients",921,215,459,36161
+FedAvg + local fine-tuning,"non-IID Dirichlet α=0.5, 3 clients",959,223,421,36153
+FedProx,"non-IID Dirichlet α=0.5, 3 clients",924,296,456,36080
+Local-only,"non-IID Dirichlet α=0.1, 3 clients",1027,160,353,36216
+Pooled model on local features (diagnostic),"non-IID Dirichlet α=0.1, 3 clients",993,252,387,36124
+FedAvg,"non-IID Dirichlet α=0.1, 3 clients",966,275,414,36101
+"FedAvg, client thresholds","non-IID Dirichlet α=0.1, 3 clients",996,273,384,36103
+FedAvg + local fine-tuning,"non-IID Dirichlet α=0.1, 3 clients",1064,204,316,36172
+FedProx,"non-IID Dirichlet α=0.1, 3 clients",963,272,417,36104

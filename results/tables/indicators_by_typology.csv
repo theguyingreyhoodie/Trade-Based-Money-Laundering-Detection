@@ -1,0 +1,11 @@
+typology,strongest_indicator,separation,next_two
+over invoicing,`price_log_ratio`,0.908,"`price_z` (0.90), `price_abs_z` (0.86)"
+under invoicing,`price_z`,0.905,"`price_log_ratio` (0.90), `price_abs_z` (0.84)"
+multiple invoicing,`ship_qty_log_ratio`,0.998,"`ship_qty_abs_dev` (1.00), `invoices_per_bl` (0.99)"
+phantom shipment,`missing_customs`,0.916,"`days_payment_minus_ship` (0.84), `missing_both` (0.81)"
+over under shipment,`customs_qty_abs_dev`,0.996,"`ship_qty_abs_dev` (0.99), `customs_qty_log_ratio` (0.54)"
+misdescription,`hs_mismatch`,0.990,"`weight_per_unit_abs_dev` (0.92), `price_abs_z_declared_hs` (0.89)"
+third party payment,`payer_risk`,0.994,"`third_party_payer` (0.98), `payer_country_differs` (0.97)"
+circular trading,`cycle_len_same_hs`,0.964,"`edge_in_cycle_same_hs` (0.92), `days_invoice_to_payment` (0.88)"
+shell company,`min_party_age_log`,0.867,"`exporter_n_trades_log` (0.79), `importer_hhi` (0.72)"
+high risk routing,`route_detour_ratio`,0.976,"`route_max_stop_risk` (0.97), `n_transshipments` (0.95)"

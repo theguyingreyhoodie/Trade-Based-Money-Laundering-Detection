@@ -732,6 +732,24 @@
           "separation": 0.7414700984954834
         }
       ],
+      "top_targeted": [
+        {
+          "feature": "price_log_ratio",
+          "separation": 0.8972738981246948
+        },
+        {
+          "feature": "price_z",
+          "separation": 0.8971235156059265
+        },
+        {
+          "feature": "price_abs_z",
+          "separation": 0.8503197431564331
+        },
+        {
+          "feature": "price_dev_exporter_hs",
+          "separation": 0.7566500902175903
+        }
+      ],
       "best_targeted_separation": 0.8972738981246948
     },
     "under_invoicing": {
@@ -759,6 +777,24 @@
         {
           "feature": "max_hs_diversity",
           "separation": 0.7313498258590698
+        }
+      ],
+      "top_targeted": [
+        {
+          "feature": "price_log_ratio",
+          "separation": 0.9122067093849182
+        },
+        {
+          "feature": "price_z",
+          "separation": 0.9099899977445602
+        },
+        {
+          "feature": "price_abs_z",
+          "separation": 0.8470988273620605
+        },
+        {
+          "feature": "price_dev_exporter_hs",
+          "separation": 0.7661964446306229
         }
       ],
       "best_targeted_separation": 0.9122067093849182
@@ -790,6 +826,24 @@
           "separation": 0.7067939639091492
         }
       ],
+      "top_targeted": [
+        {
+          "feature": "ship_qty_log_ratio",
+          "separation": 0.9781908746808767
+        },
+        {
+          "feature": "ship_qty_abs_dev",
+          "separation": 0.9766850471496582
+        },
+        {
+          "feature": "invoices_per_bl",
+          "separation": 0.9711446762084961
+        },
+        {
+          "feature": "bl_payer_banks",
+          "separation": 0.875
+        }
+      ],
       "best_targeted_separation": 0.9781908746808767
     },
     "phantom_shipment": {
@@ -805,6 +859,24 @@
         {
           "feature": "customs_value_log_ratio",
           "separation": 0.9120731055736542
+        },
+        {
+          "feature": "days_payment_minus_ship",
+          "separation": 0.8506454229354858
+        },
+        {
+          "feature": "paid_before_shipment",
+          "separation": 0.8141219615936279
+        },
+        {
+          "feature": "missing_both",
+          "separation": 0.8110293745994568
+        }
+      ],
+      "top_targeted": [
+        {
+          "feature": "missing_customs",
+          "separation": 0.919379472732544
         },
         {
           "feature": "days_payment_minus_ship",
@@ -848,6 +920,24 @@
           "separation": 0.6136999726295471
         }
       ],
+      "top_targeted": [
+        {
+          "feature": "customs_qty_abs_dev",
+          "separation": 0.9965115785598755
+        },
+        {
+          "feature": "ship_qty_abs_dev",
+          "separation": 0.9928317070007324
+        },
+        {
+          "feature": "customs_qty_log_ratio",
+          "separation": 0.5633836090564728
+        },
+        {
+          "feature": "ship_qty_log_ratio",
+          "separation": 0.5600533485412598
+        }
+      ],
       "best_targeted_separation": 0.9965115785598755
     },
     "misdescription": {
@@ -875,6 +965,24 @@
         {
           "feature": "max_hs_diversity",
           "separation": 0.7643569111824036
+        }
+      ],
+      "top_targeted": [
+        {
+          "feature": "hs_mismatch",
+          "separation": 0.9898626804351807
+        },
+        {
+          "feature": "weight_per_unit_abs_dev",
+          "separation": 0.9710282683372498
+        },
+        {
+          "feature": "hs_heading_mismatch",
+          "separation": 0.8938882946968079
+        },
+        {
+          "feature": "hs_chapter_mismatch",
+          "separation": 0.8882794380187988
         }
       ],
       "best_targeted_separation": 0.9898626804351807
@@ -906,6 +1014,24 @@
           "separation": 0.6934688091278076
         }
       ],
+      "top_targeted": [
+        {
+          "feature": "payer_risk",
+          "separation": 0.9938443303108215
+        },
+        {
+          "feature": "payer_country_differs",
+          "separation": 0.9869046807289124
+        },
+        {
+          "feature": "third_party_payer",
+          "separation": 0.9822075963020325
+        },
+        {
+          "feature": "payer_age_log",
+          "separation": 0.915565200150013
+        }
+      ],
       "best_targeted_separation": 0.9938443303108215
     },
     "circular_trading": {
@@ -933,6 +1059,24 @@
         {
           "feature": "exporter_resale_days_log",
           "separation": 0.8516939431428909
+        }
+      ],
+      "top_targeted": [
+        {
+          "feature": "cycle_len_same_hs",
+          "separation": 0.9696617722511292
+        },
+        {
+          "feature": "edge_in_cycle_same_hs",
+          "separation": 0.9206106066703796
+        },
+        {
+          "feature": "exporter_import_share",
+          "separation": 0.8827640414237976
+        },
+        {
+          "feature": "days_invoice_to_payment",
+          "separation": 0.8716830164194107
         }
       ],
       "best_targeted_separation": 0.9696617722511292
@@ -964,6 +1108,24 @@
           "separation": 0.7133596539497375
         }
       ],
+      "top_targeted": [
+        {
+          "feature": "min_party_age_log",
+          "separation": 0.868887647986412
+        },
+        {
+          "feature": "exporter_n_trades_log",
+          "separation": 0.7787646353244781
+        },
+        {
+          "feature": "importer_n_trades_log",
+          "separation": 0.7680236995220184
+        },
+        {
+          "feature": "round_amount_level",
+          "separation": 0.7196655869483948
+        }
+      ],
       "best_targeted_separation": 0.868887647986412
     },
     "high_risk_routing": {
@@ -991,6 +1153,24 @@
         {
           "feature": "max_hs_diversity",
           "separation": 0.8473788499832153
+        }
+      ],
+      "top_targeted": [
+        {
+          "feature": "route_detour_ratio",
+          "separation": 0.9754197001457214
+        },
+        {
+          "feature": "route_max_stop_risk",
+          "separation": 0.9714398384094238
+        },
+        {
+          "feature": "n_transshipments",
+          "separation": 0.9511576890945435
+        },
+        {
+          "feature": "route_rarity",
+          "separation": 0.941569983959198
         }
       ],
       "best_targeted_separation": 0.9754197001457214
@@ -1828,5 +2008,5 @@
       0.5471
     ]
   },
-  "seconds": 1.8555913749150932
+  "seconds": 1.8191082500852644
 }

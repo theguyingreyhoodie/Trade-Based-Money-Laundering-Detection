@@ -80,6 +80,10 @@ class PyLedger(EvidenceLedger):
         if kind == "org":
             self._orgs[payload["name"]] = payload["address"]
             self._names[payload["address"]] = payload["name"]
+            # keys are derived from the name, so an organisation found on a reopened ledger can sign again
+            key = _key_for(payload["name"], self._salt)
+            if key.address == payload["address"]:
+                self._keys.setdefault(payload["name"], key)
         elif kind == "revoke":
             self._orgs.pop(payload["name"], None)
         elif kind == "evidence":

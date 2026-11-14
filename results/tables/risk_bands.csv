@@ -1,0 +1,5 @@
+band,score,trades,illicit,precision,share_of_all_illicit
+Low,0 - 25,"12,052",132,1.1%,29.3%
+Medium,25 - 50,71,22,31.0%,4.9%
+High,50 - 75,118,70,59.3%,15.5%
+Critical,75 - 100,237,227,95.8%,50.3%

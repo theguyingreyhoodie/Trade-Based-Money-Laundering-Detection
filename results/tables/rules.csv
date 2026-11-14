@@ -1,0 +1,21 @@
+rule,red_flag,typology,hits,precision,recall_own_typology
+R01,Unit price far above reference,over invoicing,66,29%,28%
+R02,Unit price far below reference,under invoicing,44,23%,40%
+R03,Customs value differs from invoice value,over invoicing,47,72%,40%
+R04,Several invoices exceed one shipment,multiple invoicing,48,100%,100%
+R05,"Paid, but no shipment and no customs record",phantom shipment,38,63%,52%
+R06,No customs record and paid early or near-empty shipment,phantom shipment,17,82%,30%
+R07,Shipped or declared quantity differs from invoice,over under shipment,197,50%,86%
+R08,Goods declared under a different HS heading,misdescription,92,40%,70%
+R09,Cargo weight inconsistent with the goods,misdescription,80,52%,60%
+R10,Unrelated third-party payer in a high-risk jurisdiction,third party payment,28,36%,17%
+R11,Unrelated third-party payer abroad,third party payment,76,59%,76%
+R12,Same goods traded round a loop,circular trading,228,16%,84%
+R13,Goods resold within days inside a loop,circular trading,297,10%,73%
+R14,Young company at a mass-registration address,shell company,374,17%,43%
+R15,Young company with very high turnover,shell company,660,9%,54%
+R16,Round amount paid in advance to or by a young company,shell company,17,41%,19%
+R17,Needless transshipment,high risk routing,399,10%,90%
+R18,Stop in a listed high-risk jurisdiction,high risk routing,48,40%,59%
+R19,Proceeds collected in an offshore bank,high risk routing,162,20%,45%
+R20,Party in a listed high-risk jurisdiction,high risk routing,1298,2%,10%

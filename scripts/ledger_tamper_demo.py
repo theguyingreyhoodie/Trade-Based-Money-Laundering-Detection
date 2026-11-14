@@ -67,7 +67,8 @@ def model_demo(ledger, cfg) -> dict | None:
     altered = copy.deepcopy(weights)
     altered[2].flat[0] += np.float32(1e-3)  # nudge a single weight of the first layer
     digest_altered, record_altered = verify_model(ledger, names, altered)
-    return {"model_file": str(path.relative_to(cfg.root)), "round": meta["best_round"],
+    shown = path.relative_to(cfg.root) if path.is_relative_to(cfg.root) else path
+    return {"model_file": str(shown), "round": meta["best_round"],
             "original": {"sha256": digest, "on_ledger": record.exists, "doc_type": record.doc_type, "ref_id": record.ref_id, "registered_by": record.org},
             "one_weight_changed": {"sha256": digest_altered, "on_ledger": record_altered.exists},
             "as_expected": record.exists and record.ref_id.endswith(f"round-{int(meta['best_round']):03d}") and not record_altered.exists}

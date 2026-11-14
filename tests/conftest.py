@@ -49,3 +49,43 @@ def features(cfg: Config, dataset: TradeDataset, linked):
 
     ref = Reference.from_tables(dataset.tables)
     return build_features(linked, dataset.tables["kyc_entities"], dataset.tables["banks"], ref, cfg, dataset.tables["labels"])
+
+
+@pytest.fixture(scope="session")
+def pipeline_run(tmp_path_factory: pytest.TempPathFactory):
+    """Run the command-line pipeline end to end on the test profile, in a temporary directory.
+
+    Covers the same scripts as ``scripts/run_all.sh`` except the experiment sweep
+    and the stretch experiments (see ``test_pipeline.py`` for those). The
+    pure-Python ledger is used so the test needs no Node.js.
+    """
+    import runpy
+    import sys
+
+    root = tmp_path_factory.mktemp("pipeline")
+    common = [
+        "--profile", "test",
+        "--set", f"paths.data_dir={root / 'data'}",
+        "--set", f"paths.artifacts_dir={root / 'artifacts'}",
+        "--set", f"paths.results_dir={root / 'results'}",
+        "--set", "ledger.backend=python",
+        "--set", "ledger.auto_start_node=false",
+        "--set", "fl.experiments.n_clients=[3]",
+        "--set", "fl.experiments.alphas=[0.5]",
+        "--set", "ledger.benchmark.n_single=20",
+        "--set", "ledger.benchmark.n_batched_items=100",
+    ]
+
+    def run(script: str, *extra: str) -> None:
+        saved = sys.argv
+        sys.argv = [script, *common, *extra]
+        try:
+            runpy.run_path(str(REPO_ROOT / "scripts" / script), run_name="__main__")
+        finally:
+            sys.argv = saved
+
+    for script in ["generate_data.py", "build_features.py", "run_baselines.py", "ledger_register.py", "run_fl.py", "generate_alerts.py",
+                   "ledger_tamper_demo.py", "ledger_benchmark.py", "evaluate.py"]:
+        run(script)
+    overrides = [common[i + 1] for i in range(2, len(common), 2)]
+    return {"root": root, "results": root / "results", "artifacts": root / "artifacts", "run": run, "overrides": overrides}
