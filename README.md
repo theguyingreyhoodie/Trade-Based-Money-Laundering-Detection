@@ -8,10 +8,12 @@
 ![Streamlit](https://img.shields.io/badge/Streamlit-dashboard-FF4B4B?logo=streamlit&logoColor=white)
 ![Data: synthetic](https://img.shields.io/badge/data-synthetic-6E7781)
 
-B.E. final-year project prototype. Trade-Based Money Laundering (TBML) hides illicit money in trade
-transactions. The evidence is split across organisations: banks hold payments, traders and
-carriers hold invoices and shipment records, customs holds declarations. None of them can pool raw
-records with the others.
+B.E. Computer Engineering project, MES Wadia College of Engineering, Pune (2026–27).
+**Team:** Anuj Nanhe, Aniket Shelke, Laiba Shaikh. **Guide:** Dr. S. R. Khonde.
+
+Trade-Based Money Laundering (TBML) hides illicit money in trade transactions. The evidence is
+split across organisations: banks hold payments, traders and carriers hold invoices and shipment
+records, customs holds declarations. None of them can pool raw records with the others.
 
 **Research question.** Can Federated Learning and Blockchain support privacy-preserving TBML
 detection across multiple organisations?
