@@ -1,16 +1,43 @@
-# The dashboard's chart colours are chosen for a light surface, so the light theme is pinned.
+# Theme: the "achromatic ledger" app style. The chrome carries no colour: ink text, a
+# near-black primary action, white surfaces on a blue-grey ground. The one data hue
+# (#1d5fbf) is used on the main data element of each screen, set in dashboard/app.py.
+
 [theme]
 base = "light"
-primaryColor = "#2a78d6"
-backgroundColor = "#fcfcfb"
-secondaryBackgroundColor = "#f3f2ee"
-textColor = "#0b0b0b"
+primaryColor = "#141414"
+backgroundColor = "#f2f4f7"
+secondaryBackgroundColor = "#ffffff"
+textColor = "#0a0a0a"
+linkColor = "#0a0a0a"
+borderColor = "#e3e5e8"
+showWidgetBorder = true
+showSidebarBorder = true
+font = "Geist:https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap"
+codeFont = "Geist Mono:https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&display=swap"
+baseFontSize = 14
+headingFontSizes = ["24px", "16px", "14px", "14px", "12px", "12px"]
+headingFontWeights = [600, 600, 500, 500, 500, 500]
+baseRadius = "8px"
+buttonRadius = "6px"
+dataframeBorderColor = "#eceef1"
+dataframeHeaderBackgroundColor = "#ffffff"
+greenBackgroundColor = "#dcfae5"
+greenTextColor = "#04250e"
+redBackgroundColor = "#ffedea"
+redTextColor = "#831c1e"
+yellowBackgroundColor = "#fffbeb"
+yellowTextColor = "#92400e"
+chartCategoricalColors = ["#1d5fbf", "#9a9a9a", "#141414"]
+
+[theme.sidebar]
+backgroundColor = "#f2f4f7"
+secondaryBackgroundColor = "#ffffff"
 
 [browser]
 gatherUsageStats = false
 
 [client]
-toolbarMode = "minimal"
+toolbarMode = "viewer"
 
 [server]
 headless = true

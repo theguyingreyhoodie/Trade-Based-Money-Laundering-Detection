@@ -25,3 +25,6 @@ chain/artifacts/**/*.dbg.json
 .DS_Store
 .vscode/
 .idea/
+
+# design-tool working files
+/.taste-skill/
