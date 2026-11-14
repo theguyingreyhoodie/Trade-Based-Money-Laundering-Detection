@@ -5,6 +5,7 @@ from __future__ import annotations
 from typing import Any
 
 from tbml.config import Config
+from tbml.fl.data import cached_result, run_fingerprint
 from tbml.fl.local import run_local_only, run_pooled_local_features
 from tbml.fl.partition import Scenario
 from tbml.fl.simulation import result_path, run_federated
@@ -55,15 +56,20 @@ def target_f1(cfg: Config, seed: int) -> float | None:
 
 
 def run_scenario(cfg: Config, seed: int, scenario: Scenario, strategies: list[str], force: bool = False) -> dict[str, Any]:
-    """Local-only, the fragmentation diagnostic and the federated strategies for one scenario."""
+    """Local-only, the fragmentation diagnostic and the federated strategies for one scenario.
+
+    A saved result is reused only if it was produced from the same data and
+    settings (see ``fl.data.run_fingerprint``); ``force`` recomputes regardless.
+    """
     out: dict[str, Any] = {}
     root = cfg.path("results_dir", "fl", f"seed_{seed}")
+    fingerprint = run_fingerprint(cfg, seed)
     for name, runner in [("local", run_local_only), ("pooled_local_features", run_pooled_local_features)]:
-        path = root / f"{scenario.name}__{name}.json"
-        out[name] = load_json(path) if path.is_file() and not force else runner(cfg, seed, scenario)
+        saved = None if force else cached_result(root / f"{scenario.name}__{name}.json", fingerprint)
+        out[name] = saved or runner(cfg, seed, scenario)
     for strategy in strategies:
-        path = result_path(cfg, seed, scenario, strategy)
-        out[strategy] = load_json(path) if path.is_file() and not force else run_federated(cfg, seed, scenario, strategy, target_f1=target_f1(cfg, seed))
+        saved = None if force else cached_result(result_path(cfg, seed, scenario, strategy), fingerprint)
+        out[strategy] = saved or run_federated(cfg, seed, scenario, strategy, target_f1=target_f1(cfg, seed))
     return out
 
 

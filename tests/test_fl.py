@@ -384,3 +384,31 @@ def test_local_only_and_fragmentation_diagnostic(cfg, clients, scenario) -> None
     pooled = run_pooled_local_features(cfg, 0, scenario, save=False)
     assert pooled["final"]["n"] == local["final"]["n"], "both are measured on the same test trades"
     assert pooled["final"]["pr_auc"] > 3 * pooled["final"]["prevalence"]
+
+
+def test_stale_caches_are_not_reused(cfg, clients, scenario, tmp_path) -> None:
+    """Client files and saved results are tied to the data and settings they were built from."""
+    import copy
+
+    from tbml.fl.data import cached_result, data_fingerprint, run_fingerprint
+    from tbml.utils import save_json
+
+    summary, _ = clients
+    assert summary["fingerprint"] == data_fingerprint(cfg, 0)
+    assert prepare_clients(cfg, 0, scenario)["fingerprint"] == summary["fingerprint"], "unchanged inputs: the partition is reused"
+
+    changed = copy.deepcopy(cfg)
+    changed.set_path("split.train_frac", 0.5)
+    assert data_fingerprint(changed, 0) != data_fingerprint(cfg, 0)
+    other_lr = copy.deepcopy(cfg)
+    other_lr.set_path("fl.lr", 0.123)
+    assert data_fingerprint(other_lr, 0) == data_fingerprint(cfg, 0), "the learning rate does not affect client features"
+    assert run_fingerprint(other_lr, 0) != run_fingerprint(cfg, 0), "but it does affect results"
+    assert run_fingerprint(cfg, 1) != run_fingerprint(cfg, 0)
+
+    path = save_json({"fingerprint": run_fingerprint(cfg, 0), "final": {"f1": 0.5}}, tmp_path / "r.json")
+    assert cached_result(path, run_fingerprint(cfg, 0))["final"]["f1"] == 0.5
+    assert cached_result(path, run_fingerprint(other_lr, 0)) is None
+    assert cached_result(tmp_path / "missing.json", "x") is None
+    save_json({"final": {"f1": 0.5}}, path)  # a result from before fingerprints existed counts as stale
+    assert cached_result(path, run_fingerprint(cfg, 0)) is None

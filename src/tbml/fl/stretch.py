@@ -9,12 +9,13 @@ import numpy as np
 from tbml.config import Config
 from tbml.data.generator import load_dataset
 from tbml.features.pipeline import load_central_features
-from tbml.fl.experiments import experiment_plan, primary_scenario
+from tbml.fl.data import cached_result, run_fingerprint
+from tbml.fl.experiments import experiment_plan, primary_scenario, target_f1
 from tbml.fl.local import run_personalised
 from tbml.fl.partition import Scenario
 from tbml.fl.simulation import model_dir, result_path, run_federated
 from tbml.fl.vertical import run_vertical_demo
-from tbml.utils import get_logger, load_json
+from tbml.utils import get_logger
 
 log = get_logger(__name__)
 
@@ -23,8 +24,8 @@ SECAGG_SECRET = "pairwise-keys-agreed-among-clients"  # stands in for Diffie-Hel
 
 def _reference(cfg: Config, seed: int, scenario: Scenario, strategy: str = "fedavg") -> dict[str, Any]:
     """The plain run of the sweep for the same seed and scenario (run it if it is missing)."""
-    path = result_path(cfg, seed, scenario, strategy)
-    return load_json(path) if path.is_file() else run_federated(cfg, seed, scenario, strategy)
+    saved = cached_result(result_path(cfg, seed, scenario, strategy), run_fingerprint(cfg, seed))
+    return saved or run_federated(cfg, seed, scenario, strategy, target_f1=target_f1(cfg, seed))
 
 
 def _brief(result: dict[str, Any]) -> dict[str, Any]:

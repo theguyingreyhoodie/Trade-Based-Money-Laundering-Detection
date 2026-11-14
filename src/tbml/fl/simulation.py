@@ -17,7 +17,7 @@ from tbml.eval.metrics import N_CLASSES
 from tbml.features.dictionary import FEATURE_NAMES
 from tbml.fl.boundary import BoundarySpec
 from tbml.fl.client import make_client_app
-from tbml.fl.data import prepare_clients, scenario_dir
+from tbml.fl.data import prepare_clients, run_fingerprint, scenario_dir
 from tbml.fl.extensions import N_SLOT
 from tbml.fl.partition import Scenario
 from tbml.fl.server import AuditSink, RunState, make_strategy, run_rounds
@@ -182,6 +182,7 @@ def run_federated(
 
     result: dict[str, Any] = {
         "seed": seed,
+        "fingerprint": run_fingerprint(cfg, seed),
         "scenario": scenario.to_dict(),
         "strategy": strategy,
         "tag": tag,

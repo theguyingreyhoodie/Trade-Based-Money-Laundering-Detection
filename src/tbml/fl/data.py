@@ -32,10 +32,43 @@ from tbml.data.typologies import TYPOLOGY_CLASSES
 from tbml.features.build import FeatureSet, Reference, build_features
 from tbml.features.link import link_dataset
 from tbml.fl.partition import Scenario, partition_summary, partition_trades
+from tbml.ledger.hashing import canonical_json, sha256_hex
 from tbml.models.split import assign_split
 from tbml.utils import derive_seed, get_logger, load_json, save_json
 
 log = get_logger(__name__)
+
+
+def data_fingerprint(cfg: Config, seed: int) -> str:
+    """Identifies the inputs a client's feature file depends on: the dataset, the split and the feature settings.
+
+    The generator is deterministic, so the dataset is identified by its
+    ``meta.json`` (seed, generator version and the full data configuration).
+    """
+    meta = cfg.seed_dir("data_dir", seed, "meta.json")
+    parts = {
+        "data": sha256_hex(meta.read_bytes()) if meta.is_file() else "missing",
+        "split": cfg.split.to_dict(),
+        "features": cfg.features.to_dict(),
+        "min_client_share": float(cfg.fl.experiments.min_client_share),
+    }
+    return sha256_hex(canonical_json(parts))[:16]
+
+
+def run_fingerprint(cfg: Config, seed: int) -> str:
+    """Identifies everything a federated or local result depends on (data plus model and FL settings)."""
+    keys = ["rounds", "local_epochs", "fraction_train", "fraction_evaluate", "lr", "lr_decay", "proximal_mu", "hist_bins"]
+    parts = {"data": data_fingerprint(cfg, seed), "mlp": cfg.models.mlp.to_dict(), "fl": {k: cfg.fl[k] for k in keys},
+             "personalisation": cfg.fl.personalisation.to_dict(), "threshold_metric": str(cfg.models.threshold_metric)}
+    return sha256_hex(canonical_json(parts))[:16]
+
+
+def cached_result(path: Path, fingerprint: str) -> dict[str, Any] | None:
+    """A saved result, if it exists and was produced from the same data and settings."""
+    if not Path(path).is_file():
+        return None
+    result = load_json(path)
+    return result if result.get("fingerprint") == fingerprint else None
 
 
 def scenario_dir(cfg: Config, seed: int, scenario: Scenario) -> Path:
@@ -55,8 +88,11 @@ def prepare_clients(cfg: Config, seed: int, scenario: Scenario, force: bool = Fa
     """Partition the trades of ``seed`` and build each client's local features."""
     root = scenario_dir(cfg, seed, scenario)
     summary_path = root / "partition.json"
+    fingerprint = data_fingerprint(cfg, seed)
     if summary_path.is_file() and not force and all(client_path(root, c).is_file() for c in range(scenario.n_clients)):
-        return load_json(summary_path)
+        summary = load_json(summary_path)
+        if summary.get("fingerprint") == fingerprint:  # otherwise the data or settings changed: rebuild
+            return summary
 
     ds = load_dataset(cfg.seed_dir("data_dir", seed))
     linked = link_dataset(ds)
@@ -77,7 +113,7 @@ def prepare_clients(cfg: Config, seed: int, scenario: Scenario, force: bool = Fa
         fs.save(client_path(root, client))
 
     summary = partition_summary(owner, typology, split)
-    summary.update({"scenario": scenario.to_dict(), "seed": seed, "n_trades": int(len(linked))})
+    summary.update({"scenario": scenario.to_dict(), "seed": seed, "n_trades": int(len(linked)), "fingerprint": fingerprint})
     save_json(summary, summary_path)
     pd.DataFrame({"trade_id": linked["trade_id"], "client": owner}).to_csv(root / "owners.csv", index=False)
     sizes = [c["n"] for c in summary["clients"]]

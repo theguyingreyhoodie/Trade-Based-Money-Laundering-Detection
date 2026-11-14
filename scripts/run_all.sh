@@ -21,7 +21,7 @@ step "Phase 2  record linkage + risk indicators";  run scripts/build_features.py
 step "Phase 3  rules engine + centralised ML";     run scripts/run_baselines.py --all-seeds
 step "Phase 5  register trade documents";          run scripts/ledger_register.py
 step "Phase 4  primary federated run (hashes on the ledger)"; run scripts/run_fl.py
-step "Phase 4  federated experiment sweep";        run scripts/run_fl_experiments.py
+step "Phase 4  federated experiment sweep";        run scripts/run_fl_experiments.py --force
 step "Phase 6  risk scores + explainable alerts";  run scripts/generate_alerts.py
 step "Phase 5  tamper demo + ledger benchmark";    run scripts/ledger_tamper_demo.py
                                                    run scripts/ledger_benchmark.py

@@ -16,7 +16,7 @@ import numpy as np
 from tbml.config import Config
 from tbml.data.typologies import TYPOLOGY_CLASSES
 from tbml.eval.metrics import N_CLASSES, ScoreHist
-from tbml.fl.data import load_client, prepare_clients, scenario_dir
+from tbml.fl.data import load_client, prepare_clients, run_fingerprint, scenario_dir
 from tbml.fl.partition import Scenario
 from tbml.models.mlp import fit_mlp, predict_proba
 from tbml.utils import derive_seed, get_logger, save_json
@@ -74,6 +74,7 @@ def run_local_only(cfg: Config, seed: int, scenario: Scenario, save: bool = True
                         "pr_auc": h_test.pr_auc(), "threshold": m["threshold"], "best_epoch": info["best_epoch"]})
     result = {
         "seed": seed,
+        "fingerprint": run_fingerprint(cfg, seed),
         "scenario": scenario.to_dict(),
         "strategy": "local",
         "n_clients": scenario.n_clients,
@@ -116,7 +117,7 @@ def run_pooled_local_features(cfg: Config, seed: int, scenario: Scenario, save: 
     n_bins = int(cfg.fl.hist_bins)
     h_val = ScoreHist.from_scores(predict_proba(model, X[va]), typ[va], n_bins)
     h_test = ScoreHist.from_scores(predict_proba(model, X[te]), typ[te], n_bins)
-    result = {"seed": seed, "scenario": scenario.to_dict(), "strategy": "pooled_local_features", "n_clients": scenario.n_clients,
+    result = {"seed": seed, "fingerprint": run_fingerprint(cfg, seed), "scenario": scenario.to_dict(), "strategy": "pooled_local_features", "n_clients": scenario.n_clients,
               "final": evaluate_hists(h_val, h_test, str(cfg.models.threshold_metric)), "best_epoch": info["best_epoch"]}
     if save:
         save_json(result, cfg.path("results_dir", "fl", f"seed_{seed}", f"{scenario.name}__pooled_local_features.json"))
@@ -162,7 +163,7 @@ def run_personalised(cfg: Config, seed: int, scenario: Scenario, strategy: str =
         pooled = pooled + h_test
         clients.append({"client": client, "f1": m["f1"], "precision": m["precision"], "recall": m["recall"], "kept_epoch": info["best_epoch"],
                         "n_test": h_test.n, "n_illicit_test": h_test.n_pos})
-    result = {"seed": seed, "scenario": scenario.to_dict(), "strategy": f"{strategy}+finetune", "n_clients": scenario.n_clients,
+    result = {"seed": seed, "fingerprint": run_fingerprint(cfg, seed), "scenario": scenario.to_dict(), "strategy": f"{strategy}+finetune", "n_clients": scenario.n_clients,
               "global_round": meta["best_round"], "final": pooled_from_counts(flagged, support, pooled), "per_client": clients,
               "clients_that_changed_the_model": sum(c["kept_epoch"] > 0 for c in clients)}
     if save:
