@@ -31,16 +31,18 @@ Mean of 3 seeds on the test period (full tables and figures: [`results/RESULTS.m
 | Local-only (10 institutions, IID) | no | 0.519 | 0.531 |
 | **FedAvg (10 institutions, IID)** | **no** | **0.628** | **0.676** |
 
-- FedAvg beats training alone whenever data is spread thin, and the gain grows with the number of
-  institutions (+0.05 F1 at 3, +0.11 at 10).
+- With IID data FedAvg beats training alone, and the gain grows with the number of institutions
+  (+0.05 F1 at 3, +0.06 at 5, +0.11 at 10).
 - FedAvg stays within 0.03 F1 of a model trained on pooled rows that uses each institution's
-  locally computed indicators. The gap to the centralised model comes from **information
-  fragmentation** (indicators that need related trades from several institutions), not from
-  parameter averaging.
-- Under strong data skew, local models win; local fine-tuning of the global model closes that gap.
+  locally computed indicators (+0.004 at 3 IID institutions). Most of the gap to the centralised
+  model therefore comes from **information fragmentation** (indicators that need related trades
+  from several institutions), not from parameter averaging.
+- Under strong data skew (Dirichlet α = 0.1) local-only training beats FedAvg (0.801 vs 0.737);
+  fine-tuning the global model locally matches it (0.804).
 - The server receives model parameters and fixed-size aggregates only (enforced and tested).
-- Evidence ledger: 8.9 ms per registration (p50), 103k gas; Merkle batching brings a trade document
-  down to 206 gas. A changed invoice, model update or alert fails verification.
+- Evidence ledger: 6-9 ms per registration (p50; timings vary between runs), 103k gas; Merkle
+  batching brings a trade document down to 206 gas. A changed invoice, model update or alert fails
+  verification.
 - Alerts: precision 31% / 59% / 96% in the Medium / High / Critical bands; each alert lists its top
   SHAP contributions in plain English, the rules that fired and a suspected typology.
 
@@ -51,12 +53,15 @@ Without Node.js the pipeline uses a pure-Python ledger with the same interface.
 
 ```bash
 make setup          # creates .venv, installs Python dependencies and the Hardhat project
-make all            # reproduces every result (about 30 minutes)
+make all            # reproduces every result (about 22 minutes on an Apple M5 laptop)
 make test           # test suite
 make dashboard      # investigator dashboard at http://localhost:8501
 ```
 
-`make quick` runs the whole pipeline on a small profile in a few minutes.
+`make quick` runs the whole pipeline on a small profile in about 3 minutes. Most of `make all` is
+the federated sweep (39 simulated federations, plus local-only and diagnostic models); on macOS run it as `caffeinate -i make all` so the
+machine does not go to sleep part-way (a sleeping laptop pauses the run but does not change the
+results, which are bit-for-bit reproducible from the seeds).
 
 **The local chain.** The ledger steps start a Hardhat node at `http://127.0.0.1:8545` when none is
 running, deploy `EvidenceRegistry`, and leave the node running so the dashboard can verify

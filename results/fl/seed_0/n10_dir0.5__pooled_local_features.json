@@ -1,5 +1,6 @@
 {
   "seed": 0,
+  "fingerprint": "3897ea3c922fb2e3",
   "scenario": {
     "name": "n10_dir0.5",
     "n_clients": 10,

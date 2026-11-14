@@ -19,6 +19,7 @@
     "recall": 0.6829268292682927,
     "pr_auc": 0.7817852666428426,
     "best_round": 29,
+    "last_round_f1": 0.7185185185185186,
     "total_bytes": 10140482,
     "train_upload_per_client_round": 31723.0
   },
@@ -28,6 +29,7 @@
     "recall": 0.6940133037694013,
     "pr_auc": 0.7824896397523384,
     "best_round": 29,
+    "last_round_f1": 0.711111111111111,
     "total_bytes": 12867152,
     "train_upload_per_client_round": 61986.333333333336
   },

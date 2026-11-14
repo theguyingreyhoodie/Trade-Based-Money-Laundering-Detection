@@ -151,6 +151,27 @@ def test_median_clipping_bounds_a_boosted_update(cfg) -> None:
 # --------------------------------------------------------------------------- DP-SGD
 
 
+def test_dp_accounting_matches_opacus() -> None:
+    """The accountant must use the sampling rate and step count Opacus actually trains with."""
+    import warnings
+
+    from opacus import PrivacyEngine
+
+    from tbml.fl.dp import sample_rate, steps_per_epoch
+
+    for n, batch in [(4894, 256), (5000, 256), (1000, 256), (256, 256), (100, 256), (12345, 1024)]:
+        dataset = torch.utils.data.TensorDataset(torch.zeros(n, 3), torch.zeros(n))
+        loader = torch.utils.data.DataLoader(dataset, batch_size=min(batch, n))
+        model = torch.nn.Linear(3, 1)
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+            _, _, private_loader = PrivacyEngine(accountant="rdp").make_private(
+                module=model, optimizer=torch.optim.SGD(model.parameters(), lr=0.1), data_loader=loader, noise_multiplier=1.0, max_grad_norm=1.0)
+        assert private_loader.sample_rate == pytest.approx(sample_rate(n, batch), rel=1e-12), (n, batch)
+        assert len(private_loader) == steps_per_epoch(n, batch), (n, batch)
+    assert sample_rate(4894, 256) == pytest.approx(1 / 20) and steps_per_epoch(4894, 256) == 20
+
+
 def test_dp_noise_calibration() -> None:
     args = dict(delta=1e-5, n=5000, batch=256, rounds=30, local_epochs=1)
     assert total_steps(5000, 256, 30, 1) == 600

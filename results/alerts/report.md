@@ -5,7 +5,7 @@ using the global federated model and the rules engine. **An alert is a prompt fo
 
 - Alerts raised: 426 (Medium: 71, High: 118, Critical: 237)
 - Share of alerts on truly illicit trades: 75%
-- Suspected typology correct for 82% of alerts on illicit trades (within the top two: 96%)
+- Suspected typology correct for 83% of alerts on illicit trades (within the top two: 96%)
 - Evidence ledger: evm; every alert below can be re-verified with `scripts/ledger_tamper_demo.py` or the dashboard
 
 | Band | Score | Trades | Illicit | Precision | Share of all illicit trades |
@@ -27,15 +27,15 @@ using the global federated model and the rules engine. **An alert is a prompt fo
 
 Why the model flagged it (SHAP contributions to the log-odds):
 
-1. customs value and invoice value differ by a factor of 2.26 (raises risk, +6.80)
-2. importer registered 4 months before the invoice (lowers risk, -1.76)
-3. value declared to customs is 0.4x the invoice value (raises risk, +1.55)
-4. 1 trade on record between these two parties (raises risk, +1.48)
-5. importer buys from 2 suppliers (raises risk, +1.28)
+1. customs value and invoice value differ by a factor of 2.26 (raises risk, +6.13)
+2. value declared to customs is 0.4x the invoice value (raises risk, +2.31)
+3. importer registered 4 months before the invoice (lowers risk, -1.80)
+4. 1 trade on record between these two parties (raises risk, +1.50)
+5. importer buys from 2 suppliers (raises risk, +1.36)
 
 Rules fired: R01 Unit price far above reference; R03 Customs value differs from invoice value; R15 Young company with very high turnover
 
-Evidence: SHA-256 `0e0a9cc23affdb9d3387d5c3047e96d422ddd6a7e2e771b8f8958d41d17b7cf7`, transaction `0x28454db4524b784902af31135b0ce22c3b83fc8203f010c823efa96f3089e7a3` (block 4114), registered by `fl_client_2`
+Evidence: SHA-256 `edfad7377550555240a0a4eaf97d279354a22e641165acf4a10c9a3300ae77c1`, transaction `0x1cf37578a83c045bd5f27d1e5caf333f937b58ea8a804863a336bea7da831cf1` (block 9560), registered by `fl_client_2`
 
 _Ground truth, for evaluation only and never shown to an investigator: over invoicing._
 
@@ -49,15 +49,15 @@ _Ground truth, for evaluation only and never shown to an investigator: over invo
 
 Why the model flagged it (SHAP contributions to the log-odds):
 
-1. invoices on this bill of lading were paid through 2 different banks (raises risk, +6.15)
-2. shipped and invoiced quantity differ by a factor of 2.01 (raises risk, +5.17)
-3. shipped quantity is 0.5x the quantity invoiced against this bill of lading (raises risk, +5.00)
-4. shipped 6 days before the invoice was issued (raises risk, +1.84)
-5. a party trades goods from 7 different HS chapters (raises risk, +1.57)
+1. invoices on this bill of lading were paid through 2 different banks (raises risk, +6.43)
+2. shipped quantity is 0.5x the quantity invoiced against this bill of lading (raises risk, +5.24)
+3. shipped and invoiced quantity differ by a factor of 2.01 (raises risk, +3.05)
+4. shipped 6 days before the invoice was issued (raises risk, +2.17)
+5. a party trades goods from 7 different HS chapters (raises risk, +1.70)
 
 Rules fired: R04 Several invoices exceed one shipment; R07 Shipped or declared quantity differs from invoice
 
-Evidence: SHA-256 `f12793c134bcf9d105e1ef0d1f356a6cf5e2a61ac8477a625d26f17c3d3c1f57`, transaction `0x43c5b9168529699776d0d60f205804718fcf9265d10b5ad801af27ad116ad936` (block 4090), registered by `fl_client_1`
+Evidence: SHA-256 `734da69a41e9149d8afdd06e87d3a6b56d8329a8f3e66d4235c159d8be93d580`, transaction `0x53d9baf385d033f61e549977ced2390b6c8b8911ee4dfe5e539125d7116dac87` (block 9536), registered by `fl_client_1`
 
 _Ground truth, for evaluation only and never shown to an investigator: multiple invoicing._
 
@@ -71,15 +71,15 @@ _Ground truth, for evaluation only and never shown to an investigator: multiple 
 
 Why the model flagged it (SHAP contributions to the log-odds):
 
-1. cargo weight per unit is off by a factor of 403.43 (raises risk, +5.26)
-2. declared weight per unit is 0.0025x the typical weight of the invoiced goods (lowers risk, -4.96)
-3. customs value and invoice value differ by a factor of 1.57 (raises risk, +4.96)
-4. cargo weight per unit is 0.0025x the typical weight of the invoiced goods (raises risk, +4.07)
+1. customs value and invoice value differ by a factor of 1.57 (raises risk, +5.35)
+2. declared weight per unit is 0.0025x the typical weight of the invoiced goods (lowers risk, -5.29)
+3. cargo weight per unit is off by a factor of 403.43 (raises risk, +5.29)
+4. cargo weight per unit is 0.0025x the typical weight of the invoiced goods (raises risk, +3.95)
 5. customs HS code is in a different chapter than the invoice (raises risk, +3.82)
 
 Rules fired: R03 Customs value differs from invoice value; R08 Goods declared under a different HS heading; R09 Cargo weight inconsistent with the goods
 
-Evidence: SHA-256 `72147975d77126001de5c14df1395e7cbb503f3803afe3a6f74c79f1ae86f938`, transaction `0x979ac7446418e11a1ce3c7960df9e3c78651aa14dadc2e444e3f1728aeadef53` (block 4101), registered by `fl_client_1`
+Evidence: SHA-256 `fa52df3da994a878c24d4bcc70022619d978787f2a25f994bfe74ea2cf86ca11`, transaction `0xc01005560b4238ba21e5d85315b49580dfb0dfca50368cc5eaaba1b54e1da4f2` (block 9547), registered by `fl_client_1`
 
 _Ground truth, for evaluation only and never shown to an investigator: misdescription._
 
@@ -93,15 +93,15 @@ _Ground truth, for evaluation only and never shown to an investigator: misdescri
 
 Why the model flagged it (SHAP contributions to the log-odds):
 
-1. younger party registered only 5 months before the invoice (raises risk, +2.39)
-2. exporter has 3 trades on record (raises risk, +2.29)
+1. exporter has 3 trades on record (raises risk, +2.24)
+2. younger party registered only 5 months before the invoice (raises risk, +2.16)
 3. a party is in a jurisdiction with risk score 1.00 (raises risk, +1.85)
-4. importer is a hub of the trade network (raises risk, +1.74)
-5. importer registered 9 months before the invoice (lowers risk, -1.51)
+4. importer is a hub of the trade network (raises risk, +1.77)
+5. the trade lies on a loop in the trade network (raises risk, +1.47)
 
 Rules fired: R12 Same goods traded round a loop; R13 Goods resold within days inside a loop; R14 Young company at a mass-registration address; R20 Party in a listed high-risk jurisdiction
 
-Evidence: SHA-256 `c5fef2e2052d450f7096de8bea59b17d3d566ec2924135f4d4eeeabae2551836`, transaction `0x292902348e927358ce8f490878e286da0ebc58b5607979a36fc4cd0fbbbc145e` (block 4106), registered by `fl_client_1`
+Evidence: SHA-256 `c639478419509c6d94a33f30c418639aa6dad65c73eb791651467bb28fc579f3`, transaction `0x14f22c3eca5fc2933263a473b29bd267dfdc018b5f49915fd89d11eb631003fd` (block 9552), registered by `fl_client_1`
 
 _Ground truth, for evaluation only and never shown to an investigator: circular trading._
 
@@ -115,15 +115,15 @@ _Ground truth, for evaluation only and never shown to an investigator: circular 
 
 Why the model flagged it (SHAP contributions to the log-odds):
 
-1. neither a shipment record nor a customs declaration exists (raises risk, +5.02)
-2. the trade lies on a loop in the trade network (raises risk, +1.68)
-3. younger party registered only 5 months before the invoice (raises risk, +1.67)
-4. a party trades goods from 5 different HS chapters (raises risk, +1.54)
-5. importer has an ordinary position in the trade network (raises risk, +1.47)
+1. neither a shipment record nor a customs declaration exists (raises risk, +5.29)
+2. younger party registered only 5 months before the invoice (raises risk, +1.87)
+3. the trade lies on a loop in the trade network (raises risk, +1.59)
+4. shipped on the invoice date (raises risk, +1.55)
+5. importer has an ordinary position in the trade network (raises risk, +1.44)
 
 Rules fired: R05 Paid, but no shipment and no customs record; R14 Young company at a mass-registration address; R15 Young company with very high turnover
 
-Evidence: SHA-256 `5a117ffa0ca1e4c4f904fb7fea291b74a0e5a9da47e5b099addd5b127e38ad1d`, transaction `0xfed2fda13e01b9918e38a13aa2340d3a1a3ec0cf13aeaaafb79355c08d950bf7` (block 4095), registered by `fl_client_0`
+Evidence: SHA-256 `0c4f27ed4817eb165767df5cf612f8fe72ff5b6650ba724b298000b59bdf733e`, transaction `0x43fac7afe2879b5d50c77cddd2ee8a1bd7e76b1cf2410eb56abf46a806df63b6` (block 9541), registered by `fl_client_0`
 
 _Ground truth, for evaluation only and never shown to an investigator: phantom shipment._
 
@@ -137,15 +137,15 @@ _Ground truth, for evaluation only and never shown to an investigator: phantom s
 
 Why the model flagged it (SHAP contributions to the log-odds):
 
-1. third-party payer is in a different jurisdiction than the importer (raises risk, +3.16)
-2. third-party payer in a jurisdiction with risk score 0.70 (raises risk, +3.04)
-3. exporter has 2 trades on record (raises risk, +1.23)
-4. paid by a third party, not the importer (lowers risk, -1.07)
-5. younger party registered only 9 months before the invoice (raises risk, +1.02)
+1. third-party payer is in a different jurisdiction than the importer (raises risk, +3.12)
+2. third-party payer in a jurisdiction with risk score 0.70 (raises risk, +2.96)
+3. paid by a third party, not the importer (lowers risk, -1.42)
+4. younger party registered only 9 months before the invoice (raises risk, +1.22)
+5. exporter has 2 trades on record (raises risk, +1.20)
 
 Rules fired: R10 Unrelated third-party payer in a high-risk jurisdiction; R14 Young company at a mass-registration address; R20 Party in a listed high-risk jurisdiction
 
-Evidence: SHA-256 `dc7a7e8605da4e6f23693d4e14322375b666c69e572feecdcd82e941bb1bd367`, transaction `0xb664ac8e9f9bbcd894705c022821ffd04c6bca6e57a265708233f295dc2676d0` (block 4133), registered by `fl_client_0`
+Evidence: SHA-256 `2d7eddd3a332d4374794fed78edaa17c095955d3ecc0344ccd4801850695d934`, transaction `0xd1d1937fa7c6c399a5d54798f5baed8b83ae513aac7b2ba2de31fc374b2d36fb` (block 9579), registered by `fl_client_0`
 
 _Ground truth, for evaluation only and never shown to an investigator: third party payment._
 
@@ -159,15 +159,15 @@ _Ground truth, for evaluation only and never shown to an investigator: third par
 
 Why the model flagged it (SHAP contributions to the log-odds):
 
-1. a party trades goods from 9 different HS chapters (raises risk, +4.79)
-2. unit price 8.8 standard deviations away from the HS reference (raises risk, +3.22)
-3. unit price 8.8 standard deviations away from the reference of the goods declared to customs (raises risk, +2.51)
-4. importer buys from 7 suppliers (lowers risk, -1.94)
-5. 9 trades on record between these two parties (lowers risk, -0.66)
+1. a party trades goods from 9 different HS chapters (raises risk, +5.03)
+2. unit price 8.8 standard deviations away from the HS reference (raises risk, +3.38)
+3. unit price 8.8 standard deviations away from the reference of the goods declared to customs (raises risk, +2.28)
+4. importer buys from 7 suppliers (lowers risk, -1.91)
+5. importer has an ordinary position in the trade network (raises risk, +0.60)
 
 Rules fired: R02 Unit price far below reference
 
-Evidence: SHA-256 `e32fef65968da268cd65eb06f0b11a565616e9c9dc43df7d3d9dc0638239d83a`, transaction `0x13e3361ccf209914a9e36e9f87e7d734199b8556bf54d8fd71b970d1cd653874` (block 4209), registered by `fl_client_0`
+Evidence: SHA-256 `273735c88f38590e8a12ae763a8caf7425071d1db05440ae2cf05bf599b6cd98`, transaction `0xb84c7d73412eee4e2d108397daa2fcea55c22aec4b886dcd43ec188843db17d8` (block 9655), registered by `fl_client_0`
 
 _Ground truth, for evaluation only and never shown to an investigator: under invoicing._
 
@@ -181,15 +181,15 @@ _Ground truth, for evaluation only and never shown to an investigator: under inv
 
 Why the model flagged it (SHAP contributions to the log-odds):
 
-1. cargo weight per unit is 0.038x the typical weight of the invoiced goods (raises risk, +5.79)
-2. cargo weight per unit is off by a factor of 26.42 (raises risk, +5.75)
-3. importer has an ordinary position in the trade network (raises risk, +1.73)
-4. importer buys from 5 suppliers (lowers risk, -1.16)
+1. cargo weight per unit is 0.038x the typical weight of the invoiced goods (raises risk, +5.97)
+2. cargo weight per unit is off by a factor of 26.42 (raises risk, +5.89)
+3. importer has an ordinary position in the trade network (raises risk, +1.87)
+4. importer buys from 5 suppliers (lowers risk, -1.48)
 5. no customs declaration can be linked to the invoice (lowers risk, -0.99)
 
 Rules fired: R06 No customs record and paid early or near-empty shipment; R09 Cargo weight inconsistent with the goods
 
-Evidence: SHA-256 `c00affe4bd3f1b770d88086a87669ec40aa4fe1000828b43018aad152b855431`, transaction `0xb2bb86e8f6035b9198954328e5c00ed4ce3c2e7104b52e378a3fb88861077855` (block 4141), registered by `fl_client_1`
+Evidence: SHA-256 `41753624d07d5d7d4b7a59d3d365afddbf322cf5f16a8fe41638f7583d57003f`, transaction `0xfeef53eb2bd042628d3b84860204199a415bdb8c0c7e1fdad14c66d2bcd21399` (block 9587), registered by `fl_client_1`
 
 _Ground truth, for evaluation only and never shown to an investigator: phantom shipment._
 
@@ -199,19 +199,19 @@ _Ground truth, for evaluation only and never shown to an investigator: phantom s
 - **Parties** exporter ENT-00299 to importer ENT-01756; paid by ENT-01756
 - **Goods** Integrated circuits (HS 854231), 176,616 unit, USD 1,585,941; route ELS01 > XND01 > NVR01
 - **Score** model probability 0.96, rules probability 0.20 (model weight 0.7)
-- **Suspected typology** over under shipment (next: shell company, high risk routing)
+- **Suspected typology** over under shipment (next: shell company, multiple invoicing)
 
 Why the model flagged it (SHAP contributions to the log-odds):
 
-1. quantity declared to customs is 2.1x the invoiced quantity (raises risk, +6.21)
-2. declared and invoiced quantity differ by a factor of 2.14 (raises risk, +5.42)
-3. shipped quantity is 2.1x the quantity invoiced against this bill of lading (lowers risk, -3.86)
-4. shipped and invoiced quantity differ by a factor of 2.14 (raises risk, +1.12)
-5. importer registered 16 months before the invoice (lowers risk, -0.95)
+1. quantity declared to customs is 2.1x the invoiced quantity (raises risk, +6.01)
+2. declared and invoiced quantity differ by a factor of 2.14 (raises risk, +5.99)
+3. shipped quantity is 2.1x the quantity invoiced against this bill of lading (lowers risk, -3.90)
+4. shipped and invoiced quantity differ by a factor of 2.14 (raises risk, +1.40)
+5. importer registered 16 months before the invoice (lowers risk, -0.93)
 
 Rules fired: R07 Shipped or declared quantity differs from invoice
 
-Evidence: SHA-256 `6d34dec2063743961bc2fbc1b4505f9f9ca229415d7f79de4347567b1861e3dc`, transaction `0x81b7f3da253d342d6b2fa8fb182e129c26bf85d085276f148c8718dfa58c1b35` (block 4137), registered by `fl_client_0`
+Evidence: SHA-256 `3b6debbf5d47387e5bf84f8108f7ebc59e6c74c1d67e298e04e3f55e4873b94e`, transaction `0x05568d4ea17a1468c2601ea9080e211bf66f74c022696599a1413adbab24a827` (block 9583), registered by `fl_client_0`
 
 _Ground truth, for evaluation only and never shown to an investigator: over under shipment._
 
@@ -225,15 +225,15 @@ _Ground truth, for evaluation only and never shown to an investigator: over unde
 
 Why the model flagged it (SHAP contributions to the log-odds):
 
-1. route passes through 2 listed high-risk jurisdictions (raises risk, +4.23)
-2. route is 10.0x the direct distance (raises risk, +3.71)
-3. exporter's collecting bank is in a jurisdiction with risk score 0.70 (raises risk, +2.99)
-4. younger party trades about USD 91,165 per year of existence (lowers risk, -1.57)
-5. route is rarely used on this corridor (lowers risk, -1.45)
+1. route passes through 2 listed high-risk jurisdictions (raises risk, +4.92)
+2. route is 10.0x the direct distance (raises risk, +3.91)
+3. exporter's collecting bank is in a jurisdiction with risk score 0.70 (raises risk, +2.28)
+4. route is rarely used on this corridor (lowers risk, -1.49)
+5. younger party trades about USD 91,165 per year of existence (lowers risk, -1.39)
 
 Rules fired: R17 Needless transshipment; R18 Stop in a listed high-risk jurisdiction; R19 Proceeds collected in an offshore bank
 
-Evidence: SHA-256 `857ae70eedc9c0eb7ed45cbc9691db4004d4a231ee64a43c68d5b18ac7958a97`, transaction `0x0fb4245ee2b38d4fd913e866fbe86029c62d54b25611c7540099bf3be3dd95d9` (block 4135), registered by `fl_client_1`
+Evidence: SHA-256 `334890a8cd9806a289a0bdf7cb4f3733789fc5e56f28f83b0ed82dfb15d0b0e6`, transaction `0x9cabd317fc32501bbb2b9fbf286b4955776f507ec3001c75c23bf199772365c9` (block 9581), registered by `fl_client_1`
 
 _Ground truth, for evaluation only and never shown to an investigator: high risk routing._
 
@@ -247,15 +247,15 @@ _Ground truth, for evaluation only and never shown to an investigator: high risk
 
 Why the model flagged it (SHAP contributions to the log-odds):
 
-1. a party trades goods from 12 different HS chapters (raises risk, +3.94)
-2. goods were declared to customs under a different HS code than invoiced (raises risk, +3.48)
-3. exporter registered 35 days before the invoice (lowers risk, -2.27)
-4. importer buys from 8 suppliers (lowers risk, -2.09)
-5. importer is a hub of the trade network (raises risk, +1.82)
+1. a party trades goods from 12 different HS chapters (raises risk, +4.41)
+2. goods were declared to customs under a different HS code than invoiced (raises risk, +3.29)
+3. exporter registered 35 days before the invoice (lowers risk, -2.35)
+4. importer buys from 8 suppliers (lowers risk, -1.95)
+5. importer is a hub of the trade network (raises risk, +1.67)
 
 Rules fired: none
 
-Evidence: SHA-256 `64c8fcb7cb1c2d59a474b3d24f3aabc26a253fdde15c94b98441e93ad073eeee`, transaction `0x2bd3564148ef54af3a6158e16d6ccf00db3ce1c93878bd65bc7ecf998d69d446` (block 4327), registered by `fl_client_0`
+Evidence: SHA-256 `baeea99a66ddb339031d5d6700c7c7d9f7cd95911ceb6af70e106a6d1d94d429`, transaction `0x978f6915af21a9fe220c0e4e89f4f47ad103e94ec64869d27c26e352f0a74008` (block 9773), registered by `fl_client_0`
 
 _Ground truth, for evaluation only and never shown to an investigator: misdescription._
 
@@ -269,14 +269,14 @@ _Ground truth, for evaluation only and never shown to an investigator: misdescri
 
 Why the model flagged it (SHAP contributions to the log-odds):
 
-1. route passes through 2 free-trade zones (raises risk, +2.47)
-2. exporter registered 3 months before the invoice (lowers risk, -2.42)
-3. younger party registered only 3 months before the invoice (raises risk, +1.40)
+1. exporter registered 3 months before the invoice (lowers risk, -2.45)
+2. route passes through 2 free-trade zones (raises risk, +2.38)
+3. younger party registered only 3 months before the invoice (raises risk, +1.50)
 4. 1 trade on record between these two parties (raises risk, +1.22)
-5. invoice value about USD 10,160,065 (raises risk, +0.99)
+5. riskiest stop on the route has jurisdiction risk 0.70 (lowers risk, -1.04)
 
 Rules fired: R14 Young company at a mass-registration address; R15 Young company with very high turnover; R17 Needless transshipment
 
-Evidence: SHA-256 `203a48662254f89c83b202f26fce0a70aa5e244372c066a1b37d67e30ca7d33e`, transaction `0x6c8efce389d3b8447915b1aca982ffbc77e6d01dae641d4de65297d4c903a39e` (block 4445), registered by `fl_client_1`
+Evidence: SHA-256 `bd6232a5640d0640f990557843edaba1eea960c12c3ebc98e48bc528e02b1921`, transaction `0xe113b6ee31ead4505541a138fc9e648b1168f59630be0bbce16b7c2066c86bc0` (block 9891), registered by `fl_client_1`
 
 _Ground truth, for evaluation only and never shown to an investigator: legitimate trade (false alert)._

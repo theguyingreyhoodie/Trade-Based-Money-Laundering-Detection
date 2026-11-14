@@ -94,8 +94,13 @@ momentum 0.9, batch 256. The same network and loss are used centrally, locally a
 | FedProx `mu` | 0.01 | fixed |
 
 The learning rate, its decay and the number of local epochs were compared on *validation* PR-AUC
-of seed 0 (IID and Dirichlet 0.5, six combinations). All were within 0.01 of each other; the
-decaying rate gave the most stable curve. Test data played no part.
+of seed 0, on the IID and the Dirichlet 0.5 split (six combinations: learning rate 0.02, 0.05 or
+0.1; constant or decaying by 0.9-0.95 per round; one or two local epochs). The best validation
+PR-AUC of the six settings spanned 0.766-0.774 on the IID split and 0.753-0.770 on the Dirichlet
+split. The chosen setting (0.05, decay 0.95, one epoch) scored 0.772 and 0.759, at most 0.011
+below the best, and had the steadiest curve: over the last ten rounds its validation PR-AUC
+varied by a standard deviation of 0.002-0.003, the smallest worst case of the six. Test data
+played no part.
 
 ## 5. Data splits between clients
 
@@ -136,13 +141,16 @@ fragmentation** (context indicators computed per client). Pooled-local -> FedAvg
   Parameter averaging loses almost nothing; at 10 clients the gap is 0.03.
 - FedAvg beats local-only when data is spread thin, and the gain grows with the number of
   clients: +0.05 F1 at 3 clients, +0.06 at 5, +0.11 at 10 (IID).
-- Everything that keeps raw data local is below the centralised MLP (0.753), because of
-  fragmentation. The typologies that depend on seeing related trades together lose most:
-  multiple invoicing (recall 1.00 -> 0.60) and circular trading (0.81 -> 0.57) on seed 0.
+- FedAvg stays below the centralised MLP (0.753) in every scenario, and on the IID split so does
+  every method that keeps raw data local. The pooled-local diagnostic (0.698 at IID) shows that
+  fragmentation accounts for most of that gap. The typologies that depend on seeing related
+  trades together lose most: multiple invoicing (recall 0.98 -> 0.59, mean of 3 seeds) and
+  circular trading (0.83 -> 0.52).
 - Under strong skew (alpha = 0.1) local-only (0.801) beats FedAvg (0.737) and even the
-  centralised MLP. When a typology concentrates at one institution, its local graph is intact
-  and its own threshold fits its own positive rate. Client thresholds on the global model
-  recover part of the gap (0.752).
+  centralised MLP. A likely explanation: when a typology concentrates at one institution, its
+  local trade graph for that typology is intact and its own threshold fits its own positive
+  rate. Consistent with the threshold part, letting each client pick its own threshold for the
+  global model recovers part of the gap (0.752).
 - FedProx (mu = 0.01) does not improve on FedAvg at any alpha (differences between -0.011 and +0.004 F1).
 
 ## 8. Threat model and limitations
@@ -236,27 +244,33 @@ decodes the sum and divides by the summed `n_i`.
 
 Clients train with per-example gradient clipping and Gaussian noise (Opacus), which bounds what
 an update reveals about any single training row. Each client computes the noise multiplier that
-spends its budget over all its local steps of the run (Renyi DP accounting, Poisson sampling,
-delta = 1e-5); a small client needs more noise than a large one.
+spends its budget over all its local steps of the run (Renyi DP accounting, delta = 1e-5); a
+small client needs more noise than a large one. The accountant uses exactly the Poisson
+sampling rate and the number of steps per epoch that Opacus trains with (1 / number of batches;
+checked against Opacus in `tests/test_stretch.py`).
 
 | Budget per client | Mean noise multiplier | F1 | PR-AUC |
 |---|---|---|---|
 | no DP | - | 0.722 ± 0.005 | 0.772 |
-| epsilon = 8 | 0.94 | 0.577 ± 0.008 | 0.605 |
-| epsilon = 3 | 1.68 | 0.548 ± 0.012 | 0.570 |
-| epsilon = 1 | 4.10 | 0.415 ± 0.046 | 0.395 |
+| epsilon = 8 | 0.92 | 0.577 ± 0.008 | 0.605 |
+| epsilon = 3 | 1.64 | 0.550 ± 0.012 | 0.570 |
+| epsilon = 1 | 3.99 | 0.418 ± 0.047 | 0.398 |
 
-Privacy is expensive here: even a loose budget costs about 0.15 F1, because the positive class
-is rare and its gradients are exactly the ones clipping and noise damage most. The clipping norm
-(2.0) was chosen on validation at epsilon = 3 on seed 0 from 12 combinations of clipping norm,
-batch size and learning rate. The first, untuned setting (norm 1.0) reached validation PR-AUC
-0.41 against 0.54, so an untuned DP baseline would have overstated the cost. DP covers training
-only; the evaluation histograms and feature moments are not noised. DP and secure aggregation
-are demonstrated separately, not combined.
+Privacy is expensive here: even the loosest budget tested costs about 0.15 F1. A plausible
+reason, not tested separately, is that the positive class is rare, so the few illicit rows carry
+most of the useful gradient signal and are the ones clipping and noise damage most. The clipping
+norm (2.0) was chosen on validation at epsilon = 3 on seed 0 from 12 combinations of clipping
+norm (0.5, 1, 2), batch size (256, 1024) and learning rate (0.05, 0.2). The first, untuned
+setting (norm 1.0) reached validation PR-AUC 0.41 against 0.54 for the chosen one, so an untuned
+DP baseline would have overstated the cost. That selection ran before the accountant was aligned
+exactly with Opacus' sampling rate; the alignment lowered the noise multipliers by 2-3% and
+changed F1 by at most 0.003. DP covers training only; the evaluation histograms and feature
+moments are not noised. DP and secure aggregation are demonstrated separately, not combined.
 
 ### Poisoning and norm clipping
 
-One of three clients (the smallest) sends its update sign-flipped and scaled by 5 in every round.
+Client 0 of three (the smallest client in seeds 0 and 1, the middle-sized one in seed 2) sends
+its update sign-flipped and scaled by 5 in every round.
 
 | Condition | F1, model of the last round | F1, round selected on validation |
 |---|---|---|
@@ -269,9 +283,17 @@ One of three clients (the smallest) sends its update sign-flipped and scaled by 
   first round; it repairs nothing.
 - Clipping every update to the round's median norm keeps training alive (0.59) but does not
   restore the clean result (0.72), and costs 0.02 F1 when nobody attacks.
-- The size of an honest update grows with the number of local steps, so the bound mostly shrinks
-  the *largest honest* client. A small attacker whose boosted update stays under the median is
-  not clipped at all, and a patient attacker within the bound (a backdoor) is not addressed.
+- How the bound acts: with three clients, exactly one update lies above the median, so exactly
+  one update is clipped per round (30 of 30 rounds in every run, with or without an attacker).
+  The norms are recorded for round 1. Under attack the attacker's norm (7.7-12.9) is far above
+  the honest ones (1.6-3.5), so the attacker is the one clipped, down to the larger honest norm.
+  Without an attacker the update clipped in round 1 is that of client 2 in every seed, the
+  client with the most data (norm 2.9-3.5): honest update size grows with the number of local
+  steps, so a median bound shrinks the largest honest client. That is a likely source of the 0.02 F1 cost
+  without an attacker.
+- Clipping bounds influence, it does not detect anything. An attacker whose update stays below
+  the median norm is never clipped, and a patient attacker within the bound (a backdoor) is not
+  addressed.
 
 ### Local fine-tuning of the global model
 
@@ -286,6 +308,7 @@ rows (learning rate 0.01), keeps whichever version validates best on its own val
 | Dirichlet 0.5 | 0.722 | 0.722 | 0.750 |
 | Dirichlet 0.1 | 0.801 | 0.737 | 0.804 |
 
-Fine-tuning is within 0.01 F1 of the better of the two alternatives in every scenario and
-clearly ahead under moderate skew. It answers the objection that institutions with skewed data
-gain nothing from joining: they keep their local advantage and still get what the others learned.
+Over all nine scenarios of the sweep (3, 5 and 10 clients), fine-tuning is never more than
+0.007 F1 below the better of FedAvg and local-only, and it is 0.028-0.033 above it at Dirichlet
+0.5. So an institution whose data differs strongly from the others does not lose accuracy by
+joining the federation, as long as it fine-tunes the global model on its own data.

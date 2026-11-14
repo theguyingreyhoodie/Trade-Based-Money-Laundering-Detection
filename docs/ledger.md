@@ -117,21 +117,26 @@ interval does.
 
 | Measure | EVM (Hardhat) | Pure Python |
 |---|---|---|
-| single registration, latency p50 / p95 | 8.9 ms / 10.6 ms | 2.9 ms / 3.2 ms |
-| single registration, throughput | 100 records/s | 343 records/s |
+| single registration, latency p50 / p95 | 6.3 ms / 6.4 ms | 2.3 ms / 2.4 ms |
+| single registration, throughput | 146 records/s | 427 records/s |
 | cost per record, single | 103,088 gas | 573 bytes |
-| batch of 10 / 50 / 100 per write, throughput | 579 / 1,706 / 1,960 records/s | 1,784 / 6,965 / 9,857 records/s |
+| batch of 10 / 50 / 100 per write, throughput | 1,266 / 2,627 / 2,793 records/s | 4,047 / 14,297 / 21,135 records/s |
 | cost per record in a batch of 100 | 74,209 gas | 105 bytes |
-| Merkle root per 500 documents, throughput | 46,506 documents/s | 92,085 documents/s |
+| Merkle root per 500 documents, throughput | 68,381 documents/s | 202,043 documents/s |
 | cost per document with Merkle batching | 206 gas | 1.2 bytes |
 | ledger storage per record | 96 bytes (3 slots) | 106 bytes |
 | ledger storage per document with Merkle batching | 0.19 bytes | 1.2 bytes |
-| read (`verify`) latency p50 | 2.7 ms | < 0.01 ms |
+| read (`verify`) latency p50 | 1.6 ms | < 0.01 ms |
 | with 1 s blocks: latency of one registration | 1.0 s (one block) | n/a |
 | with 1 s blocks: 100 registrations submitted together | all final after 1.1 s, in one block | n/a |
 
-Pipeline totals on seed 0: 252,546 trade documents anchored as 508 roots in 11.5 s (4.5 s of it
-hashing); 120 model hashes for a 30-round, 3-client run at 17 ms p50 and 142,566 gas each.
+Gas and storage are deterministic. Timings vary from run to run on a laptop: an earlier run of
+the same benchmark measured 8.9 ms (p50) and 100 records/s for single EVM registrations, and
+579 / 1,706 / 1,960 records/s for the three batch sizes.
+
+Pipeline totals on seed 0: 252,546 trade documents anchored as 508 roots in 6.8 s (2.7 s of it
+hashing); 120 model hashes for a 30-round, 3-client run at 7.8 ms p50 and 142,566 gas each;
+426 alerts at 6.5 ms p50 and 103,030 gas each.
 
 Batches are capped at 100 hashes per transaction because recent EVM rules limit a transaction
 to about 16.7 million gas.

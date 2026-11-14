@@ -184,6 +184,24 @@ def test_shap_values_are_additive(cfg) -> None:
     assert explain(model, X[:100], X[:0])["values"].shape == (0, 8)
 
 
+def test_permutation_shap_is_reproducible(cfg) -> None:
+    """With a fixed seed, explanations from the permutation explainer are identical between runs."""
+    rng = np.random.default_rng(2)
+    X = rng.normal(size=(300, 6)).astype(np.float32)
+    model = make_model(cfg, 6, seed=4)
+    with torch.no_grad():
+        set_scaler(model, *moments_to_scaler(*feature_moments(X)))
+    extreme = X[:8].copy()
+    extreme[:, 0] = 60.0  # beyond the clip: forces the permutation explainer
+    a = explain(model, X[:100], extreme, permutations=5, seed=11)
+    b = explain(model, X[:100], extreme, permutations=5, seed=11)
+    c = explain(model, X[:100], extreme, permutations=5, seed=12)
+    assert a["method"] == "permutation" and a["permutations"] == 5
+    np.testing.assert_array_equal(a["values"], b["values"])
+    assert not np.array_equal(a["values"], c["values"])
+    assert max(a["additivity_error"], c["additivity_error"]) < 1e-4
+
+
 def test_shap_falls_back_when_inputs_are_clipped(cfg) -> None:
     """Beyond the +/-8 clip DeepSHAP is inaccurate; the result must still be additive."""
     rng = np.random.default_rng(1)

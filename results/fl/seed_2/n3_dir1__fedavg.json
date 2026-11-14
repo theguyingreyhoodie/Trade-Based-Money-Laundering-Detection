@@ -1,5 +1,6 @@
 {
   "seed": 2,
+  "fingerprint": "f91cdb3c03b9b1ae",
   "scenario": {
     "name": "n3_dir1",
     "n_clients": 3,
@@ -249,7 +250,7 @@
       "bytes_eval_up": 53200,
       "bytes_round": 337882,
       "bytes_cumulative": 342198,
-      "seconds": 1.4026734998915344
+      "seconds": 0.9710009580012411
     },
     {
       "round": 2,
@@ -269,7 +270,7 @@
       "bytes_eval_up": 53185,
       "bytes_round": 337867,
       "bytes_cumulative": 680065,
-      "seconds": 0.4490222497843206
+      "seconds": 0.4646457089111209
     },
     {
       "round": 3,
@@ -289,7 +290,7 @@
       "bytes_eval_up": 53184,
       "bytes_round": 337866,
       "bytes_cumulative": 1017931,
-      "seconds": 0.3286546249873936
+      "seconds": 0.22661800007335842
     },
     {
       "round": 4,
@@ -309,7 +310,7 @@
       "bytes_eval_up": 53184,
       "bytes_round": 337866,
       "bytes_cumulative": 1355797,
-      "seconds": 0.2216087500564754
+      "seconds": 0.23066475009545684
     },
     {
       "round": 5,
@@ -329,7 +330,7 @@
       "bytes_eval_up": 53184,
       "bytes_round": 337866,
       "bytes_cumulative": 1693663,
-      "seconds": 0.22749774996191263
+      "seconds": 0.23881466616876423
     },
     {
       "round": 6,
@@ -349,7 +350,7 @@
       "bytes_eval_up": 53186,
       "bytes_round": 337868,
       "bytes_cumulative": 2031531,
-      "seconds": 0.2321567500475794
+      "seconds": 0.44597570807673037
     },
     {
       "round": 7,
@@ -369,7 +370,7 @@
       "bytes_eval_up": 53186,
       "bytes_round": 337868,
       "bytes_cumulative": 2369399,
-      "seconds": 0.23382529197260737
+      "seconds": 0.4521057920064777
     },
     {
       "round": 8,
@@ -389,7 +390,7 @@
       "bytes_eval_up": 53186,
       "bytes_round": 337868,
       "bytes_cumulative": 2707267,
-      "seconds": 0.33932166593149304
+      "seconds": 0.23606612510047853
     },
     {
       "round": 9,
@@ -409,7 +410,7 @@
       "bytes_eval_up": 53186,
       "bytes_round": 337868,
       "bytes_cumulative": 3045135,
-      "seconds": 0.3305874578654766
+      "seconds": 0.2240167499985546
     },
     {
       "round": 10,
@@ -429,7 +430,7 @@
       "bytes_eval_up": 53186,
       "bytes_round": 337868,
       "bytes_cumulative": 3383003,
-      "seconds": 0.2260668750386685
+      "seconds": 0.2234405418857932
     },
     {
       "round": 11,
@@ -449,7 +450,7 @@
       "bytes_eval_up": 53186,
       "bytes_round": 337868,
       "bytes_cumulative": 3720871,
-      "seconds": 0.22729816706851125
+      "seconds": 0.2243428339716047
     },
     {
       "round": 12,
@@ -469,7 +470,7 @@
       "bytes_eval_up": 53187,
       "bytes_round": 337869,
       "bytes_cumulative": 4058740,
-      "seconds": 0.2239940830040723
+      "seconds": 0.24177166703157127
     },
     {
       "round": 13,
@@ -489,7 +490,7 @@
       "bytes_eval_up": 53189,
       "bytes_round": 337871,
       "bytes_cumulative": 4396611,
-      "seconds": 0.2272767920512706
+      "seconds": 0.7092842911370099
     },
     {
       "round": 14,
@@ -509,7 +510,7 @@
       "bytes_eval_up": 53189,
       "bytes_round": 337871,
       "bytes_cumulative": 4734482,
-      "seconds": 0.226906584110111
+      "seconds": 0.45199941587634385
     },
     {
       "round": 15,
@@ -529,7 +530,7 @@
       "bytes_eval_up": 53189,
       "bytes_round": 337871,
       "bytes_cumulative": 5072353,
-      "seconds": 0.45676316716708243
+      "seconds": 0.3307390420231968
     },
     {
       "round": 16,
@@ -549,7 +550,7 @@
       "bytes_eval_up": 53189,
       "bytes_round": 337871,
       "bytes_cumulative": 5410224,
-      "seconds": 0.23206420801579952
+      "seconds": 0.23438295884989202
     },
     {
       "round": 17,
@@ -569,7 +570,7 @@
       "bytes_eval_up": 53189,
       "bytes_round": 337871,
       "bytes_cumulative": 5748095,
-      "seconds": 0.2315975409001112
+      "seconds": 0.22151983296498656
     },
     {
       "round": 18,
@@ -589,7 +590,7 @@
       "bytes_eval_up": 53189,
       "bytes_round": 337871,
       "bytes_cumulative": 6085966,
-      "seconds": 0.22583291702903807
+      "seconds": 0.23467354197055101
     },
     {
       "round": 19,
@@ -609,7 +610,7 @@
       "bytes_eval_up": 53189,
       "bytes_round": 337871,
       "bytes_cumulative": 6423837,
-      "seconds": 0.22598816617392004
+      "seconds": 0.2256037499755621
     },
     {
       "round": 20,
@@ -629,7 +630,7 @@
       "bytes_eval_up": 53189,
       "bytes_round": 337871,
       "bytes_cumulative": 6761708,
-      "seconds": 0.45708745904266834
+      "seconds": 0.3451319169253111
     },
     {
       "round": 21,
@@ -649,7 +650,7 @@
       "bytes_eval_up": 53189,
       "bytes_round": 337871,
       "bytes_cumulative": 7099579,
-      "seconds": 0.22608312498778105
+      "seconds": 0.46024199994280934
     },
     {
       "round": 22,
@@ -669,7 +670,7 @@
       "bytes_eval_up": 53190,
       "bytes_round": 337872,
       "bytes_cumulative": 7437451,
-      "seconds": 0.2169980830512941
+      "seconds": 0.22771149990148842
     },
     {
       "round": 23,
@@ -689,7 +690,7 @@
       "bytes_eval_up": 53189,
       "bytes_round": 337871,
       "bytes_cumulative": 7775322,
-      "seconds": 0.2248975420370698
+      "seconds": 0.2289313750807196
     },
     {
       "round": 24,
@@ -709,7 +710,7 @@
       "bytes_eval_up": 53190,
       "bytes_round": 337872,
       "bytes_cumulative": 8113194,
-      "seconds": 0.2311740000732243
+      "seconds": 0.22362537495791912
     },
     {
       "round": 25,
@@ -729,7 +730,7 @@
       "bytes_eval_up": 53190,
       "bytes_round": 337872,
       "bytes_cumulative": 8451066,
-      "seconds": 0.2337266248650849
+      "seconds": 0.2308922081720084
     },
     {
       "round": 26,
@@ -749,7 +750,7 @@
       "bytes_eval_up": 53190,
       "bytes_round": 337872,
       "bytes_cumulative": 8788938,
-      "seconds": 0.4487696250434965
+      "seconds": 0.23104108311235905
     },
     {
       "round": 27,
@@ -769,7 +770,7 @@
       "bytes_eval_up": 53190,
       "bytes_round": 337872,
       "bytes_cumulative": 9126810,
-      "seconds": 0.33800291712395847
+      "seconds": 0.3314980829600245
     },
     {
       "round": 28,
@@ -789,7 +790,7 @@
       "bytes_eval_up": 53190,
       "bytes_round": 337872,
       "bytes_cumulative": 9464682,
-      "seconds": 0.21808504103682935
+      "seconds": 0.339529582997784
     },
     {
       "round": 29,
@@ -809,7 +810,7 @@
       "bytes_eval_up": 53190,
       "bytes_round": 337872,
       "bytes_cumulative": 9802554,
-      "seconds": 0.23147133295424283
+      "seconds": 0.23225783393718302
     },
     {
       "round": 30,
@@ -829,7 +830,7 @@
       "bytes_eval_up": 53190,
       "bytes_round": 337872,
       "bytes_cumulative": 10140426,
-      "seconds": 0.23025595815852284
+      "seconds": 0.234813166083768
     }
   ],
   "communication": {
@@ -917,14 +918,6 @@
     {
       "round": 2,
       "kind": "client_update",
-      "client": 1,
-      "sha256": "23dd78eef05fba0f0e9e1486f57cc9c8aaf54564d8b7f5a275223fefd45520cd",
-      "n_examples": 9463,
-      "bytes": 31723
-    },
-    {
-      "round": 2,
-      "kind": "client_update",
       "client": 2,
       "sha256": "ef6da24c20c8525e289b7513c48c357863ae06208d0a0698739b19376ec9f42d",
       "n_examples": 6962,
@@ -940,6 +933,14 @@
     },
     {
       "round": 2,
+      "kind": "client_update",
+      "client": 1,
+      "sha256": "23dd78eef05fba0f0e9e1486f57cc9c8aaf54564d8b7f5a275223fefd45520cd",
+      "n_examples": 9463,
+      "bytes": 31723
+    },
+    {
+      "round": 2,
       "kind": "global_model",
       "client": null,
       "sha256": "d5aec39afd08b60453628e7532f887d4a00550000ff443b38c08c356e00e7eca",
@@ -949,18 +950,18 @@
     {
       "round": 3,
       "kind": "client_update",
-      "client": 1,
-      "sha256": "1f281cb11e5c080389bc7ae24ccadfb41a3258c4995f0d560010762861006f09",
-      "n_examples": 9463,
-      "bytes": 31723
-    },
-    {
-      "round": 3,
-      "kind": "client_update",
       "client": 2,
       "sha256": "a5c3b2fc509a346bc45ec2e47ca4e9114aa3981f141e6cc5d2fc25029f11f9fc",
       "n_examples": 6962,
       "bytes": 31722
+    },
+    {
+      "round": 3,
+      "kind": "client_update",
+      "client": 1,
+      "sha256": "1f281cb11e5c080389bc7ae24ccadfb41a3258c4995f0d560010762861006f09",
+      "n_examples": 9463,
+      "bytes": 31723
     },
     {
       "round": 3,
@@ -1013,18 +1014,18 @@
     {
       "round": 5,
       "kind": "client_update",
-      "client": 2,
-      "sha256": "f538bf118421263b23e4449256da68a984dc470b6ad0492ded1c8b030c88cec7",
-      "n_examples": 6962,
-      "bytes": 31722
-    },
-    {
-      "round": 5,
-      "kind": "client_update",
       "client": 1,
       "sha256": "f7bd29804c59929729fc53953a403b9aca04e533d281f1033433e34aea5a1bdb",
       "n_examples": 9463,
       "bytes": 31723
+    },
+    {
+      "round": 5,
+      "kind": "client_update",
+      "client": 2,
+      "sha256": "f538bf118421263b23e4449256da68a984dc470b6ad0492ded1c8b030c88cec7",
+      "n_examples": 6962,
+      "bytes": 31722
     },
     {
       "round": 5,
@@ -1077,18 +1078,18 @@
     {
       "round": 7,
       "kind": "client_update",
-      "client": 2,
-      "sha256": "b832081fe0945ff73f0f01d24f64aa41fda7c9f49b4d184d63dc3418b9f884e5",
-      "n_examples": 6962,
-      "bytes": 31722
-    },
-    {
-      "round": 7,
-      "kind": "client_update",
       "client": 1,
       "sha256": "1a18041dae22a774f2702703b26f11bc3ea12c6d3c85da5c79fdf5b679dd3d1a",
       "n_examples": 9463,
       "bytes": 31723
+    },
+    {
+      "round": 7,
+      "kind": "client_update",
+      "client": 2,
+      "sha256": "b832081fe0945ff73f0f01d24f64aa41fda7c9f49b4d184d63dc3418b9f884e5",
+      "n_examples": 6962,
+      "bytes": 31722
     },
     {
       "round": 7,
@@ -1525,18 +1526,18 @@
     {
       "round": 21,
       "kind": "client_update",
-      "client": 2,
-      "sha256": "35e67346aa8d24d4b086a2817b7e7bcb5d4573b773663b8cd52db5f45f5dfecc",
-      "n_examples": 6962,
-      "bytes": 31722
-    },
-    {
-      "round": 21,
-      "kind": "client_update",
       "client": 1,
       "sha256": "9cade8bedd99c38f7e73de79cfa402c1d83ab7cd878debced4167b5a1ca5347e",
       "n_examples": 9463,
       "bytes": 31723
+    },
+    {
+      "round": 21,
+      "kind": "client_update",
+      "client": 2,
+      "sha256": "35e67346aa8d24d4b086a2817b7e7bcb5d4573b773663b8cd52db5f45f5dfecc",
+      "n_examples": 6962,
+      "bytes": 31722
     },
     {
       "round": 21,
@@ -1557,18 +1558,18 @@
     {
       "round": 22,
       "kind": "client_update",
-      "client": 1,
-      "sha256": "fa5e7d084043d7a55cfc4311099f5e6128bea4c09598fdca1acf2138a60cfcc8",
-      "n_examples": 9463,
-      "bytes": 31723
-    },
-    {
-      "round": 22,
-      "kind": "client_update",
       "client": 2,
       "sha256": "1eddc4308fde5d65f7fe4da78dd3027c39bfdbdb2a566f3a20e0fdbb971f9db3",
       "n_examples": 6962,
       "bytes": 31722
+    },
+    {
+      "round": 22,
+      "kind": "client_update",
+      "client": 1,
+      "sha256": "fa5e7d084043d7a55cfc4311099f5e6128bea4c09598fdca1acf2138a60cfcc8",
+      "n_examples": 9463,
+      "bytes": 31723
     },
     {
       "round": 22,
@@ -1589,18 +1590,18 @@
     {
       "round": 23,
       "kind": "client_update",
-      "client": 1,
-      "sha256": "d67bb9f89c7a32f7bb52156b7a0a32b3ff938f9835f64c447e0153bfcc10c053",
-      "n_examples": 9463,
-      "bytes": 31723
-    },
-    {
-      "round": 23,
-      "kind": "client_update",
       "client": 2,
       "sha256": "a1147007b83fcb7e8d76f5179842ca58bba5eb3a319746881ad939529c323779",
       "n_examples": 6962,
       "bytes": 31722
+    },
+    {
+      "round": 23,
+      "kind": "client_update",
+      "client": 1,
+      "sha256": "d67bb9f89c7a32f7bb52156b7a0a32b3ff938f9835f64c447e0153bfcc10c053",
+      "n_examples": 9463,
+      "bytes": 31723
     },
     {
       "round": 23,
@@ -1717,18 +1718,18 @@
     {
       "round": 27,
       "kind": "client_update",
-      "client": 2,
-      "sha256": "be8624de960be4732ae3f4aa2165460d2aa636e680fec88b5d4530b9b3e9fd4c",
-      "n_examples": 6962,
-      "bytes": 31722
-    },
-    {
-      "round": 27,
-      "kind": "client_update",
       "client": 1,
       "sha256": "09bd0b8b6c7a7d221688e41000bbce3de84274e9772c68ba3a734236c98a7e9a",
       "n_examples": 9463,
       "bytes": 31723
+    },
+    {
+      "round": 27,
+      "kind": "client_update",
+      "client": 2,
+      "sha256": "be8624de960be4732ae3f4aa2165460d2aa636e680fec88b5d4530b9b3e9fd4c",
+      "n_examples": 6962,
+      "bytes": 31722
     },
     {
       "round": 27,
@@ -1845,7 +1846,279 @@
   ],
   "update_norms": {
     "clipped_updates": 0,
-    "last_round": {}
+    "history": [
+      {
+        "round": 1,
+        "norms": {
+          "0": 2.747393,
+          "1": 2.433992,
+          "2": 2.197705
+        },
+        "bound": null
+      },
+      {
+        "round": 2,
+        "norms": {
+          "0": 1.463759,
+          "1": 1.414931,
+          "2": 1.46416
+        },
+        "bound": null
+      },
+      {
+        "round": 3,
+        "norms": {
+          "0": 1.159183,
+          "1": 1.172956,
+          "2": 1.312951
+        },
+        "bound": null
+      },
+      {
+        "round": 4,
+        "norms": {
+          "0": 1.003312,
+          "1": 1.100921,
+          "2": 1.317604
+        },
+        "bound": null
+      },
+      {
+        "round": 5,
+        "norms": {
+          "0": 0.97639,
+          "1": 1.072317,
+          "2": 1.073417
+        },
+        "bound": null
+      },
+      {
+        "round": 6,
+        "norms": {
+          "0": 0.941483,
+          "1": 1.090347,
+          "2": 1.221289
+        },
+        "bound": null
+      },
+      {
+        "round": 7,
+        "norms": {
+          "0": 0.916865,
+          "1": 0.949923,
+          "2": 1.008242
+        },
+        "bound": null
+      },
+      {
+        "round": 8,
+        "norms": {
+          "0": 0.849675,
+          "1": 1.02116,
+          "2": 1.066407
+        },
+        "bound": null
+      },
+      {
+        "round": 9,
+        "norms": {
+          "0": 0.796605,
+          "1": 0.88487,
+          "2": 1.018232
+        },
+        "bound": null
+      },
+      {
+        "round": 10,
+        "norms": {
+          "0": 0.805992,
+          "1": 0.884517,
+          "2": 0.939994
+        },
+        "bound": null
+      },
+      {
+        "round": 11,
+        "norms": {
+          "0": 0.746347,
+          "1": 0.933088,
+          "2": 1.070453
+        },
+        "bound": null
+      },
+      {
+        "round": 12,
+        "norms": {
+          "0": 0.80394,
+          "1": 0.828645,
+          "2": 0.987576
+        },
+        "bound": null
+      },
+      {
+        "round": 13,
+        "norms": {
+          "0": 0.73223,
+          "1": 0.754369,
+          "2": 1.012718
+        },
+        "bound": null
+      },
+      {
+        "round": 14,
+        "norms": {
+          "0": 0.669474,
+          "1": 0.772697,
+          "2": 0.938395
+        },
+        "bound": null
+      },
+      {
+        "round": 15,
+        "norms": {
+          "0": 0.615738,
+          "1": 0.754884,
+          "2": 0.92768
+        },
+        "bound": null
+      },
+      {
+        "round": 16,
+        "norms": {
+          "0": 0.609961,
+          "1": 0.705729,
+          "2": 0.887672
+        },
+        "bound": null
+      },
+      {
+        "round": 17,
+        "norms": {
+          "0": 0.568178,
+          "1": 0.763656,
+          "2": 0.817372
+        },
+        "bound": null
+      },
+      {
+        "round": 18,
+        "norms": {
+          "0": 0.613556,
+          "1": 0.6411,
+          "2": 0.845324
+        },
+        "bound": null
+      },
+      {
+        "round": 19,
+        "norms": {
+          "0": 0.556283,
+          "1": 0.751381,
+          "2": 0.858144
+        },
+        "bound": null
+      },
+      {
+        "round": 20,
+        "norms": {
+          "0": 0.530119,
+          "1": 0.662627,
+          "2": 0.764985
+        },
+        "bound": null
+      },
+      {
+        "round": 21,
+        "norms": {
+          "0": 0.502532,
+          "1": 0.668535,
+          "2": 0.739036
+        },
+        "bound": null
+      },
+      {
+        "round": 22,
+        "norms": {
+          "0": 0.503713,
+          "1": 0.586265,
+          "2": 0.724847
+        },
+        "bound": null
+      },
+      {
+        "round": 23,
+        "norms": {
+          "0": 0.486238,
+          "1": 0.573036,
+          "2": 0.769469
+        },
+        "bound": null
+      },
+      {
+        "round": 24,
+        "norms": {
+          "0": 0.442561,
+          "1": 0.519358,
+          "2": 0.726843
+        },
+        "bound": null
+      },
+      {
+        "round": 25,
+        "norms": {
+          "0": 0.392619,
+          "1": 0.62031,
+          "2": 0.702589
+        },
+        "bound": null
+      },
+      {
+        "round": 26,
+        "norms": {
+          "0": 0.397913,
+          "1": 0.443124,
+          "2": 0.654558
+        },
+        "bound": null
+      },
+      {
+        "round": 27,
+        "norms": {
+          "0": 0.413236,
+          "1": 0.525274,
+          "2": 0.653578
+        },
+        "bound": null
+      },
+      {
+        "round": 28,
+        "norms": {
+          "0": 0.357104,
+          "1": 0.508266,
+          "2": 0.659179
+        },
+        "bound": null
+      },
+      {
+        "round": 29,
+        "norms": {
+          "0": 0.368236,
+          "1": 0.447571,
+          "2": 0.585955
+        },
+        "bound": null
+      },
+      {
+        "round": 30,
+        "norms": {
+          "0": 0.327621,
+          "1": 0.418998,
+          "2": 0.657429
+        },
+        "bound": null
+      }
+    ]
   },
-  "seconds": 14.091698291013017
+  "dp_clients": {},
+  "seconds": 13.952200999949127
 }

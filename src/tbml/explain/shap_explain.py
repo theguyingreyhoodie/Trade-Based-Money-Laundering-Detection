@@ -35,7 +35,7 @@ def model_logits(model: nn.Module, X: np.ndarray) -> np.ndarray:
     return model(torch.as_tensor(np.asarray(X, dtype=np.float32))).numpy().astype(np.float64)
 
 
-def explain(model: nn.Module, background: np.ndarray, X: np.ndarray, tolerance: float = 0.05) -> dict[str, Any]:
+def explain(model: nn.Module, background: np.ndarray, X: np.ndarray, tolerance: float = 0.05, permutations: int = 20, seed: int = 0) -> dict[str, Any]:
     """SHAP values of ``X`` (shape [n, d], logit scale) against ``background``.
 
     DeepSHAP is tried first. Its contributions must add up to the model output
@@ -45,6 +45,13 @@ def explain(model: nn.Module, background: np.ndarray, X: np.ndarray, tolerance: 
     inputs at +/- 8, alerted trades often have an indicator beyond that (which
     is why they are alerted), and DeepSHAP's linear rule is inaccurate across
     the clip. The method and the additivity error are returned and reported.
+
+    The permutation explainer averages over ``permutations`` random feature
+    orderings (each evaluated forwards and backwards), seeded with ``seed`` so
+    explanations are reproducible. SHAP's default budget (500 evaluations)
+    allows only 3 orderings for 81 indicators; on alerted trades of the primary
+    run that left 93% of the top-5 indicators in agreement with a 100-ordering
+    reference, against 97% with 20 orderings (see ``docs/scoring.md``).
     """
     import shap
 
@@ -69,11 +76,12 @@ def explain(model: nn.Module, background: np.ndarray, X: np.ndarray, tolerance: 
             method = "permutation"
             fn = lambda a: model_logits(model, a)  # noqa: E731
             masker = shap.maskers.Independent(background, max_samples=len(background))
-            explanation = shap.PermutationExplainer(fn, masker)(X, silent=True)
+            budget = int(permutations) * (2 * X.shape[1] + 1)
+            explanation = shap.PermutationExplainer(fn, masker, seed=int(seed) % (2**32))(X, max_evals=budget, silent=True)
             values = np.asarray(explanation.values, dtype=np.float64)
             base = float(np.mean(explanation.base_values))
             error = float(np.abs(values.sum(axis=1) + base - target).max())
-    return {"values": values, "base_value": base, "method": method, "additivity_error": error}
+    return {"values": values, "base_value": base, "method": method, "additivity_error": error, "permutations": int(permutations) if method == "permutation" else None}
 
 
 def top_contributions(shap_row: np.ndarray, x_row: np.ndarray, names: list[str], k: int) -> list[dict[str, Any]]:

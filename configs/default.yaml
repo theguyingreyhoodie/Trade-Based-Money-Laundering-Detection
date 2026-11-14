@@ -251,6 +251,7 @@ scoring:
   alert_min_score: 25           # alerts are raised from "Medium" upwards
   top_k_features: 5
   shap_background: 200
+  shap_permutations: 20         # random feature orderings per explanation (SHAP's default budget allows only 3)
   report_sample: 12
 
 # -----------------------------------------------------------------------------

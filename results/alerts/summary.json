@@ -4,7 +4,7 @@
     "run_id": "seed0-n3_dir0.5-fedavg",
     "round": 29,
     "global_model_sha256": "8ff5dc50017073748489572946bf23df25795da39f8b9074ad6a482166387b7a",
-    "global_model_tx": "0xc719727e1fdb1d0babc025a067ebe0ceea26e65b64b27d3f8d367b53a63ab33b"
+    "global_model_tx": "0xc3f4fd6582ba85ec60d85c773f24b2f968a71c1ac2af5d73e8b89ccd2b7a32b7"
   },
   "scorer": {
     "model_weight": 0.7,
@@ -1823,14 +1823,15 @@
       "permutation"
     ],
     "additivity_error": 9.536743199589637e-07,
-    "background_rows": 200
+    "background_rows": 200,
+    "permutations": 20
   },
   "ledger": {
     "backend": "evm",
     "alerts_registered": 426,
-    "latency_ms_p50": 15.160687966272235,
-    "latency_ms_p95": 25.72033362230286,
-    "cost_mean": 103030.39436619719,
+    "latency_ms_p50": 6.494666915386915,
+    "latency_ms_p95": 8.477791561745107,
+    "cost_mean": 103030.47887323944,
     "cost_unit": "gas"
   },
   "evaluation": {
@@ -2098,12 +2099,12 @@
     },
     "typology_attribution": {
       "alerts_on_illicit_trades": 319,
-      "top1_accuracy": 0.8244514106583072,
+      "top1_accuracy": 0.8275862068965517,
       "top2_accuracy": 0.9592476489028213,
       "per_typology": {
         "over_invoicing": {
           "alerts": 36,
-          "attributed_correctly": 0.8055555555555556
+          "attributed_correctly": 0.8333333333333334
         },
         "under_invoicing": {
           "alerts": 13,

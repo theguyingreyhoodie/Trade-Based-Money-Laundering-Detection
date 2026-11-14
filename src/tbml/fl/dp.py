@@ -5,12 +5,23 @@ that its model update is (epsilon, delta)-differentially private with respect to
 its own training rows. This protects a single trade record against whoever sees
 the update (the server and, through the global model, the other clients).
 
-Accounting. A client draws Poisson batches with rate ``q = batch / n`` and takes
-about ``n / batch`` steps per local epoch. Over a whole run it takes
-``rounds * local_epochs * n / batch`` steps with the same noise multiplier, and
-Renyi-DP composition over all of them gives the client's epsilon. The noise
-multiplier that hits a target epsilon is found with Opacus' accountant; it
+Accounting. Opacus replaces the client's data loader by Poisson sampling with
+rate ``q = 1 / k``, where ``k = ceil(n / batch)`` is the number of batches of the
+original loader, and draws ``int(1 / q)`` batches per epoch. The accountant here
+uses exactly that rate and step count (``sample_rate`` / ``steps_per_epoch``;
+a test checks them against Opacus). Over a whole run a client takes
+``rounds * local_epochs * steps_per_epoch`` steps with the same noise
+multiplier, and Renyi-DP composition over all of them gives its epsilon. The
+noise multiplier that hits a target epsilon is found with Opacus' accountant; it
 depends on the client's own ``n``, so every client computes its own.
+
+Empty Poisson batches are skipped (no update) instead of being released as pure
+noise, which the sampled-Gaussian analysis does not cover. A batch is empty with
+probability (1 - q)^n <= e^(-n/k) <= e^(-batch/2) for a client with at least one
+full batch of rows; a client smaller than one batch has q = 1 and never sees an
+empty batch. The guarantee therefore holds with delta larger by at most the
+number of steps times that probability: below 1e-100 for every client of the
+DP experiments here (largest value 1e-106).
 """
 
 from __future__ import annotations
@@ -26,8 +37,19 @@ from tbml.models.mlp import get_weights, make_loss, make_model, make_optimizer, 
 from tbml.utils import derive_seed
 
 
+def sample_rate(n: int, batch: int) -> float:
+    """Poisson sampling rate Opacus uses for a loader of ``n`` rows in batches of ``batch``: 1 / number of batches."""
+    n = max(int(n), 1)
+    return 1.0 / int(np.ceil(n / min(int(batch), n)))
+
+
+def steps_per_epoch(n: int, batch: int) -> int:
+    """Batches Opacus draws per epoch (``int(1 / sample_rate)``, as in its uniform sampler)."""
+    return int(1 / sample_rate(n, batch))
+
+
 def total_steps(n: int, batch: int, rounds: int, local_epochs: int) -> int:
-    return int(rounds * local_epochs * max(1, int(np.ceil(n / batch))))
+    return int(rounds * local_epochs * steps_per_epoch(n, batch))
 
 
 def noise_for_epsilon(epsilon: float, delta: float, n: int, batch: int, rounds: int, local_epochs: int) -> float:
@@ -36,7 +58,7 @@ def noise_for_epsilon(epsilon: float, delta: float, n: int, batch: int, rounds: 
 
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")
-        return float(get_noise_multiplier(target_epsilon=float(epsilon), target_delta=float(delta), sample_rate=min(1.0, batch / max(n, 1)),
+        return float(get_noise_multiplier(target_epsilon=float(epsilon), target_delta=float(delta), sample_rate=sample_rate(n, batch),
                                           steps=total_steps(n, batch, rounds, local_epochs), accountant="rdp"))
 
 
@@ -45,7 +67,7 @@ def spent_epsilon(noise_multiplier: float, delta: float, n: int, batch: int, rou
     from opacus.accountants import RDPAccountant
 
     accountant = RDPAccountant()
-    accountant.history = [(float(noise_multiplier), min(1.0, batch / max(n, 1)), total_steps(n, batch, rounds, local_epochs))]
+    accountant.history = [(float(noise_multiplier), sample_rate(n, batch), total_steps(n, batch, rounds, local_epochs))]
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")
         return float(accountant.get_epsilon(float(delta)))

@@ -1,13 +1,13 @@
 measure,evm,python
-"Single registration, latency p50 / p95",8.9 / 10.6 ms,2.9 / 3.2 ms
-"Single registration, throughput",100 records/s,343 records/s
+"Single registration, latency p50 / p95",6.3 / 6.4 ms,2.3 / 2.4 ms
+"Single registration, throughput",146 records/s,427 records/s
 "Cost per record, single","103,088 gas",573 bytes appended
-Batch of 10: throughput,579 records/s,"1,784 records/s"
-Batch of 50: throughput,"1,706 records/s","6,965 records/s"
-Batch of 100: throughput,"1,960 records/s","9,857 records/s"
+Batch of 10: throughput,"1,266 records/s","4,047 records/s"
+Batch of 50: throughput,"2,627 records/s","14,297 records/s"
+Batch of 100: throughput,"2,793 records/s","21,135 records/s"
 Cost per record in the largest batch,"74,209 gas",105 bytes appended
-Merkle root per batch of documents: throughput,"46,506 documents/s","92,085 documents/s"
+Merkle root per batch of documents: throughput,"68,381 documents/s","202,043 documents/s"
 Cost per document with Merkle batching,206.2 gas,1.2 bytes appended
 Ledger storage per record,96 bytes,106 bytes
 Ledger storage per document with Merkle batching,0.19 bytes,1.16 bytes
-Read (`verify`) latency p50,2.68 ms,< 0.01 ms
+Read (`verify`) latency p50,1.61 ms,< 0.01 ms

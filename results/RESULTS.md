@@ -11,17 +11,17 @@ written as CSV to `results/tables/`.
 
 **Research question.** Can Federated Learning and Blockchain support privacy-preserving TBML detection across multiple organisations?
 
-**Short answer.** Yes, with limits. Mean of 3 seeds, test period:
+What this run shows (mean of 3 seeds, test period):
 
-1. **Learning beats rules.** The rules engine reaches F1 0.431; pooled-data models reach 0.753 (MLP) and 0.806 (LightGBM).
-2. **Federated learning works without moving raw data.** With 3 institutions and an IID split, FedAvg reaches F1 0.702, against 0.653 when each institution trains alone (+0.049). The server received model parameters and fixed-size aggregates only, which is enforced and tested.
-3. **Parameter averaging costs almost nothing; fragmentation costs a lot.** One model trained on the pooled rows, but with each institution's locally computed indicators, reaches 0.698, the same level as FedAvg. Both are below the centralised MLP (0.753), because indicators that need to see related trades together (trade graph, shared bills of lading, entity history) are computed from one institution's records only.
+1. **Rules against learned models.** The rules engine reaches F1 0.431; with pooled data the MLP reaches 0.753 and LightGBM 0.806 (learned models are ahead of the rules).
+2. **Federated learning without moving raw data.** With 3 institutions and an IID split, FedAvg reaches F1 0.702 and local-only training 0.653: federating is ahead (+0.049). The server received model parameters and fixed-size aggregates only, which is enforced and tested.
+3. **Where the gap to the centralised model comes from.** Centralised MLP 0.753; one model trained on the pooled rows but with each institution's locally computed indicators 0.698 (-0.054: the cost of information fragmentation, because indicators that need related trades together, such as the trade graph, shared bills of lading and entity history, are computed from one institution's records only); FedAvg 0.702 (+0.004 against that model: no measurable cost of training by parameter averaging).
    The typologies that lose most recall from centralised to federated are multiple invoicing (0.98 to 0.59) and circular trading (0.83 to 0.52).
-4. **The thinner the data is spread, the more federating helps:** +0.049 F1 at 3 clients, +0.064 F1 at 5 clients, +0.109 F1 at 10 clients (IID).
-5. **Under strong skew, local models win.** At Dirichlet α = 0.1, local-only reaches 0.801 and FedAvg 0.737: when a typology concentrates at one institution, its own graph is intact and its own threshold fits its own positive rate. Fine-tuning the global model locally closes the gap (0.804).
-6. **Communication is small.** A model is 30.1 kB; a 30-round run with 3 clients moves 10.14 MB in total and reaches 95% of its final F1 after about 6 rounds.
-7. **The evidence ledger is cheap enough to run alongside.** On the EVM backend a registration takes 8.9 ms (p50) / 10.6 ms (p95) and 103,088 gas; Merkle batching brings a trade document down to 206 gas. Tampering with an invoice, a model update or an alert is detected.
-8. **Alerts are explainable and calibrated.** Precision is 31% / 59% / 96% in the Medium / High / Critical bands, and the suspected typology is right for 82% of alerts on illicit trades.
+4. **Number of institutions.** The gain from federating grows with the number of institutions (IID): +0.049 F1 at 3 clients, +0.064 F1 at 5 clients, +0.109 F1 at 10 clients.
+5. **Skewed data.** At the strongest skew tested (Dirichlet α = 0.1, 3 clients) local-only training reaches 0.801, FedAvg 0.737, and FedAvg followed by local fine-tuning 0.804. Local-only training and FedAvg with local fine-tuning are level (within 0.01 F1); FedAvg is behind.
+6. **Communication.** A model is 30.1 kB; a 30-round run with 3 clients moves 10.14 MB in total and reaches 95% of its best F1 after about 6 rounds.
+7. **Evidence ledger.** On the EVM backend a registration takes 6.3 ms (p50) / 6.4 ms (p95) and 103,088 gas; Merkle batching brings a trade document down to 206 gas. In the verification demo, 3 of 3 kinds of evidence behaved as required (genuine record verified, altered record rejected).
+8. **Explainable alerts.** Precision is 31% / 59% / 96% in the Medium / High / Critical bands, and the suspected typology is right for 83% of alerts on illicit trades.
 
 What this does not show: performance on real data, robustness against adaptive launderers, or behaviour of a real multi-node chain. See section 11.
 
@@ -104,7 +104,7 @@ typology that it catches.
 | R19 | Proceeds collected in an offshore bank | high risk routing | 162 | 20% | 45% |
 | R20 | Party in a listed high-risk jurisdiction | high risk routing | 1298 | 2% | 10% |
 
-At least one rule fires on 25.9% of trades; that set contains 88% of the illicit trades at 12% precision. Rules find most cases but bury them in false alerts.
+At least one rule fires on 25.9% of trades; that set contains 88% of the illicit trades at 12% precision.
 
 ## 5. Objective 3: federated learning
 
@@ -162,7 +162,7 @@ what training by parameter averaging costs. *Client thresholds*: same global mod
 
 ![F1 against Dirichlet alpha](plots/f1_vs_alpha.png)
 
-FedProx (μ = 0.01) against FedAvg: α = 0.1: 0.737 vs 0.737; α = 0.5: 0.710 vs 0.722; α = 1: 0.730 vs 0.726. FedProx does not improve on FedAvg at any α: the differences range from -0.011 to +0.004 F1, small against the spread between seeds.
+FedProx (μ = 0.01) against FedAvg: α = 0.1: 0.737 vs 0.737; α = 0.5: 0.710 vs 0.722; α = 1: 0.730 vs 0.726. FedProx does not improve on FedAvg at any α: the differences range from -0.011 to +0.004 F1.
 
 ### 5.5 F1 against the number of clients
 
@@ -205,18 +205,18 @@ The 90% target is 0.90 x the centralised MLP's F1 for the same seed.
 
 | Measure | EVM (Hardhat node) | Pure Python |
 | --- | ---: | ---: |
-| Single registration, latency p50 / p95 | 8.9 / 10.6 ms | 2.9 / 3.2 ms |
-| Single registration, throughput | 100 records/s | 343 records/s |
+| Single registration, latency p50 / p95 | 6.3 / 6.4 ms | 2.3 / 2.4 ms |
+| Single registration, throughput | 146 records/s | 427 records/s |
 | Cost per record, single | 103,088 gas | 573 bytes appended |
-| Batch of 10: throughput | 579 records/s | 1,784 records/s |
-| Batch of 50: throughput | 1,706 records/s | 6,965 records/s |
-| Batch of 100: throughput | 1,960 records/s | 9,857 records/s |
+| Batch of 10: throughput | 1,266 records/s | 4,047 records/s |
+| Batch of 50: throughput | 2,627 records/s | 14,297 records/s |
+| Batch of 100: throughput | 2,793 records/s | 21,135 records/s |
 | Cost per record in the largest batch | 74,209 gas | 105 bytes appended |
-| Merkle root per batch of documents: throughput | 46,506 documents/s | 92,085 documents/s |
+| Merkle root per batch of documents: throughput | 68,381 documents/s | 202,043 documents/s |
 | Cost per document with Merkle batching | 206.2 gas | 1.2 bytes appended |
 | Ledger storage per record | 96 bytes | 106 bytes |
 | Ledger storage per document with Merkle batching | 0.19 bytes | 1.16 bytes |
-| Read (`verify`) latency p50 | 2.68 ms | < 0.01 ms |
+| Read (`verify`) latency p50 | 1.61 ms | < 0.01 ms |
 
 With blocks mined every 1 s (how a real permissioned chain behaves) one registration takes 1.0 s, and 100 registrations submitted together are all final after 1.1 s in 1 block. Latency is then set by the block interval, not by the contract.
 
@@ -230,9 +230,9 @@ What the pipeline registered (primary seed):
 
 | Evidence | Volume | Time | Cost |
 | --- | --- | ---: | ---: |
-| Trade documents at ingestion | 252,546 documents in 508 Merkle batches | 11.5 s | 208 gas per document |
-| Model hashes of the primary FL run | 90 client updates + 30 global models | 17 ms p50 each | 142,566 gas each |
-| Alerts | 426 alerts | 15 ms p50 each | 103,030 gas each |
+| Trade documents at ingestion | 252,546 documents in 508 Merkle batches | 6.8 s | 208 gas per document |
+| Model hashes of the primary FL run | 90 client updates + 30 global models | 8 ms p50 each | 142,566 gas each |
+| Alerts | 426 alerts | 6 ms p50 each | 103,030 gas each |
 
 Integrity verification demo (`scripts/ledger_tamper_demo.py`, evm backend):
 
@@ -270,7 +270,7 @@ Only hashes, document types, opaque reference ids and timestamps are on the ledg
 - **Calibration.** Expected calibration error 0.0106 for the model as trained, 0.0025 for the risk score; Brier score 0.0163 against 0.0141.
 - **Blend weight.** Fixed at 0.7 in advance; the best value on validation is 0.8. The sweep is in `docs/scoring.md`.
 - **Alerts.** 426 alerts, 75% on truly illicit trades. Each lists its top SHAP contributions in plain English, the rules that fired, a suspected typology, and its hash and transaction id. A readable sample is in `results/alerts/report.md`.
-- **Suspected typology** is right for 82% of alerts on illicit trades and within the top two for 96%.
+- **Suspected typology** is right for 83% of alerts on illicit trades and within the top two for 96%.
 - **Rule floor.** 2 alert(s) were raised only because of the rule floor; 0 of them on illicit trades.
 - **SHAP.** Method: permutation; additivity error 9.5e-07.
 
@@ -287,11 +287,11 @@ Clients send their weighted updates as fixed-point 64-bit integers with pairwise
 | Privacy budget per client | Mean noise multiplier | F1 | PR-AUC |
 | --- | ---: | ---: | ---: |
 | no DP | - | 0.722 ± 0.005 | 0.772 ± 0.007 |
-| ε = 8 | 0.94 | 0.577 ± 0.008 | 0.605 ± 0.017 |
-| ε = 3 | 1.68 | 0.548 ± 0.012 | 0.570 ± 0.019 |
-| ε = 1 | 4.10 | 0.415 ± 0.046 | 0.395 ± 0.050 |
+| ε = 8 | 0.92 | 0.577 ± 0.008 | 0.605 ± 0.017 |
+| ε = 3 | 1.64 | 0.550 ± 0.012 | 0.570 ± 0.019 |
+| ε = 1 | 3.99 | 0.418 ± 0.047 | 0.398 ± 0.050 |
 
-Example-level (ε, δ = 1e-05)-DP for each client's own training rows, clipping norm 2, accounted with Rényi DP over all local steps of the run. Smaller clients need more noise for the same budget. The clipping norm was chosen on validation at ε = 3 on one seed (12 combinations of clipping norm, batch size and learning rate); an untuned setting was clearly worse.
+Example-level (ε, δ = 1e-05)-DP for each client's own training rows, clipping norm 2, accounted with Rényi DP over all local steps of the run. Smaller clients need more noise for the same budget. How the clipping norm was chosen (on validation) is described in `docs/fl_design.md`, section 10.
 
 ### 9.3 Model poisoning and norm clipping
 
@@ -304,7 +304,9 @@ Example-level (ε, δ = 1e-05)-DP for each client's own training rows, clipping 
 | Attack, median norm clipping | 0.592 ± 0.028 | 0.584 ± 0.038 | 16 |
 | No attack, median norm clipping | 0.697 ± 0.014 | 0.700 ± 0.020 | 24 |
 
-Attack: client [0] of 3 sends its update sign-flipped and scaled by 5 in every round. Without a defence training diverges; selecting the round on validation only rolls back to an early model, it does not repair anything. Clipping every update to the round's median norm keeps training alive at a cost, with or without an attacker, because it also shrinks the largest honest client's update. It does not stop a patient attacker whose updates stay within the bound (a backdoor).
+Attack: client 0 of 3 sends its update sign-flipped and scaled by 5 in every round. After the last round the global model has F1 0.720 without an attack, 0.070 under attack with no defence, 0.592 under attack with median norm clipping, and 0.697 with clipping but no attacker (-0.023: what the defence costs when nobody attacks).
+
+Two cautions when reading this. Selecting the round on validation can hide a destroyed model, because it rolls back to an early round (third column) without repairing anything. And clipping to the round's median norm bounds any one client's influence but also shrinks the largest honest update (update size grows with the number of local steps), and it does nothing against an attacker who stays within the bound, such as a backdoor.
 
 ### 9.4 Vertical FL demo (the Bank / Trade registry / Customs picture)
 
@@ -319,11 +321,11 @@ Attack: client [0] of 3 sends its update sign-flipped and scaled by 5 in every r
 | One model on all three parties' columns | 0.593 ± 0.014 | 0.642 ± 0.018 |
 | Centralised MLP with all 81 indicators (reference) | 0.753 ± 0.008 | 0.820 ± 0.013 |
 
-Columns per party: bank 23, trade 41, customs 11. Each party sends an 8-dimensional embedding per trade and receives its gradient: 192 bytes per trade per epoch, 6.79 MB per epoch for 35,383 trades, so traffic grows with the data, unlike FedAvg where it grows with the model. Working together beats any party alone, but indicators that compare two parties' fields directly cannot be computed by anyone, which is why this stays below the 81-indicator model. Design note: `docs/fl_design.md`, section 9.
+Columns per party: bank 23, trade 41, customs 11. Each party sends an 8-dimensional embedding per trade and receives its gradient: 192 bytes per trade per epoch, 6.79 MB per epoch for 35,383 trades, so traffic grows with the data, unlike FedAvg where it grows with the model. The split network reaches F1 0.568, against 0.429 for the best single party and 0.593 for one model on all three parties' columns. Indicators that compare two parties' fields directly cannot be computed by anyone in this setting, so the 81-indicator model is out of reach by construction. Design note: `docs/fl_design.md`, section 9.
 
 ### 9.5 Local fine-tuning of the global model
 
-Reported as a column of the table in section 5.1. It needs no communication and is never much worse than the better of FedAvg and local-only.
+Each client adapts the global model to its own data after training and picks its own threshold; nothing is sent. F1 per scenario is a column of the table in section 5.1. Compared with the better of FedAvg and local-only in the same scenario, fine-tuning ranges from -0.006 to +0.033 F1 over the 9 scenarios.
 
 ## 10. Confusion matrices
 
@@ -369,14 +371,14 @@ Counts on the test period, summed over 3 seeds.
 - **The chain is a single development node.** No consensus, no replication, unlocked development keys, and state that is lost on restart
   (re-anchored from a journal). Latency on it is a lower bound.
 - **Integrity is not truth.** A hash proves a record has not changed since it was registered, not that it was true.
-- **Three seeds.** Standard deviations over three runs are rough; differences of about 0.01 F1 should not be read as real.
+- **Few seeds.** Standard deviations over three runs are rough; differences of about 0.01 F1 should not be read as real.
 - **Flags, not findings.** Scores and typology suggestions support a human investigator. They are not legal determinations.
 
 ## 12. Reproduce
 
 ```
 make setup      # Python environment and the Hardhat project
-make all        # every step, all seeds (about 30 minutes on a laptop CPU)
+make all        # every step, all seeds (about 22 minutes on an Apple M5 laptop; on macOS use `caffeinate -i make all`)
 make quick      # small smoke run
 make test       # pytest
 ```

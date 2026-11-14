@@ -127,7 +127,15 @@ def _reference_line(ax: plt.Axes, y: float, label: str, x_text: float | None = N
 # --------------------------------------------------------------------------- core figures
 
 
-def method_comparison(rows: list[dict[str, Any]], path: Path, title: str, subtitle: str) -> Path:
+def seeds_text(n: int) -> str:
+    return f"mean of {n} seeds" if n > 1 else "1 seed"
+
+
+def spread_text(n: int) -> str:
+    return f"mean ± 1 std, {n} seeds" if n > 1 else "1 seed"
+
+
+def method_comparison(rows: list[dict[str, Any]], path: Path, title: str, subtitle: str, n_seeds: int = 3) -> Path:
     """Ranked horizontal bars of F1 (mean, with the spread over seeds); methods that keep raw data local are emphasised."""
     apply_style()
     rows = sorted(rows, key=lambda r: r["f1"])
@@ -140,7 +148,7 @@ def method_comparison(rows: list[dict[str, Any]], path: Path, title: str, subtit
         ax.annotate(f"{r['f1']:.3f}", (r["f1"] + r["f1_std"], i), xytext=(6, 0), textcoords="offset points", va="center", fontsize=9, color=INK)
     ax.set_yticks(y, [r["label"] for r in rows])
     ax.set_xlim(0, max(r["f1"] + r["f1_std"] for r in rows) * 1.14)
-    ax.set_xlabel("F1 on the test period (mean of 3 seeds, whiskers show ± 1 std)" + (f"\n{subtitle}" if subtitle else ""))
+    ax.set_xlabel(f"F1 on the test period ({spread_text(n_seeds)})" + (f"\n{subtitle}" if subtitle else ""))
     _only_x_grid(ax)
     ax.spines["left"].set_visible(False)
     handles = [plt.Rectangle((0, 0), 1, 1, color=BLUE), plt.Rectangle((0, 0), 1, 1, color=NEUTRAL)]
@@ -148,7 +156,7 @@ def method_comparison(rows: list[dict[str, Any]], path: Path, title: str, subtit
     return _save(fig, path)
 
 
-def scenario_dumbbell(rows: list[dict[str, Any]], centralised: float, path: Path) -> Path:
+def scenario_dumbbell(rows: list[dict[str, Any]], centralised: float, path: Path, n_seeds: int = 3) -> Path:
     """Local-only to FedAvg per scenario: does federating help, and by how much?"""
     apply_style()
     fig, ax = plt.subplots(figsize=(7.6, 0.46 * len(rows) + 1.7))
@@ -169,14 +177,14 @@ def scenario_dumbbell(rows: list[dict[str, Any]], centralised: float, path: Path
     ax.annotate(f"centralised MLP {centralised:.3f}", (centralised, -0.62), xytext=(-4, 2), textcoords="offset points", ha="right", va="bottom", fontsize=8.5, color=INK_2)
     ax.set_yticks(y, [r["label"] for r in rows])
     ax.set_ylim(-0.7, len(rows) - 0.4)
-    ax.set_xlabel("F1 on the test period (mean of 3 seeds)")
+    ax.set_xlabel(f"F1 on the test period ({seeds_text(n_seeds)})")
     _only_x_grid(ax)
     ax.spines["left"].set_visible(False)
-    _header(ax, "Federating helps where data is spread thin, not where it is skewed")
+    _header(ax, "Local-only training and FedAvg, by data split and number of clients")
     return _save(fig, path)
 
 
-def f1_vs_round(panels: list[dict[str, Any]], centralised: float, path: Path) -> Path:
+def f1_vs_round(panels: list[dict[str, Any]], centralised: float, path: Path, n_seeds: int = 3) -> Path:
     """Test F1 per round, one small panel per data split, with the fixed references."""
     apply_style()
     fig, axes = plt.subplots(1, len(panels), figsize=(3.05 * len(panels), 3.3), sharey=True)
@@ -197,12 +205,14 @@ def f1_vs_round(panels: list[dict[str, Any]], centralised: float, path: Path) ->
     handles, labels = first.get_legend_handles_labels()
     fig.subplots_adjust(wspace=0.08, top=0.74)
     left = first.get_position().x0
-    fig.suptitle("FedAvg converges in about ten rounds; the band is ± 1 std over 3 seeds", x=left, y=0.99, ha="left", va="top", fontsize=11, fontweight="bold")
+    band = f"; the band is ± 1 std over {n_seeds} seeds" if n_seeds > 1 else ""
+    fig.suptitle(f"F1 of the global model by round{band}", x=left, y=0.99, ha="left", va="top", fontsize=11, fontweight="bold")
     fig.legend(handles, labels, loc="upper left", bbox_to_anchor=(left, 0.925), ncols=3, handlelength=1.6, columnspacing=1.6, borderaxespad=0.0)
     return _save(fig, path)
 
 
-def lines_by_setting(x_labels: list[str], series: dict[str, dict[str, np.ndarray]], centralised: float, path: Path, title: str, xlabel: str) -> Path:
+def lines_by_setting(x_labels: list[str], series: dict[str, dict[str, np.ndarray]], centralised: float, path: Path, title: str, xlabel: str,
+                     n_seeds: int = 3) -> Path:
     """F1 of each method across an ordered setting (data skew, number of clients)."""
     apply_style()
     fig, ax = plt.subplots(figsize=(7.4, 4.0))
@@ -222,14 +232,14 @@ def lines_by_setting(x_labels: list[str], series: dict[str, dict[str, np.ndarray
     span = ax.get_ylim()[1] - ax.get_ylim()[0]
     _end_labels(ax, ends, x[-1] + 0.3, min_gap=span * 0.055)
     ax.set_xlabel(xlabel)
-    ax.set_ylabel("F1 on the test period (mean ± 1 std, 3 seeds)")
+    ax.set_ylabel(f"F1 on the test period ({spread_text(n_seeds)})")
     _only_y_grid(ax)
     _header(ax, title)
     fig.subplots_adjust(right=0.74)
     return _save(fig, path)
 
 
-def typology_heatmap(methods: list[str], typologies: list[str], recall: np.ndarray, path: Path) -> Path:
+def typology_heatmap(methods: list[str], typologies: list[str], recall: np.ndarray, path: Path, n_seeds: int = 3) -> Path:
     """Recall per typology and method: one hue, darker is higher, values printed in the cells."""
     apply_style()
     fig, ax = plt.subplots(figsize=(1.0 + 0.86 * len(typologies), 0.9 + 0.5 * len(methods)))
@@ -252,12 +262,11 @@ def typology_heatmap(methods: list[str], typologies: list[str], recall: np.ndarr
     bar.outline.set_visible(False)
     bar.set_label("recall", fontsize=9, color=INK_2)
     bar.ax.tick_params(labelsize=8, length=0)
-    fig.suptitle("Which laundering patterns each method catches (recall on the test period, mean of 3 seeds)", x=0.02, y=1.04, ha="left", fontsize=11,
-                 fontweight="bold")
+    fig.suptitle(f"Recall per typology and method (test period, {seeds_text(n_seeds)})", x=0.02, y=1.04, ha="left", fontsize=11, fontweight="bold")
     return _save(fig, path)
 
 
-def communication(curves: list[dict[str, Any]], path: Path) -> Path:
+def communication(curves: list[dict[str, Any]], path: Path, n_seeds: int = 3) -> Path:
     """Test F1 against megabytes exchanged, for federations of different size (ordered series: one hue)."""
     apply_style()
     fig, ax = plt.subplots(figsize=(7.2, 3.9))
@@ -268,10 +277,10 @@ def communication(curves: list[dict[str, Any]], path: Path) -> Path:
     for _, (x, y, label) in zip(ORDINAL, ends):
         ax.annotate(label, (x, y), xytext=(6, 7), textcoords="offset points", va="center", fontsize=8.5, color=INK_2, annotation_clip=False)
     ax.set_xlabel("cumulative traffic of the whole federation, MB (model up and down, evaluation, setup)")
-    ax.set_ylabel("F1 on the test period (mean of 3 seeds)")
+    ax.set_ylabel(f"F1 on the test period ({seeds_text(n_seeds)})")
     ax.set_xlim(0, max(c["mb"][-1] for c in curves) * 1.16)
     _only_y_grid(ax)
-    ax.set_title("More clients need more traffic for a lower F1 (IID split, 30 rounds)")
+    ax.set_title(f"F1 against traffic exchanged (IID split, {len(curves[0]['f1'])} rounds)")
     ax.legend(loc="lower right", handlelength=1.6)
     return _save(fig, path)
 
@@ -291,8 +300,7 @@ def ledger_modes(modes: list[str], throughput: list[float], gas: list[float], pa
         ax.spines["left"].set_visible(False)
         ax.xaxis.set_major_formatter(matplotlib.ticker.FuncFormatter(lambda v, _: f"{v / 1000:.0f}K" if v >= 1000 else f"{v:.0f}"))
     axes[0].set_yticks(y, modes)
-    fig.suptitle("Batching raises throughput; a Merkle root makes the cost per document negligible (EVM backend)", x=0.02, y=1.04, ha="left", fontsize=11,
-                 fontweight="bold")
+    fig.suptitle("Throughput and gas per record by way of writing to the chain (EVM backend)", x=0.02, y=1.04, ha="left", fontsize=11, fontweight="bold")
     fig.subplots_adjust(wspace=0.12)
     return _save(fig, path)
 
@@ -310,12 +318,12 @@ def storage_growth(records: np.ndarray, direct_bytes: np.ndarray, merkle_bytes: 
     ax.set_ylim(0, None)
     ax.xaxis.set_major_formatter(matplotlib.ticker.FuncFormatter(lambda v, _: f"{v / 1000:.0f}K" if v else "0"))
     _only_y_grid(ax)
-    ax.set_title("On-chain storage grows linearly with the number of records")
+    ax.set_title("On-chain storage against the number of documents registered")
     ax.legend(loc="upper left", handlelength=1.6)
     return _save(fig, path)
 
 
-def privacy_utility(epsilons: list[float], mean: np.ndarray, std: np.ndarray, non_private: float, path: Path) -> Path:
+def privacy_utility(epsilons: list[float], mean: np.ndarray, std: np.ndarray, non_private: float, path: Path, n_seeds: int = 3) -> Path:
     apply_style()
     fig, ax = plt.subplots(figsize=(6.4, 3.7))
     x = np.arange(len(epsilons))
@@ -328,9 +336,9 @@ def privacy_utility(epsilons: list[float], mean: np.ndarray, std: np.ndarray, no
     ax.set_ylim(min(mean.min() - std.max() - 0.04, non_private - 0.05), non_private + 0.045)
     _reference_line(ax, non_private, f"FedAvg without DP {non_private:.3f}", x_text=-0.4)
     ax.set_xlabel("privacy budget of each client (smaller = more private), δ = 1e-5")
-    ax.set_ylabel("F1 on the test period (mean ± 1 std, 3 seeds)")
+    ax.set_ylabel(f"F1 on the test period ({spread_text(n_seeds)})")
     _only_y_grid(ax)
-    ax.set_title("DP-SGD: what example-level privacy costs in F1")
+    ax.set_title("DP-SGD: F1 against the privacy budget")
     return _save(fig, path)
 
 
@@ -370,7 +378,7 @@ def risk_bands(bands: list[dict[str, Any]], reliability: list[dict[str, Any]], p
     ax.set_xlabel("share of trades in the band that are illicit")
     _only_x_grid(ax)
     ax.spines["left"].set_visible(False)
-    ax.set_title("Precision rises with the risk band", fontsize=10.5)
+    ax.set_title("Share of illicit trades per risk band", fontsize=10.5)
 
     ax = axes[1]
     predicted = np.array([r["mean_predicted"] for r in reliability])
@@ -384,6 +392,6 @@ def risk_bands(bands: list[dict[str, Any]], reliability: list[dict[str, Any]], p
     ax.set_aspect("equal")
     ax.set_xlabel("risk score / 100 (mean per bucket)")
     ax.set_ylabel("observed share of illicit trades")
-    ax.set_title("The score can be read as a probability", fontsize=10.5)
+    ax.set_title("Risk score against observed share of illicit trades", fontsize=10.5)
     fig.subplots_adjust(wspace=0.28)
     return _save(fig, path)

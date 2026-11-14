@@ -134,7 +134,7 @@ def build_alerts(
     trades = linked.set_index("trade_id")
     created = dt.datetime.now(dt.timezone.utc).replace(microsecond=0).isoformat()
     alerts: list[dict[str, Any]] = []
-    shap_info = {"method": [], "additivity_error": 0.0, "background_rows": int(scfg.shap_background)}
+    shap_info = {"method": [], "additivity_error": 0.0, "background_rows": int(scfg.shap_background), "permutations": int(scfg.shap_permutations)}
     for cs in scored:
         fs = cs.fs
         risk = scorer.score(cs.model_score, cs.rule_score)
@@ -144,7 +144,7 @@ def build_alerts(
         train = np.flatnonzero(fs.split == "train")
         rng = np.random.default_rng(derive_seed(seed, "shap-background", cs.client))
         background = fs.X[rng.choice(train, size=min(int(scfg.shap_background), len(train)), replace=False)] if len(train) else fs.X[:1]
-        result = explain(model, background, fs.X[rows])
+        result = explain(model, background, fs.X[rows], permutations=int(scfg.shap_permutations), seed=derive_seed(seed, "shap", cs.client))
         shap_info["method"].append(result["method"])
         shap_info["additivity_error"] = max(shap_info["additivity_error"], result["additivity_error"])
         p_model, p_rules = scorer.components(cs.model_score[rows], cs.rule_score[rows])

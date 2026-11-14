@@ -1,5 +1,6 @@
 {
   "seed": 0,
+  "fingerprint": "3897ea3c922fb2e3",
   "scenario": {
     "name": "n10_iid",
     "n_clients": 10,
@@ -354,7 +355,7 @@
       "bytes_eval_up": 177404,
       "bytes_round": 1126334,
       "bytes_cumulative": 1140714,
-      "seconds": 2.3638006660621613
+      "seconds": 1.5654725420754403
     },
     {
       "round": 2,
@@ -374,7 +375,7 @@
       "bytes_eval_up": 177280,
       "bytes_round": 1126210,
       "bytes_cumulative": 2266924,
-      "seconds": 0.3814228749834001
+      "seconds": 0.36200395808555186
     },
     {
       "round": 3,
@@ -394,7 +395,7 @@
       "bytes_eval_up": 177280,
       "bytes_round": 1126210,
       "bytes_cumulative": 3393134,
-      "seconds": 0.3687359590549022
+      "seconds": 0.2387393331155181
     },
     {
       "round": 4,
@@ -414,7 +415,7 @@
       "bytes_eval_up": 177280,
       "bytes_round": 1126210,
       "bytes_cumulative": 4519344,
-      "seconds": 0.3645439581014216
+      "seconds": 0.24523187498562038
     },
     {
       "round": 5,
@@ -434,7 +435,7 @@
       "bytes_eval_up": 177280,
       "bytes_round": 1126210,
       "bytes_cumulative": 5645554,
-      "seconds": 0.2546000420115888
+      "seconds": 0.44769145804457366
     },
     {
       "round": 6,
@@ -454,7 +455,7 @@
       "bytes_eval_up": 177280,
       "bytes_round": 1126210,
       "bytes_cumulative": 6771764,
-      "seconds": 0.3640065419021994
+      "seconds": 0.34782916703261435
     },
     {
       "round": 7,
@@ -474,7 +475,7 @@
       "bytes_eval_up": 177280,
       "bytes_round": 1126210,
       "bytes_cumulative": 7897974,
-      "seconds": 0.25556537485681474
+      "seconds": 0.2433927501551807
     },
     {
       "round": 8,
@@ -494,7 +495,7 @@
       "bytes_eval_up": 177280,
       "bytes_round": 1126210,
       "bytes_cumulative": 9024184,
-      "seconds": 0.38782479194924235
+      "seconds": 0.24909895798191428
     },
     {
       "round": 9,
@@ -514,7 +515,7 @@
       "bytes_eval_up": 177280,
       "bytes_round": 1126210,
       "bytes_cumulative": 10150394,
-      "seconds": 0.25546758412383497
+      "seconds": 0.3574367919936776
     },
     {
       "round": 10,
@@ -534,7 +535,7 @@
       "bytes_eval_up": 177280,
       "bytes_round": 1126210,
       "bytes_cumulative": 11276604,
-      "seconds": 0.36965770786628127
+      "seconds": 0.24718066700734198
     },
     {
       "round": 11,
@@ -554,7 +555,7 @@
       "bytes_eval_up": 177280,
       "bytes_round": 1126210,
       "bytes_cumulative": 12402814,
-      "seconds": 0.3541072909720242
+      "seconds": 0.2497291669715196
     },
     {
       "round": 12,
@@ -574,7 +575,7 @@
       "bytes_eval_up": 177280,
       "bytes_round": 1126210,
       "bytes_cumulative": 13529024,
-      "seconds": 0.25600475003011525
+      "seconds": 0.48457312514074147
     },
     {
       "round": 13,
@@ -594,7 +595,7 @@
       "bytes_eval_up": 177280,
       "bytes_round": 1126210,
       "bytes_cumulative": 14655234,
-      "seconds": 0.3672378750052303
+      "seconds": 0.2383647090755403
     },
     {
       "round": 14,
@@ -614,7 +615,7 @@
       "bytes_eval_up": 177280,
       "bytes_round": 1126210,
       "bytes_cumulative": 15781444,
-      "seconds": 0.2584585421718657
+      "seconds": 0.38134470907971263
     },
     {
       "round": 15,
@@ -634,7 +635,7 @@
       "bytes_eval_up": 177280,
       "bytes_round": 1126210,
       "bytes_cumulative": 16907654,
-      "seconds": 0.47080895816907287
+      "seconds": 0.24447945784777403
     },
     {
       "round": 16,
@@ -654,7 +655,7 @@
       "bytes_eval_up": 177280,
       "bytes_round": 1126210,
       "bytes_cumulative": 18033864,
-      "seconds": 0.2583055831491947
+      "seconds": 0.3593999999575317
     },
     {
       "round": 17,
@@ -674,7 +675,7 @@
       "bytes_eval_up": 177280,
       "bytes_round": 1126210,
       "bytes_cumulative": 19160074,
-      "seconds": 0.4906797499861568
+      "seconds": 0.35262108291499317
     },
     {
       "round": 18,
@@ -694,7 +695,7 @@
       "bytes_eval_up": 177280,
       "bytes_round": 1126210,
       "bytes_cumulative": 20286284,
-      "seconds": 0.24103912501595914
+      "seconds": 0.2410878329537809
     },
     {
       "round": 19,
@@ -714,7 +715,7 @@
       "bytes_eval_up": 177280,
       "bytes_round": 1126210,
       "bytes_cumulative": 21412494,
-      "seconds": 0.24307179101742804
+      "seconds": 0.23909975006245077
     },
     {
       "round": 20,
@@ -734,7 +735,7 @@
       "bytes_eval_up": 177280,
       "bytes_round": 1126210,
       "bytes_cumulative": 22538704,
-      "seconds": 0.46409583394415677
+      "seconds": 0.47542037488892674
     },
     {
       "round": 21,
@@ -754,7 +755,7 @@
       "bytes_eval_up": 177280,
       "bytes_round": 1126210,
       "bytes_cumulative": 23664914,
-      "seconds": 0.3493040830362588
+      "seconds": 0.23909666598774493
     },
     {
       "round": 22,
@@ -774,7 +775,7 @@
       "bytes_eval_up": 177280,
       "bytes_round": 1126210,
       "bytes_cumulative": 24791124,
-      "seconds": 0.24170183297246695
+      "seconds": 0.24024495808407664
     },
     {
       "round": 23,
@@ -794,7 +795,7 @@
       "bytes_eval_up": 177280,
       "bytes_round": 1126210,
       "bytes_cumulative": 25917334,
-      "seconds": 0.48158266698010266
+      "seconds": 0.34541129088029265
     },
     {
       "round": 24,
@@ -814,7 +815,7 @@
       "bytes_eval_up": 177280,
       "bytes_round": 1126210,
       "bytes_cumulative": 27043544,
-      "seconds": 0.3542394160758704
+      "seconds": 0.36837295815348625
     },
     {
       "round": 25,
@@ -834,7 +835,7 @@
       "bytes_eval_up": 177280,
       "bytes_round": 1126210,
       "bytes_cumulative": 28169754,
-      "seconds": 0.24337454210035503
+      "seconds": 0.24388129077851772
     },
     {
       "round": 26,
@@ -854,7 +855,7 @@
       "bytes_eval_up": 177280,
       "bytes_round": 1126210,
       "bytes_cumulative": 29295964,
-      "seconds": 0.3597867500502616
+      "seconds": 0.25124129210598767
     },
     {
       "round": 27,
@@ -874,7 +875,7 @@
       "bytes_eval_up": 177280,
       "bytes_round": 1126210,
       "bytes_cumulative": 30422174,
-      "seconds": 0.3457122081890702
+      "seconds": 0.4677793749142438
     },
     {
       "round": 28,
@@ -894,7 +895,7 @@
       "bytes_eval_up": 177280,
       "bytes_round": 1126210,
       "bytes_cumulative": 31548384,
-      "seconds": 0.2341230830643326
+      "seconds": 0.2415466250386089
     },
     {
       "round": 29,
@@ -914,7 +915,7 @@
       "bytes_eval_up": 177280,
       "bytes_round": 1126210,
       "bytes_cumulative": 32674594,
-      "seconds": 0.23840395803563297
+      "seconds": 0.2424418341834098
     },
     {
       "round": 30,
@@ -934,7 +935,7 @@
       "bytes_eval_up": 177280,
       "bytes_round": 1126210,
       "bytes_cumulative": 33800804,
-      "seconds": 0.47123220888897777
+      "seconds": 0.4923521669115871
     }
   ],
   "communication": {
@@ -990,30 +991,6 @@
     {
       "round": 1,
       "kind": "client_update",
-      "client": 5,
-      "sha256": "0bc07f30e2b5b1d4f2a564acdac309e773590b6d3b06fba89d36ea8247cc643e",
-      "n_examples": 3525,
-      "bytes": 31722
-    },
-    {
-      "round": 1,
-      "kind": "client_update",
-      "client": 7,
-      "sha256": "f990ca834857f054d0ea7c64827b8e34d78650dba00bac2253965bf8b0f1b869",
-      "n_examples": 3538,
-      "bytes": 31722
-    },
-    {
-      "round": 1,
-      "kind": "client_update",
-      "client": 9,
-      "sha256": "a337d18e76f9203d92e8ddbb7955e6a0a90fdceb04c9c74d5c15c624a0566d3a",
-      "n_examples": 3607,
-      "bytes": 31722
-    },
-    {
-      "round": 1,
-      "kind": "client_update",
       "client": 8,
       "sha256": "f20ac73795ad25421621687e901846e9b49de2d178f9084dd1575e814e096762",
       "n_examples": 3564,
@@ -1030,14 +1007,6 @@
     {
       "round": 1,
       "kind": "client_update",
-      "client": 4,
-      "sha256": "8da2cc09257a9e813d1d99d774e345c260be68613b787bf6634207adc020efe4",
-      "n_examples": 3510,
-      "bytes": 31722
-    },
-    {
-      "round": 1,
-      "kind": "client_update",
       "client": 6,
       "sha256": "de6320e25ad22affea7c69c23395958f92b9f1d647d9a58197248b14c36a1be4",
       "n_examples": 3560,
@@ -1046,9 +1015,41 @@
     {
       "round": 1,
       "kind": "client_update",
+      "client": 5,
+      "sha256": "0bc07f30e2b5b1d4f2a564acdac309e773590b6d3b06fba89d36ea8247cc643e",
+      "n_examples": 3525,
+      "bytes": 31722
+    },
+    {
+      "round": 1,
+      "kind": "client_update",
       "client": 2,
       "sha256": "4c0dbb865642eae430af38739f1af7c056cfb824cc1e2cdafe3c8ca68e9a47ec",
       "n_examples": 3515,
+      "bytes": 31722
+    },
+    {
+      "round": 1,
+      "kind": "client_update",
+      "client": 9,
+      "sha256": "a337d18e76f9203d92e8ddbb7955e6a0a90fdceb04c9c74d5c15c624a0566d3a",
+      "n_examples": 3607,
+      "bytes": 31722
+    },
+    {
+      "round": 1,
+      "kind": "client_update",
+      "client": 4,
+      "sha256": "8da2cc09257a9e813d1d99d774e345c260be68613b787bf6634207adc020efe4",
+      "n_examples": 3510,
+      "bytes": 31722
+    },
+    {
+      "round": 1,
+      "kind": "client_update",
+      "client": 7,
+      "sha256": "f990ca834857f054d0ea7c64827b8e34d78650dba00bac2253965bf8b0f1b869",
+      "n_examples": 3538,
       "bytes": 31722
     },
     {
@@ -1078,57 +1079,9 @@
     {
       "round": 2,
       "kind": "client_update",
-      "client": 0,
-      "sha256": "11e1d84e9b030646ed34d0b72e8bd891650302a083dc60e6d36497e6ddcbf5d7",
-      "n_examples": 3537,
-      "bytes": 31722
-    },
-    {
-      "round": 2,
-      "kind": "client_update",
-      "client": 1,
-      "sha256": "b0b169ff2650e74912051f8a89fbc41d238108a1d9357b02989738e8c622efcb",
-      "n_examples": 3548,
-      "bytes": 31722
-    },
-    {
-      "round": 2,
-      "kind": "client_update",
-      "client": 2,
-      "sha256": "37d0e2c0de9f9db4b3c478777efdb5ca25e9370c2d081ba151dcd42e8e5cb284",
-      "n_examples": 3515,
-      "bytes": 31722
-    },
-    {
-      "round": 2,
-      "kind": "client_update",
       "client": 4,
       "sha256": "819e7bdae16c5f4ef43cd9d1acf02be033a438b8807700ff948c47a7421356dc",
       "n_examples": 3510,
-      "bytes": 31722
-    },
-    {
-      "round": 2,
-      "kind": "client_update",
-      "client": 3,
-      "sha256": "0f8e45e0266ed95562bcc6dace2db23e6e43d31d040a6c035599bfae86c0505f",
-      "n_examples": 3479,
-      "bytes": 31722
-    },
-    {
-      "round": 2,
-      "kind": "client_update",
-      "client": 7,
-      "sha256": "fbf370a7f63d4c902ad73b05ee6f1eeede1cf764efec1c2cf9bb46d56ef75800",
-      "n_examples": 3538,
-      "bytes": 31722
-    },
-    {
-      "round": 2,
-      "kind": "client_update",
-      "client": 5,
-      "sha256": "7936cf161d1757efc2d0934ae6a2d759447b91f6c95c8a96dff0bad392616f0a",
-      "n_examples": 3525,
       "bytes": 31722
     },
     {
@@ -1142,9 +1095,49 @@
     {
       "round": 2,
       "kind": "client_update",
-      "client": 9,
-      "sha256": "c28deafcd76583d2918bb3f6281b4205cdcc5dd940acd30932ccf5e64f5e1ccb",
-      "n_examples": 3607,
+      "client": 1,
+      "sha256": "b0b169ff2650e74912051f8a89fbc41d238108a1d9357b02989738e8c622efcb",
+      "n_examples": 3548,
+      "bytes": 31722
+    },
+    {
+      "round": 2,
+      "kind": "client_update",
+      "client": 3,
+      "sha256": "0f8e45e0266ed95562bcc6dace2db23e6e43d31d040a6c035599bfae86c0505f",
+      "n_examples": 3479,
+      "bytes": 31722
+    },
+    {
+      "round": 2,
+      "kind": "client_update",
+      "client": 2,
+      "sha256": "37d0e2c0de9f9db4b3c478777efdb5ca25e9370c2d081ba151dcd42e8e5cb284",
+      "n_examples": 3515,
+      "bytes": 31722
+    },
+    {
+      "round": 2,
+      "kind": "client_update",
+      "client": 0,
+      "sha256": "11e1d84e9b030646ed34d0b72e8bd891650302a083dc60e6d36497e6ddcbf5d7",
+      "n_examples": 3537,
+      "bytes": 31722
+    },
+    {
+      "round": 2,
+      "kind": "client_update",
+      "client": 5,
+      "sha256": "7936cf161d1757efc2d0934ae6a2d759447b91f6c95c8a96dff0bad392616f0a",
+      "n_examples": 3525,
+      "bytes": 31722
+    },
+    {
+      "round": 2,
+      "kind": "client_update",
+      "client": 7,
+      "sha256": "fbf370a7f63d4c902ad73b05ee6f1eeede1cf764efec1c2cf9bb46d56ef75800",
+      "n_examples": 3538,
       "bytes": 31722
     },
     {
@@ -1153,6 +1146,14 @@
       "client": 8,
       "sha256": "c719a556456431f9bed276699107c842701de529c48333814780ab92765c354c",
       "n_examples": 3564,
+      "bytes": 31722
+    },
+    {
+      "round": 2,
+      "kind": "client_update",
+      "client": 9,
+      "sha256": "c28deafcd76583d2918bb3f6281b4205cdcc5dd940acd30932ccf5e64f5e1ccb",
+      "n_examples": 3607,
       "bytes": 31722
     },
     {
@@ -1174,22 +1175,6 @@
     {
       "round": 3,
       "kind": "client_update",
-      "client": 4,
-      "sha256": "7ad6884262857ebc22c445411643c063c446e9c80d7bd83bd26e8882dcb18240",
-      "n_examples": 3510,
-      "bytes": 31722
-    },
-    {
-      "round": 3,
-      "kind": "client_update",
-      "client": 6,
-      "sha256": "c7ebc91de788c40afeaebf47fcf4419bd09352abca06c9491abc31fcd950f4fc",
-      "n_examples": 3560,
-      "bytes": 31722
-    },
-    {
-      "round": 3,
-      "kind": "client_update",
       "client": 1,
       "sha256": "872805a4adbbb3c250845df662d28f4e0eda3b9cf7a17e0759b18246849f940d",
       "n_examples": 3548,
@@ -1206,17 +1191,33 @@
     {
       "round": 3,
       "kind": "client_update",
-      "client": 5,
-      "sha256": "dfb316f34e61082b8109891aa97e116aa442eb9fdd2e27acabbe3ae78b58625d",
-      "n_examples": 3525,
+      "client": 2,
+      "sha256": "d0971428382fbb7079f0979635d315b6a48ba6f3aa11fe29a55d142c82c0fabe",
+      "n_examples": 3515,
       "bytes": 31722
     },
     {
       "round": 3,
       "kind": "client_update",
-      "client": 9,
-      "sha256": "fb4872766e9016f951a6712d280849eb4ef58855337e2b0708611d509a051992",
-      "n_examples": 3607,
+      "client": 4,
+      "sha256": "7ad6884262857ebc22c445411643c063c446e9c80d7bd83bd26e8882dcb18240",
+      "n_examples": 3510,
+      "bytes": 31722
+    },
+    {
+      "round": 3,
+      "kind": "client_update",
+      "client": 6,
+      "sha256": "c7ebc91de788c40afeaebf47fcf4419bd09352abca06c9491abc31fcd950f4fc",
+      "n_examples": 3560,
+      "bytes": 31722
+    },
+    {
+      "round": 3,
+      "kind": "client_update",
+      "client": 8,
+      "sha256": "ae605217695adf34312bb5b21535c60e1a173d8c160e23929558c00470b8ea1b",
+      "n_examples": 3564,
       "bytes": 31722
     },
     {
@@ -1230,17 +1231,17 @@
     {
       "round": 3,
       "kind": "client_update",
-      "client": 2,
-      "sha256": "d0971428382fbb7079f0979635d315b6a48ba6f3aa11fe29a55d142c82c0fabe",
-      "n_examples": 3515,
+      "client": 9,
+      "sha256": "fb4872766e9016f951a6712d280849eb4ef58855337e2b0708611d509a051992",
+      "n_examples": 3607,
       "bytes": 31722
     },
     {
       "round": 3,
       "kind": "client_update",
-      "client": 8,
-      "sha256": "ae605217695adf34312bb5b21535c60e1a173d8c160e23929558c00470b8ea1b",
-      "n_examples": 3564,
+      "client": 5,
+      "sha256": "dfb316f34e61082b8109891aa97e116aa442eb9fdd2e27acabbe3ae78b58625d",
+      "n_examples": 3525,
       "bytes": 31722
     },
     {
@@ -1254,25 +1255,17 @@
     {
       "round": 4,
       "kind": "client_update",
-      "client": 1,
-      "sha256": "bb3366526497819571edd6d7f8599c9c56c7646dbaad2020c8f6206a6f1b78b9",
-      "n_examples": 3548,
-      "bytes": 31722
-    },
-    {
-      "round": 4,
-      "kind": "client_update",
-      "client": 3,
-      "sha256": "9394faa057df1c8270dbd48e285617bcfd6a0a46941f649b4934310babf5b3f2",
-      "n_examples": 3479,
-      "bytes": 31722
-    },
-    {
-      "round": 4,
-      "kind": "client_update",
       "client": 0,
       "sha256": "f1494d60fc7dfd6472fe8814cc71f4d4fed68f2bb530b273a437f7d57ae07cb7",
       "n_examples": 3537,
+      "bytes": 31722
+    },
+    {
+      "round": 4,
+      "kind": "client_update",
+      "client": 1,
+      "sha256": "bb3366526497819571edd6d7f8599c9c56c7646dbaad2020c8f6206a6f1b78b9",
+      "n_examples": 3548,
       "bytes": 31722
     },
     {
@@ -1286,9 +1279,9 @@
     {
       "round": 4,
       "kind": "client_update",
-      "client": 6,
-      "sha256": "53616a83776b6af426dfbc7f96916357a38933c13422f6cf57e028b14d9b45d2",
-      "n_examples": 3560,
+      "client": 3,
+      "sha256": "9394faa057df1c8270dbd48e285617bcfd6a0a46941f649b4934310babf5b3f2",
+      "n_examples": 3479,
       "bytes": 31722
     },
     {
@@ -1302,9 +1295,9 @@
     {
       "round": 4,
       "kind": "client_update",
-      "client": 7,
-      "sha256": "2679c20dc6f2a4f12cfed76f6fef9f68d10a73dcf7de215bae5c4b86f0fff32c",
-      "n_examples": 3538,
+      "client": 6,
+      "sha256": "53616a83776b6af426dfbc7f96916357a38933c13422f6cf57e028b14d9b45d2",
+      "n_examples": 3560,
       "bytes": 31722
     },
     {
@@ -1313,6 +1306,14 @@
       "client": 5,
       "sha256": "ffdff7d989c496d4a73735f8ebc3ff4c18c5427cf4e6a588400ffd8700b4fcc6",
       "n_examples": 3525,
+      "bytes": 31722
+    },
+    {
+      "round": 4,
+      "kind": "client_update",
+      "client": 7,
+      "sha256": "2679c20dc6f2a4f12cfed76f6fef9f68d10a73dcf7de215bae5c4b86f0fff32c",
+      "n_examples": 3538,
       "bytes": 31722
     },
     {
@@ -1342,17 +1343,9 @@
     {
       "round": 5,
       "kind": "client_update",
-      "client": 5,
-      "sha256": "dd70b430e77535315910fecc83697681a460330637b011c02b573061bd5824d5",
-      "n_examples": 3525,
-      "bytes": 31722
-    },
-    {
-      "round": 5,
-      "kind": "client_update",
-      "client": 3,
-      "sha256": "f986484500c1cd654e314f031101dd73ae7b45f0fd032f6359dff76b43950af1",
-      "n_examples": 3479,
+      "client": 1,
+      "sha256": "e162ed96cdfa60b30fd5f6fc85eafc63c4aa8a5bccba767874e69ca71b928746",
+      "n_examples": 3548,
       "bytes": 31722
     },
     {
@@ -1366,33 +1359,17 @@
     {
       "round": 5,
       "kind": "client_update",
-      "client": 6,
-      "sha256": "87323d1220016c5e676f789dd6d32ccb0fa1b175890c86bc71a275e2b0621aff",
-      "n_examples": 3560,
+      "client": 3,
+      "sha256": "f986484500c1cd654e314f031101dd73ae7b45f0fd032f6359dff76b43950af1",
+      "n_examples": 3479,
       "bytes": 31722
     },
     {
       "round": 5,
       "kind": "client_update",
-      "client": 1,
-      "sha256": "e162ed96cdfa60b30fd5f6fc85eafc63c4aa8a5bccba767874e69ca71b928746",
-      "n_examples": 3548,
-      "bytes": 31722
-    },
-    {
-      "round": 5,
-      "kind": "client_update",
-      "client": 8,
-      "sha256": "27d33bbb761250c26d28c761d9536316d606903894ef412b5b69c9a389d8d3b2",
-      "n_examples": 3564,
-      "bytes": 31722
-    },
-    {
-      "round": 5,
-      "kind": "client_update",
-      "client": 0,
-      "sha256": "e47c7cf4e4062dbdc7e0d7020b17dcecfe39ab813de29304c9956f5ed1c212cd",
-      "n_examples": 3537,
+      "client": 5,
+      "sha256": "dd70b430e77535315910fecc83697681a460330637b011c02b573061bd5824d5",
+      "n_examples": 3525,
       "bytes": 31722
     },
     {
@@ -1414,6 +1391,30 @@
     {
       "round": 5,
       "kind": "client_update",
+      "client": 6,
+      "sha256": "87323d1220016c5e676f789dd6d32ccb0fa1b175890c86bc71a275e2b0621aff",
+      "n_examples": 3560,
+      "bytes": 31722
+    },
+    {
+      "round": 5,
+      "kind": "client_update",
+      "client": 8,
+      "sha256": "27d33bbb761250c26d28c761d9536316d606903894ef412b5b69c9a389d8d3b2",
+      "n_examples": 3564,
+      "bytes": 31722
+    },
+    {
+      "round": 5,
+      "kind": "client_update",
+      "client": 0,
+      "sha256": "e47c7cf4e4062dbdc7e0d7020b17dcecfe39ab813de29304c9956f5ed1c212cd",
+      "n_examples": 3537,
+      "bytes": 31722
+    },
+    {
+      "round": 5,
+      "kind": "client_update",
       "client": 9,
       "sha256": "2faedd61a43739c952efacfc9d091827569160eb6707e1bacebad25783dd6200",
       "n_examples": 3607,
@@ -1430,9 +1431,9 @@
     {
       "round": 6,
       "kind": "client_update",
-      "client": 1,
-      "sha256": "ae45cca796f14b9118b43be99fe61ee2ef94e3d1c83136d7e18288fc8569a4ac",
-      "n_examples": 3548,
+      "client": 0,
+      "sha256": "aa25ecbf196e66553d1bd6ee28d52a85884e2c7edd7c02a24e92947582a90d00",
+      "n_examples": 3537,
       "bytes": 31722
     },
     {
@@ -1446,17 +1447,17 @@
     {
       "round": 6,
       "kind": "client_update",
-      "client": 3,
-      "sha256": "3b462f053f4505d63c68a20ff339ea7ed2aa73598fbfe74a5710e27409b71a6d",
-      "n_examples": 3479,
+      "client": 1,
+      "sha256": "ae45cca796f14b9118b43be99fe61ee2ef94e3d1c83136d7e18288fc8569a4ac",
+      "n_examples": 3548,
       "bytes": 31722
     },
     {
       "round": 6,
       "kind": "client_update",
-      "client": 0,
-      "sha256": "aa25ecbf196e66553d1bd6ee28d52a85884e2c7edd7c02a24e92947582a90d00",
-      "n_examples": 3537,
+      "client": 3,
+      "sha256": "3b462f053f4505d63c68a20ff339ea7ed2aa73598fbfe74a5710e27409b71a6d",
+      "n_examples": 3479,
       "bytes": 31722
     },
     {
@@ -1518,22 +1519,6 @@
     {
       "round": 7,
       "kind": "client_update",
-      "client": 1,
-      "sha256": "8e7e89beda21ecec248de92a313117878628b9016e9b20286dc8530bf3081ca7",
-      "n_examples": 3548,
-      "bytes": 31722
-    },
-    {
-      "round": 7,
-      "kind": "client_update",
-      "client": 2,
-      "sha256": "dcf2cc2b67b7f02fd4534ff1bf2ae57630d052c13acd17eabb0820d93d29da35",
-      "n_examples": 3515,
-      "bytes": 31722
-    },
-    {
-      "round": 7,
-      "kind": "client_update",
       "client": 0,
       "sha256": "146defabfbfce1f7f24a9ade90acaad4abf1091d5b1e081a9deabd89be86b887",
       "n_examples": 3537,
@@ -1542,9 +1527,9 @@
     {
       "round": 7,
       "kind": "client_update",
-      "client": 4,
-      "sha256": "a6deb0784e5e6158e78129d5cd863ab3958f1fa154bf6854e412bfe18363036e",
-      "n_examples": 3510,
+      "client": 2,
+      "sha256": "dcf2cc2b67b7f02fd4534ff1bf2ae57630d052c13acd17eabb0820d93d29da35",
+      "n_examples": 3515,
       "bytes": 31722
     },
     {
@@ -1566,9 +1551,17 @@
     {
       "round": 7,
       "kind": "client_update",
-      "client": 7,
-      "sha256": "9c3ae1973a9c98ba9393e9b64643e9198dbed73633978cbdb2b441fa424a8964",
-      "n_examples": 3538,
+      "client": 1,
+      "sha256": "8e7e89beda21ecec248de92a313117878628b9016e9b20286dc8530bf3081ca7",
+      "n_examples": 3548,
+      "bytes": 31722
+    },
+    {
+      "round": 7,
+      "kind": "client_update",
+      "client": 4,
+      "sha256": "a6deb0784e5e6158e78129d5cd863ab3958f1fa154bf6854e412bfe18363036e",
+      "n_examples": 3510,
       "bytes": 31722
     },
     {
@@ -1577,6 +1570,14 @@
       "client": 6,
       "sha256": "0db131116f697a2a1abd720f0df82aef4f61d6df00f82c3c636cb822f7d823e5",
       "n_examples": 3560,
+      "bytes": 31722
+    },
+    {
+      "round": 7,
+      "kind": "client_update",
+      "client": 7,
+      "sha256": "9c3ae1973a9c98ba9393e9b64643e9198dbed73633978cbdb2b441fa424a8964",
+      "n_examples": 3538,
       "bytes": 31722
     },
     {
@@ -1614,17 +1615,17 @@
     {
       "round": 8,
       "kind": "client_update",
-      "client": 2,
-      "sha256": "1452f6220c1551ca02f12ccbe8a1d1226ce3b7a1cf8063c77ea7b163e8ba53a6",
-      "n_examples": 3515,
+      "client": 1,
+      "sha256": "55075071d30911b6e10fc5044b076882da55d4476b5d9eb4e012c7c4db5270b9",
+      "n_examples": 3548,
       "bytes": 31722
     },
     {
       "round": 8,
       "kind": "client_update",
-      "client": 1,
-      "sha256": "55075071d30911b6e10fc5044b076882da55d4476b5d9eb4e012c7c4db5270b9",
-      "n_examples": 3548,
+      "client": 2,
+      "sha256": "1452f6220c1551ca02f12ccbe8a1d1226ce3b7a1cf8063c77ea7b163e8ba53a6",
+      "n_examples": 3515,
       "bytes": 31722
     },
     {
@@ -1702,22 +1703,6 @@
     {
       "round": 9,
       "kind": "client_update",
-      "client": 3,
-      "sha256": "1d49933a1c19dfbedb9fbe53558530d2ec04a0c57e52017efcf7fbe71349cecd",
-      "n_examples": 3479,
-      "bytes": 31722
-    },
-    {
-      "round": 9,
-      "kind": "client_update",
-      "client": 4,
-      "sha256": "f09807a2b992aa50dbf3ac8cc2e028b9311afa81e231b6dcf5a55a34363d74ac",
-      "n_examples": 3510,
-      "bytes": 31722
-    },
-    {
-      "round": 9,
-      "kind": "client_update",
       "client": 1,
       "sha256": "6a2841a8661d3c991d1bd05d17528002a6d8318aab81f9e9f453f19420fd3348",
       "n_examples": 3548,
@@ -1729,6 +1714,22 @@
       "client": 2,
       "sha256": "f18ecbdc4bf00e4e7fbbef90c70e8f0d520743d466f4302dd8546eef10c3f794",
       "n_examples": 3515,
+      "bytes": 31722
+    },
+    {
+      "round": 9,
+      "kind": "client_update",
+      "client": 3,
+      "sha256": "1d49933a1c19dfbedb9fbe53558530d2ec04a0c57e52017efcf7fbe71349cecd",
+      "n_examples": 3479,
+      "bytes": 31722
+    },
+    {
+      "round": 9,
+      "kind": "client_update",
+      "client": 4,
+      "sha256": "f09807a2b992aa50dbf3ac8cc2e028b9311afa81e231b6dcf5a55a34363d74ac",
+      "n_examples": 3510,
       "bytes": 31722
     },
     {
@@ -1750,9 +1751,9 @@
     {
       "round": 9,
       "kind": "client_update",
-      "client": 8,
-      "sha256": "a3d7020b85f84053dce7b6b157e5e8287c6142c9cac4f44b49bdb10a67990eff",
-      "n_examples": 3564,
+      "client": 7,
+      "sha256": "4d5ecec9ab760d118f485a94515b070ba71e62c1fc0c5b23e3807c02d87a90a1",
+      "n_examples": 3538,
       "bytes": 31722
     },
     {
@@ -1766,9 +1767,9 @@
     {
       "round": 9,
       "kind": "client_update",
-      "client": 7,
-      "sha256": "4d5ecec9ab760d118f485a94515b070ba71e62c1fc0c5b23e3807c02d87a90a1",
-      "n_examples": 3538,
+      "client": 8,
+      "sha256": "a3d7020b85f84053dce7b6b157e5e8287c6142c9cac4f44b49bdb10a67990eff",
+      "n_examples": 3564,
       "bytes": 31722
     },
     {
@@ -1778,6 +1779,22 @@
       "sha256": "38130eb2bf853a736c444e1662ecddf9b842b55f19e54f3c4f9b2290ad52f4d1",
       "n_examples": 35383,
       "bytes": 31535
+    },
+    {
+      "round": 10,
+      "kind": "client_update",
+      "client": 1,
+      "sha256": "a452d4a505020bbdf8feb6a8110869bb1081b8606126be97f54f9a5841e08c85",
+      "n_examples": 3548,
+      "bytes": 31722
+    },
+    {
+      "round": 10,
+      "kind": "client_update",
+      "client": 3,
+      "sha256": "53ce47b9c4848a0cecdabbd39f7abf971e0094f8b6e0eb82db538b555e6d3c7b",
+      "n_examples": 3479,
+      "bytes": 31722
     },
     {
       "round": 10,
@@ -1798,17 +1815,9 @@
     {
       "round": 10,
       "kind": "client_update",
-      "client": 3,
-      "sha256": "53ce47b9c4848a0cecdabbd39f7abf971e0094f8b6e0eb82db538b555e6d3c7b",
-      "n_examples": 3479,
-      "bytes": 31722
-    },
-    {
-      "round": 10,
-      "kind": "client_update",
-      "client": 5,
-      "sha256": "bbd648179c0026de2ed0eb63a4001c8bcbf6ff6f0685d31c2a5785ba21537514",
-      "n_examples": 3525,
+      "client": 0,
+      "sha256": "b29c9b9129bce1f1f3782ce2abcf02049c1b18a5cdf03ecccad7e5fff9327090",
+      "n_examples": 3537,
       "bytes": 31722
     },
     {
@@ -1822,17 +1831,9 @@
     {
       "round": 10,
       "kind": "client_update",
-      "client": 1,
-      "sha256": "a452d4a505020bbdf8feb6a8110869bb1081b8606126be97f54f9a5841e08c85",
-      "n_examples": 3548,
-      "bytes": 31722
-    },
-    {
-      "round": 10,
-      "kind": "client_update",
-      "client": 0,
-      "sha256": "b29c9b9129bce1f1f3782ce2abcf02049c1b18a5cdf03ecccad7e5fff9327090",
-      "n_examples": 3537,
+      "client": 5,
+      "sha256": "bbd648179c0026de2ed0eb63a4001c8bcbf6ff6f0685d31c2a5785ba21537514",
+      "n_examples": 3525,
       "bytes": 31722
     },
     {
@@ -1878,14 +1879,6 @@
     {
       "round": 11,
       "kind": "client_update",
-      "client": 1,
-      "sha256": "d04fe3a888a2d4ddd3486e0099e247c996c0eeb446643f97e58751b5743d5645",
-      "n_examples": 3548,
-      "bytes": 31722
-    },
-    {
-      "round": 11,
-      "kind": "client_update",
       "client": 2,
       "sha256": "1655e92227ef65243ffe64df4ac713f3e34509fd2479c1c59ecd461f8f9ae66f",
       "n_examples": 3515,
@@ -1902,6 +1895,14 @@
     {
       "round": 11,
       "kind": "client_update",
+      "client": 4,
+      "sha256": "d0e67f10fcc9d2cac55c62cab80e45c7303f7ed1f27913a9fc04a152afbd93f1",
+      "n_examples": 3510,
+      "bytes": 31722
+    },
+    {
+      "round": 11,
+      "kind": "client_update",
       "client": 5,
       "sha256": "cd6e00528427bb4b94c654a628f351b1646761690278b8e68208acbad595502d",
       "n_examples": 3525,
@@ -1910,9 +1911,17 @@
     {
       "round": 11,
       "kind": "client_update",
-      "client": 4,
-      "sha256": "d0e67f10fcc9d2cac55c62cab80e45c7303f7ed1f27913a9fc04a152afbd93f1",
-      "n_examples": 3510,
+      "client": 6,
+      "sha256": "dfe8194d0a0f5b499c1580142a300760ab7e42eb00550483f67e6c4bb4a0d9a3",
+      "n_examples": 3560,
+      "bytes": 31722
+    },
+    {
+      "round": 11,
+      "kind": "client_update",
+      "client": 1,
+      "sha256": "d04fe3a888a2d4ddd3486e0099e247c996c0eeb446643f97e58751b5743d5645",
+      "n_examples": 3548,
       "bytes": 31722
     },
     {
@@ -1929,14 +1938,6 @@
       "client": 7,
       "sha256": "15380abc34a1a9296c202ce655109b0a49a8feb7fbd315672fe1ddf7289f6d75",
       "n_examples": 3538,
-      "bytes": 31722
-    },
-    {
-      "round": 11,
-      "kind": "client_update",
-      "client": 6,
-      "sha256": "dfe8194d0a0f5b499c1580142a300760ab7e42eb00550483f67e6c4bb4a0d9a3",
-      "n_examples": 3560,
       "bytes": 31722
     },
     {
@@ -1974,17 +1975,17 @@
     {
       "round": 12,
       "kind": "client_update",
-      "client": 1,
-      "sha256": "55b37f18557f33ce392fe32c5600da4216ef0c9fea19689b7750e044f0965ade",
-      "n_examples": 3548,
+      "client": 3,
+      "sha256": "7c53472ebcbf9978bd14e833142facd424941bfaa0dfb8bd90f6923bdb7d68e5",
+      "n_examples": 3479,
       "bytes": 31722
     },
     {
       "round": 12,
       "kind": "client_update",
-      "client": 3,
-      "sha256": "7c53472ebcbf9978bd14e833142facd424941bfaa0dfb8bd90f6923bdb7d68e5",
-      "n_examples": 3479,
+      "client": 1,
+      "sha256": "55b37f18557f33ce392fe32c5600da4216ef0c9fea19689b7750e044f0965ade",
+      "n_examples": 3548,
       "bytes": 31722
     },
     {
@@ -2006,17 +2007,17 @@
     {
       "round": 12,
       "kind": "client_update",
-      "client": 6,
-      "sha256": "3e17398dc5322977fb40b05fa0991b8513dfb26d90e221708ce2d435f421ded5",
-      "n_examples": 3560,
+      "client": 7,
+      "sha256": "f9ba649f7388915a3dc8468951ceda0904b1642db3c0a9a6854d20a591a93e32",
+      "n_examples": 3538,
       "bytes": 31722
     },
     {
       "round": 12,
       "kind": "client_update",
-      "client": 7,
-      "sha256": "f9ba649f7388915a3dc8468951ceda0904b1642db3c0a9a6854d20a591a93e32",
-      "n_examples": 3538,
+      "client": 6,
+      "sha256": "3e17398dc5322977fb40b05fa0991b8513dfb26d90e221708ce2d435f421ded5",
+      "n_examples": 3560,
       "bytes": 31722
     },
     {
@@ -2046,17 +2047,17 @@
     {
       "round": 13,
       "kind": "client_update",
-      "client": 0,
-      "sha256": "512aa26dd0370664fb9ecb69e644c654a615778cb8fd95c0eb88d170482be85b",
-      "n_examples": 3537,
+      "client": 1,
+      "sha256": "d907b9a81580a2d4971b2bea0f002c6795b403e78b5b82e9d27633896bb32e87",
+      "n_examples": 3548,
       "bytes": 31722
     },
     {
       "round": 13,
       "kind": "client_update",
-      "client": 1,
-      "sha256": "d907b9a81580a2d4971b2bea0f002c6795b403e78b5b82e9d27633896bb32e87",
-      "n_examples": 3548,
+      "client": 0,
+      "sha256": "512aa26dd0370664fb9ecb69e644c654a615778cb8fd95c0eb88d170482be85b",
+      "n_examples": 3537,
       "bytes": 31722
     },
     {
@@ -2078,17 +2079,17 @@
     {
       "round": 13,
       "kind": "client_update",
-      "client": 4,
-      "sha256": "1255cea5fe5ba055da713b4619e4a3c9093931a73e36bad56ffcc50c81919e58",
-      "n_examples": 3510,
+      "client": 5,
+      "sha256": "34c766db9dd43b372b6d3669f60ee7cbc6903198ad765126b87f82ed8568bfc3",
+      "n_examples": 3525,
       "bytes": 31722
     },
     {
       "round": 13,
       "kind": "client_update",
-      "client": 5,
-      "sha256": "34c766db9dd43b372b6d3669f60ee7cbc6903198ad765126b87f82ed8568bfc3",
-      "n_examples": 3525,
+      "client": 4,
+      "sha256": "1255cea5fe5ba055da713b4619e4a3c9093931a73e36bad56ffcc50c81919e58",
+      "n_examples": 3510,
       "bytes": 31722
     },
     {
@@ -2134,6 +2135,14 @@
     {
       "round": 14,
       "kind": "client_update",
+      "client": 1,
+      "sha256": "cc6a811bd0e0f934fa5224c1a342f6022341e023980b5e7c88aa190dd305e177",
+      "n_examples": 3548,
+      "bytes": 31722
+    },
+    {
+      "round": 14,
+      "kind": "client_update",
       "client": 2,
       "sha256": "5e970cdbc3fefa031e68fc6e31102d37a3ec6136193931f9bdfd89451cf1cc89",
       "n_examples": 3515,
@@ -2142,9 +2151,17 @@
     {
       "round": 14,
       "kind": "client_update",
-      "client": 1,
-      "sha256": "cc6a811bd0e0f934fa5224c1a342f6022341e023980b5e7c88aa190dd305e177",
-      "n_examples": 3548,
+      "client": 4,
+      "sha256": "6cf3874b52fa859a03ad5c733df3ecd474906c07660a1eafaa4119118db9ab4b",
+      "n_examples": 3510,
+      "bytes": 31722
+    },
+    {
+      "round": 14,
+      "kind": "client_update",
+      "client": 0,
+      "sha256": "8e7524a8530633384598b735054a85ea3f67725794deb39c228a69d781ed56ae",
+      "n_examples": 3537,
       "bytes": 31722
     },
     {
@@ -2174,14 +2191,6 @@
     {
       "round": 14,
       "kind": "client_update",
-      "client": 4,
-      "sha256": "6cf3874b52fa859a03ad5c733df3ecd474906c07660a1eafaa4119118db9ab4b",
-      "n_examples": 3510,
-      "bytes": 31722
-    },
-    {
-      "round": 14,
-      "kind": "client_update",
       "client": 7,
       "sha256": "6991e643fa0ef439afae4b54682578f9dc427d6eec9b82de7416646179558f61",
       "n_examples": 3538,
@@ -2193,14 +2202,6 @@
       "client": 8,
       "sha256": "e97dd5fc96f149dbd8019230a4fa1a4499068af574ad9d462a6984eb926fe7a2",
       "n_examples": 3564,
-      "bytes": 31722
-    },
-    {
-      "round": 14,
-      "kind": "client_update",
-      "client": 0,
-      "sha256": "8e7524a8530633384598b735054a85ea3f67725794deb39c228a69d781ed56ae",
-      "n_examples": 3537,
       "bytes": 31722
     },
     {
@@ -2222,25 +2223,9 @@
     {
       "round": 15,
       "kind": "client_update",
-      "client": 0,
-      "sha256": "cc614d91a84639b8dddc45631ad9879ff385b48196bb87d3860244b3201a6b06",
-      "n_examples": 3537,
-      "bytes": 31722
-    },
-    {
-      "round": 15,
-      "kind": "client_update",
       "client": 1,
       "sha256": "f00749c56da9fc1f069bd929c9e92e57e8df168c94fc17ea9e2a54bedaa339ee",
       "n_examples": 3548,
-      "bytes": 31722
-    },
-    {
-      "round": 15,
-      "kind": "client_update",
-      "client": 2,
-      "sha256": "588a17f86e048a8de29907bd290bc8a78433a877e088ced7e8f958362f672e3f",
-      "n_examples": 3515,
       "bytes": 31722
     },
     {
@@ -2270,9 +2255,9 @@
     {
       "round": 15,
       "kind": "client_update",
-      "client": 6,
-      "sha256": "d4d693326d21d6d2f68577b98eb003bde9012eea4e4edb031aa1d380298ab87a",
-      "n_examples": 3560,
+      "client": 7,
+      "sha256": "95f1ec6234be3a6ba6029385d7e085a41c6cb74c5757a5edb6a943d88500409b",
+      "n_examples": 3538,
       "bytes": 31722
     },
     {
@@ -2286,9 +2271,9 @@
     {
       "round": 15,
       "kind": "client_update",
-      "client": 7,
-      "sha256": "95f1ec6234be3a6ba6029385d7e085a41c6cb74c5757a5edb6a943d88500409b",
-      "n_examples": 3538,
+      "client": 2,
+      "sha256": "588a17f86e048a8de29907bd290bc8a78433a877e088ced7e8f958362f672e3f",
+      "n_examples": 3515,
       "bytes": 31722
     },
     {
@@ -2297,6 +2282,22 @@
       "client": 9,
       "sha256": "758dfd86017ce7d12b8a658af760816d7da50731e8ba3b97c7408d22f6c8ac19",
       "n_examples": 3607,
+      "bytes": 31722
+    },
+    {
+      "round": 15,
+      "kind": "client_update",
+      "client": 0,
+      "sha256": "cc614d91a84639b8dddc45631ad9879ff385b48196bb87d3860244b3201a6b06",
+      "n_examples": 3537,
+      "bytes": 31722
+    },
+    {
+      "round": 15,
+      "kind": "client_update",
+      "client": 6,
+      "sha256": "d4d693326d21d6d2f68577b98eb003bde9012eea4e4edb031aa1d380298ab87a",
+      "n_examples": 3560,
       "bytes": 31722
     },
     {
@@ -2318,17 +2319,9 @@
     {
       "round": 16,
       "kind": "client_update",
-      "client": 2,
-      "sha256": "5e92342d70e74aa49f220eaf6005203e3391ad0b069896124cba18c72b21561a",
-      "n_examples": 3515,
-      "bytes": 31722
-    },
-    {
-      "round": 16,
-      "kind": "client_update",
-      "client": 1,
-      "sha256": "ad64b824bf6542c432c6425f460997e9fd0661972a1b24d9002c911df19fcbf0",
-      "n_examples": 3548,
+      "client": 3,
+      "sha256": "24e97b73b3dba5c690076d940faa842b74b135788837f206dc87ab5a2514ce63",
+      "n_examples": 3479,
       "bytes": 31722
     },
     {
@@ -2337,14 +2330,6 @@
       "client": 4,
       "sha256": "74a6280d4f055f8aa642cc5d6e477406c1a3e9673bd105859b3308bf674b4b26",
       "n_examples": 3510,
-      "bytes": 31722
-    },
-    {
-      "round": 16,
-      "kind": "client_update",
-      "client": 3,
-      "sha256": "24e97b73b3dba5c690076d940faa842b74b135788837f206dc87ab5a2514ce63",
-      "n_examples": 3479,
       "bytes": 31722
     },
     {
@@ -2374,6 +2359,14 @@
     {
       "round": 16,
       "kind": "client_update",
+      "client": 1,
+      "sha256": "ad64b824bf6542c432c6425f460997e9fd0661972a1b24d9002c911df19fcbf0",
+      "n_examples": 3548,
+      "bytes": 31722
+    },
+    {
+      "round": 16,
+      "kind": "client_update",
       "client": 8,
       "sha256": "073127d596a11118619d419a352441413e56cea18609dce0924a699214bb7eeb",
       "n_examples": 3564,
@@ -2389,6 +2382,14 @@
     },
     {
       "round": 16,
+      "kind": "client_update",
+      "client": 2,
+      "sha256": "5e92342d70e74aa49f220eaf6005203e3391ad0b069896124cba18c72b21561a",
+      "n_examples": 3515,
+      "bytes": 31722
+    },
+    {
+      "round": 16,
       "kind": "global_model",
       "client": null,
       "sha256": "7b54836d60ad71326e160506dbdfaa078f57d2a283dd3e83764e09c4f5413f0a",
@@ -2398,65 +2399,9 @@
     {
       "round": 17,
       "kind": "client_update",
-      "client": 0,
-      "sha256": "f07cf2c1093f0def084618590cbe77fcd3ef0eff72a99361ed4e47bf0e189caf",
-      "n_examples": 3537,
-      "bytes": 31722
-    },
-    {
-      "round": 17,
-      "kind": "client_update",
-      "client": 1,
-      "sha256": "62cdeb14d4003012ef55e1b137cac0f5ef5d899aacd7cf6e9c5ca3bc45b6b0d5",
-      "n_examples": 3548,
-      "bytes": 31722
-    },
-    {
-      "round": 17,
-      "kind": "client_update",
       "client": 2,
       "sha256": "7dfb214be12a2f5d387aa4a17b267a7b7be26d11925ed93c6019496738d0bf7f",
       "n_examples": 3515,
-      "bytes": 31722
-    },
-    {
-      "round": 17,
-      "kind": "client_update",
-      "client": 4,
-      "sha256": "f2c59895523cbf3a08291f2a29e51b1a1b6929664786d4c04ab54aa75a92d349",
-      "n_examples": 3510,
-      "bytes": 31722
-    },
-    {
-      "round": 17,
-      "kind": "client_update",
-      "client": 7,
-      "sha256": "e28dce2c185ccb74fc107fccf5b2da933bb7fcc04ad7ab2dcbec902ac18c23ce",
-      "n_examples": 3538,
-      "bytes": 31722
-    },
-    {
-      "round": 17,
-      "kind": "client_update",
-      "client": 6,
-      "sha256": "e639cd719f541bf19f1a544c8a085f6c03467a2ffab382fa92f5152609952a73",
-      "n_examples": 3560,
-      "bytes": 31722
-    },
-    {
-      "round": 17,
-      "kind": "client_update",
-      "client": 5,
-      "sha256": "e736dfd8c30c4491cc5d2647a07a3340af3b1e6128cd07f044dea2428ac4d181",
-      "n_examples": 3525,
-      "bytes": 31722
-    },
-    {
-      "round": 17,
-      "kind": "client_update",
-      "client": 8,
-      "sha256": "ed100fdd4dff60193e87f3b7ddcf6c296cca6766624b273f6555e1c19f74c0a8",
-      "n_examples": 3564,
       "bytes": 31722
     },
     {
@@ -2470,9 +2415,65 @@
     {
       "round": 17,
       "kind": "client_update",
+      "client": 4,
+      "sha256": "f2c59895523cbf3a08291f2a29e51b1a1b6929664786d4c04ab54aa75a92d349",
+      "n_examples": 3510,
+      "bytes": 31722
+    },
+    {
+      "round": 17,
+      "kind": "client_update",
+      "client": 5,
+      "sha256": "e736dfd8c30c4491cc5d2647a07a3340af3b1e6128cd07f044dea2428ac4d181",
+      "n_examples": 3525,
+      "bytes": 31722
+    },
+    {
+      "round": 17,
+      "kind": "client_update",
+      "client": 6,
+      "sha256": "e639cd719f541bf19f1a544c8a085f6c03467a2ffab382fa92f5152609952a73",
+      "n_examples": 3560,
+      "bytes": 31722
+    },
+    {
+      "round": 17,
+      "kind": "client_update",
+      "client": 7,
+      "sha256": "e28dce2c185ccb74fc107fccf5b2da933bb7fcc04ad7ab2dcbec902ac18c23ce",
+      "n_examples": 3538,
+      "bytes": 31722
+    },
+    {
+      "round": 17,
+      "kind": "client_update",
+      "client": 1,
+      "sha256": "62cdeb14d4003012ef55e1b137cac0f5ef5d899aacd7cf6e9c5ca3bc45b6b0d5",
+      "n_examples": 3548,
+      "bytes": 31722
+    },
+    {
+      "round": 17,
+      "kind": "client_update",
+      "client": 8,
+      "sha256": "ed100fdd4dff60193e87f3b7ddcf6c296cca6766624b273f6555e1c19f74c0a8",
+      "n_examples": 3564,
+      "bytes": 31722
+    },
+    {
+      "round": 17,
+      "kind": "client_update",
       "client": 9,
       "sha256": "b755ae4305a485f80704b1937a817e2ab99e94a2761f316804ac53ad719b8289",
       "n_examples": 3607,
+      "bytes": 31722
+    },
+    {
+      "round": 17,
+      "kind": "client_update",
+      "client": 0,
+      "sha256": "f07cf2c1093f0def084618590cbe77fcd3ef0eff72a99361ed4e47bf0e189caf",
+      "n_examples": 3537,
       "bytes": 31722
     },
     {
@@ -2526,17 +2527,9 @@
     {
       "round": 18,
       "kind": "client_update",
-      "client": 8,
-      "sha256": "88a8ea5efd4b8cd394820c0bafed4d6922470099e6f5acbf20b62f18103a2e0d",
-      "n_examples": 3564,
-      "bytes": 31722
-    },
-    {
-      "round": 18,
-      "kind": "client_update",
-      "client": 5,
-      "sha256": "af5cd62a086f6bb80348fd9d82b9ec22787b8196d1ec460ef1c2c39500b7b3fd",
-      "n_examples": 3525,
+      "client": 6,
+      "sha256": "aaf208093afe1021cc6a68b27d02cec262c7b323d4b94d46ca5e6a164471adee",
+      "n_examples": 3560,
       "bytes": 31722
     },
     {
@@ -2550,9 +2543,9 @@
     {
       "round": 18,
       "kind": "client_update",
-      "client": 6,
-      "sha256": "aaf208093afe1021cc6a68b27d02cec262c7b323d4b94d46ca5e6a164471adee",
-      "n_examples": 3560,
+      "client": 8,
+      "sha256": "88a8ea5efd4b8cd394820c0bafed4d6922470099e6f5acbf20b62f18103a2e0d",
+      "n_examples": 3564,
       "bytes": 31722
     },
     {
@@ -2561,6 +2554,14 @@
       "client": 9,
       "sha256": "555c1b978affecde4bb36c9fc8eb6b4fbfa56396a11422cb3f05c44c967957d0",
       "n_examples": 3607,
+      "bytes": 31722
+    },
+    {
+      "round": 18,
+      "kind": "client_update",
+      "client": 5,
+      "sha256": "af5cd62a086f6bb80348fd9d82b9ec22787b8196d1ec460ef1c2c39500b7b3fd",
+      "n_examples": 3525,
       "bytes": 31722
     },
     {
@@ -2582,6 +2583,14 @@
     {
       "round": 19,
       "kind": "client_update",
+      "client": 1,
+      "sha256": "3d3fe73b4c1e88616901f571ed40c22b546fde32401c89dd0846f6ebe0873215",
+      "n_examples": 3548,
+      "bytes": 31722
+    },
+    {
+      "round": 19,
+      "kind": "client_update",
       "client": 2,
       "sha256": "68989a1351ed9618e6c4f4f3c63d5f7d1b8230a6bf9f417840d35a296fe7cb49",
       "n_examples": 3515,
@@ -2598,14 +2607,6 @@
     {
       "round": 19,
       "kind": "client_update",
-      "client": 5,
-      "sha256": "7d2caf4a144e9587da9d88831284920092cf4b0746c2bfb417a83d7b7ab022a4",
-      "n_examples": 3525,
-      "bytes": 31722
-    },
-    {
-      "round": 19,
-      "kind": "client_update",
       "client": 4,
       "sha256": "144c96714cfd4164e90230276ffd35cbb06825cf479fbc243b6ba9d7d6df4a3d",
       "n_examples": 3510,
@@ -2614,17 +2615,17 @@
     {
       "round": 19,
       "kind": "client_update",
-      "client": 6,
-      "sha256": "ad486ab7f3fc01df862b9b5aa4088e6e54091073f9d1f8fbef4337fae3afb053",
-      "n_examples": 3560,
+      "client": 5,
+      "sha256": "7d2caf4a144e9587da9d88831284920092cf4b0746c2bfb417a83d7b7ab022a4",
+      "n_examples": 3525,
       "bytes": 31722
     },
     {
       "round": 19,
       "kind": "client_update",
-      "client": 1,
-      "sha256": "3d3fe73b4c1e88616901f571ed40c22b546fde32401c89dd0846f6ebe0873215",
-      "n_examples": 3548,
+      "client": 6,
+      "sha256": "ad486ab7f3fc01df862b9b5aa4088e6e54091073f9d1f8fbef4337fae3afb053",
+      "n_examples": 3560,
       "bytes": 31722
     },
     {
@@ -2686,17 +2687,17 @@
     {
       "round": 20,
       "kind": "client_update",
-      "client": 4,
-      "sha256": "07936de4e5b3ae42ca1fac3294b7c0e62e323b98e644c06e9e77413668adb65a",
-      "n_examples": 3510,
+      "client": 3,
+      "sha256": "7be0519c0a5bf779e36f5e7542dc0dc15ab9d513b56a8b0321eb7e4e0b72f4fe",
+      "n_examples": 3479,
       "bytes": 31722
     },
     {
       "round": 20,
       "kind": "client_update",
-      "client": 3,
-      "sha256": "7be0519c0a5bf779e36f5e7542dc0dc15ab9d513b56a8b0321eb7e4e0b72f4fe",
-      "n_examples": 3479,
+      "client": 4,
+      "sha256": "07936de4e5b3ae42ca1fac3294b7c0e62e323b98e644c06e9e77413668adb65a",
+      "n_examples": 3510,
       "bytes": 31722
     },
     {
@@ -2718,17 +2719,17 @@
     {
       "round": 20,
       "kind": "client_update",
-      "client": 8,
-      "sha256": "cafabdbb80d8ff3d8516fb605472e64d4cd02679173159cf7634501ff232c312",
-      "n_examples": 3564,
+      "client": 7,
+      "sha256": "ae5a3ee8f8b803eb887355083f249b80de5e9edbe3a83b2f330cd3e8a1dc9c80",
+      "n_examples": 3538,
       "bytes": 31722
     },
     {
       "round": 20,
       "kind": "client_update",
-      "client": 7,
-      "sha256": "ae5a3ee8f8b803eb887355083f249b80de5e9edbe3a83b2f330cd3e8a1dc9c80",
-      "n_examples": 3538,
+      "client": 8,
+      "sha256": "cafabdbb80d8ff3d8516fb605472e64d4cd02679173159cf7634501ff232c312",
+      "n_examples": 3564,
       "bytes": 31722
     },
     {
@@ -2774,17 +2775,17 @@
     {
       "round": 21,
       "kind": "client_update",
-      "client": 3,
-      "sha256": "905c74ed5870406ca00de7945e6816d2f89c5fda13837f7496eeee48a8107db3",
-      "n_examples": 3479,
+      "client": 4,
+      "sha256": "080063e9a4e29e0a59f213578d4cb3f86cd771c1750098902b4c3616af5fc25b",
+      "n_examples": 3510,
       "bytes": 31722
     },
     {
       "round": 21,
       "kind": "client_update",
-      "client": 4,
-      "sha256": "080063e9a4e29e0a59f213578d4cb3f86cd771c1750098902b4c3616af5fc25b",
-      "n_examples": 3510,
+      "client": 3,
+      "sha256": "905c74ed5870406ca00de7945e6816d2f89c5fda13837f7496eeee48a8107db3",
+      "n_examples": 3479,
       "bytes": 31722
     },
     {
@@ -2798,14 +2799,6 @@
     {
       "round": 21,
       "kind": "client_update",
-      "client": 7,
-      "sha256": "324ff8efa656aa3491291e94dbe5f161ed2e634866f263afd1476dce86b5b40f",
-      "n_examples": 3538,
-      "bytes": 31722
-    },
-    {
-      "round": 21,
-      "kind": "client_update",
       "client": 6,
       "sha256": "89d0e1b7e072c6b28ad2d6fa5d8e96674f3b02b40106d0c890b241da21dcd47a",
       "n_examples": 3560,
@@ -2814,9 +2807,9 @@
     {
       "round": 21,
       "kind": "client_update",
-      "client": 9,
-      "sha256": "c9a781090847cb56465436549d926c7fb366b9f52e5db4ffdb60363bf390ba43",
-      "n_examples": 3607,
+      "client": 7,
+      "sha256": "324ff8efa656aa3491291e94dbe5f161ed2e634866f263afd1476dce86b5b40f",
+      "n_examples": 3538,
       "bytes": 31722
     },
     {
@@ -2825,6 +2818,14 @@
       "client": 8,
       "sha256": "837b8f97ac7be6dd13dfe44803523ec54e86791606480e19e3044a72c35d6dcc",
       "n_examples": 3564,
+      "bytes": 31722
+    },
+    {
+      "round": 21,
+      "kind": "client_update",
+      "client": 9,
+      "sha256": "c9a781090847cb56465436549d926c7fb366b9f52e5db4ffdb60363bf390ba43",
+      "n_examples": 3607,
       "bytes": 31722
     },
     {
@@ -2870,14 +2871,6 @@
     {
       "round": 22,
       "kind": "client_update",
-      "client": 4,
-      "sha256": "8894583f8ea82cbcafaeaef04c9c20a3ec7f9cefc0b6f395a55b8d5a8f4fbc6a",
-      "n_examples": 3510,
-      "bytes": 31722
-    },
-    {
-      "round": 22,
-      "kind": "client_update",
       "client": 5,
       "sha256": "a654dfe68eb993773932207590fd7468cf43f392ca7158544932016de142f8d0",
       "n_examples": 3525,
@@ -2917,6 +2910,14 @@
     },
     {
       "round": 22,
+      "kind": "client_update",
+      "client": 4,
+      "sha256": "8894583f8ea82cbcafaeaef04c9c20a3ec7f9cefc0b6f395a55b8d5a8f4fbc6a",
+      "n_examples": 3510,
+      "bytes": 31722
+    },
+    {
+      "round": 22,
       "kind": "global_model",
       "client": null,
       "sha256": "ece95446c579d011948470f147d8dc879deaabba40708dc84ed731372985b443",
@@ -2926,17 +2927,17 @@
     {
       "round": 23,
       "kind": "client_update",
-      "client": 0,
-      "sha256": "fe775412bcbdf236fb12065a56b8d963749837546d64b8ba04652a636b3031da",
-      "n_examples": 3537,
+      "client": 1,
+      "sha256": "53279f2b57c328a5a8fd65c19e78362376aa361385bf16bf6b6865fe53ff4f48",
+      "n_examples": 3548,
       "bytes": 31722
     },
     {
       "round": 23,
       "kind": "client_update",
-      "client": 1,
-      "sha256": "53279f2b57c328a5a8fd65c19e78362376aa361385bf16bf6b6865fe53ff4f48",
-      "n_examples": 3548,
+      "client": 0,
+      "sha256": "fe775412bcbdf236fb12065a56b8d963749837546d64b8ba04652a636b3031da",
+      "n_examples": 3537,
       "bytes": 31722
     },
     {
@@ -2950,33 +2951,9 @@
     {
       "round": 23,
       "kind": "client_update",
-      "client": 6,
-      "sha256": "a0e11d160272f2bcac72ff74941a239a90cbd141232d5ffdfe8b72b6fe9fb970",
-      "n_examples": 3560,
-      "bytes": 31722
-    },
-    {
-      "round": 23,
-      "kind": "client_update",
       "client": 3,
       "sha256": "ab8be99e184e3316793aa4eaace2eeeec9edf7db36c0d0e5274aa2df116a63dd",
       "n_examples": 3479,
-      "bytes": 31722
-    },
-    {
-      "round": 23,
-      "kind": "client_update",
-      "client": 4,
-      "sha256": "0ffd7de6cb38846072e599022af18b2a0f1c773b00a05eb84609479f7eb44af0",
-      "n_examples": 3510,
-      "bytes": 31722
-    },
-    {
-      "round": 23,
-      "kind": "client_update",
-      "client": 8,
-      "sha256": "480b10851905f17175d1c55ea34ca57762bc7772faa4ac2766ea5e8a03897904",
-      "n_examples": 3564,
       "bytes": 31722
     },
     {
@@ -2990,9 +2967,9 @@
     {
       "round": 23,
       "kind": "client_update",
-      "client": 9,
-      "sha256": "fb4c8a8d57317ddca5418678b4b93dc4da8cd521c7bb1d0b69aab871c9476420",
-      "n_examples": 3607,
+      "client": 4,
+      "sha256": "0ffd7de6cb38846072e599022af18b2a0f1c773b00a05eb84609479f7eb44af0",
+      "n_examples": 3510,
       "bytes": 31722
     },
     {
@@ -3001,6 +2978,30 @@
       "client": 7,
       "sha256": "65eabf03b948a058f177335f0461dc4d118150395556b22520ce07ae89c20466",
       "n_examples": 3538,
+      "bytes": 31722
+    },
+    {
+      "round": 23,
+      "kind": "client_update",
+      "client": 6,
+      "sha256": "a0e11d160272f2bcac72ff74941a239a90cbd141232d5ffdfe8b72b6fe9fb970",
+      "n_examples": 3560,
+      "bytes": 31722
+    },
+    {
+      "round": 23,
+      "kind": "client_update",
+      "client": 8,
+      "sha256": "480b10851905f17175d1c55ea34ca57762bc7772faa4ac2766ea5e8a03897904",
+      "n_examples": 3564,
+      "bytes": 31722
+    },
+    {
+      "round": 23,
+      "kind": "client_update",
+      "client": 9,
+      "sha256": "fb4c8a8d57317ddca5418678b4b93dc4da8cd521c7bb1d0b69aab871c9476420",
+      "n_examples": 3607,
       "bytes": 31722
     },
     {
@@ -3014,9 +3015,9 @@
     {
       "round": 24,
       "kind": "client_update",
-      "client": 3,
-      "sha256": "ec20459ffda86b9bc5d224e6fa3c5242b83dce1b75a3005b0f66ddee0de6d8af",
-      "n_examples": 3479,
+      "client": 0,
+      "sha256": "385c6223fcd0e4884e33441df171a7012b109bf44ffd433f5c0965559037ec78",
+      "n_examples": 3537,
       "bytes": 31722
     },
     {
@@ -3030,25 +3031,17 @@
     {
       "round": 24,
       "kind": "client_update",
+      "client": 3,
+      "sha256": "ec20459ffda86b9bc5d224e6fa3c5242b83dce1b75a3005b0f66ddee0de6d8af",
+      "n_examples": 3479,
+      "bytes": 31722
+    },
+    {
+      "round": 24,
+      "kind": "client_update",
       "client": 4,
       "sha256": "9b39941146fb62c7a8668e09a57cbc60f407c975ee26902e00ecf3bdb2156cd5",
       "n_examples": 3510,
-      "bytes": 31722
-    },
-    {
-      "round": 24,
-      "kind": "client_update",
-      "client": 0,
-      "sha256": "385c6223fcd0e4884e33441df171a7012b109bf44ffd433f5c0965559037ec78",
-      "n_examples": 3537,
-      "bytes": 31722
-    },
-    {
-      "round": 24,
-      "kind": "client_update",
-      "client": 6,
-      "sha256": "ab3043377661e2bb04fb17b5f6f40cdc5e7b24384a70f30bf5cc3172f9f9e64a",
-      "n_examples": 3560,
       "bytes": 31722
     },
     {
@@ -3081,6 +3074,14 @@
       "client": 1,
       "sha256": "8c4fdd406790729f9ebdfdeff08ec3fab40bfc1b269aa3a4ebcc5c142440c031",
       "n_examples": 3548,
+      "bytes": 31722
+    },
+    {
+      "round": 24,
+      "kind": "client_update",
+      "client": 6,
+      "sha256": "ab3043377661e2bb04fb17b5f6f40cdc5e7b24384a70f30bf5cc3172f9f9e64a",
+      "n_examples": 3560,
       "bytes": 31722
     },
     {
@@ -3134,14 +3135,6 @@
     {
       "round": 25,
       "kind": "client_update",
-      "client": 5,
-      "sha256": "4e2b33f257015d39125d1c35672012e9e2874678a03639d461f72d8a2be1867e",
-      "n_examples": 3525,
-      "bytes": 31722
-    },
-    {
-      "round": 25,
-      "kind": "client_update",
       "client": 4,
       "sha256": "d8d33586f106c18b4f6a1f686e76b1cd37bbf1adf34ab53893c79128d2f3fcb6",
       "n_examples": 3510,
@@ -3150,9 +3143,9 @@
     {
       "round": 25,
       "kind": "client_update",
-      "client": 6,
-      "sha256": "5fbbb5bed98ea5378b0ffe0d432bed6aab1a48785ebef2ca637957f60ab257e0",
-      "n_examples": 3560,
+      "client": 5,
+      "sha256": "4e2b33f257015d39125d1c35672012e9e2874678a03639d461f72d8a2be1867e",
+      "n_examples": 3525,
       "bytes": 31722
     },
     {
@@ -3169,6 +3162,14 @@
       "client": 8,
       "sha256": "1fa9dd2d70ac8d225b718ab833ad8f9f85c41e0e6c0edf8110995439b5bad53a",
       "n_examples": 3564,
+      "bytes": 31722
+    },
+    {
+      "round": 25,
+      "kind": "client_update",
+      "client": 6,
+      "sha256": "5fbbb5bed98ea5378b0ffe0d432bed6aab1a48785ebef2ca637957f60ab257e0",
+      "n_examples": 3560,
       "bytes": 31722
     },
     {
@@ -3214,14 +3215,6 @@
     {
       "round": 26,
       "kind": "client_update",
-      "client": 3,
-      "sha256": "53dc86442e7a36d92419d862ac4b28c831270456dfe8b9c0346e1d664ab7d359",
-      "n_examples": 3479,
-      "bytes": 31722
-    },
-    {
-      "round": 26,
-      "kind": "client_update",
       "client": 4,
       "sha256": "a1d1b00501a31e5866ce9881d1f41c9b7cda9d94891104a35bde8d5548f4e841",
       "n_examples": 3510,
@@ -3230,9 +3223,9 @@
     {
       "round": 26,
       "kind": "client_update",
-      "client": 6,
-      "sha256": "e6665ddd038e2bc2f9c086653de12bc9c50e1c17662d9a8b96d46ff4c7aeb246",
-      "n_examples": 3560,
+      "client": 3,
+      "sha256": "53dc86442e7a36d92419d862ac4b28c831270456dfe8b9c0346e1d664ab7d359",
+      "n_examples": 3479,
       "bytes": 31722
     },
     {
@@ -3241,6 +3234,14 @@
       "client": 5,
       "sha256": "85dfbdf732d204870bf75e8dfad7dc5c7efbe98e84a35b10dc6022bbb6775c1e",
       "n_examples": 3525,
+      "bytes": 31722
+    },
+    {
+      "round": 26,
+      "kind": "client_update",
+      "client": 6,
+      "sha256": "e6665ddd038e2bc2f9c086653de12bc9c50e1c17662d9a8b96d46ff4c7aeb246",
+      "n_examples": 3560,
       "bytes": 31722
     },
     {
@@ -3278,14 +3279,6 @@
     {
       "round": 27,
       "kind": "client_update",
-      "client": 0,
-      "sha256": "5ead18c2a4de593150f0a83887e82eb38877552d34a018a9e4475458af8b6f49",
-      "n_examples": 3537,
-      "bytes": 31722
-    },
-    {
-      "round": 27,
-      "kind": "client_update",
       "client": 1,
       "sha256": "4091cf193716ed05a35584acfa03372dd32fc3d127dd2955612746143ebef4e5",
       "n_examples": 3548,
@@ -3305,6 +3298,14 @@
       "client": 3,
       "sha256": "54613d8bed590b9e2278ac61e21bb131c9542b30268a0d37dfd03f840cd6e8a2",
       "n_examples": 3479,
+      "bytes": 31722
+    },
+    {
+      "round": 27,
+      "kind": "client_update",
+      "client": 0,
+      "sha256": "5ead18c2a4de593150f0a83887e82eb38877552d34a018a9e4475458af8b6f49",
+      "n_examples": 3537,
       "bytes": 31722
     },
     {
@@ -3366,17 +3367,9 @@
     {
       "round": 28,
       "kind": "client_update",
-      "client": 0,
-      "sha256": "3ad12c1ced2794ea08063a24c6534f8b27997549f910138a161a9f4e6f073032",
-      "n_examples": 3537,
-      "bytes": 31722
-    },
-    {
-      "round": 28,
-      "kind": "client_update",
-      "client": 1,
-      "sha256": "4ca2c82c53bc885533bb985870d2d62cf20707f872f1bee3430ff7e6b71a7785",
-      "n_examples": 3548,
+      "client": 3,
+      "sha256": "e7d2042ffe4406509cf9d5bea957aedb51c8f1ce36bd37eb2d5c8a372f5adc53",
+      "n_examples": 3479,
       "bytes": 31722
     },
     {
@@ -3393,14 +3386,6 @@
       "client": 4,
       "sha256": "2eef85c32e4ae1b3253db81ec66cb24f593d233263aa50b21521073bcadf8ea2",
       "n_examples": 3510,
-      "bytes": 31722
-    },
-    {
-      "round": 28,
-      "kind": "client_update",
-      "client": 3,
-      "sha256": "e7d2042ffe4406509cf9d5bea957aedb51c8f1ce36bd37eb2d5c8a372f5adc53",
-      "n_examples": 3479,
       "bytes": 31722
     },
     {
@@ -3430,6 +3415,22 @@
     {
       "round": 28,
       "kind": "client_update",
+      "client": 8,
+      "sha256": "4e5fbd743edda29791841a8ab99e19c05456ccef65a11347a2a48ed50c7e0295",
+      "n_examples": 3564,
+      "bytes": 31722
+    },
+    {
+      "round": 28,
+      "kind": "client_update",
+      "client": 1,
+      "sha256": "4ca2c82c53bc885533bb985870d2d62cf20707f872f1bee3430ff7e6b71a7785",
+      "n_examples": 3548,
+      "bytes": 31722
+    },
+    {
+      "round": 28,
+      "kind": "client_update",
       "client": 9,
       "sha256": "259536b1f38f653eae5c658ef057a092e1e2193b774b264aa52403d999773365",
       "n_examples": 3607,
@@ -3438,9 +3439,9 @@
     {
       "round": 28,
       "kind": "client_update",
-      "client": 8,
-      "sha256": "4e5fbd743edda29791841a8ab99e19c05456ccef65a11347a2a48ed50c7e0295",
-      "n_examples": 3564,
+      "client": 0,
+      "sha256": "3ad12c1ced2794ea08063a24c6534f8b27997549f910138a161a9f4e6f073032",
+      "n_examples": 3537,
       "bytes": 31722
     },
     {
@@ -3478,17 +3479,17 @@
     {
       "round": 29,
       "kind": "client_update",
-      "client": 5,
-      "sha256": "21b76d402b9891a0a3d1e4c3cb39d15b2b94fe9814a33133249c1accd10b3097",
-      "n_examples": 3525,
+      "client": 4,
+      "sha256": "54b5816f6cac595c0080292037d0cd76a110f65a670d7be6d9c65740dc714b82",
+      "n_examples": 3510,
       "bytes": 31722
     },
     {
       "round": 29,
       "kind": "client_update",
-      "client": 4,
-      "sha256": "54b5816f6cac595c0080292037d0cd76a110f65a670d7be6d9c65740dc714b82",
-      "n_examples": 3510,
+      "client": 1,
+      "sha256": "5fd8b348249e3d08026b3167c7912ee54c4ec1765a4d688c141fd86a41b2b01d",
+      "n_examples": 3548,
       "bytes": 31722
     },
     {
@@ -3510,17 +3511,17 @@
     {
       "round": 29,
       "kind": "client_update",
-      "client": 1,
-      "sha256": "5fd8b348249e3d08026b3167c7912ee54c4ec1765a4d688c141fd86a41b2b01d",
-      "n_examples": 3548,
+      "client": 8,
+      "sha256": "69b933e6f21b8a073e67493aa6cc717578bce4274fa28aef27422d0c2f36902e",
+      "n_examples": 3564,
       "bytes": 31722
     },
     {
       "round": 29,
       "kind": "client_update",
-      "client": 8,
-      "sha256": "69b933e6f21b8a073e67493aa6cc717578bce4274fa28aef27422d0c2f36902e",
-      "n_examples": 3564,
+      "client": 5,
+      "sha256": "21b76d402b9891a0a3d1e4c3cb39d15b2b94fe9814a33133249c1accd10b3097",
+      "n_examples": 3525,
       "bytes": 31722
     },
     {
@@ -3542,33 +3543,9 @@
     {
       "round": 30,
       "kind": "client_update",
-      "client": 0,
-      "sha256": "cd02f312886b922e8adaa6c2b36a68af5da311fd973629c04e3521f947d7254e",
-      "n_examples": 3537,
-      "bytes": 31722
-    },
-    {
-      "round": 30,
-      "kind": "client_update",
       "client": 1,
       "sha256": "3989757e6283ccc7c0e76c646b9a37d6aa4e133c46d6139c180643f05cc3c705",
       "n_examples": 3548,
-      "bytes": 31722
-    },
-    {
-      "round": 30,
-      "kind": "client_update",
-      "client": 2,
-      "sha256": "99f88c2323ec25c839c2e6f0046ca4b2ccf2c57b50ef904ceee9e2a589ca74f5",
-      "n_examples": 3515,
-      "bytes": 31722
-    },
-    {
-      "round": 30,
-      "kind": "client_update",
-      "client": 4,
-      "sha256": "8b4f000784fa72dd78b37a2114847fbfecbd876dda79cbecbe3fd03cf43bf92e",
-      "n_examples": 3510,
       "bytes": 31722
     },
     {
@@ -3582,9 +3559,25 @@
     {
       "round": 30,
       "kind": "client_update",
+      "client": 4,
+      "sha256": "8b4f000784fa72dd78b37a2114847fbfecbd876dda79cbecbe3fd03cf43bf92e",
+      "n_examples": 3510,
+      "bytes": 31722
+    },
+    {
+      "round": 30,
+      "kind": "client_update",
       "client": 5,
       "sha256": "75a1bda8ba134ae10118ac33c908659ba3067fd4a428688a5379817d8b3b7696",
       "n_examples": 3525,
+      "bytes": 31722
+    },
+    {
+      "round": 30,
+      "kind": "client_update",
+      "client": 2,
+      "sha256": "99f88c2323ec25c839c2e6f0046ca4b2ccf2c57b50ef904ceee9e2a589ca74f5",
+      "n_examples": 3515,
       "bytes": 31722
     },
     {
@@ -3601,6 +3594,14 @@
       "client": 7,
       "sha256": "94ee5ecf2f9a58263ae3466ebdcc00681c42fbad76612c528ca941b717a42a71",
       "n_examples": 3538,
+      "bytes": 31722
+    },
+    {
+      "round": 30,
+      "kind": "client_update",
+      "client": 0,
+      "sha256": "cd02f312886b922e8adaa6c2b36a68af5da311fd973629c04e3521f947d7254e",
+      "n_examples": 3537,
       "bytes": 31722
     },
     {
@@ -3630,7 +3631,489 @@
   ],
   "update_norms": {
     "clipped_updates": 0,
-    "last_round": {}
+    "history": [
+      {
+        "round": 1,
+        "norms": {
+          "0": 1.191826,
+          "1": 1.178377,
+          "2": 1.181305,
+          "3": 1.175655,
+          "4": 1.174003,
+          "5": 1.205947,
+          "6": 1.231829,
+          "7": 1.214011,
+          "8": 1.20804,
+          "9": 1.316761
+        },
+        "bound": null
+      },
+      {
+        "round": 2,
+        "norms": {
+          "0": 0.681149,
+          "1": 0.698202,
+          "2": 0.719427,
+          "3": 0.654642,
+          "4": 0.723456,
+          "5": 0.668416,
+          "6": 0.608884,
+          "7": 0.627956,
+          "8": 0.762224,
+          "9": 0.725472
+        },
+        "bound": null
+      },
+      {
+        "round": 3,
+        "norms": {
+          "0": 0.670852,
+          "1": 0.681215,
+          "2": 0.715026,
+          "3": 0.585577,
+          "4": 0.760475,
+          "5": 0.605149,
+          "6": 0.583025,
+          "7": 0.521619,
+          "8": 0.658308,
+          "9": 0.654273
+        },
+        "bound": null
+      },
+      {
+        "round": 4,
+        "norms": {
+          "0": 0.527831,
+          "1": 0.569487,
+          "2": 0.542674,
+          "3": 0.486525,
+          "4": 0.542759,
+          "5": 0.510923,
+          "6": 0.472844,
+          "7": 0.45792,
+          "8": 0.502884,
+          "9": 0.522018
+        },
+        "bound": null
+      },
+      {
+        "round": 5,
+        "norms": {
+          "0": 0.517474,
+          "1": 0.523494,
+          "2": 0.429479,
+          "3": 0.464677,
+          "4": 0.478071,
+          "5": 0.462171,
+          "6": 0.412614,
+          "7": 0.444124,
+          "8": 0.409309,
+          "9": 0.503667
+        },
+        "bound": null
+      },
+      {
+        "round": 6,
+        "norms": {
+          "0": 0.455329,
+          "1": 0.466321,
+          "2": 0.400388,
+          "3": 0.436891,
+          "4": 0.444588,
+          "5": 0.425322,
+          "6": 0.449029,
+          "7": 0.405881,
+          "8": 0.38303,
+          "9": 0.442804
+        },
+        "bound": null
+      },
+      {
+        "round": 7,
+        "norms": {
+          "0": 0.42164,
+          "1": 0.410012,
+          "2": 0.379721,
+          "3": 0.401339,
+          "4": 0.41431,
+          "5": 0.402111,
+          "6": 0.435872,
+          "7": 0.381659,
+          "8": 0.357469,
+          "9": 0.441308
+        },
+        "bound": null
+      },
+      {
+        "round": 8,
+        "norms": {
+          "0": 0.411398,
+          "1": 0.398337,
+          "2": 0.329828,
+          "3": 0.375792,
+          "4": 0.375759,
+          "5": 0.345461,
+          "6": 0.398248,
+          "7": 0.375742,
+          "8": 0.360086,
+          "9": 0.452275
+        },
+        "bound": null
+      },
+      {
+        "round": 9,
+        "norms": {
+          "0": 0.379536,
+          "1": 0.395852,
+          "2": 0.345353,
+          "3": 0.405206,
+          "4": 0.368141,
+          "5": 0.394707,
+          "6": 0.370135,
+          "7": 0.415292,
+          "8": 0.3669,
+          "9": 0.368638
+        },
+        "bound": null
+      },
+      {
+        "round": 10,
+        "norms": {
+          "0": 0.365534,
+          "1": 0.366722,
+          "2": 0.320547,
+          "3": 0.383273,
+          "4": 0.362282,
+          "5": 0.338196,
+          "6": 0.361525,
+          "7": 0.353159,
+          "8": 0.311142,
+          "9": 0.421368
+        },
+        "bound": null
+      },
+      {
+        "round": 11,
+        "norms": {
+          "0": 0.343415,
+          "1": 0.345187,
+          "2": 0.305184,
+          "3": 0.368648,
+          "4": 0.339162,
+          "5": 0.337305,
+          "6": 0.368604,
+          "7": 0.3747,
+          "8": 0.312635,
+          "9": 0.33876
+        },
+        "bound": null
+      },
+      {
+        "round": 12,
+        "norms": {
+          "0": 0.346212,
+          "1": 0.305337,
+          "2": 0.285736,
+          "3": 0.356878,
+          "4": 0.337828,
+          "5": 0.32203,
+          "6": 0.327141,
+          "7": 0.35158,
+          "8": 0.280511,
+          "9": 0.339148
+        },
+        "bound": null
+      },
+      {
+        "round": 13,
+        "norms": {
+          "0": 0.298851,
+          "1": 0.313546,
+          "2": 0.293604,
+          "3": 0.340094,
+          "4": 0.320758,
+          "5": 0.318923,
+          "6": 0.325001,
+          "7": 0.330459,
+          "8": 0.258495,
+          "9": 0.329514
+        },
+        "bound": null
+      },
+      {
+        "round": 14,
+        "norms": {
+          "0": 0.336911,
+          "1": 0.308835,
+          "2": 0.282071,
+          "3": 0.321193,
+          "4": 0.297217,
+          "5": 0.265773,
+          "6": 0.316463,
+          "7": 0.339795,
+          "8": 0.294648,
+          "9": 0.344525
+        },
+        "bound": null
+      },
+      {
+        "round": 15,
+        "norms": {
+          "0": 0.306033,
+          "1": 0.319281,
+          "2": 0.275347,
+          "3": 0.324588,
+          "4": 0.300578,
+          "5": 0.282866,
+          "6": 0.305318,
+          "7": 0.29358,
+          "8": 0.258121,
+          "9": 0.336349
+        },
+        "bound": null
+      },
+      {
+        "round": 16,
+        "norms": {
+          "0": 0.301954,
+          "1": 0.267953,
+          "2": 0.263479,
+          "3": 0.301271,
+          "4": 0.281325,
+          "5": 0.263074,
+          "6": 0.298533,
+          "7": 0.293871,
+          "8": 0.249659,
+          "9": 0.284609
+        },
+        "bound": null
+      },
+      {
+        "round": 17,
+        "norms": {
+          "0": 0.267985,
+          "1": 0.257752,
+          "2": 0.261544,
+          "3": 0.283765,
+          "4": 0.252725,
+          "5": 0.265904,
+          "6": 0.269513,
+          "7": 0.274327,
+          "8": 0.239037,
+          "9": 0.288105
+        },
+        "bound": null
+      },
+      {
+        "round": 18,
+        "norms": {
+          "0": 0.258518,
+          "1": 0.243876,
+          "2": 0.245606,
+          "3": 0.292016,
+          "4": 0.250174,
+          "5": 0.242174,
+          "6": 0.248048,
+          "7": 0.269037,
+          "8": 0.239465,
+          "9": 0.282494
+        },
+        "bound": null
+      },
+      {
+        "round": 19,
+        "norms": {
+          "0": 0.239893,
+          "1": 0.236623,
+          "2": 0.218328,
+          "3": 0.255413,
+          "4": 0.227789,
+          "5": 0.232132,
+          "6": 0.236529,
+          "7": 0.275778,
+          "8": 0.22181,
+          "9": 0.257587
+        },
+        "bound": null
+      },
+      {
+        "round": 20,
+        "norms": {
+          "0": 0.223321,
+          "1": 0.236803,
+          "2": 0.228752,
+          "3": 0.263499,
+          "4": 0.235602,
+          "5": 0.23371,
+          "6": 0.253186,
+          "7": 0.276562,
+          "8": 0.211275,
+          "9": 0.251257
+        },
+        "bound": null
+      },
+      {
+        "round": 21,
+        "norms": {
+          "0": 0.238454,
+          "1": 0.215185,
+          "2": 0.207536,
+          "3": 0.24635,
+          "4": 0.219873,
+          "5": 0.21021,
+          "6": 0.225355,
+          "7": 0.21857,
+          "8": 0.211665,
+          "9": 0.22483
+        },
+        "bound": null
+      },
+      {
+        "round": 22,
+        "norms": {
+          "0": 0.244616,
+          "1": 0.198814,
+          "2": 0.193888,
+          "3": 0.239676,
+          "4": 0.190509,
+          "5": 0.20772,
+          "6": 0.224038,
+          "7": 0.230931,
+          "8": 0.195762,
+          "9": 0.220207
+        },
+        "bound": null
+      },
+      {
+        "round": 23,
+        "norms": {
+          "0": 0.218373,
+          "1": 0.204232,
+          "2": 0.205138,
+          "3": 0.221144,
+          "4": 0.194878,
+          "5": 0.187806,
+          "6": 0.205484,
+          "7": 0.221137,
+          "8": 0.206836,
+          "9": 0.244002
+        },
+        "bound": null
+      },
+      {
+        "round": 24,
+        "norms": {
+          "0": 0.202761,
+          "1": 0.185351,
+          "2": 0.190976,
+          "3": 0.216111,
+          "4": 0.198578,
+          "5": 0.206578,
+          "6": 0.187771,
+          "7": 0.201946,
+          "8": 0.16804,
+          "9": 0.220962
+        },
+        "bound": null
+      },
+      {
+        "round": 25,
+        "norms": {
+          "0": 0.202787,
+          "1": 0.174452,
+          "2": 0.185145,
+          "3": 0.206589,
+          "4": 0.191931,
+          "5": 0.181585,
+          "6": 0.215312,
+          "7": 0.225641,
+          "8": 0.173948,
+          "9": 0.217233
+        },
+        "bound": null
+      },
+      {
+        "round": 26,
+        "norms": {
+          "0": 0.196847,
+          "1": 0.170095,
+          "2": 0.166127,
+          "3": 0.198107,
+          "4": 0.184109,
+          "5": 0.174954,
+          "6": 0.170559,
+          "7": 0.188976,
+          "8": 0.164763,
+          "9": 0.184134
+        },
+        "bound": null
+      },
+      {
+        "round": 27,
+        "norms": {
+          "0": 0.147618,
+          "1": 0.171083,
+          "2": 0.157758,
+          "3": 0.185633,
+          "4": 0.169651,
+          "5": 0.156019,
+          "6": 0.17455,
+          "7": 0.176141,
+          "8": 0.155566,
+          "9": 0.184922
+        },
+        "bound": null
+      },
+      {
+        "round": 28,
+        "norms": {
+          "0": 0.182882,
+          "1": 0.157653,
+          "2": 0.173801,
+          "3": 0.169023,
+          "4": 0.168635,
+          "5": 0.166428,
+          "6": 0.169826,
+          "7": 0.184971,
+          "8": 0.143971,
+          "9": 0.182793
+        },
+        "bound": null
+      },
+      {
+        "round": 29,
+        "norms": {
+          "0": 0.155958,
+          "1": 0.16756,
+          "2": 0.1486,
+          "3": 0.18085,
+          "4": 0.146008,
+          "5": 0.140516,
+          "6": 0.163521,
+          "7": 0.178159,
+          "8": 0.140622,
+          "9": 0.174672
+        },
+        "bound": null
+      },
+      {
+        "round": 30,
+        "norms": {
+          "0": 0.163545,
+          "1": 0.148361,
+          "2": 0.143988,
+          "3": 0.16811,
+          "4": 0.157228,
+          "5": 0.141786,
+          "6": 0.158175,
+          "7": 0.172118,
+          "8": 0.141394,
+          "9": 0.157776
+        },
+        "bound": null
+      }
+    ]
   },
-  "seconds": 19.95905604097061
+  "dp_clients": {},
+  "seconds": 16.131346458103508
 }

@@ -1,5 +1,6 @@
 {
   "seed": 0,
+  "fingerprint": "3897ea3c922fb2e3",
   "scenario": {
     "name": "n3_dir0.5",
     "n_clients": 3,
@@ -249,7 +250,7 @@
       "bytes_eval_up": 53267,
       "bytes_round": 337949,
       "bytes_cumulative": 342265,
-      "seconds": 2.1990956249646842
+      "seconds": 0.9958432500716299
     },
     {
       "round": 2,
@@ -269,7 +270,7 @@
       "bytes_eval_up": 53188,
       "bytes_round": 337870,
       "bytes_cumulative": 680135,
-      "seconds": 0.49891829187981784
+      "seconds": 0.24975345889106393
     },
     {
       "round": 3,
@@ -289,7 +290,7 @@
       "bytes_eval_up": 53184,
       "bytes_round": 337866,
       "bytes_cumulative": 1018001,
-      "seconds": 0.46580308279953897
+      "seconds": 0.2544435828458518
     },
     {
       "round": 4,
@@ -309,7 +310,7 @@
       "bytes_eval_up": 53186,
       "bytes_round": 337868,
       "bytes_cumulative": 1355869,
-      "seconds": 0.43727479106746614
+      "seconds": 0.3562085828743875
     },
     {
       "round": 5,
@@ -329,7 +330,7 @@
       "bytes_eval_up": 53186,
       "bytes_round": 337868,
       "bytes_cumulative": 1693737,
-      "seconds": 0.3281896668486297
+      "seconds": 0.3655505839269608
     },
     {
       "round": 6,
@@ -349,7 +350,7 @@
       "bytes_eval_up": 53186,
       "bytes_round": 337868,
       "bytes_cumulative": 2031605,
-      "seconds": 0.300075292121619
+      "seconds": 0.35471829213202
     },
     {
       "round": 7,
@@ -369,7 +370,7 @@
       "bytes_eval_up": 53186,
       "bytes_round": 337868,
       "bytes_cumulative": 2369473,
-      "seconds": 0.3055922498460859
+      "seconds": 0.24698400008492172
     },
     {
       "round": 8,
@@ -389,7 +390,7 @@
       "bytes_eval_up": 53186,
       "bytes_round": 337868,
       "bytes_cumulative": 2707341,
-      "seconds": 0.30740095884539187
+      "seconds": 0.3577521671541035
     },
     {
       "round": 9,
@@ -409,7 +410,7 @@
       "bytes_eval_up": 53188,
       "bytes_round": 337870,
       "bytes_cumulative": 3045211,
-      "seconds": 0.3999109170399606
+      "seconds": 0.2493304170202464
     },
     {
       "round": 10,
@@ -429,7 +430,7 @@
       "bytes_eval_up": 53188,
       "bytes_round": 337870,
       "bytes_cumulative": 3383081,
-      "seconds": 0.5214448750484735
+      "seconds": 0.24985241703689098
     },
     {
       "round": 11,
@@ -449,7 +450,7 @@
       "bytes_eval_up": 53188,
       "bytes_round": 337870,
       "bytes_cumulative": 3720951,
-      "seconds": 0.39762020902708173
+      "seconds": 0.3550927920732647
     },
     {
       "round": 12,
@@ -469,7 +470,7 @@
       "bytes_eval_up": 53188,
       "bytes_round": 337870,
       "bytes_cumulative": 4058821,
-      "seconds": 0.443384415935725
+      "seconds": 0.3672874579206109
     },
     {
       "round": 13,
@@ -489,7 +490,7 @@
       "bytes_eval_up": 53188,
       "bytes_round": 337870,
       "bytes_cumulative": 4396691,
-      "seconds": 0.4007472088560462
+      "seconds": 0.3664516669232398
     },
     {
       "round": 14,
@@ -509,7 +510,7 @@
       "bytes_eval_up": 53188,
       "bytes_round": 337870,
       "bytes_cumulative": 4734561,
-      "seconds": 0.2856628750450909
+      "seconds": 0.25560145801864564
     },
     {
       "round": 15,
@@ -529,7 +530,7 @@
       "bytes_eval_up": 53188,
       "bytes_round": 337870,
       "bytes_cumulative": 5072431,
-      "seconds": 0.297784874914214
+      "seconds": 0.3657386659178883
     },
     {
       "round": 16,
@@ -549,7 +550,7 @@
       "bytes_eval_up": 53188,
       "bytes_round": 337870,
       "bytes_cumulative": 5410301,
-      "seconds": 0.3990944589022547
+      "seconds": 0.254725624807179
     },
     {
       "round": 17,
@@ -569,7 +570,7 @@
       "bytes_eval_up": 53188,
       "bytes_round": 337870,
       "bytes_cumulative": 5748171,
-      "seconds": 0.3992583330255002
+      "seconds": 0.3599357500206679
     },
     {
       "round": 18,
@@ -589,7 +590,7 @@
       "bytes_eval_up": 53188,
       "bytes_round": 337870,
       "bytes_cumulative": 6086041,
-      "seconds": 0.42586187506094575
+      "seconds": 0.2558632080908865
     },
     {
       "round": 19,
@@ -609,7 +610,7 @@
       "bytes_eval_up": 53188,
       "bytes_round": 337870,
       "bytes_cumulative": 6423911,
-      "seconds": 0.3964665001258254
+      "seconds": 0.36758533399552107
     },
     {
       "round": 20,
@@ -629,7 +630,7 @@
       "bytes_eval_up": 53188,
       "bytes_round": 337870,
       "bytes_cumulative": 6761781,
-      "seconds": 0.3277622910682112
+      "seconds": 0.25945870811119676
     },
     {
       "round": 21,
@@ -649,7 +650,7 @@
       "bytes_eval_up": 53188,
       "bytes_round": 337870,
       "bytes_cumulative": 7099651,
-      "seconds": 0.31826070812530816
+      "seconds": 0.25068000005558133
     },
     {
       "round": 22,
@@ -669,7 +670,7 @@
       "bytes_eval_up": 53188,
       "bytes_round": 337870,
       "bytes_cumulative": 7437521,
-      "seconds": 0.33838970796205103
+      "seconds": 0.24752474995329976
     },
     {
       "round": 23,
@@ -689,7 +690,7 @@
       "bytes_eval_up": 53188,
       "bytes_round": 337870,
       "bytes_cumulative": 7775391,
-      "seconds": 0.5497055421583354
+      "seconds": 0.35184625000692904
     },
     {
       "round": 24,
@@ -709,7 +710,7 @@
       "bytes_eval_up": 53188,
       "bytes_round": 337870,
       "bytes_cumulative": 8113261,
-      "seconds": 0.5118306670337915
+      "seconds": 0.24698004103265703
     },
     {
       "round": 25,
@@ -729,7 +730,7 @@
       "bytes_eval_up": 53188,
       "bytes_round": 337870,
       "bytes_cumulative": 8451131,
-      "seconds": 0.4187239999882877
+      "seconds": 0.34984591603279114
     },
     {
       "round": 26,
@@ -749,7 +750,7 @@
       "bytes_eval_up": 53188,
       "bytes_round": 337870,
       "bytes_cumulative": 8789001,
-      "seconds": 0.5454622081015259
+      "seconds": 0.25994566618464887
     },
     {
       "round": 27,
@@ -769,7 +770,7 @@
       "bytes_eval_up": 53188,
       "bytes_round": 337870,
       "bytes_cumulative": 9126871,
-      "seconds": 0.5175608340650797
+      "seconds": 0.2545071670319885
     },
     {
       "round": 28,
@@ -789,7 +790,7 @@
       "bytes_eval_up": 53188,
       "bytes_round": 337870,
       "bytes_cumulative": 9464741,
-      "seconds": 0.5249435829464346
+      "seconds": 0.2528207499999553
     },
     {
       "round": 29,
@@ -809,7 +810,7 @@
       "bytes_eval_up": 53188,
       "bytes_round": 337870,
       "bytes_cumulative": 9802611,
-      "seconds": 0.3995827080216259
+      "seconds": 0.25364141701720655
     },
     {
       "round": 30,
@@ -829,7 +830,7 @@
       "bytes_eval_up": 53189,
       "bytes_round": 337871,
       "bytes_cumulative": 10140482,
-      "seconds": 0.4057884158100933
+      "seconds": 0.36344750015996397
     }
   ],
   "communication": {
@@ -890,11 +891,11 @@
       "n_examples": 4894,
       "bytes": 31722,
       "ledger_status": "registered",
-      "tx_id": "0xccedcba0271633f7643d49d4a59ef0aab371a1f0589f771f84505db2a486718f",
-      "block": 516,
+      "tx_id": "0x7c7abc2b032915f9419b2aa257c61853962c3ef64b84dc10006e503f6e8a4041",
+      "block": 9414,
       "ledger_org": "fl_client_0",
       "ledger_cost": 148230,
-      "ledger_latency_s": 0.025237291119992733
+      "ledger_latency_s": 0.009368415921926498
     },
     {
       "round": 1,
@@ -904,11 +905,11 @@
       "n_examples": 8303,
       "bytes": 31723,
       "ledger_status": "registered",
-      "tx_id": "0xd6ba174328f51e623a331724eeed5ba97925734e2c3ebee1b57f7bbbd4ca2d30",
-      "block": 518,
+      "tx_id": "0x942dc53085c0f79d8bc83dea47865184a73e6efe6774683f0374e09afc2614d6",
+      "block": 9416,
       "ledger_org": "fl_client_1",
       "ledger_cost": 148230,
-      "ledger_latency_s": 0.02222554199397564
+      "ledger_latency_s": 0.00702108396217227
     },
     {
       "round": 1,
@@ -918,11 +919,11 @@
       "n_examples": 22186,
       "bytes": 31724,
       "ledger_status": "registered",
-      "tx_id": "0x47f088415b18de7fa22493a4b6975712c78ec38951a4df159591b4c9d1af6a02",
-      "block": 520,
+      "tx_id": "0x018b5e32aaa81d14c965f6cb1f9b0095ec87defd29d867ec88d4225eb046c8d6",
+      "block": 9418,
       "ledger_org": "fl_client_2",
       "ledger_cost": 148230,
-      "ledger_latency_s": 0.025276624830439687
+      "ledger_latency_s": 0.007118041859939694
     },
     {
       "round": 1,
@@ -932,11 +933,11 @@
       "n_examples": 35383,
       "bytes": 31535,
       "ledger_status": "registered",
-      "tx_id": "0xb5944ae49efaded2d16c2b0c7bdabaffbd9ab3e77c19cbf4cced1ba56c08b781",
-      "block": 521,
+      "tx_id": "0xcc679404718918d3a32d73e9a1806e7e71b878504533433be6ee88af581c7026",
+      "block": 9419,
       "ledger_org": "fl_aggregator",
       "ledger_cost": 125578,
-      "ledger_latency_s": 0.01907191681675613
+      "ledger_latency_s": 0.006934208096936345
     },
     {
       "round": 2,
@@ -946,11 +947,11 @@
       "n_examples": 4894,
       "bytes": 31722,
       "ledger_status": "registered",
-      "tx_id": "0xf38bba72cf5832332e0edbbc8b58d9abe73b2fd750418810a54262a4b4521e1c",
-      "block": 522,
+      "tx_id": "0xc3e2209881e0b10d71d8215ae497e2cc2712afdf3628bbb89878c4318e303da7",
+      "block": 9420,
       "ledger_org": "fl_client_0",
       "ledger_cost": 148230,
-      "ledger_latency_s": 0.01882637501694262
+      "ledger_latency_s": 0.008625874994322658
     },
     {
       "round": 2,
@@ -960,11 +961,11 @@
       "n_examples": 8303,
       "bytes": 31723,
       "ledger_status": "registered",
-      "tx_id": "0x416e88dd8d7c0777fa512747f0bfb6fd5557c83912abcc2cd37543fc06ce3a64",
-      "block": 523,
+      "tx_id": "0xa791be7faae7a789d36da3053ccddb9b34b3d2226f5b5be2438a6a2defd7514c",
+      "block": 9421,
       "ledger_org": "fl_client_1",
       "ledger_cost": 148230,
-      "ledger_latency_s": 0.014581624884158373
+      "ledger_latency_s": 0.007542582927271724
     },
     {
       "round": 2,
@@ -974,11 +975,11 @@
       "n_examples": 22186,
       "bytes": 31724,
       "ledger_status": "registered",
-      "tx_id": "0x22171bcf739899c595daacec5b4f944fe45caa10befc85fe82974d91654295a4",
-      "block": 524,
+      "tx_id": "0x6eb684f8beb5154f79001ff00d392006b91c12e45a2602b9acad82767f32d1dc",
+      "block": 9422,
       "ledger_org": "fl_client_2",
       "ledger_cost": 148230,
-      "ledger_latency_s": 0.01494204206392169
+      "ledger_latency_s": 0.007416541920974851
     },
     {
       "round": 2,
@@ -988,11 +989,11 @@
       "n_examples": 35383,
       "bytes": 31535,
       "ledger_status": "registered",
-      "tx_id": "0xc7c6da5615d7dcd94279959d31b901a0d59b5c10ed49de4141d221e2e1e84775",
-      "block": 525,
+      "tx_id": "0x5c64c579f1048fb4b431fbd0a0563a0ec34515c86d8b9a5f9535dfb65b6e5b09",
+      "block": 9423,
       "ledger_org": "fl_aggregator",
       "ledger_cost": 125554,
-      "ledger_latency_s": 0.015460708178579807
+      "ledger_latency_s": 0.006826624972745776
     },
     {
       "round": 3,
@@ -1002,11 +1003,11 @@
       "n_examples": 4894,
       "bytes": 31722,
       "ledger_status": "registered",
-      "tx_id": "0x04ee3234b75cb1cef33f1b0a9881046c62e2b6e26ec226ef44f1f16aefed7802",
-      "block": 526,
+      "tx_id": "0xaf12001a09d2035816633523e18a2294187dd2d3ec04b01cdc92cc66a7844744",
+      "block": 9424,
       "ledger_org": "fl_client_0",
       "ledger_cost": 148230,
-      "ledger_latency_s": 0.033889624988660216
+      "ledger_latency_s": 0.009761834051460028
     },
     {
       "round": 3,
@@ -1016,11 +1017,11 @@
       "n_examples": 8303,
       "bytes": 31723,
       "ledger_status": "registered",
-      "tx_id": "0xa7580f6566fedecc6c1cfde9e5882ff208e80eb6299127e5fa617e83a2a526c8",
-      "block": 527,
+      "tx_id": "0x967267e48fe664862ecd86fef38d5498ba7887492f23cd8e63bd1c4887c1cb7b",
+      "block": 9425,
       "ledger_org": "fl_client_1",
       "ledger_cost": 148230,
-      "ledger_latency_s": 0.019896958023309708
+      "ledger_latency_s": 0.008006041869521141
     },
     {
       "round": 3,
@@ -1030,11 +1031,11 @@
       "n_examples": 22186,
       "bytes": 31724,
       "ledger_status": "registered",
-      "tx_id": "0x0d796beffb0c0b6d0b130d0504d979b7da3a84e808f934bc5ac9106ad84dd26f",
-      "block": 528,
+      "tx_id": "0x07b13485e1bc491c13cc6ff2f325aba938fe20cdebec638c4ce079f873b2d91d",
+      "block": 9426,
       "ledger_org": "fl_client_2",
       "ledger_cost": 148230,
-      "ledger_latency_s": 0.04426512494683266
+      "ledger_latency_s": 0.007356915855780244
     },
     {
       "round": 3,
@@ -1044,11 +1045,11 @@
       "n_examples": 35383,
       "bytes": 31535,
       "ledger_status": "registered",
-      "tx_id": "0x45418420d92265ad0d41be4680b6438d3bf85fcf55bde7fbeb34b1be17d8affd",
-      "block": 529,
+      "tx_id": "0x722c49e82994d9e6b7db2950676dc60900af20bf54deecd3a03a2885ee798591",
+      "block": 9427,
       "ledger_org": "fl_aggregator",
       "ledger_cost": 125578,
-      "ledger_latency_s": 0.018601707881316543
+      "ledger_latency_s": 0.006990416906774044
     },
     {
       "round": 4,
@@ -1058,11 +1059,11 @@
       "n_examples": 4894,
       "bytes": 31722,
       "ledger_status": "registered",
-      "tx_id": "0x2bc6e4335164caaf16e1b8654a9ebe34c91a89700cf5a0833314ca069e91b8c3",
-      "block": 530,
+      "tx_id": "0x3bb356824c43beb29258d980e3e9e46f976e5648eb97549119bf20fc43f7ee82",
+      "block": 9428,
       "ledger_org": "fl_client_0",
       "ledger_cost": 148230,
-      "ledger_latency_s": 0.02773895813152194
+      "ledger_latency_s": 0.01233616704121232
     },
     {
       "round": 4,
@@ -1072,11 +1073,11 @@
       "n_examples": 8303,
       "bytes": 31723,
       "ledger_status": "registered",
-      "tx_id": "0xa08853fda48ec78f74b90b21d6535bc8aece9fc233ddb7a4f5f97edde9ba7e1c",
-      "block": 531,
+      "tx_id": "0x0b3735317aeec8a8fbbb284ba251f9edbca444b6dcf201add028c9a4358e32d1",
+      "block": 9429,
       "ledger_org": "fl_client_1",
       "ledger_cost": 148230,
-      "ledger_latency_s": 0.022013833979144692
+      "ledger_latency_s": 0.009035584051162004
     },
     {
       "round": 4,
@@ -1086,11 +1087,11 @@
       "n_examples": 22186,
       "bytes": 31724,
       "ledger_status": "registered",
-      "tx_id": "0x80c90f562de2346928a4c1a668ad2a3f75fcf3225c334fe9df736ae902a21ec5",
-      "block": 532,
+      "tx_id": "0xccee102c5fb65ec0ea1592aa7f878aacbd4e70d9a7e2df73e022771a0f3aa7fc",
+      "block": 9430,
       "ledger_org": "fl_client_2",
       "ledger_cost": 148230,
-      "ledger_latency_s": 0.01722649997100234
+      "ledger_latency_s": 0.007994791027158499
     },
     {
       "round": 4,
@@ -1100,11 +1101,11 @@
       "n_examples": 35383,
       "bytes": 31535,
       "ledger_status": "registered",
-      "tx_id": "0xa7f3fe035982867f7b3ac70a6269c826049aaf3f78e68bbddcf36c18a8f4faa8",
-      "block": 533,
+      "tx_id": "0xfab40f85bea48900549def5b564bf83507cc89b9d639c0e25c08679c06bd2bb0",
+      "block": 9431,
       "ledger_org": "fl_aggregator",
       "ledger_cost": 125578,
-      "ledger_latency_s": 0.01683612517081201
+      "ledger_latency_s": 0.00752054201439023
     },
     {
       "round": 5,
@@ -1114,11 +1115,11 @@
       "n_examples": 4894,
       "bytes": 31722,
       "ledger_status": "registered",
-      "tx_id": "0x89e64369bf486f104d7fc3a5477efd60fe9463920c656685cfefc6a32bf1b4e2",
-      "block": 534,
+      "tx_id": "0x180361a8a32497b269889d321d88e71433085f2b81d31c8942f536140f5960f2",
+      "block": 9432,
       "ledger_org": "fl_client_0",
       "ledger_cost": 148230,
-      "ledger_latency_s": 0.024718291824683547
+      "ledger_latency_s": 0.010152708971872926
     },
     {
       "round": 5,
@@ -1128,11 +1129,11 @@
       "n_examples": 8303,
       "bytes": 31723,
       "ledger_status": "registered",
-      "tx_id": "0xeb1884c78c4cff28288d84a79e1e68ec258934ee12f368311fbba67d4d3a7630",
-      "block": 535,
+      "tx_id": "0x91453617f9174ab37f82553b39d9650aa3da4a415c312d52c140da97e82b8ad6",
+      "block": 9433,
       "ledger_org": "fl_client_1",
       "ledger_cost": 148230,
-      "ledger_latency_s": 0.022718916181474924
+      "ledger_latency_s": 0.008166458923369646
     },
     {
       "round": 5,
@@ -1142,11 +1143,11 @@
       "n_examples": 22186,
       "bytes": 31724,
       "ledger_status": "registered",
-      "tx_id": "0xaa5596580bad7eaba548c2cf6e1f8c8528a0276aadbb189fadd0bd0a8efbecc2",
-      "block": 536,
+      "tx_id": "0xaa9ec426a060266e239e224b0fca009f0d717fffe8d83df6e2c1770fc73047f8",
+      "block": 9434,
       "ledger_org": "fl_client_2",
       "ledger_cost": 148230,
-      "ledger_latency_s": 0.01633837493136525
+      "ledger_latency_s": 0.007241833955049515
     },
     {
       "round": 5,
@@ -1156,11 +1157,11 @@
       "n_examples": 35383,
       "bytes": 31535,
       "ledger_status": "registered",
-      "tx_id": "0x895c79309281ca7d80cfaef0dd6e6cee739c20d33da09275d0db38a4774f3133",
-      "block": 537,
+      "tx_id": "0x107b4f844cf57a94ab2061d250202c53b8fef6b25669f85adebfe064f55a3311",
+      "block": 9435,
       "ledger_org": "fl_aggregator",
       "ledger_cost": 125578,
-      "ledger_latency_s": 0.02271816716529429
+      "ledger_latency_s": 0.007153542013838887
     },
     {
       "round": 6,
@@ -1170,11 +1171,11 @@
       "n_examples": 4894,
       "bytes": 31722,
       "ledger_status": "registered",
-      "tx_id": "0xdf7106a0190106d2c9d22e9daf0a83d12398392bc7a5855d51cf824a760ebd87",
-      "block": 538,
+      "tx_id": "0xb94e5f5cd1287ac9f7e1b9c7dd425c8b5dce98eb8280c963d6d816e4c5e8d23e",
+      "block": 9436,
       "ledger_org": "fl_client_0",
       "ledger_cost": 148230,
-      "ledger_latency_s": 0.019506125012412667
+      "ledger_latency_s": 0.008424707921221852
     },
     {
       "round": 6,
@@ -1184,11 +1185,11 @@
       "n_examples": 8303,
       "bytes": 31723,
       "ledger_status": "registered",
-      "tx_id": "0x0d0d8372ea864a456a84431605d6bd28de992321a326b2a529b17a8686a4345e",
-      "block": 539,
+      "tx_id": "0xb8d7ba616bc17c7c3749779905361e3b242429d9518260ec3012614c6927e970",
+      "block": 9437,
       "ledger_org": "fl_client_1",
       "ledger_cost": 148230,
-      "ledger_latency_s": 0.019990499829873443
+      "ledger_latency_s": 0.007750125136226416
     },
     {
       "round": 6,
@@ -1198,11 +1199,11 @@
       "n_examples": 22186,
       "bytes": 31724,
       "ledger_status": "registered",
-      "tx_id": "0x24fa2f7a5bf1ec32e3d3c4d9e0d28c42258531e318d6b41f7943b946966a81b7",
-      "block": 540,
+      "tx_id": "0x404d66d0af20b1fe0f2be28340f157332ec347f74ab508fcef861911bfe3c20d",
+      "block": 9438,
       "ledger_org": "fl_client_2",
       "ledger_cost": 148230,
-      "ledger_latency_s": 0.017524250084534287
+      "ledger_latency_s": 0.007104041986167431
     },
     {
       "round": 6,
@@ -1212,11 +1213,11 @@
       "n_examples": 35383,
       "bytes": 31535,
       "ledger_status": "registered",
-      "tx_id": "0x679294df5e1c0c8bc0a754b936b2fbe8cda2dd4eec43056ac63ee5666532bdcd",
-      "block": 541,
+      "tx_id": "0x07794c13148829f1cd2ad727862da047b9f8a25b120cf8d85fac5fad4fcbf006",
+      "block": 9439,
       "ledger_org": "fl_aggregator",
       "ledger_cost": 125578,
-      "ledger_latency_s": 0.01780237490311265
+      "ledger_latency_s": 0.006650375202298164
     },
     {
       "round": 7,
@@ -1226,11 +1227,11 @@
       "n_examples": 4894,
       "bytes": 31722,
       "ledger_status": "registered",
-      "tx_id": "0xb0b507fff78efab7b4bc37cf76e49e0661411e3b9e322d8fa734993f10ce772d",
-      "block": 542,
+      "tx_id": "0x6a360cc2a0d9e7036ecaf913c788662d8f31cff0c27a1b201ac8a321f12a0279",
+      "block": 9440,
       "ledger_org": "fl_client_0",
       "ledger_cost": 148230,
-      "ledger_latency_s": 0.01944575016386807
+      "ledger_latency_s": 0.008277917047962546
     },
     {
       "round": 7,
@@ -1240,11 +1241,11 @@
       "n_examples": 8303,
       "bytes": 31723,
       "ledger_status": "registered",
-      "tx_id": "0x5d909721e4ef2d029ad9e30995e63ece2b8bfaa57f1add7d1ec01748246c15e5",
-      "block": 543,
+      "tx_id": "0xf83884e518ac7e8c3cb92f24994cac555c6ad488e3f88710da705480759602fe",
+      "block": 9441,
       "ledger_org": "fl_client_1",
       "ledger_cost": 148230,
-      "ledger_latency_s": 0.01610741694457829
+      "ledger_latency_s": 0.006834832951426506
     },
     {
       "round": 7,
@@ -1254,11 +1255,11 @@
       "n_examples": 22186,
       "bytes": 31724,
       "ledger_status": "registered",
-      "tx_id": "0x41b2619cd896d0fde6e00ba2c2823d2af59c1d19815587c56964907d93dcc47b",
-      "block": 544,
+      "tx_id": "0xa0ae58d7d01679bead1fb0578bf65bc048b9421af450b02bc81e4d1e231318cc",
+      "block": 9442,
       "ledger_org": "fl_client_2",
       "ledger_cost": 148230,
-      "ledger_latency_s": 0.015164374839514494
+      "ledger_latency_s": 0.006654874887317419
     },
     {
       "round": 7,
@@ -1268,11 +1269,11 @@
       "n_examples": 35383,
       "bytes": 31535,
       "ledger_status": "registered",
-      "tx_id": "0x2cb97dfad11d8ad9023cc644a45b98874451b8bd4f16306ea6857e0918f4ecb5",
-      "block": 545,
+      "tx_id": "0xee7b5b3bd23fb9a941150344a52f5d2c9c3e6fc55cc30b27c229928da52ac0db",
+      "block": 9443,
       "ledger_org": "fl_aggregator",
       "ledger_cost": 125578,
-      "ledger_latency_s": 0.016014083055779338
+      "ledger_latency_s": 0.006623249966651201
     },
     {
       "round": 8,
@@ -1282,11 +1283,11 @@
       "n_examples": 4894,
       "bytes": 31722,
       "ledger_status": "registered",
-      "tx_id": "0xded26f0eb93a42e5df94ba0a4fc7220fe4ce2d6207e936d14d5488921ae7ff1d",
-      "block": 546,
+      "tx_id": "0x192b669762cd48e64fc2432c7e1d4dba9b2bb2e317c1cfb74dbd1a0a71a6c783",
+      "block": 9444,
       "ledger_org": "fl_client_0",
       "ledger_cost": 148230,
-      "ledger_latency_s": 0.02324045798741281
+      "ledger_latency_s": 0.010650583077222109
     },
     {
       "round": 8,
@@ -1296,11 +1297,11 @@
       "n_examples": 8303,
       "bytes": 31723,
       "ledger_status": "registered",
-      "tx_id": "0x7acfd62052124cfc073f2ea88bb095fbbe50724843ccf94159be87fe6769424d",
-      "block": 547,
+      "tx_id": "0x141a056cff3169692beff3d6a9d17b21f2bd1346efb7dd404f406aea13bc0e51",
+      "block": 9445,
       "ledger_org": "fl_client_1",
       "ledger_cost": 148230,
-      "ledger_latency_s": 0.01549241691827774
+      "ledger_latency_s": 0.00679166684858501
     },
     {
       "round": 8,
@@ -1310,11 +1311,11 @@
       "n_examples": 22186,
       "bytes": 31724,
       "ledger_status": "registered",
-      "tx_id": "0x9c4bc9c98c9d8f41fd7af60f025cb41518a499fdba7480563eee677f3960be47",
-      "block": 548,
+      "tx_id": "0x336069ebc5f409513ff933544536fa408b80aec0714817a1d5df54553df416ba",
+      "block": 9446,
       "ledger_org": "fl_client_2",
       "ledger_cost": 148230,
-      "ledger_latency_s": 0.01507316599600017
+      "ledger_latency_s": 0.006993750110268593
     },
     {
       "round": 8,
@@ -1324,11 +1325,11 @@
       "n_examples": 35383,
       "bytes": 31535,
       "ledger_status": "registered",
-      "tx_id": "0xbe55c38bcbb703fb445782cc4ea7e39f3b03de38065b6a50b6f58b395a9923c7",
-      "block": 549,
+      "tx_id": "0x369faedd602588d83694351ac971e0292efa6100193cbcc04b544fc5ee4d8a60",
+      "block": 9447,
       "ledger_org": "fl_aggregator",
       "ledger_cost": 125578,
-      "ledger_latency_s": 0.01643175003118813
+      "ledger_latency_s": 0.007245917106047273
     },
     {
       "round": 9,
@@ -1338,11 +1339,11 @@
       "n_examples": 4894,
       "bytes": 31722,
       "ledger_status": "registered",
-      "tx_id": "0x493a3d0e17ecadeae1dc87acbc76c1425415e36c3fc5a70ee8824eb3bcfd640d",
-      "block": 550,
+      "tx_id": "0xa36c61ec4b2256e71bd1808522ff4472f70def79caa242a0aac69ce3b2f95c81",
+      "block": 9448,
       "ledger_org": "fl_client_0",
       "ledger_cost": 148230,
-      "ledger_latency_s": 0.02447125012986362
+      "ledger_latency_s": 0.008348834002390504
     },
     {
       "round": 9,
@@ -1352,11 +1353,11 @@
       "n_examples": 8303,
       "bytes": 31723,
       "ledger_status": "registered",
-      "tx_id": "0x6ba5f1cad15dd7db6b00431ac611d4b58ab243bb55c879a6492d6c3ed8eb8272",
-      "block": 551,
+      "tx_id": "0x7fc65145f210636831f7e3cb0fd15388461ab16649df06acf8448aeae3e0d88f",
+      "block": 9449,
       "ledger_org": "fl_client_1",
       "ledger_cost": 148230,
-      "ledger_latency_s": 0.0155948749743402
+      "ledger_latency_s": 0.007111125160008669
     },
     {
       "round": 9,
@@ -1366,11 +1367,11 @@
       "n_examples": 22186,
       "bytes": 31724,
       "ledger_status": "registered",
-      "tx_id": "0xc240b5476e425bf8fccb6ca73620e5217f64833fc2092e77c62e2f644b35c40f",
-      "block": 552,
+      "tx_id": "0x66a7ab9c4b2db4280ac203525d8120780ad9e7248b9b0e5cf921bbe2fad2833e",
+      "block": 9450,
       "ledger_org": "fl_client_2",
       "ledger_cost": 148218,
-      "ledger_latency_s": 0.013750124955549836
+      "ledger_latency_s": 0.006811958970502019
     },
     {
       "round": 9,
@@ -1380,11 +1381,11 @@
       "n_examples": 35383,
       "bytes": 31535,
       "ledger_status": "registered",
-      "tx_id": "0x922b39d5573c380be6f78f358c7bc7fbb72a35a184d7fd34b10df55599042285",
-      "block": 553,
+      "tx_id": "0x7a2b7f90c7aaee3257f7f1b5adc698f85381f898712ca946f4ee59eaecfd331e",
+      "block": 9451,
       "ledger_org": "fl_aggregator",
       "ledger_cost": 125566,
-      "ledger_latency_s": 0.014626041054725647
+      "ledger_latency_s": 0.007179750129580498
     },
     {
       "round": 10,
@@ -1394,11 +1395,11 @@
       "n_examples": 4894,
       "bytes": 31722,
       "ledger_status": "registered",
-      "tx_id": "0x505ff8d400fece0a5932f01f059b7c1cdfa0c2048d51b1a5a80b65d233133b7d",
-      "block": 554,
+      "tx_id": "0x491de2ad867205ef9cf1e87e7a562d4a7160a56c79e7efed5b70e6cf9128b7a9",
+      "block": 9452,
       "ledger_org": "fl_client_0",
       "ledger_cost": 148230,
-      "ledger_latency_s": 0.02485399995930493
+      "ledger_latency_s": 0.008695333963260055
     },
     {
       "round": 10,
@@ -1408,11 +1409,11 @@
       "n_examples": 8303,
       "bytes": 31723,
       "ledger_status": "registered",
-      "tx_id": "0xbd8cb8f3fb4d80a8735ed0840eeb1b74659b5f6d0011dac36b8ef7414a5df68b",
-      "block": 555,
+      "tx_id": "0xfa4c8a08ef2b81d2d465973a0e8d8187914168f2ffa4a39577a85c00059b6d04",
+      "block": 9453,
       "ledger_org": "fl_client_1",
       "ledger_cost": 148230,
-      "ledger_latency_s": 0.014599333051592112
+      "ledger_latency_s": 0.0070879170671105385
     },
     {
       "round": 10,
@@ -1422,11 +1423,11 @@
       "n_examples": 22186,
       "bytes": 31724,
       "ledger_status": "registered",
-      "tx_id": "0x0b7739bf4651231567add9828812cf183f3283b966597ea08398f1e93e687f36",
-      "block": 556,
+      "tx_id": "0x677d87c85a4c66a03bb5be9f092b565d67e1d37b76e2d3c1825ab2c93b6cc786",
+      "block": 9454,
       "ledger_org": "fl_client_2",
       "ledger_cost": 148230,
-      "ledger_latency_s": 0.015527792042121291
+      "ledger_latency_s": 0.007283041952177882
     },
     {
       "round": 10,
@@ -1436,11 +1437,11 @@
       "n_examples": 35383,
       "bytes": 31535,
       "ledger_status": "registered",
-      "tx_id": "0x692f128b8269b88c0f5baa2704c0e019a49430053db64a0d88c14e657c74d9fb",
-      "block": 557,
+      "tx_id": "0x44509d66a2382405672875e2d95546aebc4674989b1bdef68f5e0652bae0a9d5",
+      "block": 9455,
       "ledger_org": "fl_aggregator",
       "ledger_cost": 125578,
-      "ledger_latency_s": 0.012418583035469055
+      "ledger_latency_s": 0.006541582988575101
     },
     {
       "round": 11,
@@ -1450,11 +1451,11 @@
       "n_examples": 4894,
       "bytes": 31722,
       "ledger_status": "registered",
-      "tx_id": "0x1d294dc2e53c64728bfc8123c75fb1ce71a846caa501759af3d7638cc6d2f567",
-      "block": 558,
+      "tx_id": "0xb1bb3db196b51ef014a8187926dfff1809277b15a49078e8eccfb19963243f2a",
+      "block": 9456,
       "ledger_org": "fl_client_0",
       "ledger_cost": 148230,
-      "ledger_latency_s": 0.015853875083848834
+      "ledger_latency_s": 0.010104374960064888
     },
     {
       "round": 11,
@@ -1464,11 +1465,11 @@
       "n_examples": 8303,
       "bytes": 31723,
       "ledger_status": "registered",
-      "tx_id": "0x82baf2e7c3638419ab62195331fee9ed56dd979536030d03cb940180a86632fc",
-      "block": 559,
+      "tx_id": "0xa0268573eb17090d9a022e30137482ed68672cb2040022768a9d37cbe1af5915",
+      "block": 9457,
       "ledger_org": "fl_client_1",
       "ledger_cost": 148218,
-      "ledger_latency_s": 0.012704999884590507
+      "ledger_latency_s": 0.008038499858230352
     },
     {
       "round": 11,
@@ -1478,11 +1479,11 @@
       "n_examples": 22186,
       "bytes": 31724,
       "ledger_status": "registered",
-      "tx_id": "0x880281892dca3daf751c2a4b2a8909f22ff383305f2d19683d437dfd8e5543f3",
-      "block": 560,
+      "tx_id": "0x043e18782689a59b2c4ad59b47674b8fa61cd3d4845535f0b11b1137b74ad474",
+      "block": 9458,
       "ledger_org": "fl_client_2",
       "ledger_cost": 148230,
-      "ledger_latency_s": 0.014427209040150046
+      "ledger_latency_s": 0.007423916133120656
     },
     {
       "round": 11,
@@ -1492,11 +1493,11 @@
       "n_examples": 35383,
       "bytes": 31535,
       "ledger_status": "registered",
-      "tx_id": "0x13eb3d28c172d0add63b6d3897a223f8b5f81a16e839c9006a12573497c16c8b",
-      "block": 561,
+      "tx_id": "0x8e122c5426c4d726b9dc42fabd97542b12087aae4c3b1b3252976a65ae20f688",
+      "block": 9459,
       "ledger_org": "fl_aggregator",
       "ledger_cost": 125578,
-      "ledger_latency_s": 0.011358415940776467
+      "ledger_latency_s": 0.00879137497395277
     },
     {
       "round": 12,
@@ -1506,11 +1507,11 @@
       "n_examples": 4894,
       "bytes": 31722,
       "ledger_status": "registered",
-      "tx_id": "0x82487182299b37f9b69d326460d817d9707f15e6335e40e3406eb917fea34220",
-      "block": 562,
+      "tx_id": "0x89f67a1ae4f3832067afae29f219d38c97f03d8c59c8fcff1a833aa11a68e2cd",
+      "block": 9460,
       "ledger_org": "fl_client_0",
       "ledger_cost": 148218,
-      "ledger_latency_s": 0.021417584037408233
+      "ledger_latency_s": 0.010111625073477626
     },
     {
       "round": 12,
@@ -1520,11 +1521,11 @@
       "n_examples": 8303,
       "bytes": 31723,
       "ledger_status": "registered",
-      "tx_id": "0xd3b7ce50a173aced37027c8df0f940ff30d20c78c244488cdaef07df7a51395c",
-      "block": 563,
+      "tx_id": "0xc7978ee3f51a7f63259f8423b4dc912ec92e5b5878ba4b53ecdec03879a105a0",
+      "block": 9461,
       "ledger_org": "fl_client_1",
       "ledger_cost": 148230,
-      "ledger_latency_s": 0.014393541030585766
+      "ledger_latency_s": 0.008527166908606887
     },
     {
       "round": 12,
@@ -1534,11 +1535,11 @@
       "n_examples": 22186,
       "bytes": 31724,
       "ledger_status": "registered",
-      "tx_id": "0x5a7bbdcf57b205807312ed41e04ccdecd3d99dbad9d554a5f6a8eb3cbee9d6a2",
-      "block": 564,
+      "tx_id": "0x570fb9d04c93c7e7db1c615055ec2022e5b0e42cd0822b56135072530679b46f",
+      "block": 9462,
       "ledger_org": "fl_client_2",
       "ledger_cost": 148218,
-      "ledger_latency_s": 0.01866029086522758
+      "ledger_latency_s": 0.0073453751392662525
     },
     {
       "round": 12,
@@ -1548,11 +1549,11 @@
       "n_examples": 35383,
       "bytes": 31535,
       "ledger_status": "registered",
-      "tx_id": "0x7a0a74f4c4b2c7aba03cf0cebec14d43f35c2d2f04083b51bb9f1e0f1a19e7c1",
-      "block": 565,
+      "tx_id": "0x809626f50b46ea279c6a270c8ceac022259fb8548c2db549c52288ea3e75869f",
+      "block": 9463,
       "ledger_org": "fl_aggregator",
       "ledger_cost": 125578,
-      "ledger_latency_s": 0.023612250108271837
+      "ledger_latency_s": 0.006967958994209766
     },
     {
       "round": 13,
@@ -1562,11 +1563,11 @@
       "n_examples": 4894,
       "bytes": 31722,
       "ledger_status": "registered",
-      "tx_id": "0x064dcab2f5888fa7bb063875244f74d5b122fac34025cb638a1ee1982fdb9787",
-      "block": 566,
+      "tx_id": "0xedb9e6f2efd630ae72f6f58d15fc49eded2450b7fceac04e03a5c6394f978281",
+      "block": 9464,
       "ledger_org": "fl_client_0",
       "ledger_cost": 148230,
-      "ledger_latency_s": 0.018659041030332446
+      "ledger_latency_s": 0.013971082866191864
     },
     {
       "round": 13,
@@ -1576,11 +1577,11 @@
       "n_examples": 8303,
       "bytes": 31723,
       "ledger_status": "registered",
-      "tx_id": "0x523c4002ff6551d419f5de4851cdf595e01cfea89f9a9b5a0ab62cfba392ac3d",
-      "block": 567,
+      "tx_id": "0x46ed9a953526d7d7e3eeec748115d2fb2cc496d81ea7e357389a394f41d772aa",
+      "block": 9465,
       "ledger_org": "fl_client_1",
       "ledger_cost": 148230,
-      "ledger_latency_s": 0.015165790915489197
+      "ledger_latency_s": 0.009068624814972281
     },
     {
       "round": 13,
@@ -1590,11 +1591,11 @@
       "n_examples": 22186,
       "bytes": 31724,
       "ledger_status": "registered",
-      "tx_id": "0x26c0c7dc6e24c1d8eb4533fe4176ae19ccd0e2ea45cf9fbfb4239b2cdc6d60df",
-      "block": 568,
+      "tx_id": "0x27377f631f9b9c83d561dda37a27893a7815707dc8b2d1dbc92691e41758878f",
+      "block": 9466,
       "ledger_org": "fl_client_2",
       "ledger_cost": 148230,
-      "ledger_latency_s": 0.0125942078884691
+      "ledger_latency_s": 0.008519624825567007
     },
     {
       "round": 13,
@@ -1604,11 +1605,11 @@
       "n_examples": 35383,
       "bytes": 31535,
       "ledger_status": "registered",
-      "tx_id": "0x5f29314386bdbfbe9b80d627580a60c28d7dc6738942158a7c37fdcf0a3d9e8e",
-      "block": 569,
+      "tx_id": "0x03e92ed1692ed75fe56cf2d599eb30c9443e20f291eeaccacc9a75c756bd46e9",
+      "block": 9467,
       "ledger_org": "fl_aggregator",
       "ledger_cost": 125578,
-      "ledger_latency_s": 0.013980541145429015
+      "ledger_latency_s": 0.0076545411720871925
     },
     {
       "round": 14,
@@ -1618,11 +1619,11 @@
       "n_examples": 4894,
       "bytes": 31722,
       "ledger_status": "registered",
-      "tx_id": "0xea063759290c4c68d35cd60459715bcfaef5a8a6a132368c78989f73b95ae495",
-      "block": 570,
+      "tx_id": "0x990f1808f1f2a3a9385f224435a5354b33efca1c1e2566c9fbcc09c647998995",
+      "block": 9468,
       "ledger_org": "fl_client_0",
       "ledger_cost": 148230,
-      "ledger_latency_s": 0.01605179184116423
+      "ledger_latency_s": 0.010937999933958054
     },
     {
       "round": 14,
@@ -1632,11 +1633,11 @@
       "n_examples": 8303,
       "bytes": 31723,
       "ledger_status": "registered",
-      "tx_id": "0x482949ae9851b891e4623fb62828aa4e17735aed4f0eaf9bed0bdd2a2113917c",
-      "block": 571,
+      "tx_id": "0x5a9cf4f71177d49ae221d963f08cdda7506e86e8e3e31f5dacae89f127a9ae5f",
+      "block": 9469,
       "ledger_org": "fl_client_1",
       "ledger_cost": 148218,
-      "ledger_latency_s": 0.014951708959415555
+      "ledger_latency_s": 0.008454582886770368
     },
     {
       "round": 14,
@@ -1646,11 +1647,11 @@
       "n_examples": 22186,
       "bytes": 31724,
       "ledger_status": "registered",
-      "tx_id": "0x4983c88e80b5b304a066107a338b7554579db59c8f3156cf95c76bf4c404dee8",
-      "block": 572,
+      "tx_id": "0x251f9e2278cfcca7cf4e5e563947983874972ecb4811a9d31b785b9d4f6b80b3",
+      "block": 9470,
       "ledger_org": "fl_client_2",
       "ledger_cost": 148230,
-      "ledger_latency_s": 0.014329624827951193
+      "ledger_latency_s": 0.007401417009532452
     },
     {
       "round": 14,
@@ -1660,11 +1661,11 @@
       "n_examples": 35383,
       "bytes": 31535,
       "ledger_status": "registered",
-      "tx_id": "0x7216e1d9de3b8ff67528050b2ff777b9556beac5edcb9fdd896d6dfdd62a8435",
-      "block": 573,
+      "tx_id": "0x5c696eb8ff1ccd4eaf203104133c8353f63f991b8457e82b860d04a0f6a2a904",
+      "block": 9471,
       "ledger_org": "fl_aggregator",
       "ledger_cost": 125578,
-      "ledger_latency_s": 0.013063124846667051
+      "ledger_latency_s": 0.007154999999329448
     },
     {
       "round": 15,
@@ -1674,11 +1675,11 @@
       "n_examples": 4894,
       "bytes": 31722,
       "ledger_status": "registered",
-      "tx_id": "0xcff6eeca1135a2d0adb14f76f4b1d3a960c5370a731540dc83d6f3baea13a602",
-      "block": 574,
+      "tx_id": "0xaf5911610cb7275321a270c7bfe48487668cc200bbe5f3acf2df59b86ce67fa7",
+      "block": 9472,
       "ledger_org": "fl_client_0",
       "ledger_cost": 148230,
-      "ledger_latency_s": 0.01816445798613131
+      "ledger_latency_s": 0.013839750085026026
     },
     {
       "round": 15,
@@ -1688,11 +1689,11 @@
       "n_examples": 8303,
       "bytes": 31723,
       "ledger_status": "registered",
-      "tx_id": "0xefb1a0601ce137e18673f0f3e3339659328d612b4f88d9b8967a2203066084a7",
-      "block": 575,
+      "tx_id": "0xfc7e7516fc4c303ca3cbfc3d4985e6fa90c2ccf1d1976399f9a598c481bd25f2",
+      "block": 9473,
       "ledger_org": "fl_client_1",
       "ledger_cost": 148230,
-      "ledger_latency_s": 0.012278957990929484
+      "ledger_latency_s": 0.009464249946177006
     },
     {
       "round": 15,
@@ -1702,11 +1703,11 @@
       "n_examples": 22186,
       "bytes": 31724,
       "ledger_status": "registered",
-      "tx_id": "0xfc8a28687f0bb1f306728acafb62ca6878c814729f192fffc28d61da1e3c674d",
-      "block": 576,
+      "tx_id": "0x3fabf5a89488d4ea7396367ee919ffd61053ae76ca98a7dedae574d7ca1a97a9",
+      "block": 9474,
       "ledger_org": "fl_client_2",
       "ledger_cost": 148230,
-      "ledger_latency_s": 0.0131996248383075
+      "ledger_latency_s": 0.008091958006843925
     },
     {
       "round": 15,
@@ -1716,11 +1717,11 @@
       "n_examples": 35383,
       "bytes": 31535,
       "ledger_status": "registered",
-      "tx_id": "0xccac268b62c7187f741c3622023427740b4647b88c6396226b57368bf8b45176",
-      "block": 577,
+      "tx_id": "0x1142cf0b2d2517f9fc655c87a317da9acf669b0bf0a275e4f8808fb278357ecc",
+      "block": 9475,
       "ledger_org": "fl_aggregator",
       "ledger_cost": 125578,
-      "ledger_latency_s": 0.016255582915619016
+      "ledger_latency_s": 0.00757649983279407
     },
     {
       "round": 16,
@@ -1730,11 +1731,11 @@
       "n_examples": 4894,
       "bytes": 31722,
       "ledger_status": "registered",
-      "tx_id": "0xa315fe56098f4150957540611febc498b1dd1ae5e464eae8b155be896d8b4b68",
-      "block": 578,
+      "tx_id": "0xa8c9ef84abff39a189fa09a2a4e53077a5ca8d62de522dd8d526b99eb6fa209c",
+      "block": 9476,
       "ledger_org": "fl_client_0",
       "ledger_cost": 148230,
-      "ledger_latency_s": 0.01923458301462233
+      "ledger_latency_s": 0.010782666970044374
     },
     {
       "round": 16,
@@ -1744,11 +1745,11 @@
       "n_examples": 8303,
       "bytes": 31723,
       "ledger_status": "registered",
-      "tx_id": "0xa4f00dcfd2ad27188eb7e420b29ef3d00fc0b26aad9fcba0ecbf02da1f5389bd",
-      "block": 579,
+      "tx_id": "0x92bbe50766f31d3cf05c768ac8f640b13f27cd2438afa6d78fca042b999e6251",
+      "block": 9477,
       "ledger_org": "fl_client_1",
       "ledger_cost": 148230,
-      "ledger_latency_s": 0.016819166019558907
+      "ledger_latency_s": 0.008400165941566229
     },
     {
       "round": 16,
@@ -1758,11 +1759,11 @@
       "n_examples": 22186,
       "bytes": 31724,
       "ledger_status": "registered",
-      "tx_id": "0x28264f479be85637108ef4acca4365a30be876321d6d42bd635ccf61ff188556",
-      "block": 580,
+      "tx_id": "0x1a67dca66182fc9e180042d01545caeeda68059f4efc5d65f21d8f6c148f57aa",
+      "block": 9478,
       "ledger_org": "fl_client_2",
       "ledger_cost": 148230,
-      "ledger_latency_s": 0.012929124990478158
+      "ledger_latency_s": 0.007772334152832627
     },
     {
       "round": 16,
@@ -1772,11 +1773,11 @@
       "n_examples": 35383,
       "bytes": 31535,
       "ledger_status": "registered",
-      "tx_id": "0x1b6ee150b15023a498e5f82f871a6834ba016156b38ba502de096e80c00ff9c0",
-      "block": 581,
+      "tx_id": "0x0cca6752b6eebbc60c19f6e726a87ff5a494976bb282fe051ee37390c52b1951",
+      "block": 9479,
       "ledger_org": "fl_aggregator",
       "ledger_cost": 125566,
-      "ledger_latency_s": 0.015473374864086509
+      "ledger_latency_s": 0.007084042066708207
     },
     {
       "round": 17,
@@ -1786,11 +1787,11 @@
       "n_examples": 4894,
       "bytes": 31722,
       "ledger_status": "registered",
-      "tx_id": "0x939330d879a06b9bdb57a4d7119abba3168aed9a3960570fd23dd9ed1b04a436",
-      "block": 582,
+      "tx_id": "0x1728bbcd22d0600192a19661f0988c90e8f1d9d7dc6e827b555229eb0203a7ab",
+      "block": 9480,
       "ledger_org": "fl_client_0",
       "ledger_cost": 148230,
-      "ledger_latency_s": 0.01869762479327619
+      "ledger_latency_s": 0.01217504101805389
     },
     {
       "round": 17,
@@ -1800,11 +1801,11 @@
       "n_examples": 8303,
       "bytes": 31723,
       "ledger_status": "registered",
-      "tx_id": "0x18c14a375e7b015c23911df60b95c06de8265799c56f5d782e7ae5bd04921881",
-      "block": 583,
+      "tx_id": "0xaecb87881786de1960441eaf3f19ea5d4dab226652112b6619bd1e65606fb4bb",
+      "block": 9481,
       "ledger_org": "fl_client_1",
       "ledger_cost": 148230,
-      "ledger_latency_s": 0.013980583986267447
+      "ledger_latency_s": 0.0088767078705132
     },
     {
       "round": 17,
@@ -1814,11 +1815,11 @@
       "n_examples": 22186,
       "bytes": 31724,
       "ledger_status": "registered",
-      "tx_id": "0xf21da210d84ed68993f88ca1769d8f5ebe02d2b8d53f0bccc53f9787edaec5ff",
-      "block": 584,
+      "tx_id": "0xd8644d4bce93f0a71129e292e3d6d3066be4cc3683183e18a63d389e4b1ef151",
+      "block": 9482,
       "ledger_org": "fl_client_2",
       "ledger_cost": 148230,
-      "ledger_latency_s": 0.014314083848148584
+      "ledger_latency_s": 0.00791658298112452
     },
     {
       "round": 17,
@@ -1828,11 +1829,11 @@
       "n_examples": 35383,
       "bytes": 31535,
       "ledger_status": "registered",
-      "tx_id": "0xa595f783c928e1e970311501698a78910b9e202dc8ffb461900217be5b264f69",
-      "block": 585,
+      "tx_id": "0x675533c7c167413259982c0d204d117a4691aef3c90d4103d8a11eb64711ed4d",
+      "block": 9483,
       "ledger_org": "fl_aggregator",
       "ledger_cost": 125578,
-      "ledger_latency_s": 0.013950790977105498
+      "ledger_latency_s": 0.007407583994790912
     },
     {
       "round": 18,
@@ -1842,11 +1843,11 @@
       "n_examples": 4894,
       "bytes": 31722,
       "ledger_status": "registered",
-      "tx_id": "0x78742380da30412cb12e18dfdd7ca4e6ed1ccd62e5016af3e13310fd902fe8a9",
-      "block": 586,
+      "tx_id": "0x6d9abfdcfe462182d6daa55b065576093c4bcc26f6efb2c1b5238f596002b217",
+      "block": 9484,
       "ledger_org": "fl_client_0",
       "ledger_cost": 148230,
-      "ledger_latency_s": 0.018047207966446877
+      "ledger_latency_s": 0.010176333133131266
     },
     {
       "round": 18,
@@ -1856,11 +1857,11 @@
       "n_examples": 8303,
       "bytes": 31723,
       "ledger_status": "registered",
-      "tx_id": "0x194e9d5e6a64f0f6d07908069f9b93b9abc32a8cca02698fb4f7897168f49cb9",
-      "block": 587,
+      "tx_id": "0xa1aec1be50b3768fd0d3dc170b36b47f7e14c10e39aa6ce4b67a2116af191506",
+      "block": 9485,
       "ledger_org": "fl_client_1",
       "ledger_cost": 148230,
-      "ledger_latency_s": 0.015546707902103662
+      "ledger_latency_s": 0.008478375151753426
     },
     {
       "round": 18,
@@ -1870,11 +1871,11 @@
       "n_examples": 22186,
       "bytes": 31724,
       "ledger_status": "registered",
-      "tx_id": "0xe34af30c8a6635be5628d8039596443edb3eca1b75d9708dbac0ed1ffcae1b59",
-      "block": 588,
+      "tx_id": "0x0065a902334eee1b0d90cc2fb0ddc2d0c2af52fd89b4a209c00dd25038721569",
+      "block": 9486,
       "ledger_org": "fl_client_2",
       "ledger_cost": 148230,
-      "ledger_latency_s": 0.015488415956497192
+      "ledger_latency_s": 0.00774266617372632
     },
     {
       "round": 18,
@@ -1884,11 +1885,11 @@
       "n_examples": 35383,
       "bytes": 31535,
       "ledger_status": "registered",
-      "tx_id": "0x0c77e8fc53313db5b4aa7112a7b12982c3c1394fc6d7d882c7b2fb613e92528f",
-      "block": 589,
+      "tx_id": "0xeafebf2fcf6ec0896c0a2140c8ec5732aa43a044bf5f598acbb1cc8737630b3f",
+      "block": 9487,
       "ledger_org": "fl_aggregator",
       "ledger_cost": 125578,
-      "ledger_latency_s": 0.01777204219251871
+      "ledger_latency_s": 0.007053333101794124
     },
     {
       "round": 19,
@@ -1898,11 +1899,11 @@
       "n_examples": 4894,
       "bytes": 31722,
       "ledger_status": "registered",
-      "tx_id": "0xb7b77915f292a20ed39f1d7eb3c4ae10700a95210e8b4950aa38e9ab247b763b",
-      "block": 590,
+      "tx_id": "0xaeeb575d4cf135119e55bad696b7c6a7877486c2d65e8f75d14f6686ba2dc152",
+      "block": 9488,
       "ledger_org": "fl_client_0",
       "ledger_cost": 148218,
-      "ledger_latency_s": 0.01715774997137487
+      "ledger_latency_s": 0.012965583009645343
     },
     {
       "round": 19,
@@ -1912,11 +1913,11 @@
       "n_examples": 8303,
       "bytes": 31723,
       "ledger_status": "registered",
-      "tx_id": "0xe81d3a7bf617a38d8eaeffea65b0aeb8c57ad1ad345c317c272f2fd86553f947",
-      "block": 591,
+      "tx_id": "0x1e960ee0c3608dc38fa32c88befcccff048b1e2e3730b218a30f60c455d2b720",
+      "block": 9489,
       "ledger_org": "fl_client_1",
       "ledger_cost": 148230,
-      "ledger_latency_s": 0.012665458023548126
+      "ledger_latency_s": 0.008678707992658019
     },
     {
       "round": 19,
@@ -1926,11 +1927,11 @@
       "n_examples": 22186,
       "bytes": 31724,
       "ledger_status": "registered",
-      "tx_id": "0x97c375399f3bfb0d01156bcaea7583fd023511ae2e36f7a1201475ac34160df3",
-      "block": 592,
+      "tx_id": "0x160b42816cf83e096d1384e9713af005882b0be25d64daa244dfdcdff12aa966",
+      "block": 9490,
       "ledger_org": "fl_client_2",
       "ledger_cost": 148230,
-      "ledger_latency_s": 0.0130107500590384
+      "ledger_latency_s": 0.008358791936188936
     },
     {
       "round": 19,
@@ -1940,11 +1941,11 @@
       "n_examples": 35383,
       "bytes": 31535,
       "ledger_status": "registered",
-      "tx_id": "0x44a5473cbf812bce6d1f7eb3a53d6a70f10b6145108e4e3f2cc8927fe28b8f0b",
-      "block": 593,
+      "tx_id": "0x270ea3b7eeca2b175ed5fabdb1372b7c37ab129f365bfa0299e118f0d1d6ddf6",
+      "block": 9491,
       "ledger_org": "fl_aggregator",
       "ledger_cost": 125578,
-      "ledger_latency_s": 0.014439749997109175
+      "ledger_latency_s": 0.007785083027556539
     },
     {
       "round": 20,
@@ -1954,11 +1955,11 @@
       "n_examples": 4894,
       "bytes": 31722,
       "ledger_status": "registered",
-      "tx_id": "0xb8dbda4d6763e522b00842f6c5d7ddd9c9efc88fdacb6c03e56b1b71bec32455",
-      "block": 594,
+      "tx_id": "0xb449c97cbd727e7014ca050e23ab76f21d9af20048fc073b3c082e4476f4299c",
+      "block": 9492,
       "ledger_org": "fl_client_0",
       "ledger_cost": 148218,
-      "ledger_latency_s": 0.026628916850313544
+      "ledger_latency_s": 0.010716457851231098
     },
     {
       "round": 20,
@@ -1968,11 +1969,11 @@
       "n_examples": 8303,
       "bytes": 31723,
       "ledger_status": "registered",
-      "tx_id": "0x8a6fae97aec8ba78494c1c15d790f6432cbe8dbed42e0c0ddd73079351dd1f3f",
-      "block": 595,
+      "tx_id": "0xa8061fd0cf09c007d2be258884158409127db814dc66c296267b5ea1c1dcf706",
+      "block": 9493,
       "ledger_org": "fl_client_1",
       "ledger_cost": 148230,
-      "ledger_latency_s": 0.020584417041391134
+      "ledger_latency_s": 0.008304334012791514
     },
     {
       "round": 20,
@@ -1982,11 +1983,11 @@
       "n_examples": 22186,
       "bytes": 31724,
       "ledger_status": "registered",
-      "tx_id": "0x03e62ddaed072bc344e06910635038240b384335da61cc8ebdf4a8461635ffb2",
-      "block": 596,
+      "tx_id": "0x103892b0cda19874fcdafd1a34a25667849177de597b45c0f8a0f52c16438f03",
+      "block": 9494,
       "ledger_org": "fl_client_2",
       "ledger_cost": 148230,
-      "ledger_latency_s": 0.01589966705068946
+      "ledger_latency_s": 0.0077863328624516726
     },
     {
       "round": 20,
@@ -1996,11 +1997,11 @@
       "n_examples": 35383,
       "bytes": 31535,
       "ledger_status": "registered",
-      "tx_id": "0x6883c44f31f9c637dea73e478008bf65e7ce4e85215d4a2353d7e04b1589d329",
-      "block": 597,
+      "tx_id": "0x885b4b589b0d3f2cb39822c676686c3a680efee4502979c6cf3ab6a5d1879720",
+      "block": 9495,
       "ledger_org": "fl_aggregator",
       "ledger_cost": 125578,
-      "ledger_latency_s": 0.017893708078190684
+      "ledger_latency_s": 0.007376916008070111
     },
     {
       "round": 21,
@@ -2010,11 +2011,11 @@
       "n_examples": 4894,
       "bytes": 31722,
       "ledger_status": "registered",
-      "tx_id": "0xdac3a4310003ef13c6b74c39a1df6585c2d7c60546403077f6a7a87fd8813f85",
-      "block": 598,
+      "tx_id": "0x4e7b7653de4b7c4d47a500cd71af30268c0c1d2afefda5d309522ed85c26e86b",
+      "block": 9496,
       "ledger_org": "fl_client_0",
       "ledger_cost": 148230,
-      "ledger_latency_s": 0.022012042114511132
+      "ledger_latency_s": 0.008394083008170128
     },
     {
       "round": 21,
@@ -2024,11 +2025,11 @@
       "n_examples": 8303,
       "bytes": 31723,
       "ledger_status": "registered",
-      "tx_id": "0x27c75301e0bf7a18f5e42d11aea6e8c1cfd2e0618ddd6a4b29f4d3476b7486ad",
-      "block": 599,
+      "tx_id": "0x56df5daf9199d7db972471b7ac9786c4af25e8c1bd352c637a882f2bb0aa3356",
+      "block": 9497,
       "ledger_org": "fl_client_1",
       "ledger_cost": 148230,
-      "ledger_latency_s": 0.017957499949261546
+      "ledger_latency_s": 0.007268165936693549
     },
     {
       "round": 21,
@@ -2038,11 +2039,11 @@
       "n_examples": 22186,
       "bytes": 31724,
       "ledger_status": "registered",
-      "tx_id": "0x543f40e78de70caab54ff6acffaf5732084332008614e866f1cc19a8642c43f5",
-      "block": 600,
+      "tx_id": "0x3a2b7ba23f4df22dba5e00981a1f7bcbd704b68ca862e6d6abec7427dfa902d7",
+      "block": 9498,
       "ledger_org": "fl_client_2",
       "ledger_cost": 148218,
-      "ledger_latency_s": 0.01889083394780755
+      "ledger_latency_s": 0.00782370800152421
     },
     {
       "round": 21,
@@ -2052,11 +2053,11 @@
       "n_examples": 35383,
       "bytes": 31535,
       "ledger_status": "registered",
-      "tx_id": "0xe53b2270a180184d51cad7f66b4f26f76f1eddf97060a0b02172e6adf9e23c5b",
-      "block": 601,
+      "tx_id": "0x5824dc5c7abe26476bb8ad47b833deedb164218b6719871929251e203d72959f",
+      "block": 9499,
       "ledger_org": "fl_aggregator",
       "ledger_cost": 125578,
-      "ledger_latency_s": 0.01961445901542902
+      "ledger_latency_s": 0.006629958050325513
     },
     {
       "round": 22,
@@ -2066,11 +2067,11 @@
       "n_examples": 4894,
       "bytes": 31722,
       "ledger_status": "registered",
-      "tx_id": "0x9d5f7e3a8a98e6b8d110d2b378b9428e3462a5f48b331af7cecce911e000c626",
-      "block": 602,
+      "tx_id": "0xf73a85f12811352571eeb99dc4a46c493ffc2632e69edacd92eebe8af44dbe4d",
+      "block": 9500,
       "ledger_org": "fl_client_0",
       "ledger_cost": 148230,
-      "ledger_latency_s": 0.025876292027533054
+      "ledger_latency_s": 0.00821250001899898
     },
     {
       "round": 22,
@@ -2080,11 +2081,11 @@
       "n_examples": 8303,
       "bytes": 31723,
       "ledger_status": "registered",
-      "tx_id": "0x48f7e9d6ddd793b42fb893ed3341ab7c6968bbb3fad0036836278a79db5341ff",
-      "block": 603,
+      "tx_id": "0x77c2c3b6750eac6a8ec0d138992d106295cd87fc846060fd346ecead5062f2e4",
+      "block": 9501,
       "ledger_org": "fl_client_1",
       "ledger_cost": 148218,
-      "ledger_latency_s": 0.01909120799973607
+      "ledger_latency_s": 0.007293958915397525
     },
     {
       "round": 22,
@@ -2094,11 +2095,11 @@
       "n_examples": 22186,
       "bytes": 31724,
       "ledger_status": "registered",
-      "tx_id": "0x838ef17871d5f8da2c3b6cc273cf5ef9271f3a777142b9ce926949cb472ce35f",
-      "block": 604,
+      "tx_id": "0x649fdbea083ea294c9d1bbbe0260fb5ba3882ae548d6a5b008c2a7957e7b0cda",
+      "block": 9502,
       "ledger_org": "fl_client_2",
       "ledger_cost": 148230,
-      "ledger_latency_s": 0.03716258378699422
+      "ledger_latency_s": 0.0073221661150455475
     },
     {
       "round": 22,
@@ -2108,11 +2109,11 @@
       "n_examples": 35383,
       "bytes": 31535,
       "ledger_status": "registered",
-      "tx_id": "0x3c47ffa5eb1a76ab7396fc7286f2de001b89245659987cbd95ec8115e4822b9c",
-      "block": 605,
+      "tx_id": "0x51c588cb705ac2e868968721756a6a832e99d135e44210cafc5f63736e4728a5",
+      "block": 9503,
       "ledger_org": "fl_aggregator",
       "ledger_cost": 125578,
-      "ledger_latency_s": 0.017143832985311747
+      "ledger_latency_s": 0.006669082911685109
     },
     {
       "round": 23,
@@ -2122,11 +2123,11 @@
       "n_examples": 4894,
       "bytes": 31722,
       "ledger_status": "registered",
-      "tx_id": "0x58db2b5077032a03ed125492cd69d230677b9f997c7c7f8af35860c6ce77c0e2",
-      "block": 606,
+      "tx_id": "0xffac6c35df8e67cf51e72eef3f6d12a20c2b65b0f4828b9e55135387a5957d31",
+      "block": 9504,
       "ledger_org": "fl_client_0",
       "ledger_cost": 148230,
-      "ledger_latency_s": 0.024765708949416876
+      "ledger_latency_s": 0.008037333143875003
     },
     {
       "round": 23,
@@ -2136,11 +2137,11 @@
       "n_examples": 8303,
       "bytes": 31723,
       "ledger_status": "registered",
-      "tx_id": "0xe8831aff6835306a78ba2a5dffbd43e6ca21f32746dabcc443659a3307c71b0d",
-      "block": 607,
+      "tx_id": "0x5dc00b697956b2c2080475f12da59891ce7990bdb739edc53cdbb691ff6be224",
+      "block": 9505,
       "ledger_org": "fl_client_1",
       "ledger_cost": 148230,
-      "ledger_latency_s": 0.023760291980579495
+      "ledger_latency_s": 0.00721941702067852
     },
     {
       "round": 23,
@@ -2150,11 +2151,11 @@
       "n_examples": 22186,
       "bytes": 31724,
       "ledger_status": "registered",
-      "tx_id": "0x913b2c998b4b60d0c98376ab9e58bcf2c8f850ba40023444730b0b98b649a506",
-      "block": 608,
+      "tx_id": "0xfbf45e32cba152cae51932b7930a51929d9f1e52b407567859626e343058c0e8",
+      "block": 9506,
       "ledger_org": "fl_client_2",
       "ledger_cost": 148230,
-      "ledger_latency_s": 0.021558125037699938
+      "ledger_latency_s": 0.006897582905367017
     },
     {
       "round": 23,
@@ -2164,11 +2165,11 @@
       "n_examples": 35383,
       "bytes": 31535,
       "ledger_status": "registered",
-      "tx_id": "0x4cc6cdffe8ff8c024e5528ec2f7222693934ee805ed300d02bcbfc9d7d11c49c",
-      "block": 609,
+      "tx_id": "0xe3c18c19264703660a76112ae7e8b001067012f6145a9cc16a3c62e67e7821a3",
+      "block": 9507,
       "ledger_org": "fl_aggregator",
       "ledger_cost": 125578,
-      "ledger_latency_s": 0.025024875067174435
+      "ledger_latency_s": 0.006814624881371856
     },
     {
       "round": 24,
@@ -2178,11 +2179,11 @@
       "n_examples": 4894,
       "bytes": 31722,
       "ledger_status": "registered",
-      "tx_id": "0x9213b8dfd48c7b8c85a4c43873de38f3e263d422bdaa8f6ab0dc20e1bebf6c33",
-      "block": 610,
+      "tx_id": "0x10bc55cff0f06dc258b157118c8ca16e99020ea7ec23ca142dcb20eb4012d48b",
+      "block": 9508,
       "ledger_org": "fl_client_0",
       "ledger_cost": 148230,
-      "ledger_latency_s": 0.02112299995496869
+      "ledger_latency_s": 0.009835541946813464
     },
     {
       "round": 24,
@@ -2192,11 +2193,11 @@
       "n_examples": 8303,
       "bytes": 31723,
       "ledger_status": "registered",
-      "tx_id": "0xbcec71540b020f997c34294b662d681f93a2fc5f2b44a02a992ca443e50240d5",
-      "block": 611,
+      "tx_id": "0x2664813134468013c4454c2475f028efb29dd1355776c642c24ab47e22351631",
+      "block": 9509,
       "ledger_org": "fl_client_1",
       "ledger_cost": 148230,
-      "ledger_latency_s": 0.01636600005440414
+      "ledger_latency_s": 0.0069953331258147955
     },
     {
       "round": 24,
@@ -2206,11 +2207,11 @@
       "n_examples": 22186,
       "bytes": 31724,
       "ledger_status": "registered",
-      "tx_id": "0xc985a2196e63c985587e7540bb40e4587630099d1fc228e89fedf974c733d5c0",
-      "block": 612,
+      "tx_id": "0x62de07dbb1ca5237f1c6dd6101582da39a8ea419e626fe8c3cc19e6a8d086007",
+      "block": 9510,
       "ledger_org": "fl_client_2",
       "ledger_cost": 148230,
-      "ledger_latency_s": 0.014983166009187698
+      "ledger_latency_s": 0.006936291931197047
     },
     {
       "round": 24,
@@ -2220,11 +2221,11 @@
       "n_examples": 35383,
       "bytes": 31535,
       "ledger_status": "registered",
-      "tx_id": "0x7231f81b13f56a389259e9bd1dfe39f5a419bf1341dc120f4d16b0dc575e66c2",
-      "block": 613,
+      "tx_id": "0x7b52edb152cbabea6532009ab10d1a85ccfdcd812f3ee42b7e76bbacdae72ec4",
+      "block": 9511,
       "ledger_org": "fl_aggregator",
       "ledger_cost": 125578,
-      "ledger_latency_s": 0.015566749963909388
+      "ledger_latency_s": 0.007173124933615327
     },
     {
       "round": 25,
@@ -2234,11 +2235,11 @@
       "n_examples": 4894,
       "bytes": 31722,
       "ledger_status": "registered",
-      "tx_id": "0x24a4d11e931baa81150e345f6bcb3ef5690633c6b892e749e28e5cff0ffb9c8f",
-      "block": 614,
+      "tx_id": "0xe5b116b8968b5b05da3940fe668e132531887c09218ba6e37011da5bb2665fde",
+      "block": 9512,
       "ledger_org": "fl_client_0",
       "ledger_cost": 148218,
-      "ledger_latency_s": 0.0327077500987798
+      "ledger_latency_s": 0.008786875056102872
     },
     {
       "round": 25,
@@ -2248,11 +2249,11 @@
       "n_examples": 8303,
       "bytes": 31723,
       "ledger_status": "registered",
-      "tx_id": "0x2f49de27b8fadf57b6d3db7a9349dac5896bce8f85dae18587922a9df215bff9",
-      "block": 615,
+      "tx_id": "0xbd6c664ff0253ca43cd15a0358ca0d4c938f171fb7596163a25a76289aa25e3d",
+      "block": 9513,
       "ledger_org": "fl_client_1",
       "ledger_cost": 148230,
-      "ledger_latency_s": 0.0187525840010494
+      "ledger_latency_s": 0.007883209036663175
     },
     {
       "round": 25,
@@ -2262,11 +2263,11 @@
       "n_examples": 22186,
       "bytes": 31724,
       "ledger_status": "registered",
-      "tx_id": "0x8c68f9d676020d882bad531fa8d3e387d69ca263cac563f73c066a47b6bfe318",
-      "block": 616,
+      "tx_id": "0x733c5299e553512cbe2c2e5fed1adb0c8864f1bb3225a931740120513eaf89e0",
+      "block": 9514,
       "ledger_org": "fl_client_2",
       "ledger_cost": 148230,
-      "ledger_latency_s": 0.016195167088881135
+      "ledger_latency_s": 0.0069554580841213465
     },
     {
       "round": 25,
@@ -2276,11 +2277,11 @@
       "n_examples": 35383,
       "bytes": 31535,
       "ledger_status": "registered",
-      "tx_id": "0x4963c70cfd4aae2db63f36a9227d8eea5c11cd102e3b55186c24829a8eeb1ec3",
-      "block": 617,
+      "tx_id": "0x1987d9b97bb4ad9478d15b81023263390fdd439331179e9a9be8f074629d0b48",
+      "block": 9515,
       "ledger_org": "fl_aggregator",
       "ledger_cost": 125578,
-      "ledger_latency_s": 0.01406970783136785
+      "ledger_latency_s": 0.006925875088199973
     },
     {
       "round": 26,
@@ -2290,11 +2291,11 @@
       "n_examples": 4894,
       "bytes": 31722,
       "ledger_status": "registered",
-      "tx_id": "0x8b31aedbc15b9eeeca3fc029583dcaac391fecb8269f9062527b1dce18cb30d3",
-      "block": 618,
+      "tx_id": "0xb43183e425f53be526c85ac31faa42866b394c1a632a7aca445def0ccc0e68be",
+      "block": 9516,
       "ledger_org": "fl_client_0",
       "ledger_cost": 148230,
-      "ledger_latency_s": 0.0222059169318527
+      "ledger_latency_s": 0.011427583172917366
     },
     {
       "round": 26,
@@ -2304,11 +2305,11 @@
       "n_examples": 8303,
       "bytes": 31723,
       "ledger_status": "registered",
-      "tx_id": "0x1009ff752ac21f669f0c4d7575b7e4a80b2a5f1221eb8aca543950b539adcd09",
-      "block": 619,
+      "tx_id": "0xf030cefb2e28a8504007e02fcf4d29a10604777402d9e76622c4de2206e06203",
+      "block": 9517,
       "ledger_org": "fl_client_1",
       "ledger_cost": 148230,
-      "ledger_latency_s": 0.023492040811106563
+      "ledger_latency_s": 0.008150124922394753
     },
     {
       "round": 26,
@@ -2318,11 +2319,11 @@
       "n_examples": 22186,
       "bytes": 31724,
       "ledger_status": "registered",
-      "tx_id": "0x6ddc18fbab778ecaa5b4e45424daa0052ffbd9d0bfc36c8578bcf22a55b691d9",
-      "block": 620,
+      "tx_id": "0x0cddc3a7a9a0351f0aa9b722b693da5df0ff8c615dd2c41202b9ef81f2852131",
+      "block": 9518,
       "ledger_org": "fl_client_2",
       "ledger_cost": 148230,
-      "ledger_latency_s": 0.020513291005045176
+      "ledger_latency_s": 0.009263750165700912
     },
     {
       "round": 26,
@@ -2332,11 +2333,11 @@
       "n_examples": 35383,
       "bytes": 31535,
       "ledger_status": "registered",
-      "tx_id": "0xad4d33f6f7b4a8182f32f9ab4ab17eb3ed5de75a1387ee1f4823ecee16f48114",
-      "block": 621,
+      "tx_id": "0x7b75bc5b9fd890675f3ae17483600570b670dff61fc97507ff00496bc9decda6",
+      "block": 9519,
       "ledger_org": "fl_aggregator",
       "ledger_cost": 125578,
-      "ledger_latency_s": 0.018217957811430097
+      "ledger_latency_s": 0.008461291901767254
     },
     {
       "round": 27,
@@ -2346,11 +2347,11 @@
       "n_examples": 4894,
       "bytes": 31722,
       "ledger_status": "registered",
-      "tx_id": "0xa16c53aa1bd7cc6127eb6712e261b18961cbd0ee5dc58bdaf5c910502f8e68da",
-      "block": 622,
+      "tx_id": "0xfa2c7c5beacc5ea67063ddeda1d15be3b4d85f8f7ef743f7e55a9e9b570dd70e",
+      "block": 9520,
       "ledger_org": "fl_client_0",
       "ledger_cost": 148230,
-      "ledger_latency_s": 0.01976883294992149
+      "ledger_latency_s": 0.011173791950568557
     },
     {
       "round": 27,
@@ -2360,11 +2361,11 @@
       "n_examples": 8303,
       "bytes": 31723,
       "ledger_status": "registered",
-      "tx_id": "0x3a03179461966ac32f9259453beee5e59a891d521afb74c52cdda8d3f75242f2",
-      "block": 623,
+      "tx_id": "0xacb5a027cb6f93cfabb567875a043a86eab3e4167cbccf83002eb641962f7e01",
+      "block": 9521,
       "ledger_org": "fl_client_1",
       "ledger_cost": 148230,
-      "ledger_latency_s": 0.0190121668856591
+      "ledger_latency_s": 0.0084283328615129
     },
     {
       "round": 27,
@@ -2374,11 +2375,11 @@
       "n_examples": 22186,
       "bytes": 31724,
       "ledger_status": "registered",
-      "tx_id": "0xa9f1c18a2847c98ab0920a0056d8cc76fa5a0f2c98b43c0a90c5f44c998b56e5",
-      "block": 624,
+      "tx_id": "0xfac3f734b41fdd261b9ccec92ba7eaf562053e5b6553aaf8db03b896a72649af",
+      "block": 9522,
       "ledger_org": "fl_client_2",
       "ledger_cost": 148230,
-      "ledger_latency_s": 0.01701875007711351
+      "ledger_latency_s": 0.007626124890521169
     },
     {
       "round": 27,
@@ -2388,11 +2389,11 @@
       "n_examples": 35383,
       "bytes": 31535,
       "ledger_status": "registered",
-      "tx_id": "0xcb0904d842fb7bdfe14500f175c49a62b8a8453fd59b67cad099e00325f6d47d",
-      "block": 625,
+      "tx_id": "0x878272b05a20072109bc6745712d99226bf7a85b26a06ff941b569c6b187c118",
+      "block": 9523,
       "ledger_org": "fl_aggregator",
       "ledger_cost": 125578,
-      "ledger_latency_s": 0.015187333105131984
+      "ledger_latency_s": 0.007291042013093829
     },
     {
       "round": 28,
@@ -2402,11 +2403,11 @@
       "n_examples": 4894,
       "bytes": 31722,
       "ledger_status": "registered",
-      "tx_id": "0xdfb6a7460d7e52bb17bc3de27d17bc3061945ca98eccb1293c3ca54160ad66a6",
-      "block": 626,
+      "tx_id": "0xd6f322ce81654f8019db708af7cc98e2a2716f8fb9ae54522345e3e20d733c6c",
+      "block": 9524,
       "ledger_org": "fl_client_0",
       "ledger_cost": 148230,
-      "ledger_latency_s": 0.0179792910348624
+      "ledger_latency_s": 0.008944541914388537
     },
     {
       "round": 28,
@@ -2416,11 +2417,11 @@
       "n_examples": 8303,
       "bytes": 31723,
       "ledger_status": "registered",
-      "tx_id": "0x9fa92fc0b4657e19cd3fbe224278e30bb59e001069da5d89662e49ec10a0614c",
-      "block": 627,
+      "tx_id": "0x70a1ab6f529d7a409bf4b9357870b7f9034e967f753de7bd2452f90dbb02c464",
+      "block": 9525,
       "ledger_org": "fl_client_1",
       "ledger_cost": 148230,
-      "ledger_latency_s": 0.01972737512551248
+      "ledger_latency_s": 0.007508083013817668
     },
     {
       "round": 28,
@@ -2430,11 +2431,11 @@
       "n_examples": 22186,
       "bytes": 31724,
       "ledger_status": "registered",
-      "tx_id": "0x407198f499dbe3a54474aa15a4f252f3474133a65ee84069ad9eb6fc55253310",
-      "block": 628,
+      "tx_id": "0x23c024f2a403eae1f9141686898cb8bed50b612af45cf1956ed6372cdc0ac5ee",
+      "block": 9526,
       "ledger_org": "fl_client_2",
       "ledger_cost": 148230,
-      "ledger_latency_s": 0.017015540972352028
+      "ledger_latency_s": 0.007289875065907836
     },
     {
       "round": 28,
@@ -2444,11 +2445,11 @@
       "n_examples": 35383,
       "bytes": 31535,
       "ledger_status": "registered",
-      "tx_id": "0x3c79c08cfbdaada592d1cde15111d75971dd02eb93398f0271d1279ea1df7d6f",
-      "block": 629,
+      "tx_id": "0xa9576883fb9291bf5be33a8403ab9c17b4790ddb109e12da77393024594f73bc",
+      "block": 9527,
       "ledger_org": "fl_aggregator",
       "ledger_cost": 125578,
-      "ledger_latency_s": 0.018841000040993094
+      "ledger_latency_s": 0.006912042153999209
     },
     {
       "round": 29,
@@ -2458,11 +2459,11 @@
       "n_examples": 4894,
       "bytes": 31722,
       "ledger_status": "registered",
-      "tx_id": "0x63166f9cec72519d85f92562730305bb974c579c813447114cb16f0af785c71a",
-      "block": 630,
+      "tx_id": "0xcac68cbae05769436e466f918c874800e0a21b1022f605e6e5b3b4fae8a2082b",
+      "block": 9528,
       "ledger_org": "fl_client_0",
       "ledger_cost": 148230,
-      "ledger_latency_s": 0.02046758309006691
+      "ledger_latency_s": 0.010446249973028898
     },
     {
       "round": 29,
@@ -2472,11 +2473,11 @@
       "n_examples": 8303,
       "bytes": 31723,
       "ledger_status": "registered",
-      "tx_id": "0xab8ec692a2cfa20dfbede4eb52f8f15aa15784dc492f7323b1aa99e363902ebf",
-      "block": 631,
+      "tx_id": "0xd6fe26f11a5bcacf06ff9baa50ee7b59d8eebfdc4e58b99d1fd43877c099f9de",
+      "block": 9529,
       "ledger_org": "fl_client_1",
       "ledger_cost": 148230,
-      "ledger_latency_s": 0.014222207944840193
+      "ledger_latency_s": 0.00830854196101427
     },
     {
       "round": 29,
@@ -2486,11 +2487,11 @@
       "n_examples": 22186,
       "bytes": 31724,
       "ledger_status": "registered",
-      "tx_id": "0x0e5a822d2072bedfd43d44aaea4e80431040ce90ec7b3c5c38200c7db0a1a1c3",
-      "block": 632,
+      "tx_id": "0xbfa02a68f961cd55e36b52f45a197d4a19dd890b2908de88308923068e72889d",
+      "block": 9530,
       "ledger_org": "fl_client_2",
       "ledger_cost": 148230,
-      "ledger_latency_s": 0.014096749946475029
+      "ledger_latency_s": 0.007623958168551326
     },
     {
       "round": 29,
@@ -2500,11 +2501,11 @@
       "n_examples": 35383,
       "bytes": 31535,
       "ledger_status": "registered",
-      "tx_id": "0xc719727e1fdb1d0babc025a067ebe0ceea26e65b64b27d3f8d367b53a63ab33b",
-      "block": 633,
+      "tx_id": "0xc3f4fd6582ba85ec60d85c773f24b2f968a71c1ac2af5d73e8b89ccd2b7a32b7",
+      "block": 9531,
       "ledger_org": "fl_aggregator",
       "ledger_cost": 125578,
-      "ledger_latency_s": 0.01483700005337596
+      "ledger_latency_s": 0.0071100417990237474
     },
     {
       "round": 30,
@@ -2514,11 +2515,11 @@
       "n_examples": 4894,
       "bytes": 31722,
       "ledger_status": "registered",
-      "tx_id": "0x5a874fa369f46dc3f172786ded540f6e4172c8ab62fa284f624d3f46331b4400",
-      "block": 634,
+      "tx_id": "0x8121183a280ab5133daa78b7514c25c0a244e648f25b81cbd6339b6a4edf95f9",
+      "block": 9532,
       "ledger_org": "fl_client_0",
       "ledger_cost": 148230,
-      "ledger_latency_s": 0.020612708991393447
+      "ledger_latency_s": 0.013036875054240227
     },
     {
       "round": 30,
@@ -2528,11 +2529,11 @@
       "n_examples": 8303,
       "bytes": 31723,
       "ledger_status": "registered",
-      "tx_id": "0xe2d09a92a46244ae3fec100962ccc99173db5bc09c078ef5f793535d70fd583c",
-      "block": 635,
+      "tx_id": "0xf3214f35b2aa29ae65f31bc570325bdbe6f1a3a9734da0b29a40afc2705ce7e0",
+      "block": 9533,
       "ledger_org": "fl_client_1",
       "ledger_cost": 148230,
-      "ledger_latency_s": 0.016182292019948363
+      "ledger_latency_s": 0.009091709041967988
     },
     {
       "round": 30,
@@ -2542,11 +2543,11 @@
       "n_examples": 22186,
       "bytes": 31724,
       "ledger_status": "registered",
-      "tx_id": "0x5225913ccc99c4b231b64f8cd6276036b9c19091512e3585bdfe5e3b7db07c0e",
-      "block": 636,
+      "tx_id": "0xb834280944a366cd7744dbf047eb6ffd592fcd206e39ecd334a4db56657112d8",
+      "block": 9534,
       "ledger_org": "fl_client_2",
       "ledger_cost": 148230,
-      "ledger_latency_s": 0.01608508313074708
+      "ledger_latency_s": 0.00850504101254046
     },
     {
       "round": 30,
@@ -2556,18 +2557,290 @@
       "n_examples": 35383,
       "bytes": 31535,
       "ledger_status": "registered",
-      "tx_id": "0x36cd26b7968c5ad4b6b95c63b5347e56ce47fb46fc298bdb3a90b9be5177a34e",
-      "block": 637,
+      "tx_id": "0x9951350d041adeffdd7e4f7eb6fa06d0feb78147b491fd8635d31cfb178d1f6c",
+      "block": 9535,
       "ledger_org": "fl_aggregator",
       "ledger_cost": 125578,
-      "ledger_latency_s": 0.019334624987095594
+      "ledger_latency_s": 0.00781429186463356
     }
   ],
   "update_norms": {
     "clipped_updates": 0,
-    "last_round": {}
+    "history": [
+      {
+        "round": 1,
+        "norms": {
+          "0": 1.789885,
+          "1": 2.530244,
+          "2": 3.206358
+        },
+        "bound": null
+      },
+      {
+        "round": 2,
+        "norms": {
+          "0": 1.88436,
+          "1": 1.771938,
+          "2": 1.288564
+        },
+        "bound": null
+      },
+      {
+        "round": 3,
+        "norms": {
+          "0": 1.16033,
+          "1": 1.277729,
+          "2": 1.120577
+        },
+        "bound": null
+      },
+      {
+        "round": 4,
+        "norms": {
+          "0": 1.11769,
+          "1": 1.206328,
+          "2": 1.040986
+        },
+        "bound": null
+      },
+      {
+        "round": 5,
+        "norms": {
+          "0": 1.161394,
+          "1": 1.192302,
+          "2": 0.936135
+        },
+        "bound": null
+      },
+      {
+        "round": 6,
+        "norms": {
+          "0": 1.148834,
+          "1": 1.135716,
+          "2": 0.867398
+        },
+        "bound": null
+      },
+      {
+        "round": 7,
+        "norms": {
+          "0": 1.000397,
+          "1": 1.145107,
+          "2": 0.906072
+        },
+        "bound": null
+      },
+      {
+        "round": 8,
+        "norms": {
+          "0": 1.043098,
+          "1": 1.141655,
+          "2": 0.765856
+        },
+        "bound": null
+      },
+      {
+        "round": 9,
+        "norms": {
+          "0": 1.005644,
+          "1": 1.135239,
+          "2": 0.742943
+        },
+        "bound": null
+      },
+      {
+        "round": 10,
+        "norms": {
+          "0": 1.09353,
+          "1": 1.175514,
+          "2": 0.751956
+        },
+        "bound": null
+      },
+      {
+        "round": 11,
+        "norms": {
+          "0": 0.968898,
+          "1": 1.08645,
+          "2": 0.737899
+        },
+        "bound": null
+      },
+      {
+        "round": 12,
+        "norms": {
+          "0": 0.99296,
+          "1": 1.080556,
+          "2": 0.722401
+        },
+        "bound": null
+      },
+      {
+        "round": 13,
+        "norms": {
+          "0": 0.9135,
+          "1": 1.013866,
+          "2": 0.625903
+        },
+        "bound": null
+      },
+      {
+        "round": 14,
+        "norms": {
+          "0": 0.883165,
+          "1": 1.002086,
+          "2": 0.648401
+        },
+        "bound": null
+      },
+      {
+        "round": 15,
+        "norms": {
+          "0": 0.855457,
+          "1": 1.099542,
+          "2": 0.596311
+        },
+        "bound": null
+      },
+      {
+        "round": 16,
+        "norms": {
+          "0": 0.84338,
+          "1": 1.052748,
+          "2": 0.57825
+        },
+        "bound": null
+      },
+      {
+        "round": 17,
+        "norms": {
+          "0": 0.798481,
+          "1": 0.992086,
+          "2": 0.572144
+        },
+        "bound": null
+      },
+      {
+        "round": 18,
+        "norms": {
+          "0": 0.943205,
+          "1": 0.926313,
+          "2": 0.533509
+        },
+        "bound": null
+      },
+      {
+        "round": 19,
+        "norms": {
+          "0": 0.764414,
+          "1": 0.906589,
+          "2": 0.487463
+        },
+        "bound": null
+      },
+      {
+        "round": 20,
+        "norms": {
+          "0": 0.797974,
+          "1": 0.867695,
+          "2": 0.48989
+        },
+        "bound": null
+      },
+      {
+        "round": 21,
+        "norms": {
+          "0": 0.750966,
+          "1": 0.809242,
+          "2": 0.49608
+        },
+        "bound": null
+      },
+      {
+        "round": 22,
+        "norms": {
+          "0": 0.765191,
+          "1": 0.850195,
+          "2": 0.455186
+        },
+        "bound": null
+      },
+      {
+        "round": 23,
+        "norms": {
+          "0": 0.748815,
+          "1": 0.780409,
+          "2": 0.419319
+        },
+        "bound": null
+      },
+      {
+        "round": 24,
+        "norms": {
+          "0": 0.702597,
+          "1": 0.715258,
+          "2": 0.389804
+        },
+        "bound": null
+      },
+      {
+        "round": 25,
+        "norms": {
+          "0": 0.696301,
+          "1": 0.725258,
+          "2": 0.402054
+        },
+        "bound": null
+      },
+      {
+        "round": 26,
+        "norms": {
+          "0": 0.637523,
+          "1": 0.740295,
+          "2": 0.340602
+        },
+        "bound": null
+      },
+      {
+        "round": 27,
+        "norms": {
+          "0": 0.634443,
+          "1": 0.685556,
+          "2": 0.347126
+        },
+        "bound": null
+      },
+      {
+        "round": 28,
+        "norms": {
+          "0": 0.547238,
+          "1": 0.688454,
+          "2": 0.359208
+        },
+        "bound": null
+      },
+      {
+        "round": 29,
+        "norms": {
+          "0": 0.620454,
+          "1": 0.62716,
+          "2": 0.298701
+        },
+        "bound": null
+      },
+      {
+        "round": 30,
+        "norms": {
+          "0": 0.535857,
+          "1": 0.628608,
+          "2": 0.339154
+        },
+        "bound": null
+      }
+    ]
   },
-  "seconds": 23.66009054100141,
+  "dp_clients": {},
+  "seconds": 14.416408542077988,
   "ledger": {
     "backend": "evm",
     "run_id": "seed0-n3_dir0.5-fedavg",
@@ -2575,8 +2848,8 @@
     "duplicates": 0,
     "client_updates": 90,
     "global_models": 30,
-    "latency_ms_p50": 17.375375027768314,
-    "latency_ms_p95": 25.913923268672075,
+    "latency_ms_p50": 7.785707945004106,
+    "latency_ms_p95": 11.46495606517419,
     "cost_total": 17107872,
     "cost_mean": 142565.6,
     "cost_unit": "gas"

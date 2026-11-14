@@ -235,6 +235,7 @@ def make_figures(res: dict[str, Any], cfg: Config, out: Path) -> dict[str, Path]
     base = counts[0]
     alphas = sorted([float(a) for a in cfg.fl.experiments.alphas], reverse=True)
     central = mean_std(baseline_values(res, "mlp"))[0]
+    n_seeds = len(res["seeds"])
     have_fl = all(res["fl"][s].get(f"n{base}_iid", {}).get("fedavg") for s in res["seeds"])
 
     # ---- method comparison on the primary scenario
@@ -247,7 +248,7 @@ def make_figures(res: dict[str, Any], cfg: Config, out: Path) -> dict[str, Path]
                 if values:
                     rows.append({"label": FL_LABELS[m], "f1": mean_std(values)[0], "f1_std": mean_std(values)[1], "local_data": True})
         figs["methods"] = plots.method_comparison(rows, out / "method_comparison.png", "Detection quality by method",
-                                                  f"Federated and local methods on the primary split: {names[primary].label}" if primary in names else "")
+                                                  f"Federated and local methods on the primary split: {names[primary].label}" if primary in names else "", n_seeds)
     if not have_fl:
         return figs
 
@@ -257,7 +258,7 @@ def make_figures(res: dict[str, Any], cfg: Config, out: Path) -> dict[str, Path]
         local, fed = fl_values(res, scenario.name, "local"), fl_values(res, scenario.name, "fedavg")
         if local and fed:
             rows.append({"label": scenario.label, "local": mean_std(local)[0], "fedavg": mean_std(fed)[0]})
-    figs["dumbbell"] = plots.scenario_dumbbell(rows, central, out / "local_vs_fedavg.png")
+    figs["dumbbell"] = plots.scenario_dumbbell(rows, central, out / "local_vs_fedavg.png", n_seeds)
 
     # ---- F1 per round for IID and every alpha
     panels = []
@@ -267,7 +268,7 @@ def make_figures(res: dict[str, Any], cfg: Config, out: Path) -> dict[str, Path]
             stack = np.vstack(curves)
             label = "IID" if name.endswith("iid") else f"Dirichlet α = {names[name].alpha:g}"
             panels.append({"label": label, "mean": stack.mean(axis=0), "std": stack.std(axis=0), "local": mean_std(fl_values(res, name, "local"))[0]})
-    figs["rounds"] = plots.f1_vs_round(panels, central, out / "f1_vs_round.png")
+    figs["rounds"] = plots.f1_vs_round(panels, central, out / "f1_vs_round.png", n_seeds)
 
     # ---- F1 against data skew
     order = [f"n{base}_iid", *[f"n{base}_dir{a:g}" for a in alphas]]
@@ -277,8 +278,8 @@ def make_figures(res: dict[str, Any], cfg: Config, out: Path) -> dict[str, Path]
         stats = [mean_std(fl_values(res, name, method)) for name in order]
         if all(not np.isnan(m) for m, _ in stats):
             series[method] = {"mean": np.array([m for m, _ in stats]), "std": np.array([s for _, s in stats])}
-    figs["alpha"] = plots.lines_by_setting(labels, series, central, out / "f1_vs_alpha.png", f"Stronger skew favours local models ({base} clients)",
-                                           "data split, from identical clients (IID) to strongly different clients (Dirichlet α = 0.1)")
+    figs["alpha"] = plots.lines_by_setting(labels, series, central, out / "f1_vs_alpha.png", f"F1 against data skew ({base} clients)",
+                                           f"data split, from identical clients (IID) to the most different clients (Dirichlet α = {min(alphas):g})", n_seeds)
 
     # ---- F1 against the number of clients
     order = [f"n{n}_iid" for n in counts]
@@ -288,11 +289,11 @@ def make_figures(res: dict[str, Any], cfg: Config, out: Path) -> dict[str, Path]
         if all(not np.isnan(m) for m, _ in stats):
             series[method] = {"mean": np.array([m for m, _ in stats]), "std": np.array([s for _, s in stats])}
     figs["clients"] = plots.lines_by_setting([f"{n} clients" for n in counts], series, central, out / "f1_vs_clients.png",
-                                             "The more institutions the data is split across, the more federating helps (IID)", "number of clients")
+                                             "F1 against the number of clients (IID split)", "number of clients", n_seeds)
 
     # ---- recall per typology
     _, _, methods, recall = table_typology(res, cfg, f"n{base}_iid")
-    figs["typology"] = plots.typology_heatmap(methods, TYPOLOGIES, recall, out / "recall_by_typology.png")
+    figs["typology"] = plots.typology_heatmap(methods, TYPOLOGIES, recall, out / "recall_by_typology.png", n_seeds)
 
     # ---- communication: F1 against traffic
     curves = []
@@ -301,7 +302,7 @@ def make_figures(res: dict[str, Any], cfg: Config, out: Path) -> dict[str, Path]
         if runs:
             curves.append({"label": f"{n} clients", "mb": np.mean([[h["bytes_cumulative"] / 1e6 for h in r["history"]] for r in runs], axis=0),
                            "f1": np.mean([[h["test_f1"] for h in r["history"]] for r in runs], axis=0)})
-    figs["communication"] = plots.communication(curves, out / "communication.png")
+    figs["communication"] = plots.communication(curves, out / "communication.png", n_seeds)
     return figs
 
 
@@ -339,15 +340,15 @@ def make_stretch_figures(res: dict[str, Any], out: Path) -> dict[str, Path]:
         eps = [row["epsilon"] for row in dp["private"]]
         stats = [mean_std([r["f1"] for r in row["runs"]]) for row in dp["private"]]
         figs["dp"] = plots.privacy_utility(eps, np.array([m for m, _ in stats]), np.array([s for _, s in stats]),
-                                           mean_std([r["f1"] for r in dp["non_private"]])[0], out / "privacy_utility.png")
+                                           mean_std([r["f1"] for r in dp["non_private"]])[0], out / "privacy_utility.png", len(dp["seeds"]))
     poison = res["stretch"]["poison"]
     if poison:
         order = [("no_attack", "No attack", False), ("attack_no_defence", "Attack, no defence", True), ("attack_median_clipping", "Attack, median clipping", True),
                  ("no_attack_median_clipping", "No attack, median clipping", False)]
         stats = [mean_std([r.get("last_round_f1", r["f1"]) for r in poison["runs"][key]]) for key, _, _ in order]
         figs["poison"] = plots.condition_bars([label for _, label, _ in order], np.array([m for m, _ in stats]), np.array([s for _, s in stats]),
-                                              [h for _, _, h in order], out / "poisoning.png", "One malicious client out of three: F1 of the model after the last round",
-                                              "F1 on the test period, global model of the last round (mean ± 1 std, 3 seeds)")
+                                              [h for _, _, h in order], out / "poisoning.png", "One malicious client: F1 of the model after the last round",
+                                              f"F1 on the test period, global model of the last round ({plots.spread_text(len(poison['seeds']))})")
     vertical = res["stretch"]["vertical"]
     if vertical:
         order = [("customs_alone", "Customs alone", False), ("bank_alone", "Bank alone", False), ("trade_alone", "Trade registry alone", False),
@@ -355,5 +356,5 @@ def make_stretch_figures(res: dict[str, Any], out: Path) -> dict[str, Path]:
         stats = [mean_std([r["methods"][key]["f1"] for r in vertical["runs"]]) for key, _, _ in order]
         figs["vertical"] = plots.condition_bars([label for _, label, _ in order], np.array([m for m, _ in stats]), np.array([s for _, s in stats]),
                                                 [h for _, _, h in order], out / "vertical_fl.png", "Vertical FL: three parties with different columns of the same trades",
-                                                "F1 on the test period (mean ± 1 std, 3 seeds)")
+                                                f"F1 on the test period ({plots.spread_text(len(vertical['runs']))})")
     return figs

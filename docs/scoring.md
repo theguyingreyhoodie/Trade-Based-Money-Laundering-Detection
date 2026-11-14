@@ -46,9 +46,11 @@ On the test period:
 | Global model alone | 0.726 | 0.774 | 0.683 | 0.782 | 0.7% |
 | Rules alone (on local features) | 0.349 | 0.244 | 0.610 | 0.288 | 7.1% |
 
-The blend gives a better operating point (higher F1 and precision). Its PR-AUC is slightly lower
-than the model's because isotonic calibration maps many scores to the same value, which costs
-ranking resolution.
+The blend gives a better operating point (higher F1 and precision). Its PR-AUC is lower than
+the model's because of the final calibration step, not because of the blend: before that step
+the blend ranks the test trades exactly as well as the model alone (PR-AUC 0.783 for both),
+but isotonic calibration maps its 637 distinct values onto 120, and the resulting ties cost
+0.012 PR-AUC. Ties do not matter for the band an alert falls into.
 
 ## 3. Calibration
 
@@ -91,10 +93,30 @@ is why it is now explicit.)
 **SHAP.** Attributions are computed on the model's log-odds, where they add up exactly: base
 value plus contributions equals the trade's log-odds. The background sample is 200 of the
 explaining institution's own training rows, so no data from other institutions is needed.
-DeepSHAP is tried first and rejected when its contributions do not add up; that happens for
-nearly half of the alerted trades, because the model clips standardised inputs at +/- 8 and
-alerted trades often have an indicator beyond that. The permutation explainer is then used
-(additivity error below 1e-6).
+DeepSHAP is tried first on each institution's batch of alerts and rejected if its contributions
+for any trade miss the model's output by more than 0.05. In this run it was rejected for all
+three institutions. The model clips standardised inputs at +/- 8, and alerted trades often have
+an indicator beyond the clip, where DeepSHAP's linear rule fails: on 60 illicit test trades of
+one institution, 45% had at least one clipped indicator and the worst trade's contributions
+missed its log-odds by 45. All explanations therefore come from the permutation explainer,
+whose contributions add up exactly (largest error 1e-6).
+
+The permutation explainer averages over random orderings of the indicators. SHAP's default
+budget allows only 3 orderings for 81 indicators, which makes the top-5 list noisy, so each
+explanation uses 20 orderings (`scoring.shap_permutations`), seeded per institution so that
+explanations are reproducible (tested). Measured on 40 alerts of one institution against a
+100-ordering reference:
+
+| Orderings | Top-5 indicators shared with the reference | Error of the contribution values | Time per alert |
+|---|---|---|---|
+| 3 (SHAP default) | 93% | 11% | 27 ms |
+| 10 | 96% | 6% | 74 ms |
+| **20 (used)** | **97%** | **4%** | **171 ms** |
+| 40 | 98% | 3% | 408 ms |
+
+"Error" is the L1 distance to the reference relative to the reference's L1 size; the reference
+itself is an estimate. Moving from 3 to 20 orderings changed the suspected typology of none of
+the 426 alerts and kept 94% of their top-5 indicators.
 
 **Plain English.** Every indicator has a phrase (`explain/phrases.py`, tested for all 81):
 "unit price 3.4x the HS reference price", "2 invoices quote the same bill of lading", "younger
@@ -106,7 +128,7 @@ contributions with their direction.
 **Suspected typology.** Model evidence is the positive SHAP mass of the indicators that target
 each typology (per the feature dictionary); rule evidence is the severity of the fired rules of
 each typology. Both are normalised and averaged. Among alerts on illicit trades the suspected
-typology is right for 82% and within the top two for 96%.
+typology is right for 83% and within the top two for 96%.
 
 | Typology | Alerts on it | Attributed correctly |
 |---|---|---|
@@ -116,7 +138,7 @@ typology is right for 82% and within the top two for 96%.
 | Shell company | 28 | 86% |
 | Third-party payment | 45 | 84% |
 | Misdescription | 42 | 83% |
-| Over-invoicing | 36 | 81% |
+| Over-invoicing | 36 | 83% |
 | Multiple invoicing | 37 | 81% |
 | Under-invoicing | 13 | 62% |
 | Circular trading | 22 | 36% |
@@ -139,7 +161,7 @@ each institution sees only in part, so the evidence that remains points elsewher
 
 The hash covers everything except the `ledger` block and includes a random 128-bit salt.
 Lowering a score, changing the band, removing a fired rule or editing an explanation after the
-fact produces a hash that is not on the ledger (tested). Registration took 15 ms (p50) and
+fact produces a hash that is not on the ledger (tested). Registration took 6.5 ms (p50) and
 103,030 gas per alert. No ground-truth field is ever part of an alert.
 
 ## 7. Limitations

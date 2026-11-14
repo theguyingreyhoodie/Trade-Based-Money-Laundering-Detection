@@ -42,6 +42,20 @@ def _m(values: list[float]) -> float:
     return mean_std(values)[0]
 
 
+def _verdict(delta: float, ahead: str, behind: str, level: str, margin: float = 0.01) -> str:
+    """Wording for a difference: only call it a difference when it exceeds ``margin``."""
+    if np.isnan(delta) or abs(delta) <= margin:
+        return level
+    return ahead if delta > 0 else behind
+
+
+def _poison_text(p: dict[str, Any]) -> str:
+    last = {k: _m([r.get("last_round_f1", r["f1"]) for r in runs]) for k, runs in p["runs"].items()}
+    return (f"After the last round the global model has F1 {last['no_attack']:.3f} without an attack, {last['attack_no_defence']:.3f} under attack with no defence, "
+            f"{last['attack_median_clipping']:.3f} under attack with median norm clipping, and {last['no_attack_median_clipping']:.3f} with clipping but no attacker "
+            f"({last['no_attack_median_clipping'] - last['no_attack']:+.3f}: what the defence costs when nobody attacks).")
+
+
 def _img(figs: dict[str, Path], key: str, alt: str) -> list[str]:
     return [f"![{alt}](plots/{figs[key].name})", ""] if key in figs else []
 
@@ -88,49 +102,80 @@ def build_results(cfg: Config) -> Path:
         "> determination that a trade is laundering: the system flags trades for human review.", "")
 
     # ------------------------------------------------------------------ 1. summary
+    # Every statement below is derived from the numbers of this run; nothing is asserted that the results do not show.
+    n = len(seeds)
+    over = f"mean of {n} seeds" if n > 1 else "1 seed"
+    profile = str(cfg.get("_profile", "") or "")
+    if profile or n < 3:
+        add(f"> **Reduced run.** This report was generated with {'the `' + profile + '` profile' if profile else 'the default profile'} and {n} seed{'s' if n != 1 else ''}. "
+            "It checks that the pipeline works; its numbers are not the project's results (use `make all` for those).", "")
     add("## 1. Summary", "",
         "**Research question.** Can Federated Learning and Blockchain support privacy-preserving TBML detection across multiple organisations?", "",
-        f"**Short answer.** Yes, with limits. Mean of {len(seeds)} seeds, test period:", "")
+        f"What this run shows ({over}, test period):", "")
+    item = 0
+
+    def point(text: str) -> None:
+        nonlocal item
+        item += 1
+        add(f"{item}. {text}")
+
     if have_base:
         rules, lgbm, mlp = _m(baseline_values(res, "rules")), _m(baseline_values(res, "lightgbm")), _m(baseline_values(res, "mlp"))
-        add(f"1. **Learning beats rules.** The rules engine reaches F1 {rules:.3f}; pooled-data models reach {mlp:.3f} (MLP) and {lgbm:.3f} (LightGBM).")
+        point(f"**Rules against learned models.** The rules engine reaches F1 {rules:.3f}; with pooled data the MLP reaches {mlp:.3f} and LightGBM {lgbm:.3f} "
+              f"({_verdict(min(mlp, lgbm) - rules, 'learned models are ahead of the rules', 'the rules are ahead of at least one learned model', 'no clear difference')}).")
     if have_base and have_fl:
         fed, local, pooled = _m(fl_values(res, iid, "fedavg")), _m(fl_values(res, iid, "local")), _m(fl_values(res, iid, "pooled_local_features"))
-        add(f"2. **Federated learning works without moving raw data.** With {base} institutions and an IID split, FedAvg reaches F1 {fed:.3f}, against "
-            f"{local:.3f} when each institution trains alone ({fed - local:+.3f}). The server received model parameters and fixed-size aggregates only, "
-            "which is enforced and tested.")
-        add(f"3. **Parameter averaging costs almost nothing; fragmentation costs a lot.** One model trained on the pooled rows, but with each institution's "
-            f"locally computed indicators, reaches {pooled:.3f}, the same level as FedAvg. Both are below the centralised MLP ({mlp:.3f}), because indicators that "
-            "need to see related trades together (trade graph, shared bills of lading, entity history) are computed from one institution's records only.")
-        drops = _typology_drops(res, iid)[:2]
+        point(f"**Federated learning without moving raw data.** With {base} institutions and an IID split, FedAvg reaches F1 {fed:.3f} and local-only training {local:.3f}: "
+              f"{_verdict(fed - local, 'federating is ahead', 'federating is behind', 'the two are level')} ({fed - local:+.3f}). The server received model parameters and "
+              "fixed-size aggregates only, which is enforced and tested.")
+        point(f"**Where the gap to the centralised model comes from.** Centralised MLP {mlp:.3f}; one model trained on the pooled rows but with each institution's locally "
+              f"computed indicators {pooled:.3f} ({pooled - mlp:+.3f}: the cost of information fragmentation, because indicators that need related trades together, such as "
+              f"the trade graph, shared bills of lading and entity history, are computed from one institution's records only); FedAvg {fed:.3f} ({fed - pooled:+.3f} against "
+              "that model: " + ("no measurable cost of training by parameter averaging)." if abs(fed - pooled) <= 0.01 else
+                               ("the cost of training by parameter averaging)." if fed < pooled else "parameter averaging did better here).")))
+        drops = [(t, c, f) for t, c, f in _typology_drops(res, iid) if f < c - 0.05][:2]
         if drops:
             add("   The typologies that lose most recall from centralised to federated are "
                 + " and ".join(f"{t.replace('_', ' ')} ({c:.2f} to {f:.2f})" for t, c, f in drops) + ".")
-        gains = [(n, _m(fl_values(res, f"n{n}_iid", "fedavg")) - _m(fl_values(res, f"n{n}_iid", "local"))) for n in counts if fl_values(res, f"n{n}_iid", "fedavg")]
-        add("4. **The thinner the data is spread, the more federating helps:** " + ", ".join(f"{g:+.3f} F1 at {n} clients" for n, g in gains) + " (IID).")
-        if fl_values(res, strong, "fedavg"):
+        gains = [(k, _m(fl_values(res, f"n{k}_iid", "fedavg")) - _m(fl_values(res, f"n{k}_iid", "local"))) for k in counts if fl_values(res, f"n{k}_iid", "fedavg")]
+        if len(gains) > 1:
+            growing = all(b[1] > a[1] for a, b in zip(gains[:-1], gains[1:]))
+            lead = "The gain from federating grows with the number of institutions" if growing and gains[0][1] > 0 else "FedAvg minus local-only by number of institutions"
+            point(f"**Number of institutions.** {lead} (IID): " + ", ".join(f"{g:+.3f} F1 at {k} clients" for k, g in gains) + ".")
+        if fl_values(res, strong, "fedavg") and strong != iid:
             s_local, s_fed, s_tuned = _m(fl_values(res, strong, "local")), _m(fl_values(res, strong, "fedavg")), _m(fl_values(res, strong, "fedavg_finetuned"))
-            tuned = f" Fine-tuning the global model locally closes the gap ({s_tuned:.3f})." if not np.isnan(s_tuned) else ""
-            add(f"5. **Under strong skew, local models win.** At Dirichlet α = {alphas[0]:g}, local-only reaches {s_local:.3f} and FedAvg {s_fed:.3f}: when a "
-                f"typology concentrates at one institution, its own graph is intact and its own threshold fits its own positive rate.{tuned}")
+            tuned = f", and FedAvg followed by local fine-tuning {s_tuned:.3f}" if not np.isnan(s_tuned) else ""
+            options = [("local-only training", s_local), ("FedAvg", s_fed)] + ([("FedAvg with local fine-tuning", s_tuned)] if not np.isnan(s_tuned) else [])
+            top = max(v for _, v in options)
+            leaders = [name for name, v in options if top - v <= 0.01]
+            behind = [name for name, v in options if name not in leaders]
+            tail = f" {' and '.join(behind)} {'is' if len(behind) == 1 else 'are'} behind." if behind else ""
+            verdict = (f"{leaders[0][0].upper() + leaders[0][1:]} is best.{tail}" if len(leaders) == 1 else
+                       " and ".join(leaders)[0].upper() + " and ".join(leaders)[1:] + f" are level (within 0.01 F1);{tail}")
+            point(f"**Skewed data.** At the strongest skew tested (Dirichlet α = {alphas[0]:g}, {base} clients) local-only training reaches {s_local:.3f}, FedAvg {s_fed:.3f}{tuned}. "
+                  f"{verdict}")
         comm = [res["fl"][s][iid]["fedavg"]["communication"] for s in seeds]
-        add(f"6. **Communication is small.** A model is {mb(comm[0]['model_bytes'])}; a 30-round run with {base} clients moves "
-            f"{mb(np.mean([c['total_bytes'] for c in comm]))} in total and reaches 95% of its final F1 after about "
-            f"{np.mean([c['convergence']['rounds'] for c in comm]):.0f} rounds.")
+        n_rounds = res["fl"][seeds[0]][iid]["fedavg"]["rounds"]
+        point(f"**Communication.** A model is {mb(comm[0]['model_bytes'])}; a {n_rounds}-round run with {base} clients moves "
+              f"{mb(np.mean([c['total_bytes'] for c in comm]))} in total and reaches 95% of its best F1 after about "
+              f"{np.mean([c['convergence']['rounds'] for c in comm]):.0f} rounds.")
     bench = res["ledger"]["benchmark"]
     if bench:
         backend = "evm" if "evm" in bench else "python"
         b = bench[backend]
-        add(f"7. **The evidence ledger is cheap enough to run alongside.** On the {backend.upper() if backend == 'evm' else 'pure-Python'} backend a registration takes "
-            f"{b['single']['latency']['p50_ms']:.1f} ms (p50) / {b['single']['latency']['p95_ms']:.1f} ms (p95) and {b['single']['cost_per_record']:,.0f} "
-            f"{b['cost_unit']}; Merkle batching brings a trade document down to {b['merkle']['cost_per_record']:,.0f} {b['cost_unit']}. Tampering with an invoice, "
-            "a model update or an alert is detected.")
+        tamper = res["ledger"]["tamper_demo"]
+        checks = [part["as_expected"] for part in (tamper or {}).values() if isinstance(part, dict) and "as_expected" in part]
+        detected = (f" In the verification demo, {sum(checks)} of {len(checks)} kinds of evidence behaved as required (genuine record verified, altered record rejected)."
+                    if checks else "")
+        point(f"**Evidence ledger.** On the {'EVM' if backend == 'evm' else 'pure-Python'} backend a registration takes "
+              f"{b['single']['latency']['p50_ms']:.1f} ms (p50) / {b['single']['latency']['p95_ms']:.1f} ms (p95) and {b['single']['cost_per_record']:,.0f} "
+              f"{b['cost_unit']}; Merkle batching brings a trade document down to {b['merkle']['cost_per_record']:,.0f} {b['cost_unit']}.{detected}")
     if res["alerts"]:
         ev = res["alerts"]["evaluation"]
         crit, high, med = ev["bands"][3], ev["bands"][2], ev["bands"][1]
-        add(f"8. **Alerts are explainable and calibrated.** Precision is {100 * (med['precision'] or 0):.0f}% / {100 * (high['precision'] or 0):.0f}% / "
-            f"{100 * (crit['precision'] or 0):.0f}% in the Medium / High / Critical bands, and the suspected typology is right for "
-            f"{100 * ev['typology_attribution']['top1_accuracy']:.0f}% of alerts on illicit trades.")
+        point(f"**Explainable alerts.** Precision is {100 * (med['precision'] or 0):.0f}% / {100 * (high['precision'] or 0):.0f}% / "
+              f"{100 * (crit['precision'] or 0):.0f}% in the Medium / High / Critical bands, and the suspected typology is right for "
+              f"{100 * (ev['typology_attribution']['top1_accuracy'] or 0):.0f}% of alerts on illicit trades.")
     add("", "What this does not show: performance on real data, robustness against adaptive launderers, or behaviour of a real multi-node chain. See section 11.", "")
 
     # ------------------------------------------------------------------ 2. setup
@@ -148,7 +193,7 @@ def build_results(cfg: Config) -> Path:
         "- **Threshold.** Every method's decision threshold maximises F1 on validation; test data never influences it.",
         "- **Metrics.** Precision, recall, F1, PR-AUC (average precision), ROC-AUC, false-positive rate (FPR), confusion matrix, recall per typology.",
         "  All methods are scored by the same histogram-based code, which is what a federation can compute without pooling predictions.",
-        f"- **Seeds.** A seed fixes the data, the client split and the model initialisation. Tables give mean ± standard deviation over {len(seeds)} seeds.",
+        f"- **Seeds.** A seed fixes the data, the client split and the model initialisation. Tables give mean ± standard deviation over {len(seeds)} seed{'s' if len(seeds) != 1 else ''}.",
         "- **Local-only and fine-tuned models** use one threshold per client; their PR-AUC and ROC-AUC are for the merged ranking of all clients' scores.", "")
 
     # ------------------------------------------------------------------ 3. objective 1
@@ -187,7 +232,7 @@ def build_results(cfg: Config) -> Path:
         add(f"Rule book on the test period of seed {seeds[0]} (pooled view). *Precision*: share of hits that are illicit. *Recall*: share of the rule's own",
             "typology that it catches.", "", md_table(["Rule", "Red flag", "Typology", "Hits", "Precision", "Recall"], rows, "lllrrr"), "",
             f"At least one rule fires on {100 * any_rule['alert_rate']:.1f}% of trades; that set contains {100 * any_rule['recall']:.0f}% of the illicit trades at "
-            f"{100 * any_rule['precision']:.0f}% precision. Rules find most cases but bury them in false alerts.", "")
+            f"{100 * any_rule['precision']:.0f}% precision.", "")
         write_csv(tables_dir / "rules.csv", ["rule", "red_flag", "typology", "hits", "precision", "recall_own_typology"], rows)
 
     # ------------------------------------------------------------------ 5. objective 3
@@ -208,13 +253,14 @@ def build_results(cfg: Config) -> Path:
         add("### 5.4 F1 against data skew (Dirichlet α)", "", *_img(figs, "alpha", "F1 against Dirichlet alpha"))
         prox = [(a, _m(fl_values(res, f"n{base}_dir{a:g}", "fedavg")), _m(fl_values(res, f"n{base}_dir{a:g}", "fedprox"))) for a in alphas]
         diffs = [p - f for _, f, p in prox]
-        verdict = ("FedProx does not improve on FedAvg at any α" if max(diffs) <= 0.005 else "FedProx is ahead at some α and behind at others")
+        verdict = ("FedProx does not improve on FedAvg at any α" if max(diffs) <= 0.005 else
+                   ("FedProx is ahead of FedAvg at every α" if min(diffs) > 0.005 else "FedProx is ahead at some α and behind at others"))
         add("FedProx (μ = " + f"{float(cfg.fl.proximal_mu):g}) against FedAvg: " + "; ".join(f"α = {a:g}: {p:.3f} vs {f:.3f}" for a, f, p in prox)
-            + f". {verdict}: the differences range from {min(diffs):+.3f} to {max(diffs):+.3f} F1, small against the spread between seeds.", "")
+            + f". {verdict}: the differences range from {min(diffs):+.3f} to {max(diffs):+.3f} F1.", "")
         add("### 5.5 F1 against the number of clients", "", *_img(figs, "clients", "F1 against number of clients"))
         add("### 5.6 Which laundering patterns each method catches", "", *_img(figs, "typology", "Recall per typology"))
         t_header, t_rows, _, _ = table_typology(res, cfg, iid)
-        add(f"Recall per typology, {names[iid].label}, mean of {len(seeds)} seeds:", "", md_table(t_header, t_rows), "")
+        add(f"Recall per typology, {names[iid].label}, {over}:", "", md_table(t_header, t_rows), "")
         write_csv(tables_dir / "recall_by_typology.csv", t_header, t_rows)
         run = res["primary"] or res["fl"][seeds[0]][iid]["fedavg"]
         b = run["boundary"]
@@ -352,8 +398,8 @@ def build_results(cfg: Config) -> Path:
         add("### 9.2 Differential privacy (DP-SGD with Opacus)", "", *_img(figs, "dp", "Privacy / utility"),
             md_table(["Privacy budget per client", "Mean noise multiplier", "F1", "PR-AUC"], rows), "",
             f"Example-level (ε, δ = {d['private'][0]['delta']:g})-DP for each client's own training rows, clipping norm {d['private'][0]['max_grad_norm']:g}, "
-            "accounted with Rényi DP over all local steps of the run. Smaller clients need more noise for the same budget. The clipping norm was chosen on "
-            "validation at ε = 3 on one seed (12 combinations of clipping norm, batch size and learning rate); an untuned setting was clearly worse.", "")
+            "accounted with Rényi DP over all local steps of the run. Smaller clients need more noise for the same budget. How the clipping norm was chosen "
+            "(on validation) is described in `docs/fl_design.md`, section 10.", "")
         write_csv(tables_dir / "privacy_utility.csv", ["budget", "noise_multiplier", "f1", "pr_auc"], rows)
     if st["poison"]:
         p = st["poison"]
@@ -364,10 +410,11 @@ def build_results(cfg: Config) -> Path:
         a = p["attack"]
         add("### 9.3 Model poisoning and norm clipping", "", *_img(figs, "poison", "Poisoning"),
             md_table(["Condition", "F1, model of the last round", "F1, round selected on validation", "Selected round"], rows), "",
-            f"Attack: client {a['clients']} of {primary_scenario(cfg).n_clients} sends its update {'sign-flipped and ' if a['mode'] == 'signflip' else ''}scaled by {a['scale']:g} in every round. "
-            "Without a defence training diverges; selecting the round on validation only rolls back to an early model, it does not repair anything. "
-            "Clipping every update to the round's median norm keeps training alive at a cost, with or without an attacker, because it also shrinks the "
-            "largest honest client's update. It does not stop a patient attacker whose updates stay within the bound (a backdoor).", "")
+            f"Attack: client {', '.join(str(c) for c in a['clients'])} of {primary_scenario(cfg).n_clients} sends its update {'sign-flipped and ' if a['mode'] == 'signflip' else ''}scaled by {a['scale']:g} in every round. "
+            + _poison_text(p), "",
+            "Two cautions when reading this. Selecting the round on validation can hide a destroyed model, because it rolls back to an early round (third column) "
+            "without repairing anything. And clipping to the round's median norm bounds any one client's influence but also shrinks the largest honest update "
+            "(update size grows with the number of local steps), and it does nothing against an attacker who stays within the bound, such as a backdoor.", "")
         write_csv(tables_dir / "poisoning.csv", ["condition", "f1_last_round", "f1_selected_round", "selected_round"], rows)
     if st["vertical"]:
         v = st["vertical"]
@@ -378,22 +425,33 @@ def build_results(cfg: Config) -> Path:
             rows.append(["Centralised MLP with all 81 indicators (reference)", pm(baseline_values(res, "mlp")), pm(baseline_values(res, "mlp", "pr_auc"))])
         run = v["runs"][0]
         c = run["communication"]
+        split_f1 = _m([r["methods"]["split_nn"]["f1"] for r in v["runs"]])
+        best_alone = max(_m([r["methods"][k]["f1"] for r in v["runs"]]) for k in ("bank_alone", "trade_alone", "customs_alone"))
+        pooled_cols = _m([r["methods"]["pooled_columns"]["f1"] for r in v["runs"]])
         parties = ", ".join(f"{p} {d['n_features']}" for p, d in run["parties"].items())
         add("### 9.4 Vertical FL demo (the Bank / Trade registry / Customs picture)", "", *_img(figs, "vertical", "Vertical FL"), md_table(["Model", "F1", "PR-AUC"], rows), "",
             f"Columns per party: {parties}. Each party sends an {run['embedding']}-dimensional embedding per trade and receives its gradient: "
             f"{c['bytes_per_trade_per_epoch']} bytes per trade per epoch, {mb(c['bytes_per_epoch'])} per epoch for {c['n_train_trades']:,} trades, so traffic grows with the "
-            "data, unlike FedAvg where it grows with the model. Working together beats any party alone, but indicators that compare two parties' fields directly "
-            "cannot be computed by anyone, which is why this stays below the 81-indicator model. Design note: `docs/fl_design.md`, section 9.", "")
+            f"data, unlike FedAvg where it grows with the model. The split network reaches F1 {split_f1:.3f}, against {best_alone:.3f} for the best single party and "
+            f"{pooled_cols:.3f} for one model on all three parties' columns. Indicators that compare two parties' fields directly cannot be computed by anyone in this "
+            "setting, so the 81-indicator model is out of reach by construction. Design note: `docs/fl_design.md`, section 9.", "")
         write_csv(tables_dir / "vertical_fl.csv", ["model", "f1", "pr_auc"], rows)
-    if st["personalised"]:
+    if st["personalised"] and have_fl:
+        gaps = []
+        for scenario in names:
+            tuned, alt = _m(fl_values(res, scenario, "fedavg_finetuned")), max(_m(fl_values(res, scenario, "local")), _m(fl_values(res, scenario, "fedavg")))
+            if not np.isnan(tuned) and not np.isnan(alt):
+                gaps.append(tuned - alt)
         add("### 9.5 Local fine-tuning of the global model", "",
-            "Reported as a column of the table in section 5.1. It needs no communication and is never much worse than the better of FedAvg and local-only.", "")
+            "Each client adapts the global model to its own data after training and picks its own threshold; nothing is sent. F1 per scenario is a column of the "
+            f"table in section 5.1. Compared with the better of FedAvg and local-only in the same scenario, fine-tuning ranges from {min(gaps):+.3f} to {max(gaps):+.3f} F1 "
+            f"over the {len(gaps)} scenarios.", "")
     if not any(st.values()):
         add("_Stretch results are missing; run `scripts/run_stretch.py`._", "")
 
     # ------------------------------------------------------------------ 10. confusion
     if confusion:
-        add("## 10. Confusion matrices", "", f"Counts on the test period, summed over {len(seeds)} seeds.", "",
+        add("## 10. Confusion matrices", "", f"Counts on the test period, summed over {len(seeds)} seed{'s' if len(seeds) != 1 else ''}.", "",
             md_table(["Method", "Data", "True positives", "False positives", "False negatives", "True negatives"], [[r[0], r[1], *[f"{v:,}" for v in r[2:]]] for r in confusion], "llrrrr"), "")
         write_csv(tables_dir / "confusion_matrices.csv", ["method", "data", "tp", "fp", "fn", "tn"], confusion)
 
@@ -412,11 +470,12 @@ def build_results(cfg: Config) -> Path:
         "- **The chain is a single development node.** No consensus, no replication, unlocked development keys, and state that is lost on restart",
         "  (re-anchored from a journal). Latency on it is a lower bound.",
         "- **Integrity is not truth.** A hash proves a record has not changed since it was registered, not that it was true.",
-        "- **Three seeds.** Standard deviations over three runs are rough; differences of about 0.01 F1 should not be read as real.",
+        "- **Few seeds.** Standard deviations over three runs are rough; differences of about 0.01 F1 should not be read as real.",
         "- **Flags, not findings.** Scores and typology suggestions support a human investigator. They are not legal determinations.", "")
 
     # ------------------------------------------------------------------ 12. reproduce
-    add("## 12. Reproduce", "", "```", "make setup      # Python environment and the Hardhat project", "make all        # every step, all seeds (about 30 minutes on a laptop CPU)",
+    add("## 12. Reproduce", "", "```", "make setup      # Python environment and the Hardhat project",
+        "make all        # every step, all seeds (about 22 minutes on an Apple M5 laptop; on macOS use `caffeinate -i make all`)",
         "make quick      # small smoke run", "make test       # pytest", "```", "",
         "Per-method metrics: `results/baselines/`, `results/fl/`. Ledger: `results/ledger/`. Alerts: `results/alerts/`. Stretch: `results/stretch/`.", "")
 
