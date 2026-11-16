@@ -28,3 +28,6 @@ chain/artifacts/**/*.dbg.json
 
 # design-tool working files
 /.taste-skill/
+
+# Streamlit secrets (API keys, credentials) must never be committed
+.streamlit/secrets.toml
