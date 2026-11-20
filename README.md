@@ -196,6 +196,7 @@ scripts/       one command-line script per step, run_all.sh
 dashboard/     Streamlit app
 docs/          data_generator.md, features.md, rules.md, fl_design.md, ledger.md, scoring.md
 results/       metrics (JSON), tables (CSV), figures, RESULTS.md, alerts
+report/        B.E. Stage 1 project report (Word)
 tests/         pytest suite
 ```
 
